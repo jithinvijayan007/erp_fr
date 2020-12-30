@@ -1,0 +1,135 @@
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="card-title">Sales Return</h4>
+              <mat-radio-group name="strReturnType" [(ngModel)]="strReturnType" (change)="radioChange()">
+                <mat-radio-button value="1">Imei</mat-radio-button>
+                <mat-radio-button value="2">Customer</mat-radio-button>
+                <mat-radio-button value="3">Invoice No</mat-radio-button>
+                <mat-radio-button value="4">Old Sales Return</mat-radio-button>
+                <mat-radio-button value="5">Branch</mat-radio-button>
+
+              </mat-radio-group>
+              <div class="row mt-2">
+                <div class="col-md-3" *ngIf="strReturnType=='1'">
+                    <mat-form-field>
+                        <input placeholder="Imei" matInput [(ngModel)]="strReturnImei">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3" *ngIf="strReturnType=='2'">
+                    <mat-form-field>
+                        <input readonly (click)="picker1.open()" matInput [matDatepicker]="picker1" placeholder="From" [(ngModel)]="datReturnFrom">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1>
+                        </mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3" *ngIf="strReturnType=='2'">
+                    <mat-form-field>
+                        <input readonly (click)="picker2.open()" matInput [matDatepicker]="picker2" placeholder="To" [(ngModel)]="datReturnTo">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2>
+                        </mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3" *ngIf="strReturnType=='2'">
+                    <mat-form-field>
+                        <input matInput placeholder="Customer" (ngModelChange)="customerChanged($event)" [matAutocomplete]="customer" [(ngModel)]="selectedReturnCustomer">
+                        <mat-autocomplete #customer="matAutocomplete">
+                            <mat-option *ngFor="let item of lstReturnCustomer" [value]="item.vchr_name" (onSelectionChange)="CustomerClicked(item)">
+                                {{ item.int_mobile}} - {{item.vchr_name }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3" *ngIf="strReturnType=='3'">
+                    <mat-form-field>
+                        <input placeholder="Invoice No" matInput [(ngModel)]="strInvoiceNo">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3" *ngIf="strReturnType=='4'">
+                        <mat-form-field>
+                        <input matInput placeholder="Contact No." [formControl]="searchCustomerNo" [matAutocomplete]="customerNumber" [(ngModel)]="intContactNo"  (ngModelChange)="customerNumberModelChange($event)">
+                            <mat-autocomplete #customerNumber="matAutocomplete">
+                                <mat-option *ngFor="let item of lstCustomerNumber" [value]="item.intContactNo" (onSelectionChange)="customerNumberChanged(item)">{{ item.strCustName }} </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                <div class="col-md-6" *ngIf="strReturnType=='4'">
+                    <img *ngIf="!blnCustAddDisabled" title="Customer Add" src="assets/images/useradd.png" class="mr-3 cursor" (click)="opencustomeredit()">
+
+                </div>
+                <!-- f --> 
+                <div class="col-md-3" *ngIf="strReturnType=='5'">
+                    <mat-form-field>
+                        <input matInput placeholder="Branch*" [formControl]="searchBranch" [matAutocomplete]="branchname" [(ngModel)]="selectedBranch" #branchId>
+                        <mat-autocomplete #branchname="matAutocomplete">
+                            <mat-option *ngFor="let item of lstBranch" [value]="item.branchname" (onSelectionChange)="BranchChanged(item)">
+                                {{ item.branchname }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="strReturnType!='4'" class="col-md-3 mt-3">
+                    <button class="btn btn_redeem" type="submit" (click)="getInvoice()">Search</button>
+                </div>
+              </div>
+              <div *ngIf="lstReturnItems.length !==0 && strReturnType!='4'">
+                <table style="width: 100%;margin-bottom: 0;" class="table table-bordered">
+                    <thead style="background-color: #f5f4f4;">
+                        <tr>
+                            <th>Invoice No
+                            </th>
+                            <th>Item name
+                            </th>
+                            <th>Imei
+                            </th>
+                            <th>Amount
+                            </th>
+                            <th class="text-right" style="min-width: 140px;">
+                                <!-- <input type="checkbox" [(ngModel)]="dct_current_item['dmg_all']" (ngModelChange)=SetSelectAll(2)>&nbsp;Damaged -->
+                              Return &nbsp;<span>
+                                <mat-checkbox [disabled]="strReturnType=='2'"  [(ngModel)]="blnAll" (ngModelChange)=SetSelectAll()></mat-checkbox></span>
+                              </th>
+                            <!-- <th style="width: 100px;">Action
+                            </th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of lstReturnItems; let i = index">
+                            <td class="text-left">
+                                <label for="">{{item.enquiry_num}}</label>
+                            </td>
+                            <td class="text-left">
+                                <label for="">{{item.item}}</label>
+                            </td>
+                            <td class="text-left">
+                                <label for="">{{item.imei}}</label>
+                            </td>
+                            <td style="width: 83px;">
+                                <label for="">{{item.dbl_selling_price}}</label>
+                            </td>
+                            <!-- <td> -->
+                                <td *ngIf="item" class="text-right">
+                                    <!-- <input type="checkbox" [(ngModel)]="dct_imei[int_item_id][item]['avl']" (ngModelChange)=setImei(item,1)> -->
+                                    <mat-checkbox [(ngModel)]="item.bln_true" (change)=setAll(item,i,$event)></mat-checkbox>
+                                  </td>
+                                <!-- <button (click)="returnItem(item)" class="trashbtn">
+              <i class="fas fa-undo"></i>
+              </button> -->
+                            <!-- </td> -->
+                        </tr>
+                    </tbody>
+                </table>
+              </div>
+              <div class="nodata" *ngIf="blnReturnData && lstReturnItems.length ===0">
+                <p *ngIf="strReturnType!='4'" class="text-center">No data found</p>
+              </div>
+              <div *ngIf="lstReturnItems.length > 0" class="col-md-12 mb-4 text-center">
+                <button class="btn btn_redeem" style=" margin-top: 10px;" type="submit" (click)="returnItem(lstReturnItems)">Return</button>
+            </div>
+        </div>
+      </div>
+   </div>
+</div>

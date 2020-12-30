@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Account Maping List</h4>
+              
+              <div class="card nodata" *ngIf="!blnShowData">
+                  <h5>No Data Found</h5>
+              </div>
+                  
+              <div *ngIf="blnShowData" class="example-container mat-elevation-z8">
+                  <mat-table [dataSource]="dataSource">
+  
+                   
+                      <ng-container matColumnDef="moduleName">
+                          <mat-header-cell *matHeaderCellDef> Module Name</mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.vchr_module_name}} </mat-cell>
+                        
+                      </ng-container>
+  
+                      <ng-container matColumnDef="category">
+                          <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.vchr_category}} </mat-cell>
+                        
+                      </ng-container>
+  
+                      <ng-container matColumnDef="branch">
+                          <mat-header-cell *matHeaderCellDef> Branch </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.fk_branch__vchr_name}} </mat-cell>
+                   
+                      </ng-container>
+                      <ng-container matColumnDef="chartofacc">
+                          <mat-header-cell *matHeaderCellDef> Chart of accounts </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.fk_coa__vchr_acc_name}} </mat-cell>
+                   
+                      </ng-container>
+                      <ng-container matColumnDef="action">
+                          <mat-header-cell class="matheadr_right" *matHeaderCellDef> Action </mat-header-cell>
+                          <mat-cell *matCellDef="let row;let i= index;"class="matheadr_right">
+                            <button  title="Edit" (click)="onEdit(row.pk_bint_id)" class="view_btn">
+                              <i class="fa fa-edit"></i>
+                            </button>
+                            <button title="Delete" class="delete_btn" (click)=onDelete(row.pk_bint_id) >
+                                <i class="ti-trash text-danger" aria-hidden="true"></i>
+                              </button>
+                            <!-- <button  title="Edit" *ngIf="row.blnShowEdit" (click)="onEdit(row.vchr_doc_num)" class="edit_btn">
+                              <i class="ti-pencil text-info m-r-10"></i>
+                            </button> -->
+                         
+  
+                          </mat-cell>
+                        </ng-container>
+                      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                  </mat-table>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>

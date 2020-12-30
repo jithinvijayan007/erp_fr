@@ -1,0 +1,23 @@
+:host /deep/ ng2-smart-table table tr th{ 
+    min-width: 160px; 
+}
+:host /deep/ ng2-smart-table tbody > tr > td:nth-child(5) {
+    text-align: right;
+}
+
+:host /deep/ ng2-smart-table tbody > tr > td:nth-child(6) {
+    text-align: right;
+}
+:host /deep/ ng2-smart-table tbody > tr > td:nth-child(7) {
+    text-align: right;
+}
+:host /deep/ ng2-smart-table tbody > tr > td:nth-child(8) {
+    text-align: right;
+}
+:host /deep/ ng2-smart-table tbody > tr > td:nth-child(9) {
+    text-align: right;
+}
+
+.alignCenter{
+ text-align: right;
+}

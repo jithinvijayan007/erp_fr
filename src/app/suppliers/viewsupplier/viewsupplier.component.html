@@ -1,0 +1,202 @@
+
+<div class="card">
+    <div class="card-body">
+        <h3><span><i class="fa fa-users" aria-hidden="true"></i></span>&nbsp; View Supplier
+            <span class="float-right">
+                <!-- <button class="edit_btn" [routerLink]="['/supplier/editsupplier']"><i class="mdi mdi-tooltip-edit"></i> Edit </button> -->
+                <button class="back" [routerLink]="['/supplier/listsupplier']"><i class="fa fa-angle-left"></i> Back</button>
+            </span>
+        </h3>
+        <div class="row" *ngIf="dataLoaded">
+            <div class="col-md-12">
+                <div class="row mt-2">
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>Supplier Code</label>
+                            <p class="">{{supplierDetails['vchr_code']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>Supplier Name</label>
+                            <p class=""> {{supplierDetails['supplier_name']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>Date From</label>
+                            <p class="">{{supplierDetails['dat_from']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>Credit Days</label>
+                            <p class="">{{supplierDetails['int_credit_days']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>Credit Limit</label>
+                            <p class="">{{supplierDetails['bint_credit_limit']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>PO Expiry Days</label>
+                            <p class="">{{supplierDetails['int_po_expiry_days']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>TIN No</label>
+                            <p class="">{{supplierDetails['vchr_tin_no']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>CST No</label>
+                            <p class="">{{supplierDetails['vchr_cst_no']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>GSTIN</label>
+                            <p class="">{{supplierDetails['vchr_gstin']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>GSTIN Status</label>
+                            <p class="">{{supplierDetails['vchr_gstin_status']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>Supplier Category</label>
+                            <p class="">{{supplierDetails['vchr_category_name']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>Supplier Tax Class</label>
+                            <p class="">{{supplierDetails['vchr_tax_master_name']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>Account Group</label>
+                            <p class="">{{supplierDetails['vchr_account_group']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>Bank Account</label>
+                            <p class="">{{supplierDetails['vchr_bank_account']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>PAN No</label>
+                            <p class="">{{supplierDetails['vchr_pan_no']}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>PAN Status</label>
+                            <p class="">{{supplierDetails['vchr_pan_status']}}</p>
+                        </div>
+                    </div>
+                   
+                </div>    
+                <!-- view address detials start -->
+                <div class = "row mt-3" *ngFor="let item of supplierDetails['lst_address'];let i=index">
+                 <div class="col-md-12">
+                    <h6 class="bg">Address #{{i+1}} 
+                        <label *ngIf="item['bln_primary']">Main Address</label>
+                    </h6> 
+                    <div class="row mt-3" style="padding-left: 9px;">
+                        
+                        <div class="col-md-4">
+                            <div class="form-group mt-1">
+                                <label>Email Id</label>
+                                <p class="">{{item['strEmail']}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mt-1">
+                                <label>Phone No</label>
+                                <p class="">{{item['intPhone']}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mt-1">
+                                <label>Pin Code</label>
+                                <p class="">{{item['strPinCode']}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Address</label>
+                                    <p class="">{{item['strAddress']}} </p>
+                                </div>
+                       </div>
+                       <div class="col-md-4">
+                          <div class="form-group mt-1">
+                            <label>State</label>
+                            <p class=""> {{item['strStates']}}</p>
+                          </div>
+                       </div>
+                   </div>
+               </div> 
+            </div>
+                <!-- adrees view ends  -->
+                <!-- conatct view starts -->
+                <div class = "row mt-3" *ngFor="let item of supplierDetails['lst_contact'];let i=index">
+                    <div class="col-md-12">
+                         <h6 class="bg">Contact #{{i+1}}</h6>
+                            <div class="row mt-3" style="padding-left: 9px;">
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Name</label>
+                                    <p class=""> {{item['strName']}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Designation</label>
+                                    <p class="">{{item['strDesignation']}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Department</label>
+                                    <p class="">{{item['strDepartment']}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Office</label>
+                                    <p class="">{{item['strOffice']}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                    <div class="form-group mt-1">
+                                        <label>Mobile No.1</label>
+                                        <p class="">{{item['intMobile1']}}</p>
+                                    </div>
+                            </div>
+                            <div class="col-md-4">
+                                    <div class="form-group mt-1">
+                                        <label>Mobile No.2</label>
+                                        <p class="">{{item['intMobile2']}}</p>
+                                    </div>
+                            </div>
+                        </div>
+                     </div> 
+                <!-- contact view ends  -->                                                                                                            
+                 </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+input {
+    outline: none !important;
+    outline-style: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+  }
+  .view_btn{
+    background: none;
+    border: none;
+    color: #6495ed;
+    cursor: pointer;
+    padding-left: 0;
+  }

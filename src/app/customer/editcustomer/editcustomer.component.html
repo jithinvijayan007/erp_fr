@@ -1,0 +1,101 @@
+<div class="card">
+  <div class="card-body">
+      <div class="row">
+        <h4>
+          <span>
+            <i aria-hidden="true"></i>
+          </span>&nbsp; Edit customer
+        </h4>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+            <mat-form-field>
+                <input required matInput placeholder="Mobile number" id="typeahead-mobile" [formControl]="searchMobile" [matAutocomplete]="mobileauto" [(ngModel)]="mobileNumber" #mobile (ngModalCHange)="clearData()">
+                <mat-autocomplete #mobileauto="matAutocomplete">
+                    <mat-option *ngFor="let item of lstMobileNumbers" [value]="item.phone"  (onSelectionChange)="searchCustomer(item)">
+                       {{ item.name }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="card" *ngIf="showData">
+    <div class="card-body">
+    <div class="row">
+            <div class="col-md-4">
+                <mat-form-field class="mat-icon-left">
+                    <input matInput required type="text" placeholder="Name"[(ngModel)]="dctCustomer.first_name" name="fname" #firstName>
+                </mat-form-field>
+            </div>
+            <!-- <div class="col-md-4">
+                <mat-form-field class="mat-icon-left">
+                    <input matInput required type="text" placeholder="Last name" [(ngModel)]="dctCustomer.last_name" name="lname" #lastName>
+                </mat-form-field>
+            </div> -->
+            <div class="col-md-4">
+                <mat-form-field class="mat-icon-left">
+                    <input matInput required type="number" placeholder="Mobile Number" [(ngModel)]="dctCustomer.mob_no" name="mobile" #mobNo>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="mat-icon-left">
+                    <input type="email" matInput placeholder="E-mail" [(ngModel)]="dctCustomer.str_email" name="email" #emailId>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="mat-icon-left">
+                    <!-- <input matInput type="number" placeholder="Alternate mobile no." [value]="dctCustomer.city" [(ngModel)]="dctCustomer.alternateMobile" name="alternateMobile"> -->
+                    <input matInput required placeholder="City" [(ngModel)]="dctCustomer.location" name="location" [formControl]="searchLocation" [matAutocomplete]="location" #location>
+                    <mat-autocomplete #location="matAutocomplete">
+                        <mat-option *ngFor="let item of lstLocation" [value]="item.vchr_name" (onSelectionChange)="locationChanged(item)">
+                            {{ item.vchr_name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="mat-icon-left">
+                    <input type="text" required matInput placeholder="State" [(ngModel)]="dctCustomer.state" name="state" [formControl]="searchState" [matAutocomplete]="state" #state>
+                    <mat-autocomplete #state="matAutocomplete">
+                            <mat-option *ngFor="let item of lstState" [value]="item.vchr_name | titlecase" (onSelectionChange)="stateChanged(item)">
+                                    {{ item.vchr_code }} - {{ item.vchr_name | titlecase}} 
+                            </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+         
+         
+            <div class="col-md-4">
+                <mat-form-field class="mat-icon-left">
+                    <input matInput  maxlength="15" minlength="15" placeholder="GST No." [(ngModel)]="dctCustomer.gst_no" name="gst" #gstno>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="mat-icon-left">
+                    <input type="text"  matInput placeholder="Address" [(ngModel)]="dctCustomer.txt_address" name="address" #address>
+                </mat-form-field>
+            </div>
+           
+           
+            <!-- <div class="col-md-4" *ngIf="dctCustomer.loyalty_card_name">
+                <mat-form-field class="mat-icon-left">
+                    <input matInput placeholder="Loyalty card Name" [(ngModel)]="dctCustomer.loyalty_card_name" name="loyaltyCard">
+                </mat-form-field>
+            </div> -->
+           
+         </div>
+        <div class="row">
+        <div class="col-md-12">
+                <button  type="button" class="btn save_btn mr-2" (click)="updateCustomerData()">Update</button>
+                <button  type="button" class="btn btn-secondary" (click)="clearCustomerdata()">Cancel</button>
+         </div>
+    </div>
+ </div>
+</div>

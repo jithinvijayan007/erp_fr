@@ -1,0 +1,121 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-body">
+              <h3 class="card-title" >Credit Settlement</h3>
+          
+
+
+              <form class="form p-t-10 row">
+                  <div class="col-md-3">
+                      <mat-form-field>
+                          <input matInput  placeholder="Customer" required [formControl]="searchCustomer" [matAutocomplete]="customername" [(ngModel)]="selectedCustomer" #customerId>
+                          <mat-autocomplete #customername="matAutocomplete">
+                              <mat-option *ngFor="let item of lstCustomer" [value]="item.name" (onSelectionChange)="CustomerChanged(item)">
+                                  {{ item.name }}
+                              </mat-option>
+                          </mat-autocomplete>
+                      </mat-form-field>
+                  </div>
+
+                  <div class="col-md-3">
+                      <mat-form-field>
+                          <mat-select [(ngModel)]="fopSelected" name="fopSelected" placeholder="FOP" (ngModelChange)=fopchange(fopSelected)>
+                              <mat-option [value]=1>CASH</mat-option>
+                              <mat-option [value]=2>DEBIT CARD</mat-option>
+                              <mat-option [value]=3>CREDIT CARD</mat-option>
+                              <mat-option [value]=4>CHEQUE</mat-option>
+                              <mat-option [value]=5>RTGS</mat-option>
+                              <mat-option [value]=6>NEFT</mat-option>
+                              <!-- <mat-option [value]=7>PAYTM</mat-option>
+                              <mat-option [value]=8>PAYTM MALL</mat-option> -->
+                              <mat-option [value]=9>Bharath QR </mat-option>
+
+                          </mat-select>
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-3" *ngIf = "fopSelected==2 || fopSelected==3">
+                      <mat-form-field>
+                          <input #cardNum  [(ngModel)]="strCardNumber" OnlyInteger="true" maxlength="4" type="text" minlength="4" name="strCardNumber" matInput placeholder="Card No (Last 4 digits)*" #cardId>
+                      </mat-form-field>
+                  </div>
+
+                  <div class="col-md-3" *ngIf = "fopSelected==7 || fopSelected==8 || fopSelected==9 || fopSelected==2 || fopSelected==3">
+                      <mat-form-field>
+                          <input #refe  [(ngModel)]="strPaytmRefereNumber" name="strPaytmRefereNumber" OnlyAlphaNum="true" type="text"  matInput placeholder="Reference Number*" #paytmRefId>
+                      </mat-form-field>
+                  </div>
+
+                  <div  class="col-md-3" *ngIf = "fopSelected==2 || fopSelected==3">
+                      <mat-form-field>
+                          <mat-select [(ngModel)]="intBankId" name="bankSelected" placeholder="Bank Name">
+                              <mat-option *ngFor="let item of lstBankNames;" [value]="item.pk_bint_id">{{item.vchr_name | titlecase}} </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </div>
+                  <div  class="col-md-3" *ngIf = "fopSelected==4">
+                      <mat-form-field>
+                          <input [(ngModel)]="strPaytmRefereNumber" name="strChequeNumber" OnlyAlphaNum="true" type="number"  matInput placeholder="Cheque Number*" #chequeId>
+                      </mat-form-field>
+                  </div>
+
+
+                  <div class="col-md-3">
+                      <mat-form-field>
+                          <input #Amnt type="number" [(ngModel)]="intAmount" name="intAmount" matInput placeholder="Amount" (ngModelChange)=amountValidate() required #amountId>
+                      </mat-form-field>
+                  </div>
+
+                  <div  *ngIf ="strGroup == 'ADMIN'" class="col-md-3">
+                      <mat-form-field>
+                          <input matInput readonly [matDatepicker]="picker" placeholder="Date Issue*" [(ngModel)]="datIssue" name="issueDate" #issueDate>
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                  </div>
+
+                  <div *ngIf ="strGroup != 'ADMIN'" class="col-md-3">
+                      <mat-form-field>
+                          <input matInput readonly [matDatepicker]="picker" placeholder="Date Issue*" [(ngModel)]="datIssue" name="issueDate" #issueDate>
+                      </mat-form-field>
+                  </div>
+
+                  <div class="col-md-3">
+                      <mat-form-field>
+                          <input matInput placeholder="Remarks" required [(ngModel)]="remarks" value="" name="remarks" #idName>
+                      </mat-form-field>
+                  </div>
+              </form>
+              <div class="row col-md-6" *ngIf="lstInvoice.length !=0">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Invoice No.</th>
+                        <th scope="col">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let invoice of lstInvoice;">
+                        <th scope="row">
+                            <mat-checkbox  [(ngModel)]="invoice.checked"  (change)="invoiceSelected(invoice)" style="padding: 5px;"></mat-checkbox>
+                        </th>
+                        <td>{{invoice.invoice_num}}</td>
+                        <td>{{invoice.credit_amount}}</td>
+                       
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+              </div>
+              <div class="row">
+                  <div class="col-md-3">
+                      <!-- <div class="col-md-12 row"> -->
+                      <button type="submit" class="btn save_btn  mt-2"  (click)="AddReceipt()">Save</button>
+                      <button type="submit" class="btn btn-secondary  ml-2 mt-2" >Cancel</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

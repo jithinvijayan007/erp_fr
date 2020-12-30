@@ -1,0 +1,359 @@
+<div class="row">
+  <div class="col-lg-8">
+      <div class="card">
+          <div class="card-body">
+              <h3 class="card-title">Quotation &nbsp;
+
+              </h3>
+              <div class="form p-t-10 row">
+                  <div class="col-md-12">
+                      <div class="row">
+                          <div class="col-md-4">
+                              <div class="form-group mt-1">
+                                  <!-- <h6>Contact No.</h6> -->
+                                  <!-- <p class="">{{intContactNo}}</p> -->
+                                  <mat-form-field>
+                                  <input matInput required  OnlyInteger="true" type="text" maxlength="12"  minlength="10"  placeholder="Contact No."  [(ngModel)]="intContactNo" >
+                                  </mat-form-field>
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                              <div class="form-group mt-1">
+                                  <!-- <h6>Customer</h6> -->
+                                  <mat-form-field>
+                                  <input matInput  required  type="text" placeholder="Customer" [(ngModel)]="strName" >
+                                  </mat-form-field>
+                                  <!-- <p class="">{{strName}}</p> -->
+                              </div>
+                          </div>
+                          <div class="col-md-4" >
+                                  <div class="form-group mt-1">
+                                      <!-- <h6>GST Number</h6> -->
+                                      <mat-form-field>
+                                      <input matInput type="text" placeholder="GST Number" [(ngModel)]="strGSTNo"  (blur)="billingDatails('other',0)">
+                                      </mat-form-field>
+                                      <!-- <p class="">{{strGSTNo}}</p> -->
+                                  </div>
+                          </div>
+                          <div class="col-md-4" >
+                              <div class="form-group mt-1">
+                                  <!-- <h6>Mail ID</h6> -->
+                                  <mat-form-field>
+                                  <input matInput type="text" placeholder="Mail ID" [(ngModel)]="strEmail" >
+                                  </mat-form-field>
+                                  <!-- <p class="">{{strEmail | lowercase}}</p> -->
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                            <mat-form-field>
+                                <input matInput required placeholder="State " [formControl]="searchState" [matAutocomplete]="custStatename" [(ngModel)]="selectedCustState" #stateId>
+                                <mat-autocomplete #custStatename="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstState" [value]="item.vchr_name" (onSelectionChange)="custStateChanged(item)">
+                                        {{ item.vchr_name }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                                <mat-form-field>
+                                <input (click)="picker1.open()" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="Valid Till" [(ngModel)]="datValid">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                        </div>
+
+                      </div>
+                      <div class="row">
+
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <textarea matInput  placeholder="Address" [(ngModel)]="strAddress"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <textarea matInput placeholder="Add your Remarks" [(ngModel)]="strRemarks"></textarea>
+                            </mat-form-field>
+                        </div>
+                      </div>
+                      
+                        
+                  </div>
+<!-- 
+                  <div class="col-md-1">
+                      <div class="form-group mb-3 mt-1" title="Loyalty points">
+                          <img class="layalty_img" src="assets/images/loyalty.gif">
+                          <br>
+                          <small class="loyalty_text mt-2">{{intTotPoints}} POINTS</small>
+                      </div>
+                  </div> -->
+<!--                  
+                  <div class="col-md-3" *ngIf="strInitRemarks">
+                      <div class="form-group mt-1">
+                          <h6>Remark</h6>
+                          <p class="">{{strInitRemarks}}</p>
+                      </div>
+                  </div> -->
+                 
+               
+              </div>
+              <!-- Item table  -->
+              <div class="card">
+                  <div class="card-body" style="padding: 15px 0px;">
+                      <div id="invoicetable" class="table-editable">
+                          <table class="table table-responsive-md">
+                              <thead>
+                                  <tr>
+                                      <th class="text-left">Item Name</th>
+                                      <th class="text-center">Qty</th>
+                                      <th class="text-right">Rate</th>
+                                      <!-- <th class="text-right">(-)BB</th> -->
+                                      <th class="text-right">(-)Dis.</th>
+                                      <th class="text-right">Tax</th>
+                                      <!-- <th *ngIf="!blnCheckIGST" class="text-right">SGST%</th> -->
+                                      <th class="text-right">(+)Margin</th>
+                                      <th class="text-right">Amt</th>
+                                      <th class="text-right">
+                                          <!-- <span title="Search item" class="cursor" style="display: none"  (click)="openfilteritem(filteritem)">
+                      <i class="icon-magnifier"></i>
+                    </span> -->
+                                      </th>
+                                  </tr>
+                              </thead>
+                              <tr  *ngFor="let item of lstItemDetails; let id = index">
+                                  <td class="text-left" contenteditable="false">{{item.strItemCode}} - {{item.strItemName}}</td>
+                             
+                                  <td class="text-right" style="width:7%;">
+                                      <input type="text" class="text-center"  [(ngModel)]="item.intQty"  (keypress)="OnEnter( id,'intQty',$event )" (blur)="changeQtyValue(id,'editRow')" (keyup.enter)="changeQtyValue(id,'editRow')">
+                                  </td>
+                                  <!-- =========================================================================================================================================================================================================== -->
+                                  <td class="text-right" contenteditable="false" style="padding-right: 7px;">{{(item.dblRate).toFixed(2)}}</td>
+                                 
+
+                                  <!-- <td class="text-right width8">
+                                      <input type="number" OnlyNumber='true' [(ngModel)]="item.dblBuyBack" (keypress)="OnEnter( id,'dblBuyBack',$event )" (blur)="changeBBValue(id, 'dblBuyBack', $event,'editRow')" (keyup.enter)="changeBBValue(id, 'dblBuyBack', $event,'editRow')"
+                                          #bbId>
+                                  </td> -->
+
+                              
+                                  <td class="text-right width8">
+                                      <input type="number" OnlyNumber="true" [(ngModel)]="item.dblDiscount" (keypress)="OnEnter( id,'dblDiscount',$event )" (blur)="changeDiscountValue(id,'editRow')" (keyup.enter)="changeDiscountValue(id,'editRow')"
+                                          #discId>
+                                  </td>
+
+                                 
+                                  <td  class="text-right width8" contenteditable="false" >{{item.GST}}
+                                  </td>
+                                 
+                                  <td class="text-right width10">
+                                      <input type="number" OnlyNumber='true'  placeholder="0" [(ngModel)]="item.dblMarginAmount" (keypress)="OnEnter( id,'dblDiscount',$event )" (blur)="changeMarginValue(id,'editRow')"  (keyup.enter)="changeMarginValue(id,'editRow')"
+                                         #marginId>
+                                  </td>
+                                
+                                  <td class="text-right width10">
+                                      <input type="number" OnlyNumber='true' readonly placeholder="0" [(ngModel)]="item.dblAmount" #rateId>
+                                  </td>
+
+                                  <td class="table-remove cursor text-right" style=" width: 8%;">
+                                      <i  (click)="removeRow(id)"  title="Delete" class="ti-trash text-danger"></i>
+                                  </td>
+                              </tr>
+
+
+
+                              <!-- Add new row Strat here -->
+                              <tr   class="addnwrow" style="background: #edf8ff;">
+                                  <td>
+                                      <mat-form-field>
+                                          <input matInput class="text-left" (ngModelChange)="itemNameChanged($event)" [matAutocomplete]="itemName" [(ngModel)]="newItem.strItemName" #itemId>
+                                          <mat-autocomplete #itemName="matAutocomplete">
+                                              <mat-option *ngFor="let i of lstItemName" [value]="i.strItemName" (onSelectionChange)="itemNameSelected(i)">
+                                                  {{i.strItemCode}} - {{ i.strItemName }}
+                                              </mat-option>
+                                          </mat-autocomplete>
+                                      </mat-form-field>
+                                  </td>
+                                  <td class="text-center" style="width:7%;">
+                                      <input matInput type="text" class="form-control text-center" id="qty" [(ngModel)]="newItem.intQty" placeholder="" style="border-bottom:1px solid #eee !important;border: none;"  (blur)="changeQtyValue(1,'newItem')" (keyup.enter)="changeQtyValue(1,'newItem')">
+                                  </td>
+                                  <td class="text-right">
+                                      <!-- <span>{{newItem.dblRate}}</span> -->
+                                      <input type="number" class="text-center"  [readonly]="newItem.strItemName != 'Gdew (Extended Warranty)' && newItem.strItemName != 'Gdp'" [(ngModel)]="newItem.dblRate" style="text-align: right !important;padding-right: 4px;">
+                                  </td>
+                                  <!-- <td class="text-right width8">
+                                      <input type="number" (keyup.enter)="changeBBValue(1, 'bb', $event,'newItem')" (blur)="changeBBValue(1, 'bb', $event,'newItem')" [(ngModel)]="newItem.dblBuyBack" id="" placeholder="" style="border-bottom:1px solid #eee !important;border: none;">
+                                  </td> -->
+                                  <td class="text-right width8">
+                                      <input type="number" (keyup.enter)="changeDiscountValue(1,'newItem')"  (blur)="changeDiscountValue(1,'newItem')" [(ngModel)]="newItem.dblDiscount" id="" placeholder="" style="border-bottom:1px solid #eee !important;border: none;">
+                                  </td>
+                                  <!-- <td *ngIf="!blnCheckIGST" class="text-right width6">
+                                      <span>{{newItem.dblCGSTPer}}</span>
+                                  </td>
+                                  <td *ngIf="!blnCheckIGST" class="text-right width6">
+                                      <span>{{newItem.dblSGSTPer}}</span>
+                                  </td> -->
+                                  <td class="text-right width6">
+                                      <span>{{newItem.GST}}</span>
+                                  </td>
+                                  <td class="text-right width10">
+                                      <input type="number" OnlyNumber='true'  placeholder="" [(ngModel)]="newItem.dblMarginAmount"   (blur)="changeMarginValue(1,'newItem')"  (keyup.enter)="changeMarginValue(1,'newItem')"
+                                         #marginId>
+                                  </td>
+                                  <td class="text-right width8">
+                                      <!-- <span>{{(newItem.dblAmount).toFixed(2) }}</span> -->
+                                      <span>{{(newItem.dblAmount) }}</span>
+                                      
+                                  </td>
+                                  <td class="text-right">
+                                      <i title="Save" class="ti-save text-success m-r-10 cursor" (click)="addNewRow()"></i>
+                                      <i title="Clear" class="ti-close text-danger cursor" (click)="clearRow()"></i>
+                                  </td>
+                              </tr>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+              <!-- Item table end here -->
+          </div>
+      </div>
+  </div>
+  <div class="col-lg-4">
+      <div class="card">
+          <div class="card-body">
+              <h3 class="card-title text-center">Billing Details</h3>
+              <div class="scroll1">
+                  <!-- Billing Section start here -->
+                  <div>
+                      <div id="billing_table" class="table-responsive" style="clear: both;">
+                          <table class="table table-hover">
+                              <thead>
+                                  <tr>
+                                      <th class="text-center">#</th>
+                                      <th>Item</th>
+                                      <th class="text-right">Qty</th>
+                                      <th class="text-right" style="width:24%;">Amt</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let item of objectKeys(dctData['billingdetailsCopy']); let i = index">
+                                      <td class="text-center">{{i+1}}.</td>
+                                      <td>{{dctData['billingdetailsCopy'][item]['name']}}</td>
+                                      <td class="text-right">{{dctData['billingdetailsCopy'][item]['qty']}}</td>
+                                      <td class="text-right" style="width:24%;">{{(dctData['billingdetailsCopy'][item]['amt']).toFixed(2)}}</td>
+
+
+                                      <!-- <td class="text-right" style="width:24%;">{{(dctData['billingdetailsCopy'][item]['amt']).toFixed(2)}}</td> -->
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+
+                  <div class="table-responsive m-t-10" style="clear: both;">
+                      <table class="table table-hover">
+                          <tbody>
+                              <tr>
+                                  <td class="text-right" colspan="2">Total Rate :</td>
+                                  <td class="text-right" style="width:24%;">{{(intTotal)| number: '1.2-2'}}</td>
+                              </tr>
+                              <!-- <tr>
+                <td class="text-right" colspan="2">Tax :</td>
+                <td class="text-right" style="width:24%;">{{(intTax)| number: '1.2-2'}}</td>
+              </tr> -->
+                              <tr *ngIf="intTotCGST>0">
+                                  <td class="text-right" colspan="2">CGST :</td>
+                                  <td class="text-right" style="width:24%;">{{(intTotCGST)| number: '1.2-2'}}</td>
+                              </tr>
+                              <tr *ngIf="intTotSGST>0">
+                                  <td class="text-right" colspan="2">SGST :</td>
+                                  <td class="text-right" style="width:24%;">{{(intTotSGST)| number: '1.2-2'}}</td>
+                              </tr>
+                              <tr *ngIf="intTotIGST>0">
+                                  <td class="text-right" colspan="2">IGST :</td>
+                                  <td class="text-right" style="width:24%;">{{(intTotIGST)| number: '1.2-2'}}</td>
+                              </tr>
+                              <tr *ngIf=" intKfcTot >0">
+                                  <td class="text-right" colspan="2">Kerala Flood Cess :</td>
+                                  <td class="text-right" style="width:24%;">{{(intKfcTot)| number: '1.2-2'}}</td>
+                              </tr>
+
+                              <tr *ngIf="intDiscount>0">
+                                  <td class="text-right" colspan="2">Discount :</td>
+                                  <td class="text-right" style="width:20%;">{{(intDiscount)| number: '1.2-2'}}</td>
+                              </tr>
+                              <tr *ngIf="intBuyBack>0">
+                                  <td class="text-right" colspan="2">Buy Back Amt. :</td>
+                                  <td class="text-right" style="width:24%;">{{(intBuyBack)| number: '1.2-2'}}</td>
+                              </tr>
+                            
+                              <tr *ngIf="intCouponDisc">
+                                  <td class="text-right" colspan="2">Coupon Discount Amt :</td>
+                                  <td class="text-right" style="width:24%;">{{(intCouponDisc)| number: '1.2-2'}}</td>
+                              </tr>
+                              <tr *ngIf="intTotRedeemAmt">
+                                  <td class="text-right" colspan="2">Redeem Point Amt :</td>
+                                  <td class="text-right" style="width:24%;">{{(intTotRedeemAmt)| number: '1.2-2'}}</td>
+                              </tr>
+                              <tr *ngIf="intReturnAmt">
+                                  <td class="text-right" colspan="2">Return Amt :</td>
+                                  <td class="text-right" style="width:24%;">{{(intReturnAmt)| number: '1.2-2'}}</td>
+                              </tr>
+                              <tr *ngIf="intTotIndirectDis">
+                                  <td class="text-right" colspan="2">Special Discount :</td>
+                                  <td class="text-right" style="width:24%;">{{(intTotIndirectDis)| number: '1.2-2'}}</td>
+                              </tr>
+
+                              <tr *ngIf="lstAdditions.length>0" style="background-color: #ecf7ff;font-weight: 600;font-size: 13px;">
+                                  <td colspan="3">Additions</td>
+                              </tr>
+             
+                              <!-- <tr>
+                                  <td class="text-right" colspan="2">Total Amount</td>
+                                  <td class="text-right" style="width:24%;">{{intTotNoRounding}}</td>
+                              </tr> -->
+                              <tr *ngIf="intExchange">
+                                  <td class="text-right" colspan="2">Exchange :</td>
+                                  <td class="text-right" style="width:24%;">{{(intExchange)| number: '1.2-2'}}</td>
+                              </tr>
+                              <!-- <tr>
+                                  <td class="text-right" colspan="2">Rounding Off</td>
+                                  <td class="text-right" style="width:24%;">{{intRounding}}</td>
+                                 
+                              </tr> -->
+
+                          </tbody>
+                      </table>
+
+                  </div>
+              </div>
+              <div class="clearfix"></div>
+              <h3 style="background: #e9f0f5;">
+                  <b class="text-left">Grand Total :</b>
+                  <span class="float-right"> ₹ {{(intGrandTot)| number: '1.2-2'}}</span>
+              </h3>
+              <div class="m-t-10 col-md-12">
+                  <!-- <p>{{intBalanceAmt}}</p> -->
+                  <span class="float-left">
+            <!-- <p  style="display: none" *ngIf="intBalanceAmt>0" class="mb-2 get_btn">To Get : {{intBalanceAmt| number: '1.2-2'}} /-</p>
+            <p  style="display: none" *ngIf="intBalanceAmt<0" class="mb-2 give_btn">To Give : {{(intBalanceAmt*-1)| number: '1.2-2'}} /-</p> -->
+          </span>
+                  <!-- ================================================================================== -->
+                  <!-- <p  style="display: none" *ngIf="blnMakePayment && ((intGrandTot<=200000 || intApprove==2 )|| (strGroupName=='ADMIN' && intApprove!=1 ))" class="float-right cursor" (click)="openmakepayment(makepayment)">
+                      <u>Make Payments</u>
+                  </p> -->
+                  <!-- for credit customer no make payment -->
+                  <!-- ================================================================================== -->
+
+
+              </div>
+              <div class="clearfix"></div>
+              <div class="text-center m-t-10">
+                  <button  [disabled]="printDisable" class="btn print_btn" type="submit" (click)="printInvoice()">Print</button>
+                  <button [disabled]="saveDisable" class="btn btn-success" type="submit" (click)="saveQuotation()">Save</button>
+              </div>
+
+              <!-- Billing end here -->
+          </div>
+      </div>
+  </div>
+</div>

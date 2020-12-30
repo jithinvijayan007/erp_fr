@@ -1,0 +1,458 @@
+<div class="card">
+  <div class="card-body">
+      <h4 class="form-head">Goods Return</h4>
+      <div class="row mt-3">
+        <div class="col-md-3">
+          <mat-form-field>
+            <input matInput readonly required placeholder="From Branch" [(ngModel)]="fromBranch" #BranchIdFrom>
+            <!-- <mat-autocomplete #Branchname="matAutocomplete">
+                <mat-option *ngFor="let item of lstBranch" [value]="item.name" (onSelectionChange)="BranchChanged(item)">
+                    {{ item.name }}
+                </mat-option>
+            </mat-autocomplete> -->
+        </mat-form-field>
+        </div>
+        <!-- <div class="col-md-3">
+          <mat-form-field>
+            <input matInput required placeholder="To Branch" [formControl]="searchBranch" [matAutocomplete]="toBranchname" [(ngModel)]="toBranch" #BranchIdTo>
+            <mat-autocomplete #toBranchname="matAutocomplete">
+                <mat-option *ngFor="let item of lstBranch" [value]="item.vchr_name" (onSelectionChange)="BranchChanged(item)">
+                  {{ item.vchr_code }} - {{ item.vchr_name }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        </div>    -->
+
+        <div class="col-md-3">
+          <mat-form-field>
+          <input (click)="picker1.open()" disabled id="traDatId" #traDateId required matInput [matDatepicker]="picker1" placeholder="Transfer Date"
+              [(ngModel)]="transferDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1>
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+        <!-- <div class="col-md-3 mt-3">
+          <mat-checkbox name="blnTransfer" [(ngModel)]="blnTransfer">Add Transportation Details</mat-checkbox>
+        </div> -->
+    
+        <div class="col-md-6">
+          <mat-form-field>
+              <textarea placeholder="Remarks" required matInput [(ngModel)]="strRemarks" ></textarea>
+          </mat-form-field>
+        </div>
+    
+      </div>
+     
+    
+    </div>
+    <div class="card-body">
+      
+    <div class="row">
+      <mat-tab-group mat-align-tabs="start" class="col-md-12">
+        <mat-tab label="Serial No.">
+                <div id="table" style="position: relative;">
+                  <button id="add_button" title="Add" (click)="addItem()" class="addbtnround float-right" style="margin-top: 20px;">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                  <section class="">
+                    <div class="container1">
+                      <table class="table table-bordered" id="table1" style="margin-bottom:0px;">
+                        <thead>
+                          <tr>
+                            <th style="width: 138px;">
+                                <div>Product</div>
+                            </th>
+                            <th style="width: 238px;">
+                              <div>Item name</div>
+                            </th>
+                            <th style="width: 36px;">
+                              <div>Qty</div>
+                            </th>
+                            <th style="width: 86px;">
+                              <div>Rate</div>
+                            </th>
+                            <th style="width: 96px;">
+                              <div>Total</div>
+                            </th>
+                            <th style="width:92px;">
+                              <div>Action</div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of lstItem; let i = index">
+                            <td class="text-left">
+                                <mat-form-field>
+                                  <input matInput [(ngModel)]="lstItem[i]['product_name']" placeholder="Enter product name" [matAutocomplete]="productNa" (keyup)="productSearched($event,lstItem[i]['product_name'],i,'imei')">
+                                  <mat-autocomplete #productNa="matAutocomplete">
+                                    <mat-option *ngFor="let product of lstProducts" [value]="product.name" (onSelectionChange)="productChanged(product,i,$event)">
+                                      {{ product.name }}
+                                    </mat-option>
+                                  </mat-autocomplete>
+                                </mat-form-field>
+                            </td>
+                            <td class="text-left">
+                              <mat-form-field>
+                                <input matInput [(ngModel)]="lstItem[i]['item_name']" name="'item'+i" placeholder="Enter item name" [matAutocomplete]="itemNa" (keyup)="itemSearched(lstItem[i]['item_name'],i)">
+                                <mat-autocomplete #itemNa="matAutocomplete">
+                                  <mat-option *ngFor="let items of lstItems" [value]="items.name" (onSelectionChange)="itemChanged(items,i,$event)">
+                                    {{ items.name }}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                            </td>
+                            <td>
+                              <input id="intQty" disabled matInput type="number" [(ngModel)]="lstItem[i]['int_qty']" (ngModelChange)="lstItem[i]['total'] = lstItem[i]['int_qty'] * lstItem[i]['rate']">
+                            </td>  
+                            <td  style="position: relative;">
+                              <input  [disabled]=true id="intPrice" matInput type="number" [(ngModel)]="lstItem[i]['rate']">
+                            </td>
+                            <td  style="position: relative;">
+                                <input [disabled]=true id="intTot" matInput type="number" [(ngModel)]="lstItem[i]['total']">
+                            </td>                          
+                            <td style="padding:0;padding-left:10px;">
+                              <button style="margin-top: 39px;" id="idImei" class="imeigreen" name="naImei" (click)="openImei(imeipopup,i)">IMEI</button>
+                              <button class="trashbtn" (click)="deleteItem(i)">
+                                <i class="ti-trash"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr style="font-weight: bold;">
+                            <td >Total</td>
+                            <td></td>
+                            <td>{{intTotalQty}}</td>
+                            <td></td>
+                            <td>{{intTotalAmount}}</td>
+                            <td></td>
+                          </tr>
+                    </tfoot>
+                      </table>
+                    </div>
+                  </section>
+                </div>
+        </mat-tab>
+        <mat-tab label="Batch">
+          <div id="table" style="position: relative;">
+            <button id="add_button" title="Add" (click)="addItemBatch()" class="addbtnround float-right" style="margin-top: 20px;">
+              <i class="fa fa-plus"></i>
+            </button>
+            <section class="">
+              <div class="container1">
+                <table class="table table-bordered" id="table1" style="margin-bottom:0px;">
+                  <thead>
+                    <tr>
+                      <th style="width: 138px;">
+                          <div>Product</div>
+                      </th>
+                      <th style="width: 238px;">
+                        <div>Item name</div>
+                      </th>
+                      <th style="width: 36px;">
+                        <div>Qty</div>
+                      </th>
+                      <th style="width: 86px;">
+                        <div>Rate</div>
+                      </th>
+                      <th style="width: 96px;">
+                        <div>Total</div>
+                      </th>
+                      <th style="width:92px;">
+                        <div>Action</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of lstItemBatch; let i = index">
+                      <td class="text-left">
+                          <mat-form-field>
+                            <input matInput [(ngModel)]="lstItemBatch[i]['product_name']" placeholder="Enter product name" [matAutocomplete]="productNa" (keyup)="productSearched($event,lstItemBatch[i]['product_name'],i,'batch')">
+                            <mat-autocomplete #productNa="matAutocomplete">
+                              <mat-option *ngFor="let product of lstProducts" [value]="product.name" (onSelectionChange)="productChangedBatch(product,i,$event)">
+                                {{ product.name }}
+                              </mat-option>
+                            </mat-autocomplete>
+                          </mat-form-field>
+                      </td>
+                      <td class="text-left">
+                        <mat-form-field>
+                          <input matInput [(ngModel)]="lstItemBatch[i]['item_name']" name="'item'+i" placeholder="Enter item name" [matAutocomplete]="itemNa" (keyup)="itemSearchedBatch(lstItemBatch[i]['item_name'],i)">
+                          <mat-autocomplete #itemNa="matAutocomplete">
+                            <mat-option *ngFor="let items of lstItems" [value]="items.name" (onSelectionChange)="itemChangedBatch(items,i,$event)">
+                              {{ items.name }}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        <input id="intQty" disabled matInput type="number" [(ngModel)]="lstItemBatch[i]['int_qty']" (ngModelChange)="lstItemBatch[i]['total'] = lstItemBatch[i]['int_qty'] * lstItemBatch[i]['rate']">
+                      </td>  
+                      <td  style="position: relative;">
+                        <input  [disabled]=true id="intPrice" matInput type="number" [(ngModel)]="lstItemBatch[i]['rate']">
+                      </td>
+                      <td  style="position: relative;">
+                          <input [disabled]=true id="intTot" matInput type="number" [(ngModel)]="lstItemBatch[i]['total']">
+                      </td>                          
+                      <td style="padding:0;padding-left:10px;">
+                        <button style="margin-top: 39px;" id="idBatch" class="imeigreen" name="naBatch" (click)="openBatch(batchpopup,i)">Batch</button>
+                        <button class="trashbtn" (click)="deleteItemBatch(i)">
+                          <i class="ti-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr style="font-weight: bold;">
+                      <td >Total</td>
+                      <td></td>
+                      <td>{{intTotalQtyBatch}}</td>
+                      <td></td>
+                      <td>{{intTotalAmountBatch}}</td>
+                      <td></td>
+                    </tr>
+              </tfoot>
+                </table>
+              </div>
+            </section>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+
+  
+    <!-- Transportation Details -->
+    <div class="mt-4" *ngIf="blnTransfer">
+      <div class="row" style="background-color: #f2f4f5;">
+          <h4 class="card-title" style="margin-bottom: 0px;padding: 8px 0px 8px 5px;font-size: 16px;">
+              <b>Transportation Details</b>
+          </h4>
+      </div>
+      <div class="row mt-4">
+          <div class="col-md-12">
+              <mat-radio-group name="strMedium" [(ngModel)]="strMedium">
+                  <mat-radio-button value="1">Courier</mat-radio-button>
+                  <mat-radio-button value="2">Bus</mat-radio-button>
+                  <mat-radio-button value="3">Direct</mat-radio-button>
+              </mat-radio-group>
+          </div>
+          <div class="col-md-12 mt-2">
+              <div class="row" *ngIf="strMedium == 1">
+                  <div class="col-md-3">
+                      <mat-form-field>
+                          <input placeholder="Courier No " matInput [(ngModel)]="strMediumNo">
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-3" >
+                     
+                      <mat-form-field >
+                          <mat-select [(ngModel)]="intCourierName" name="intCourierName" placeholder="Courier Name " required (ngModelChange)=courierNameChange()>
+                              <mat-option *ngFor="let item of lstCourierName;" [value]="item.pk_bint_id" >{{item.vchr_name | titlecase}} </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-3" *ngIf="intCourierName">
+                      <mat-form-field>
+                          <mat-select [(ngModel)]="strVehicleNo" name="strVehicleNo" placeholder="Vehicle No" required>
+                              <mat-option *ngFor="let item of lstVehicleNo;" [value]="item">{{item | titlecase}} </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </div>
+
+                  <div class="col-md-3">
+                      <mat-form-field>
+                          <input type="number" placeholder="Contact no. " matInput [(ngModel)]="strCourierPhNo" required>
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                      <mat-form-field>
+                          <input type="number" placeholder="No. of Packets " required matInput [(ngModel)]="intCouPackets">
+                      </mat-form-field>
+                  </div>
+         
+              </div>
+              <div class="row " *ngIf="strMedium == 2">
+                  <div class="col-md-3">
+                      <mat-form-field>
+                          <input placeholder="Bus No " required matInput [(ngModel)]="strBusNo">
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                      <mat-form-field>
+                          <input placeholder="Contact Name " required matInput [(ngModel)]="strBusName">
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                      <mat-form-field>
+                          <input type="number" placeholder="Contact no. " required matInput [(ngModel)]="strBusPhNo">
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                      <mat-form-field>
+                          <input type="number" placeholder="No of Packets " required matInput [(ngModel)]="intBusPackets">
+                      </mat-form-field>
+                  </div>
+                 
+              </div>
+              <div class="row" *ngIf="strMedium == 3">
+              
+                  <div class="col-md-4">
+                      <mat-form-field>
+                          <input placeholder="Contact Name " required matInput [(ngModel)]="strTransName">
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-4">
+                      <mat-form-field>
+                          <input type="number" placeholder="Contact no. " required matInput [(ngModel)]="strTransPhNo">
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-4">
+                      <mat-form-field>
+                          <input type="number" placeholder="No of Packets " required matInput [(ngModel)]="intTransPackets">
+                      </mat-form-field>
+                  </div>
+               
+                  <div class="col-md-4">
+                      <mat-form-field>
+                          <input type="text" placeholder="Vehicle No" matInput [(ngModel)]="strTransVehicleNo">
+                      </mat-form-field>
+                  </div>
+
+                 
+              </div>
+          </div>
+      </div>
+
+  </div>
+
+    <!-- Transportation Details End -->
+
+    <div class="mt-2 mb-4 row">
+        <button class="btn save_btn mr-10" (click)="saveTransfer()" [disabled]="saveDisable">Save</button>
+        <button class="btn btn-secondary" type="button" (click)="cancelTransfer()" mat-raised-button>Cancel</button>
+    </div>
+  </div>
+
+
+  </div>
+ 
+
+
+  <!-- IMEI Popup -->
+<ng-template #imeipopup let-modal>
+    <div class="modal-header" style="background-color: #6ad4b4;">
+        <div class="col-md-12" style="text-align: center;">
+            <h4 class="modal-title">
+                <span style="color: white;text-align: center; margin-top: 5px; margin-bottom: 5px;">Enter IMEI Number</span>
+            </h4>
+        </div>
+    </div>
+    <div class="modal-body" id="imeipopup">
+        <div class="text-center mt-2" style="display: none">
+            <mat-checkbox name="same"></mat-checkbox>
+        </div>
+      <div>
+        <span *ngIf="lstTabImei.length!=0">Quantity: <label for="Quantity">{{lstTabImei.length}}</label></span>
+        <div class="avimeiscroll">
+        <table id="imeiTable" class="table" *ngIf="lstTabImei.length!=0">
+            <thead class="imeihead">
+                <th>No</th>
+                <th>Imei</th>
+                <th>Age</th>
+
+                <th></th>
+            </thead>
+           <tbody>
+                <tr *ngFor="let imei of lstTabImei; let i = index">
+                    <td>{{i+1}}</td>
+                    <label for="">{{imei.imei}}</label>
+                    <td>{{imei.imei_age}}</td>
+
+                    <td><button  class="trashbtn" (click)="removeImei(i)">
+                          <i class="ti-close"></i>
+                        </button></td>
+                </tr>
+                
+            </tbody>
+        </table>
+      </div>
+        <div class="row">
+          <div class="col-md-12">
+              <div class="form-group">
+                  <input type="text"  class="form-control" [(ngModel)]=strImei placeholder="Imei" (keyup.enter)="imeiEntered()" (keypress)="keyPressAlphaNumeric($event)">
+              </div>
+          </div>     
+        </div>
+    </div>
+  </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-12" style="text-align:center;">
+              
+                <button type="button" class="btn btn-default m-r-10" (click)="saveImei()" style="background-color: #6ad4b4;">Save</button>
+                <button type="button" class="btn close1" (click)="closeImei()">Close</button>
+            </div>
+        </div>
+    </div>
+  </ng-template>
+  <!-- IMEi popup end here -->
+  
+
+
+  <!-- Batch Popup -->
+  <ng-template #batchpopup let-modal>
+    <div class="modal-header" style="background-color: #6ad4b4;">
+        <div class="col-md-12" style="text-align: center;">
+            <h4 class="modal-title">
+                <span style="color: white;text-align: center; margin-top: 5px; margin-bottom: 5px;">Batch Number</span>
+            </h4>
+        </div>
+    </div>
+    <div class="modal-body" id="imeipopup">
+        <div class="text-center mt-2" style="display: none">
+            <mat-checkbox name="same"></mat-checkbox>
+        </div>
+      <div>
+        <span>Quantity: <label for="Quantity">{{intTot[itemIndexBatch]}}</label></span>
+        <div class="avimeiscroll">
+        <table id="imeiTable" class="table">
+            <thead class="imeihead">
+                <th>No</th>
+                <th>Batch (Qty Available, Days)</th>
+                <th>Enter Qty</th>
+
+                <th></th>
+            </thead>
+           <tbody>
+                <tr *ngFor="let batch of lstTabBatch; let i = index">
+                    <td>{{i+1}}</td>
+                    <label for="">{{batch.batch}}({{batch.qty}},{{batch.batch_age}})</label>
+                    <td>
+                      <input type="number" [(ngModel)]=batch.transfer_qty (keyup)="calcTotQty()">
+                    </td>
+
+                    <!-- <td><button  class="trashbtn" (click)="removeBatch(i)">
+                          <i class="ti-close"></i>
+                        </button></td> -->
+                </tr>
+                
+            </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-12" style="text-align:center;">
+              
+                <button type="button" class="btn btn-default m-r-10" (click)="saveBatch()" style="background-color: #6ad4b4;">Save</button>
+                <button type="button" class="btn close1" (click)="closeBatch()">Close</button>
+            </div>
+        </div>
+    </div>
+  </ng-template>
+  <!-- Batch popup end here -->
+  
+

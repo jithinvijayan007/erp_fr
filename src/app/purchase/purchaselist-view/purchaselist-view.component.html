@@ -1,0 +1,450 @@
+<div class="card">
+  <div class="card-body">
+      <div class="row">
+              <h4><b><span><i aria-hidden="true"></i></span>&nbsp; GRN List View - {{dctPurchaseData['purchase_num']}}</b> {{dctPurchaseData['vchr_stkrqst_num']}}</h4>
+      </div>
+     
+      <!-- <h5 class="card-subtitle">made with bootstrap elements</h5> -->
+      <div class="row mt-3">
+        <div class="col-md-10">
+
+        <!-- <div class="col-md-4">
+            <label>Purchase Order Number</label>
+            <p>{{dctPurchaseData['fk_po_num']}}</p>
+        </div> -->
+        <div class="row">
+        <div class="col-md-4">
+                <label>Purchase Date</label>
+                <p>{{dctPurchaseData['dat_purchase']}}</p>
+            </div>
+
+            <div class="col-md-4">
+              <label>Bill Date</label>
+              <p>{{dctPurchaseData['bill_date']}}</p>
+          </div>
+
+          <div class="col-md-4">
+              <label>Supplier </label>
+              <p> {{dctPurchaseData['supplier_name']}}</p>
+          </div>
+
+          <div *ngIf="dctPurchaseData['fk_po_num']" class="col-md-4">
+              <label>Purchase Order Number</label>
+              <p>{{dctPurchaseData['fk_po_num']}}</p>
+          </div>
+
+
+          <div class="col-md-4">
+            <label>Bill Number</label>
+            <p>{{dctPurchaseData['bill_no']}}</p>
+        </div>
+
+        <div class="col-md-4">
+          <label>Branch </label>
+          <p> {{dctPurchaseData['branch_name']}}</p>
+      </div>
+      
+          <div class="col-md-4">
+            <label>Mode of Payment</label>
+            <p *ngIf="dctPurchaseData['int_fop']==0">Cash</p>
+            <p *ngIf="dctPurchaseData['int_fop']==1">Credit</p>
+        </div>
+
+          <div class="col-md-4">
+              <label>Remarks</label>
+              <p>{{dctPurchaseData['vchr_notes']}}</p>
+          </div>
+          <div class="col-md-4">
+            <label>Bill Amount</label>
+            <p>{{dctPurchaseData['dbl_bill_amount']}}</p>
+        </div>
+      </div>
+    </div>
+   
+ 
+    <div class="col-md-2" *ngIf="imgBillSrc">
+        <div class="row">
+            <div class="col-md-12">
+                <label>Bill image</label>
+            </div>
+            <div class="col-md-12">
+              <div class="imagebox">
+                    <img src="{{hostname}}{{imgBillSrc}}" alt="Image is temporrarly unavailable" class="image" style="max-width: 100%;width: 95%;">
+                      <div class="middle">
+                        <div class="text" (click)="openzoomimage(zoomimage)"><i class="fa fa-search-plus fa-2x"></i></div>
+                    </div>
+                </div>
+              </div>
+        </div>
+       <!-- <img (click)="openzoomimage(zoomimage)" class="img" src="{{hostname}}{{imgBillSrc}}"  alt="Image is temporrarly unavailable" style="max-width: 100%;width: 95%;" /> -->
+      
+      <!-- <p>{{dctPurchaseData['bill_no']}}</p> -->
+     </div>
+    </div>
+
+
+
+      <div class="row mt-3">
+        <div class="col-12">
+            <h4><b>Item List</b></h4>
+          <table class="table table-bordered mt-3"> 
+            <thead>
+   
+              <tr>
+                  <th>Sl no</th>
+                  <th>Item</th>
+                  <th>Qty</th>
+                  <th>Free</th>
+                  <th>Rate</th>
+                  <th style="text-align: center;">Disc %</th>
+                  <th>Disc / Unit</th>
+                  <th>Disc Amount</th>
+                  <th *ngIf="dctPurchaseData['branch_state_id'] == dctPurchaseData['supplier_state_id']">CGST</th>
+                  <th  *ngIf="dctPurchaseData['branch_state_id'] == dctPurchaseData['supplier_state_id']">SGST</th>
+                  <th  *ngIf="dctPurchaseData['branch_state_id'] != dctPurchaseData['supplier_state_id']">IGST</th>
+                  <th>Amount</th>
+                  <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let keys of lstKeys; let i=index">
+                <td> {{dctItemdata[keys]['slno']}}</td>
+                <td> {{dctItemdata[keys]['item_name']}} </td>
+                <td style="text-align: right;"> {{dctItemdata[keys]['int_qty']}} </td>
+                <td style="text-align: right;"> {{dctItemdata[keys]['int_free']}} </td>
+                <td style="text-align: right;"> {{dctItemdata[keys]['unit_price']}} </td>
+                <td style="text-align: right;"> {{dctItemdata[keys]['discount_percent']}} </td>
+                <td style="text-align: right;"> {{dctItemdata[keys]['discount_per_unit']}} </td>
+                <td style="text-align: right;"> {{dctItemdata[keys]['total_discount']}} </td>
+                <td *ngIf="dctPurchaseData['branch_state_id'] == dctPurchaseData['supplier_state_id']" style="text-align: right;"> {{dctItemdata[keys]['cgst']}} </td>
+                <td *ngIf="dctPurchaseData['branch_state_id'] == dctPurchaseData['supplier_state_id']" style="text-align: right;"> {{dctItemdata[keys]['sgst']}} </td>
+                <td *ngIf="dctPurchaseData['branch_state_id'] != dctPurchaseData['supplier_state_id']" style="text-align: right;"> {{dctItemdata[keys]['igst']}} </td>
+                <td style="text-align: right;"> {{dctItemdata[keys]['total_amount']}} </td>
+                <td>
+                    <button  id="idImei" class="imeigreen" name="naImei" (click)="showImei(showImeiList,dctItemdata[keys],keys)">IMEI</button>
+                    <!-- <button *ngIf="!(dctItemdata[keys]['imei_status'])" id="idNonImei" class="imeigreen" name="naNonImei" (click)="showDamaged(showDamagedList,dctItemdata[keys])">IMEI</button> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+
+ 
+      
+      <!-- <div class="row mt-3">
+          <div class="col-12">
+             
+                <div class="row" style="background-color: #f2f4f5;">
+                    <h4 class="card-title" style="margin-bottom: 0px;padding: 8px 0px 8px 10px;font-size: 16px;"><b>Item List</b></h4>
+                </div>
+                      
+                      <div class="example-container mat-elevation-z8 mt-4">
+                          <mat-table [dataSource]="dataSource">
+
+                              <ng-container matColumnDef="slno" sticky>
+                                  <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.slno}} </mat-cell>
+                                  <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                              </ng-container>
+
+                              <ng-container matColumnDef="fk_item__vchr_name">
+                                  <mat-header-cell *matHeaderCellDef> Item </mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.item_name}} </mat-cell>
+                                  <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                              </ng-container>
+
+                              <ng-container matColumnDef="int_qty">
+                                <mat-header-cell *matHeaderCellDef> Qty </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.int_qty}} </mat-cell>
+                                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="int_free">
+                                <mat-header-cell *matHeaderCellDef> Free </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.int_free}} </mat-cell>
+                                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="unit_price">
+                                <mat-header-cell *matHeaderCellDef> Rate </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.unit_price}} </mat-cell>
+                                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="discount_percent">
+                                <mat-header-cell *matHeaderCellDef> Disc % </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.discount_percent}} </mat-cell>
+                                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                            </ng-container> 
+
+                            <ng-container matColumnDef="discount_per_unit">
+                                <mat-header-cell *matHeaderCellDef> Disc / Unit </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.discount_per_unit}} </mat-cell>
+                                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="total_discount">
+                                <mat-header-cell *matHeaderCellDef> Disc Amount </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.total_discount}} </mat-cell>
+                                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="cgst">
+                                <mat-header-cell *matHeaderCellDef> CGST </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.cgst}} </mat-cell>
+                                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="sgst">
+                                <mat-header-cell *matHeaderCellDef> SGST </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.sgst}} </mat-cell>
+                                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="igst">
+                                <mat-header-cell *matHeaderCellDef> IGST </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.igst}} </mat-cell>
+                                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                            </ng-container>
+
+                              <ng-container matColumnDef="total_amount">
+                                  <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.total_amount}} </mat-cell>
+                                  <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                              </ng-container>
+
+                              <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                                <!-- <mat-cell *matCellDef="let element"> {{element.total_amount}} </mat-cell> 
+                                <mat-cell *matCellDef="let element"> 
+                                    <button *ngIf="element['imei_status']" id="idImei" class="imeigreen" name="naImei" (click)="showImei(showImeiList,element)">IMEI</button>
+                                    <button *ngIf="!(element['imei_status'])" id="idNonImei" class="imeigreen" name="naNonImei" (click)="showDamaged(showDamagedList,element)">IMEI</button>
+                                <!-- <button class="delete" (click)="deleteData(i)">Delete</button></mat-cell> 
+                                </mat-cell>
+                                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                            </ng-container>
+
+
+                              <mat-header-row *matHeaderRowDef="displayedColumns; sticky: false"></mat-header-row>
+                              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+                              <mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></mat-footer-row>
+                          </mat-table>
+                      </div>       
+          </div>
+
+      </div> -->
+
+      <div class="row">
+        <!-- <div class="col-md-4 mt-4"> -->
+          
+                <!-- <button type="submit"  class="btn save_btn m-r-10" (click)="transferData()" style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);">Transfer</button> -->
+              <!--   <button type="submit" *ngIf="dctPurchaseData['int_approve']==0" class="btn btn-secondary" (click)="rejectItemPopup(rejectPopup)" style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);"> Reject </button>
+                <button type="submit" *ngIf="dctPurchaseData['int_approve']==1" class="btn save_btn m-r-10" (click)="initiateVoucher()" style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);">Initiate Purchase Voucher</button> -->
+                <!-- <button type="submit" *ngIf="dctPurchaseData['int_approve']==-1" class="btn save_btn m-r-10" (click)="editPurchase()" style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);"> Purchase Edit</button> -->
+               
+        <!-- </div> -->
+        <div class="col-md-8 mt-4" style="text-align:right;">
+        <div class="row">
+            <div class="col-xl-6 col-md-6">
+                
+            </div>
+           <div class="col-xl-6 col-md-6">
+               <div class="pull-right">
+                       <div class="row" style="border-bottom: 1px dotted #d2d6d8;">
+                             <div class="col-md-9">
+                                 <label style="color:black"><b>Total :</b></label>
+                             </div>
+                             <div class="col-md-3" style="text-align:right;">
+                                <label style="font-weight: 600;color: black;">{{ intTotAmount.toFixed(2) }}</label>
+                               
+                             </div>
+                       </div>
+
+
+                       <div class="row mt-2" style="border-bottom: 1px dotted #d2d6d8;">
+                             <div class="col-md-9">
+                               <label>Quantity :</label>
+                             </div>
+                             <div class="col-md-3" style="text-align:right;padding-left: 0">
+                              <label> {{ intQtyTot }}</label>
+                                 
+                             </div>
+                       </div>
+
+                       <div class="row mt-2" style="border-bottom: 1px dotted #d2d6d8;">
+                           <div class="col-md-9">
+                             <label>Round off :</label>
+                           </div>
+                           <div class="col-md-3" style="text-align:right;padding-left: 0">
+                         
+                            <label>{{ dctPurchaseData['dbl_roundoff_value']}} </label>
+                           </div>
+                     </div>
+
+                    
+
+
+                       <div class="row mt-2" style="border-bottom: 1px dotted #d2d6d8;">
+                             <div class="col-md-9">
+                                 <label>Additions :</label>
+                             </div>
+                             <div class="col-md-3" style="text-align:right;padding-left: 0">
+                              <label> {{dctPurchaseData['dbl_addition']}}</label>
+                               
+                             </div>
+                       </div>
+
+
+                       <div class="row mt-2" style="border-bottom: 1px dotted #d2d6d8;">
+                             <div class="col-md-9">
+                               <label>Deductions :</label>
+                             </div>
+                             <div class="col-md-3" style="text-align:right;padding-left: 0">
+                              <label>{{dctPurchaseData['dbl_deduction']}}</label>
+                               
+                             </div>
+                       </div>
+
+
+                       <div class="row bgclr">
+                             <div class="col-md-9">
+                                 <label style="color:black;margin-top: 7px;"><b>Net Amount :</b></label>
+                             </div>
+                             <div class="col-md-3" style="text-align:right;padding-left: 0">
+                                 
+                              <label style="margin-top: 7px;font-weight: 600;color: black;"> {{ dctPurchaseData['dbl_total'] }}</label>
+                             </div>
+                       </div>
+               
+                 </div>
+           </div>
+        </div>
+       </div>
+     </div>
+
+
+
+
+
+
+
+
+
+
+      
+ 
+
+
+<!-- imei popup start here -->
+<ng-template #showImeiList let-modal>
+  <div class="modal-header" style="background-color: #6ad4b4;">
+    <div class="col-md-12" style="text-align: center;">
+      
+            <h4 *ngIf="!selectedItem['imei_status']" class="modal-title"><span style="color: white;text-align: center; margin-top: 5px; margin-bottom: 5px;"> Batch - {{selectedItem.batch_num}}</span></h4>
+            <h4 *ngIf="selectedItem['imei_status']" class="modal-title"><span style="color: white;text-align: center; margin-top: 5px; margin-bottom: 5px;"> IMEI </span></h4>
+    </div>
+  </div>
+  <div class="modal-body" id="imeiPopup">
+    <div class='row' *ngIf="selectedItem['imei_status']">
+        <table class="table table-bordered table-responsive-md text-center mt-3">
+                <thead>
+                    <tr class="bgclr">
+                    <th class="text-center">Sl:No</th>
+                    <th class="text-center">IMEI No</th>
+                    <!-- <th class="text-center"></th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of lstItemImei; let i = index;">
+                        <td>{{i + 1}}</td>
+                        <td> 
+                        <div>{{ item }}</div>
+                        </td>
+                    </tr>
+                </tbody>
+         </table> 
+    </div>
+   
+    <!-- <div *ngIf="!selectedItem['imei_status']">
+        <h5 >{{selectedItem.batch_num}}</h5>
+    </div> -->
+
+      <div class="row">
+        <div class="col-md-12" style="text-align:center;">
+          <!-- <button type="button" class="btn btn-default m-r-10" (click)="saveImei()" style="background-color: #6ad4b4;">Save</button> -->
+          <button type="button" class="btn btn-secondary" (click)="hideModal()">Cancel</button>
+        </div>
+      </div>
+  </div>
+</ng-template>
+<!-- imei popup end here -->
+
+<!-- non-imei popup -->
+<!-- <ng-template #showDamagedList let-modal>
+  <div class="modal-header" style="background-color: #6ad4b4;">
+    <div class="col-md-12" style="text-align: center;">
+        <h4 class="modal-title"><span style="color: white;text-align: center; margin-top: 5px; margin-bottom: 5px;">Batch: {{ intBatchNum }}EI</span></h4>
+    </div>
+  </div>
+  <div class="modal-body" id="nonImei">
+    <div class="row">
+      <div class="col-md-12" style="text-align:center;">
+          <p> No of Damaged : <span style="font-weight:600"> {{ intDamaged }} </span></p>
+      </div>
+   
+    </div>
+
+      <div class="row mt-2">
+        <div class="col-md-12" style="text-align:center;">
+          <button type="button" class="btn btn-secondary" (click)="hideModal()">Cancel</button>
+        </div>
+      </div>
+  </div>
+</ng-template> -->
+
+<!-- non-imei popup ends here -->
+
+
+<!-- purchase reject popup start here -->
+<!-- <ng-template #rejectPopup let-modal>
+        <div class="modal-header" style="background-color: #6ad4b4;">
+          <div class="col-md-12" style="text-align: center;">
+              <h4 class="modal-title"><span style="color: white;text-align: center; margin-top: 5px; margin-bottom: 5px;">Add IMEI</span></h4>
+          </div>
+        </div>
+        <div class="modal-body" >
+          <label>Why Do You Want to Reject This Purchase?</label>
+          <input type="text" class="form-control" id="rejectRemark" placeholder="Remarks" [(ngModel)]="strRejectReason" >
+            <div class="row">
+              <div class="col-md-12" style="text-align:center;">
+                <button type="button" class="btn btn-default m-r-10" (click)="rejectPurchase()" style="background-color: #6ad4b4;">Reject</button>
+                <button type="button" class="btn btn-secondary" (click)="hideModal()">Cancel</button>
+              </div>
+            </div>
+        </div>
+      </ng-template> -->
+      <!-- purchase reject popup end here -->
+
+
+    </div></div>
+
+
+ <!-- Zoom view Popup -->
+<ng-template #zoomimage let-modal>
+  <div class="modal-content">       
+    <div class="modal-body">
+        <div class="row">
+            <img class="img" src="{{hostname}}{{imgBillSrc}}" style="width:100%;" />
+        </div>
+    </div>
+  </div>    
+</ng-template>
+<!-- Zoom view popup end here -->
+
+
+   
+

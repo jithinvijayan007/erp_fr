@@ -1,0 +1,274 @@
+ <!-- =========Customer Details============== -->
+ <div class="card">
+     <div class="card-body">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 mt-2">
+                            <h3 class="col-md-12">Customer Details &nbsp;
+                            <!-- <span><img *ngIf="!blnDisabled" title="Customer Add" src="assets/images/useradd.png" class="mr-3 cursor" (click)="opencustomeredit(customeredit)"></span> -->
+                        </h3>
+                            <div class="text-center mt-2" style="display: none">
+                                <mat-checkbox name="same"></mat-checkbox>
+                            </div>
+                            <!-- ===============================================================================================-->
+                            <div class="row">
+                             
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input [disabled]=true matInput placeholder="Name" [(ngModel)]="strName" (keyup)="changeNameToUppercase()">
+                                    </mat-form-field>
+                                </div>
+          
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                <input matInput [disabled]=true placeholder="Contact No." [(ngModel)]="intContactNo"  (ngModelChange)="customerNumberModelChange($event)">
+                                    <!-- <mat-autocomplete #customerNumber="matAutocomplete">
+                                        <mat-option *ngFor="let item of lstCustomerNumber" [value]="item.intContactNo" (onSelectionChange)="customerNumberChanged(item)">{{ item.strCustName }} </mat-option>
+                                    </mat-autocomplete> -->
+                                </mat-form-field>
+                              </div>
+          
+          
+          
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput [disabled]=true [(ngModel)]="strEmail" placeholder="Email" value="">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput [disabled]=true placeholder="City "  [(ngModel)]="selectedCity" #cityId>
+                                        <!-- <mat-autocomplete #cityname="matAutocomplete">
+                                            <mat-option *ngFor="let item of lstCity" [value]="item.vchr_name" (onSelectionChange)="cityChanged(item)">
+                                                {{ item.vchr_pin_code+' - '+item.vchr_name }}
+                                            </mat-option>
+                                        </mat-autocomplete> -->
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field>
+                                        <input matInput [disabled]=true placeholder="State " [(ngModel)]="selectedState" #stateId>
+                                        <!-- <mat-autocomplete #statename="matAutocomplete">
+                                            <mat-option *ngFor="let item of lstState" [value]="item.vchr_name" (onSelectionChange)="stateChanged(item)">
+                                                {{ item.vchr_code+' - '+item.vchr_name }}
+                                            </mat-option>
+                                        </mat-autocomplete> -->
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput [disabled]=true [(ngModel)]="strGSTNo" placeholder="GST No." OnlyAlphaNum="true" value="" type="text" maxlength="15" minlength="15" (keyup)="changeToUppercase()">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput [disabled]=true [(ngModel)]="strAddress" placeholder="Address" value="">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            
+                            <!-- =============================================================================================== -->
+                            <!-- =============================================================================================== -->
+                        </div>
+          
+                    </div>
+                    
+   
+                </div>
+          <!-- ==========Customer Details========= -->
+          <!-- ==========Item Details========= -->
+          <div class="row">
+            <div class="col-md-12 mt-3">
+                <div style="position: relative;">
+                    <button id="add_button" title="Add Item" (click)="addItem()" class="addbtnround float-right">
+            <i class="fa fa-plus"></i>
+                        </button>
+                        <div class="container1">
+                            <table style="width: 100%;margin-bottom: 0;margin-top: 46px;" class="table table-bordered">
+                                <thead style="background-color: #f5f4f4;">
+                                    <tr>
+                                        <th style="min-width: 280px;">Item name
+                                            <div style="text-align:left">Item Details</div>
+                                        </th>
+                                        <th style="width: 75px;">Dbl Rate
+                                            <div>Dbl Rate</div>
+                                        </th>
+                                        <th *ngIf="!blnIgst" style="width: 55px;">
+                                            <div>SGST<br>(%)</div>
+                                        </th>
+                                        <th *ngIf="!blnIgst" style="width:55px;">
+                                            <div>CGST<br>(%)</div>
+                                        </th>
+                                        <th *ngIf="blnIgst" style="width: 55px;">
+                                            <div>IGST<br>(%)</div>
+                                        </th>
+                                        <th style="min-width: 57px;">Total
+                                            <div>Total</div>
+                                        </th>
+                                        <th style="width: 55px;">Action
+                                            <div>Action </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of lstItems; let i = index">
+                                        <td class="text-left">
+                                            <mat-form-field  style="width:33%;margin-right: 10px; margin-top: 25px;">
+                                                <input matInput [(ngModel)]="lstItems[i]['product_name']" placeholder="Product" [matAutocomplete]="product" #idProduct (ngModelChange)="productSearched(lstItems[i]['product_name'],i)">
+                                                <mat-autocomplete #product="matAutocomplete">
+                                                    <mat-option *ngFor="let item of lstProductList" [value]="item.name" (onSelectionChange)="productSelected(item,i)">
+                                                        {{ item.name|titlecase }}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+
+                                            <!-- <mat-form-field style="width:45%; margin-top: 25px;">
+                                                <input matInput [(ngModel)]="lstItems[i]['brand_name']" placeholder="Brand" [matAutocomplete]="brand" #idBrand (ngModelChange)="brandSearched(lstItems[i]['brand_name'],i)">
+                                                <mat-autocomplete #brand="matAutocomplete">
+                                                    <mat-option *ngFor="let item of lstBrandList" [value]="item.name" (onSelectionChange)="brandSelected(item,i)">
+                                                        {{ item.name|titlecase }}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field> -->
+                                            <mat-form-field appearance="none" style="width:33%;margin-right: 10px; ">
+                                                <input matInput [(ngModel)]="lstItems[i]['item_name']" placeholder="Enter Item Name" [matAutocomplete]="item" #idItem (ngModelChange)="itemSearched(lstItems[i]['item_name'],i)">
+                                                <mat-autocomplete #item="matAutocomplete">
+                                                    <mat-option *ngFor="let item of lstItemsList" [value]="item.strItemName" (onSelectionChange)="itemSelected(item,i)">
+                                                        {{ item.strItemName|titlecase }}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="none" style="width:30%">
+                                                <input matInput OnlyAlphaNum="true" [(ngModel)]="lstItems[i]['imei']" placeholder="Enter IMEI or BatchNo" (keypress)="OnKeyPress(lstItems[i]['imei'],$event)" (ngModelChange)="imeiCheck(lstItems[i])">
+                                            </mat-form-field>
+
+                                        </td>
+                                        <td >
+                                            <input [disabled]=true id="txtDblRate" matInput type="number" placeholder="0" [(ngModel)]="lstItems[i]['dblRate']">
+                                        </td>
+                                        <td *ngIf="!blnIgst" style="position: relative;">
+                                            <input [disabled]=true id="txtSgst" matInput type="number" placeholder="0" [(ngModel)]="lstItems[i]['dblSGSTPer']">
+                                        </td>
+                                        <td *ngIf="!blnIgst" style=" position: relative;">
+                                            <input [disabled]=true id="txtCgst" matInput type="number" placeholder="0" [(ngModel)]="lstItems[i]['dblCGSTPer']">
+                                        </td>
+                                        <td *ngIf="blnIgst" style=" position: relative;">
+                                            <input [disabled]=true id="txtIgst" matInput type="number" placeholder="0" [(ngModel)]="lstItems[i]['dblIGSTPer'] = lstItems[i]['dblCGSTPer'] + lstItems[i]['dblSGSTPer']">
+                                        </td>
+                                        <td style="max-width: 50px;text-align:right;">
+                                            <input *ngIf="!blnIgst" id="txtTotal1" matInput type="number" placeholder="0" [(ngModel)]="lstItems[i]['dblAmount']" (ngModelChange)="changeAmount(i,$event)" >
+                                            <input *ngIf="blnIgst" id="txtTotal2" matInput type="number" placeholder="0" [(ngModel)]="lstItems[i]['dblAmount']" (ngModelChange)="changeAmount(i,$event)">
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <button class="trashbtn" (click)="deleteItem(i)">
+                        <i class="ti-trash"></i>
+                      </button>
+                                        </td>
+                                    </tr >
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-md-3"> -->
+            <mat-form-field  class="col-md-3" style="top:20px;">
+            <input matInput placeholder="Invoice No *." [(ngModel)]="strInvoiceNum">
+            </mat-form-field>
+        <!-- </div> -->
+        <!-- <div class="col-md-4"> -->
+            <mat-form-field class="col-md-4" style="top:20px;">
+            <input matInput placeholder="Remarks *." [(ngModel)]="strRemarks">
+            </mat-form-field>
+        <!-- </div> -->
+
+        <div class="row mt-3">
+        <div class="col- mb-3 text-center" style="margin-left: 14px;" >
+            <button [disabled]="saveDisable"  class="btn save_btn" type="submit" (click)="save()" >Save</button>
+            <button class="btn btn-secondary" style="margin-left: 5px;" type="submit" (click)="cancelAll()">Cancel</button>
+        </div>
+    </div>
+          <!-- ==========Item Details========= -->
+          <ng-template #customeredit let-modal>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 mt-2">
+                        <h3 class="col-md-12">Customer Details</h3>
+                        <div class="text-center mt-2" style="display: none">
+                            <mat-checkbox></mat-checkbox>
+                        </div>
+                        <!-- ===============================================================================================-->
+                        <div class="row">
+                         
+                            <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Name" [(ngModel)]="strName" (keyup)="changeNameToUppercase()">
+                                </mat-form-field>
+                            </div>
+      
+                        <div class="col-md-3">
+                            <mat-form-field>
+                            <input matInput placeholder="Contact No." [(ngModel)]="intContactNo" type="number"  (ngModelChange)="customerNumberModelChange($event)">
+                                <!-- <mat-autocomplete #customerNumber="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstCustomerNumber" [value]="item.intContactNo" (onSelectionChange)="customerNumberChanged(item)">{{ item.strCustName }} </mat-option>
+                                </mat-autocomplete> -->
+                            </mat-form-field>
+                          </div>
+      
+      
+      
+                            <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput [(ngModel)]="strEmail" placeholder="Email" value="">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="City " [formControl]="searchCity" [matAutocomplete]="cityname" [(ngModel)]="selectedCity" #cityId>
+                                    <mat-autocomplete #cityname="matAutocomplete">
+                                        <mat-option *ngFor="let item of lstCity" [value]="item.vchr_name" (onSelectionChange)="cityChanged(item)">
+                                            {{ item.vchr_pin_code+' - '+item.vchr_name }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <input matInput placeholder="State " [formControl]="searchState" [matAutocomplete]="statename" [(ngModel)]="selectedState" #stateId>
+                                    <mat-autocomplete #statename="matAutocomplete">
+                                        <mat-option *ngFor="let item of lstState" [value]="item.vchr_name" (onSelectionChange)="stateChanged(item)">
+                                            {{ item.vchr_code+' - '+item.vchr_name }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput [(ngModel)]="strGSTNo" placeholder="GST No." OnlyAlphaNum="true" value="" type="text" maxlength="15" minlength="15" (keyup)="changeToUppercase()">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-12">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput [(ngModel)]="strAddress" placeholder="Address" value="">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        
+                        <!-- =============================================================================================== -->
+                        <!-- =============================================================================================== -->
+                    </div>
+                    
+                    <div class="col-md-12 mb-4 text-center">
+                        <button class="btn btn_redeem" type="submit" (click)="saveCustEdit()">Save</button>
+                        <button class="btn btn_cancel" type="submit" (click)="cancelCustEdit()">Cancel</button>
+                    </div>
+      
+                </div>
+                
+
+            </div>
+            </ng-template>
+      <!-- ==========Customer Details========= -->
+
+    </div>
+</div>

@@ -1,0 +1,15 @@
+.view_btn{
+    background: none;
+    border: none;
+    color: #6495ed;
+    cursor: pointer;
+    padding-left: 0;
+}
+.edit_btn{
+    background: none;
+    border: none;
+    color: cadetblue;
+    cursor: pointer;
+    padding-left: 0;
+    font-size: 13px;
+}

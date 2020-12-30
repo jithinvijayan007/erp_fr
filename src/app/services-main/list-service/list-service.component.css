@@ -1,0 +1,71 @@
+:host ::ng-deep .mat-tab-label {
+    max-width: 6vw;
+    min-width: 2vw;
+}
+
+:host ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar{
+    background-color: #1a0101;
+}
+
+:host ::ng-deep .mat-tab-header {
+    border-bottom: none;
+}
+
+:host ::ng-deep .mat-tab-group {
+    margin-top: -2vh;
+}
+
+
+.highcharts-background, .highcharts-root, .highcharts-container {
+    max-height: 100%;
+    max-width: 100%;
+    background-color: brown;
+  }
+
+.date-range-div{
+    width: 85%;
+    background: #000002;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.date-range-input{
+    border: none;
+    background: #000002;
+    color: aliceblue;
+    padding-left: 15px;
+    margin-bottom: 5px;
+    width: inherit;
+}
+/* nfx_date_range_picker */
+
+
+
+  .viewbtn{
+    color: #ff3b00e0 !important;
+    background: none;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgb(255 135 135);
+    border-radius: 30px;
+    border: none;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+  }
+  .printbtn{
+    color: #0014ffe0 !important;
+    background: none;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgb(135 152 255);
+    border-radius: 30px;
+    border: none;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+
+  }
+  .icon {
+    padding: 10px;
+    background: dodgerblue;
+    color: white;
+    min-width: 50px;
+    text-align: center;
+  }  

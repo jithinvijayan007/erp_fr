@@ -1,0 +1,34 @@
+.ack_btn{
+    padding: 3px 4px 2px;
+    border-radius: 4px;
+}
+.ack_btn i{
+    font-size: 18px;
+    color: #13ec1c;
+
+}
+.notack_btn{
+    padding: 3px 4px 2px;
+    border-radius: 4px;
+}
+.notack_btn i{
+    font-size: 18px;
+    color: #f96e6e;
+}
+.mat-checkbox-checked .mat-checkbox-checkmark{
+    padding: 1px !important;
+}
+.mat-checkbox label{
+    color: #223e5a !important;
+    font-size: 15px!important;
+}
+.acktable table input {
+    text-align: right;
+    border: none;
+    border-bottom: 1px solid #eee;
+}
+.tablehint{
+    color: #969595;
+    font-style: italic; 
+    font-size: 14px;
+}

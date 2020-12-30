@@ -1,0 +1,98 @@
+<div class="card col-md-12 col-lg-12">
+  <div class="card-body">
+    <h4 class="card-title mt-3 mb-4">Cash Closure</h4>
+
+    <!-- <div class="col-md-12"> -->
+
+    <!-- <button id="add_button" ng-disabled="blnShowClosed" title="Add" (click)="addRow()" mat-mini-fab color="primary" class="float-right" style="top: 10px !important;">
+          <mat-icon style="font-size: 20px;">add</mat-icon>
+        </button>     -->
+       
+    <div class="example-container mat-elevation-z8 mt-3" style="position:relative">
+        <button id="add_button"  [disabled]="blnShowClosed" title="Add" (click)="addRow()" class="addbtnround float-right">
+            <i class="fa fa-plus"></i>
+          </button>
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="denomination">
+          <mat-header-cell *matHeaderCellDef> Denomination </mat-header-cell>
+          <mat-cell *matCellDef="let row;let i= index;">
+            <mat-form-field style="width:60%;margin-top:10px;">
+              <mat-select placeholder="Select" [disabled]="blnShowClosed" [(ngModel)]="row.intDayclosureId">
+                <mat-option *ngFor="let denomination of lstNotes" [value]="denomination.pk_bint_id" (click)="denominationChanged(denomination.vchr_name,i)">{{denomination.vchr_name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="noNotes">
+          <mat-header-cell *matHeaderCellDef class="matheadr_right" style="direction:rtl"> No. of notes </mat-header-cell>
+          <mat-cell *matCellDef="let row;let i= index;" class="matheadr_right" style="direction:rtl">
+            <input class="text-right" style="width:60%;border: none; border-bottom: 1px solid #dad6d6;" [readonly]="blnShowClosed" type="number" id="countId" [(ngModel)]="row.count" (keyup)="calcTotal(i,$event)">
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="total">
+          <mat-header-cell class="matheadr_right" *matHeaderCellDef style="direction:rtl;"> Total </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="matheadr_right" style="direction:rtl;">{{row.total}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef style="direction: rtl;"><p style="margin:0;">Grand Total :&nbsp;<span style="font-size: 18px;color: #2f67be;font-weight: 600;">{{intGrandTotal}}</span></p>  </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell class="matheadr_right" *matHeaderCellDef style="direction:rtl;"> Action </mat-header-cell>
+          <mat-cell *matCellDef="let row;let i= index;"class="matheadr_right" style="direction:rtl;">
+            <button class="trashbtn" (click)="deleteData(i)" [disabled]="blnShowClosed">
+              <i class="ti-trash"></i>
+            </button>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+        <!-- <ng-container matColumnDef="paidReward">
+      <mat-header-cell class="text-right" *matHeaderCellDef mat-sort-header='reward_paid'> Paid Reward </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="text-right">{{row.reward_paid}} </mat-cell>
+    </ng-container> -->
+        <mat-header-row *matHeaderRowDef="lstDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: lstDisplayedColumns; let i = index;">
+        </mat-row>
+        <mat-footer-row *matFooterRowDef="lstDisplayedColumns;sticky: true" style="background: #ecf7ff;min-height: 40px;"></mat-footer-row>
+      </mat-table>
+      <!-- <mat-paginator #matPag1 [length]="intSummaryLength"
+     [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+
+     <div class="col-md-12 mt-3">
+      <div class="form-group mt-1">
+        <mat-form-field>
+            <input type="text" [readonly]="blnShowClosed"  matInput name="remark" id=remarkId placeholder="Remarks" [(ngModel)]="strRemarks">
+
+        </mat-form-field>
+      </div>
+    </div>
+   
+      <div class="row">
+        <div class="col-md-12">
+        <button (click)="saveDetails()" *ngIf="blnSave" class="btn save_btn mr-2" style="float:left;">
+          SAVE
+        </button>
+
+        <button class="btn cancel_btn" *ngIf="blnSave" (click)="clearFields()">Cancel</button>
+
+        <button (click)="caseVerify('confirm')" *ngIf="blnVerify" class="btn save_btn mr-2" style="float:left;">
+          CONFIRM
+        </button>
+        <button (click)="caseDeny('modified');blnShowClosed=false" *ngIf="blnVerify" class="btn save_btn mr-2" style="float:left;">
+          DENY
+        </button>
+      </div>
+    </div>
+    </div>
+  
+
+  </div>
+</div>
+<div class="overlay" *ngIf="showSpinner">
+
+<mat-progress-spinner  style="margin:0 auto;" class="spinner"
+[color]="color"
+[mode]="mode"
+[value]="value"
+ [strokeWidth]="strokeWidth">
+</mat-progress-spinner>
+</div>

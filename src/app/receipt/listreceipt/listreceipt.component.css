@@ -1,0 +1,10 @@
+.ng2-smart-table  td{
+    min-width: 15% !important;
+}
+
+::ng-deep .ng2-smart-table .ng2-smart-actions {
+    min-width: 15% !important;
+}
+::ng-deep .ng2-smart-actions {
+    width: 15%;
+}

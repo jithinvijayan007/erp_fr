@@ -1,0 +1,43 @@
+.form-control{
+    border: none;
+    padding: 0px;
+}
+label[for="file-input"] {
+    display: block;
+    margin-bottom: 3px;
+    color: #666;
+    opacity: 0.9;
+  }
+  input[type="file"] {
+    cursor: pointer !Important;
+    margin-bottom: 10px;
+  }
+  input[type="file"]::-webkit-file-upload-button {
+    background: linear-gradient(to right, #616161, #9bc5c3)!important;
+    border: 0;
+    padding: 0.2em 0.6em;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 0.2em;
+  }
+  input[type="file"]::-ms-browse {
+    background: linear-gradient(to right, #616161, #9bc5c3)!important;
+    border: 0;
+    padding: 0.2em 0.6em;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 0.2em;
+  }
+  .form-control input:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+  }
+  .edit_btn{
+    background: linear-gradient(to right, #43cea2, #29879f);
+    color: #fff;
+    font-size: 15px;
+    padding: 7px 10px;    
+    cursor: pointer;
+  }

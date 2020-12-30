@@ -1,0 +1,373 @@
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title" >Invoice Details &nbsp;
+                    <span>
+            <!-- <img title="Customer Edit" src="assets/images/useredit.png" class="mr-3 cursor" (click)="opencustomeredit(customeredit)"> -->
+          </span>
+                 
+  
+                </h3>
+                <div class="form p-t-10 row">
+                    <div class="col-md-2">
+                        <div class="form-group mt-1">
+                            <h6>Contact No.</h6>
+                            <p class="">{{intContactNo}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mt-1">
+                            <h6>Customer</h6>
+                            <p class="">{{strName| titlecase}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4" *ngIf="strEmail">
+                        <div class="form-group mt-1">
+                            <h6>Mail ID</h6>
+                            <p class="">{{strEmail | lowercase}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group mt-1" >
+                          <h6>Staff</h6>
+                          <p class="">{{strStaff | titlecase}}</p>
+                      </div>
+                   </div>
+                   
+                    <div class="col-md-6" *ngIf="strInitRemarks">
+                        <div class="form-group mt-1">
+                            <h6>Remark</h6>
+                            <p class="">{{strInitRemarks}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <textarea matInput placeholder="Add your Remarks" [(ngModel)]="strRemarks"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- Item table  -->
+                <div class="card">
+                    <div class="card-body">
+                        <div id="invoicetable" class="table-editable">
+                            <table class="table table-responsive-md">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">Item Name</th>
+                                        <th class="text-center">IMEI</th>
+                                        <th class="text-right">Rate</th>
+                                        <th class="text-right">BB</th>
+                                        <th class="text-right">Dis.</th>
+                                        <th *ngIf="!blnCheckIGST" class="text-right">CGST</th>
+                                        <th *ngIf="!blnCheckIGST" class="text-right">SGST</th>
+                                        <th *ngIf="blnCheckIGST" class="text-right">IGST</th>
+                                        <th class="text-right">Amt</th>
+                                        <th class="text-right">
+                                          
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tr *ngFor="let item of lstItemDetails; let id = index" >
+                                    <td *ngIf="blnService" class="text-left" (keyup)="changeValue(id, 'itemname', $event)" (blur)="updateList(id, 'itemname', $event)" contenteditable="false">{{item.strItemName}} (Service)
+                                    </td>
+                                    <td *ngIf="!blnService" class="text-left" (keyup)="changeValue(id, 'itemname', $event)" (blur)="updateList(id, 'itemname', $event)" contenteditable="false">{{item.strItemName}}
+                                      </td>
+                                    <!-- <td class="text-center" contenteditable="true" (focusout)="focusOutImei(item)" (blur)="updateList(id, 'strImei', $event)">{{item.strImei}}
+                  </td> -->
+                                    <td class="text-right" style="width:20%;">
+                                      <span *ngIf="(((id+1) == lstItemLength) && (blnImei) && (item.intStatus==4))">
+                                              <input type="text" class={{style}} [readonly]="!(((id+1) == lstItemLength) && (blnImei) && (item.intStatus==4))" [(ngModel)]="item.strImei"  >
+                                      </span>
+                                        
+                                      <span *ngIf="!(((id+1) == lstItemLength) && (blnImei) && (item.intStatus==4))">
+                                              <input type="text"  [readonly]="!(((id+1) == lstItemLength) && (blnImei) && (item.intStatus==4))" [(ngModel)]="item.strImei"  >
+                                      </span>                                  
+                                  </td>
+                                   
+                                    <td class="text-right width8" contenteditable="false" (keyup)="changeValue(id, 'rate', $event,item)" (blur)="updateList(id, 'rate', $event)">{{(item.dblRate).toFixed(2)}}</td>
+  
+                                    <!-- <td class="text-right width6" contenteditable="true" (keyup.enter)="changeBBValue(id, 'bb', $event,'editRow')" (blur)="updateList(id, 'bb', $event)"#bbId>{{item.dblBuyBack}}
+                  </td> -->
+                                    <td class="text-right width8" contenteditable="false" (blur)="changeBBValue(id, 'dblBuyBack', $event,'editRow')" (keyup.enter)="changeBBValue(id, 'dblBuyBack', $event,'editRow')"
+                                    >{{item.dblBuyBack}}
+                                       
+                                    </td>
+                                    <!-- <td class="text-right width6" contenteditable="true" (keyup.enter)="changeDiscountValue(id, 'discount', $event,'editRow')" (blur)="updateList(id, 'discount', $event)" #discId>{{item.dblDiscount}}
+                  </td> -->
+                                    <td class="text-right width8" type="number" OnlyNumber="true" contenteditable="false"  (keypress)="OnEnter( id,'dblDiscount',$event )" (blur)="changeDiscountValue(id, 'dblDiscount', $event,'editRow')" (keyup.enter)="changeDiscountValue(id, 'dblDiscount', $event,'editRow')"
+                                    >
+                                       {{item.dblDiscount}}
+                                    </td>
+                                    <td *ngIf="!blnCheckIGST" class="text-right width6" contenteditable="false" (keyup)="changeValue(id, 'cgst', $event,item)" (blur)="updateList(id, 'cgst', $event)">{{item.dblCGSTPer}}
+                                    </td>
+                                    <td *ngIf="!blnCheckIGST" class="text-right width8" contenteditable="false" (keyup)="changeValue(id, 'sgst', $event,item)" (blur)="updateList(id, 'sgst', $event)">{{item.dblSGSTPer}}
+                                    </td>
+                                    <td *ngIf="blnCheckIGST" class="text-right width8" contenteditable="false" (keyup)="changeValue(id, 'igst', $event,item)" (blur)="updateList(id, 'igst', $event)">{{item.dblIGSTPer}}
+                                    </td>
+                                    <td class="text-right" contenteditable="false" (keyup)="changeValue(id, 'amount', $event,item)" (blur)="updateList(id, 'amount', $event)">{{(item.dblAmount).toFixed(2)}}
+                                    </td>
+                                    <td class="table-remove cursor text-right"  style="width: 10%;">
+                                        
+
+                                        <img src="assets/images/return.png" (click)="openReturnDetails(returnDetail,id,item.intItemId)" *ngIf="item.intStatus==0 && item.strItemCode !='GDC00001' && item.strItemCode !='GDC00002'" title="Return Detail" class="mr-1">
+  
+  
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Item table end here -->
+            </div>   
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center">Billing Details</h3>
+                <div>
+                </div>
+                <!-- Billing Section start here -->
+                <!-- <div> -->
+                    <!-- <div id="billing_table" class="table-responsive m-t-10" style="clear: both;"> -->
+                        <!-- <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th>Item</th>
+                                    <th class="text-right">Qty</th>
+                                    <th class="text-right" style="width:24%;">Amt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of objectKeys(dctData['billingdetailsCopy']); let i = index">
+                                    <td class="text-center">{{i+1}}.</td>
+                                    <td>{{dctData['billingdetailsCopy'][item]['name']}}</td>
+                                    <td class="text-right">{{dctData['billingdetailsCopy'][item]['qty']}}</td>
+                                    <td class="text-right" style="width:24%;">{{dctData['billingdetailsCopy'][item]['amt']}}</td>
+                                </tr>
+                            </tbody>
+                        </table> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+                <div>
+                    <div class="table-responsive m-t-10" style="clear: both;">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td class="text-right" colspan="2">Total :</td>
+                                    <td class="text-right" style="width:24%;">{{(intTotal)| number: '1.2-2'}}</td>
+                                </tr>
+   
+                                <!-- <tr >
+                                  <td class="text-right" colspan="2">Spare Parts Amt :</td>
+                                  <td class="text-right" style="width:24%;">{{(intSpareTotal)| number: '1.2-2'}}</td>
+                                </tr> -->
+                                <!-- <tr *ngIf="intAdvncPaid">
+                                  <td class="text-right" colspan="2">Advance Amt :</td>
+                                  <td class="text-right" style="width:24%;">{{(intAdvncPaid)| number: '1.2-2'}}</td>
+                                </tr>
+   -->
+                                <!-- <tr>
+                  <td class="text-right" colspan="2">Tax :</td>
+                  <td class="text-right" style="width:24%;">{{(intTax)| number: '1.2-2'}}</td>
+                </tr> -->
+                               <tr *ngIf="intTotCGST>0">
+                                    <td class="text-right" colspan="2">CGST :</td>
+                                    <td class="text-right" style="width:24%;">{{(intTotCGST)| number: '1.2-2'}}</td>
+                                </tr>
+                                <tr *ngIf="intTotSGST>0">
+                                    <td class="text-right" colspan="2">SGST :</td>
+                                    <td class="text-right" style="width:24%;">{{(intTotSGST)| number: '1.2-2'}}</td>
+                                </tr>
+                                <tr *ngIf="intTotIGST>0">
+                                    <td class="text-right" colspan="2">IGST :</td>
+                                    <td class="text-right" style="width:24%;">{{(intTotIGST)| number: '1.2-2'}}</td>
+                                </tr>
+                                <tr *ngIf="intTotKfc>0">
+                                    <td class="text-right" colspan="2">KFC :</td>
+                                    <td class="text-right" style="width:24%;">{{(intTotKfc)| number: '1.2-2'}}</td>
+                                </tr> 
+                                 
+
+                                <tr *ngIf="intDiscount>0">
+                                    <td class="text-right" colspan="2">Discount :</td>
+                                    <td class="text-right" style="width:20%;">{{(intDiscount)| number: '1.2-2'}}</td>
+                                </tr>
+
+                                <tr *ngIf="intBuyBack>0">
+                                    <td class="text-right" colspan="2">Buy Back Amt. :</td>
+                                    <td class="text-right" style="width:24%;">{{(intBuyBack)| number: '1.2-2'}}</td>
+                                </tr>
+                                <tr *ngIf="intTotIndirectDis>0">
+                                    <td class="text-right" colspan="2">Indirect Discount :</td>
+                                    <td class="text-right" style="width:20%;">{{(intTotIndirectDis)| number: '1.2-2'}}</td>
+                                </tr>
+
+                                <tr *ngIf="intGDP>0">
+                                    <td class="text-right" colspan="2">GDP Amt. :</td>
+                                    <td class="text-right" style="width:24%;">{{(intGDP)| number: '1.2-2'}}</td>
+                                </tr>
+                                <tr *ngIf="intGDEW>0">
+                                    <td class="text-right" colspan="2">GDEW Amt. :</td>
+                                    <td class="text-right" style="width:24%;">{{(intGDEW)| number: '1.2-2'}}</td>
+                                </tr>
+                                <tr *ngIf="dblDeductions>0">
+                                    <td class="text-right" colspan="2">Deductions Amt. :</td>
+                                    <td class="text-right" style="width:24%;">{{(dblDeductions)| number: '1.2-2'}}</td>
+                                </tr>
+                                <tr *ngIf="dblAdditions>0">
+                                    <td class="text-right" colspan="2">Additions Amt. :</td>
+                                    <td class="text-right" style="width:24%;">{{(dblAdditions)| number: '1.2-2'}}</td>
+                                </tr>
+
+
+
+                            </tbody>
+                        </table>
+                        <h3 style="background: #e9f0f5;">
+                            <b class="text-left">Grand Total :</b>
+                            <span class="float-right"> ₹ {{(intGrandTot)| number: '1.2-2'}}</span>
+                        </h3>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="clearfix"></div>
+                    <div class="text-center m-t-10">
+                        <button class="btn btn-danger" type="submit" (click)="rejectInvoice()">Reject</button>
+                        <button [disabled]="printDisable" class="btn print_btn" type="submit" (click)="printInvoice()">Print</button>
+                        <button [disabled]="saveDisable" class="btn btn-success" type="submit" (click)="saveInvoice()">Save</button>
+                        <!-- <button class="btn print_btn" style="background-color: #7eaed4;" type="submit">Preview</button> -->
+                    </div>
+                </div>
+                <!-- Billing end here -->
+            </div>
+        </div>
+    </div>
+  </div>
+
+<!--Return Details  Popup -->
+<ng-template #returnDetail let-modal>
+    <div class="modal-body" id="returnDetail">
+        <div class="col-md-12 text-center mt-3">
+            <p class="text-center" style="color: #008080;">Return Details</p>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12" style="text-align: center;">
+                <mat-checkbox name="same" [(ngModel)]="dctReturnDetail[currentIndex]['blnDamage']"> Item is damaged</mat-checkbox>
+            </div>
+  
+            <div class="col-md-12 mt-2">
+                <div class="upload">
+                    <input *ngIf="!dctReturnDetail[currentIndex]['message']" value="Choose your file" class="input1">
+                    <input *ngIf="dctReturnDetail[currentIndex]['message']" value="{{dctReturnDetail[currentIndex]['message']}}" class="input1" readonly>
+  
+                    <button id="erase" class="attach" (click)='fileManager2(file1)'><i class="fa fa-paperclip"></i>
+                        <input hidden='true'  #file1 type="file" accept='image/*' (change)="Preview1(file1.files,$event,currentIndex)" max-file-size="100kb" readonly/>
+                    </button>
+                </div>
+            </div>
+  
+            <div class="col-md-12" *ngIf="dctReturnDetail[currentIndex]['imgURL']">
+                <label style="color: #8fbc8f;" class="mt-4">Preview 1 : &nbsp;&nbsp;</label>
+                <span>
+                    <img [src]="dctReturnDetail[currentIndex]['imgURL']" style="width:100%">
+                </span>
+            </div>
+  
+        </div>
+  
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <mat-form-field>
+                        <textarea matInput placeholder="Remarks *" [(ngModel)]="dctReturnDetail[currentIndex]['strRemark']"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 text-center">
+            <button class="btn btn_redeem" type="submit" (click)="returnDetailsSave(currentIndex)"> Ok</button>
+        </div>
+    </div>
+  </ng-template>
+  <!--Return Details  popup end here -->
+  <!-- Customer edit Popup -->
+<ng-template #customeredit let-modal>
+    <div class="modal-body" id="deliverypopup">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 mt-2">
+                    <h3 class="col-md-12">Customer Edit</h3>
+                    <div class="text-center mt-2" style="display: none">
+                        <mat-checkbox name="same"></mat-checkbox>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="Name" [(ngModel)]="strName">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput readonly placeholder="Contact No." value={{intContactNo}}>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput [(ngModel)]="strEmail" placeholder="Email" value="">
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <input matInput [(ngModel)]="strCity" placeholder="City" value="">
+              </mat-form-field>
+            </div> -->
+                        <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="City " readonly [formControl]="searchCity" [matAutocomplete]="cityname" [(ngModel)]="selectedCity" #cityId>
+                                <mat-autocomplete #cityname="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstCity" [value]="item.vchr_name" (onSelectionChange)="cityChanged(item)">
+                                        {{ item.vchr_pin_code+' - '+item.vchr_name }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <!--
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <input matInput  [(ngModel)]="strState" placeholder="State" value="">
+              </mat-form-field>
+            </div> -->
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input matInput placeholder="State " readonly [formControl]="searchState" [matAutocomplete]="statename" [(ngModel)]="selectedState" #stateId>
+                                <mat-autocomplete #statename="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstState" [value]="item.vchr_name" (onSelectionChange)="stateChanged(item)">
+                                        {{ item.vchr_code+' - '+item.vchr_name }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput [(ngModel)]="strGSTNo" placeholder="GST No."  maxlength="15" minlength="15" value="">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+                            <mat-form-field class="example-full-width">
+                                <input matInput [(ngModel)]="strAddress" placeholder="Address" value="">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-4 text-center">
+                    <button class="btn btn_redeem" type="submit" (click)="saveCustEdit()">Save</button>
+                    <button class="btn btn_cancel" type="submit" (click)="cancelCustEdit()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<!-- Customer edit popup end here -->

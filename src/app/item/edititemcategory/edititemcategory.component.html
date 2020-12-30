@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Edit Item Category</h4>
+        <!-- <h5 class="card-subtitle">made with bootstrap elements</h5> -->
+        <form class="form p-t-10">
+          <div class="row">
+            <div class="col-md-2">
+              <mat-form-field>
+                <input matInput [(ngModel)]="strCategory" placeholder="Category Name" value="" name="category">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-2">
+              <mat-form-field>
+                <input matInput type="text" placeholder="HSN code" value="" name="hsn" [(ngModel)]="strHSN" #idHSN>
+              </mat-form-field>
+            </div>
+            
+            <div class="col-md-2">
+              <mat-form-field>
+                <input matInput type="text" placeholder="SAC code" value="" name="sac" [(ngModel)]="strSAC" #idSAC>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+              <mat-form-field>
+
+                <mat-select name="spec" [(ngModel)]="dctData['lstSpecification']" placeholder="Specification" multiple (ngModelChange)="specChange($event)">
+
+                  <mat-option *ngFor="let item of dctData['lstSpec']" [value]="item.vchr_name">{{item.vchr_name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+
+            <div class="col-md-2">
+              <mat-form-field>
+                <mat-select name="group" [(ngModel)]="dctData['lstTaxSelect'][tabCount]['strTax']" placeholder="Tax Master" (ngModelChange)="taxChange($event)">
+                  <mat-option *ngFor="let item of dctData['lstTaxMaster']" [value]="item.vchr_name">{{item.vchr_name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-1">
+              <mat-form-field *ngIf="dctData['lstTaxSelect'][tabCount]['strTax']">
+                <input  type="number"  matInput [(ngModel)]="dctData['lstTaxSelect'][tabCount]['intPerc']" placeholder="Percentage" value="" name="percentage">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-1">
+              <button *ngIf="dctData['lstTaxSelect'][tabCount]['strTax']" id="add_button" title="Add" (click)="addTax(tabCount)" mat-mini-fab
+                color="primary" class="float-right" style="top: 10px !important;">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+         
+
+          </div>
+          <div *ngIf="dctData['tax'].length>0">
+            <label>Tax List</label>
+            <div *ngFor="let item of dctData['tax'];let i=index">
+              <div class="row mb-4">
+                <div class="border_bottom col-md-1">
+                  <p>{{ item.strTax }}</p>
+                </div>
+                <div class="border_bottom col-md-1">
+                  <p>{{ item.intPerc }}</p>
+                </div>
+                <div class="col-md-1 border_bottom text-right" *ngIf="dctData['tax'][i]['strTax']">
+                  <!-- <button class="close_btn_s" (click)="closeTab(i)"> -->
+                  <i class="close_btn_round mdi mdi-close-circle-outline" (click)="closeTab(i)"></i>
+                  <!-- </button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <button type="submit" class="btn save_btn m-r-10" (click)="addCategory()">Update</button>
+            <button type="submit" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,180 @@
+<div class="card">
+  <div class="card-body">
+    <div class="col-md-12 col-lg-12">
+      <h4 class="form-head">Add permission</h4>
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field>
+            <input matInput placeholder="Company*" [formControl]="searchCompany" [matAutocomplete]="company" [(ngModel)]="companyName"
+              #CompanyId>
+            <mat-autocomplete #company="matAutocomplete">
+              <mat-option *ngFor="let item of lstCompany" [value]="item.name" (onSelectionChange)="companyChanged(item)">
+                {{ item.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3 mt-4" *ngIf="lstPerms.length > 0">
+          <mat-checkbox class="example-margin" name="adminGroup" [(ngModel)]="blnAdminGroup" (ngModelChange)="checkAdminGroup()" *ngIf="!blnAddAdminGroup">
+            Admin Group &nbsp;&nbsp;
+          </mat-checkbox>
+          <mat-checkbox class="example-margin float-right" name="adminUser" [(ngModel)]="blnAdminUser" *ngIf="(!blnAddAdminUser && blnAddAdminGroup) || (!blnAddAdminUser && blnAdminGroup)">
+            Admin User
+          </mat-checkbox>
+        </div>
+      </div>
+      <div class="row" *ngIf="blnAdminUser">
+        <div class="col-md-3">
+          <mat-form-field>
+            <input pattern="^[a-zA-Z0-9-]*$" [formControl]="form.controls['code']" required [(ngModel)]="code" name="code" matInput placeholder="User code">
+            <mat-error *ngIf="form.controls['code'].hasError('required')">
+              User code required
+            </mat-error>
+            <mat-error *ngIf="form.controls['code'].errors?.pattern">
+              Alpha-numerics and hiphen only allowed
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input pattern="[a-zA-Z\s]*$" [formControl]="form.controls['fname']" required [(ngModel)]="firstname" name="first" matInput
+              placeholder="First name">
+            <mat-error *ngIf="form.controls['fname'].hasError('required')">
+              First name required
+            </mat-error>
+            <mat-error *ngIf="form.controls['fname'].errors?.pattern">
+              Alphabets and spaces only allowed
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="mat-icon-left">
+            <input pattern="[a-zA-Z\s]*$" [formControl]="form.controls['lname']" required [(ngModel)]="lastname" name="lastname" matInput
+              placeholder="Last name">
+            <mat-error *ngIf="form.controls['lname'].hasError('required') ">
+              Last name required
+            </mat-error>
+            <mat-error *ngIf="form.controls['lname'].errors?.pattern">
+              Alphabets and spaces only allowed
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="mat-icon-left">
+            <input [formControl]="form.controls['phone']" type="number" required [(ngModel)]="contactno" name="contactno" matInput placeholder="Contact no.">
+            <mat-error *ngIf="form.controls['phone'].hasError('required') ">
+              Phone required
+            </mat-error>
+            <mat-error *ngIf="form.controls['phone'].errors?.number && form.controls['phone'].touched">
+              Numbers only allowed
+            </mat-error>
+            <mat-error *ngIf="form.controls['phone'].errors?.min && form.controls['phone'].touched">
+              Requires minimum 10 digits
+            </mat-error>
+            <mat-error *ngIf="form.controls['phone'].errors?.max && form.controls['phone'].touched">
+              Maximum 12 digits allowed
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input matInput placeholder="Branch*" [formControl]="searchBranch" [matAutocomplete]="branchname" [(ngModel)]="strSelectedBranch"
+              #brandId>
+            <mat-autocomplete #branchname="matAutocomplete">
+              <mat-option *ngFor="let item of lstBranch" [value]="item.branchname" (onSelectionChange)="BranchChanged(item)">
+                {{ item.branchname }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field class="mat-icon-left">
+            <input type="password" [formControl]="form.controls['password']" required [(ngModel)]="password" name="password" matInput
+              placeholder="Password">
+            <mat-error *ngIf="form.controls['password'].hasError('required')">
+              Password required.
+            </mat-error>
+            <mat-error *ngIf="form.controls['password'].hasError('minlength')">
+              Minimum 8 characters required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field class="mat-icon-left">
+            <input type="password" [formControl]="form.controls['confirmPassword']" required [(ngModel)]="confirmPassword" name="confirmPassword"
+              matInput placeholder="Confirm password">
+            <mat-error *ngIf="form.controls['confirmPassword'].errors?.equalTo">
+              Passwords do not match.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <label class="mb-0" style="font-size: 12px;">User image*</label>
+          <input #file1 type="file" id="userImage" (change)="onChange($event)" (cuechange)="onChange($event)" class="input-file" id="InputFile"
+            name="InputFile" accept="image/jpeg" max-file-size="100kb">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" *ngIf="lstPerms.length > 0">
+          <button class="btn save_btn" type="button" (click)="savePermission()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card" *ngIf="lstPerms.length > 0">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+         
+            <ul>
+              <li style="padding: 5px 10px;background: #eee;font-weight:600;margin: 0px;">Module</li>
+              <li style="padding: 5px 10px;background: #eee;font-weight:600;margin: 0px;">Action</li>
+            </ul>
+            <ul *ngFor="let item of lstPerms; let i = index">
+              <li style="padding: 5px 10px;font-weight:600;" class="cursor" scope="row" (click)="levelOneClicked(item)">{{item.name | titlecase}} 
+                  <i class="mdi mdi-chevron-right" *ngIf="!item.blnArrowLevelOne"></i>
+                  <i class="mdi mdi-chevron-down"  *ngIf="item.blnArrowLevelOne"></i>                  
+              </li>
+              <!-- <li style="padding: 5px 10px; ">
+                <mat-checkbox [disabled]="isAllDisabled(i, 'sub_status')" [indeterminate]="isAllDisabled(i, 'sub_status')" [checked]="isAllChecked(i, 'sub_status')"
+                  (change)="mainChanged($event, i, 'sub_status')">
+                </mat-checkbox>
+              </li> -->
+              <li style="padding: 5px 10px; ">
+                <mat-checkbox  [checked]="isAllChecked(i, 'sub_status')"
+                  (change)="mainChanged($event, i, 'sub_status')">
+                </mat-checkbox>
+              </li>
+              <ul *ngFor="let subItem of item.sub_items; let j = index">
+                <li scope="row" (click)="levelTwoClicked(subItem)" style="cursor:pointer;padding: 0px 25px; font-size: 13px;font-weight:600;" *ngIf="item.levelOneClicked">{{subItem.name}}
+                    <i class="mdi mdi-chevron-right" *ngIf="!subItem.blnArrowLevelTwo"></i>
+                    <i class="mdi mdi-chevron-down" *ngIf="subItem.blnArrowLevelTwo"></i>
+                    
+                </li>
+                <!-- <li style=" padding-left: 10px;" *ngIf="item.levelOneClicked">
+                  <mat-checkbox [disabled]="isAllDisabledSub(i,j, 'bln_menu_add_perm')" [indeterminate]="isAllDisabledSub(i,j, 'bln_menu_add_perm')"
+                    [checked]="isAllCheckedSub(i,j, 'bln_menu_add_perm')" (change)="mainChangedSub($event, i, j,'bln_menu_add_perm')"
+                    [(ngModel)]="subItem.sub_status">
+                  </mat-checkbox>
+                </li> -->
+                <li style=" padding-left: 10px;" *ngIf="item.levelOneClicked">
+                  <mat-checkbox  
+                    [checked]="isAllCheckedSub(i,j, 'bln_menu_add_perm')" (change)="mainChangedSub($event, i, j,'bln_menu_add_perm')"
+                    [(ngModel)]="subItem.sub_status">
+                  </mat-checkbox>
+                </li>
+                <ul *ngFor="let menuSubItem of subItem.menu_items">
+                  <li  style="padding-left: 50px;font-size: 14px;" scope="row" *ngIf="subItem.levelTwoClicked" (click)="levelThreeClicked()">{{menuSubItem.vchr_menu_category_name | titlecase}}</li>
+                  <li style="padding-left: 10px;;">
+                    <mat-checkbox [(ngModel)]="menuSubItem.bln_menu_add_perm" *ngIf="subItem.levelTwoClicked" (change)="menuItemChanged($event, i, j,subItem)"></mat-checkbox>
+                  </li>
+                </ul>
+              </ul>
+            </ul>
+          <!--AMR EDITS END HERE -->
+      </div>
+    </div>
+  </div>
+</div>
+

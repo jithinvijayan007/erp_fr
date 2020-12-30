@@ -1,0 +1,117 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Product Profit Report</h4>
+                <div class="row">
+
+                    <div class="col-md-2 col-lg-2">
+                        <mat-form-field>
+                            <input (click)="picker1.open()" id="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="From" [(ngModel)]="datFrom">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-2 col-lg-2">
+                        <mat-form-field>
+                            <input (click)="picker2.open()" id="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To" [(ngModel)]="datTo">
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2>
+                            </mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-md-3" style="margin-top: 13px;">
+                        <ngx-select-dropdown [config]="branchConfig" [options]="branchOptions" [(ngModel)]="lstBranch" [multiple]="true"></ngx-select-dropdown>
+                    </div>
+
+
+
+
+
+
+                    <div class="col-md-4  mt-2">
+                        <button type="submit" class="btn save_btn mr-2" (click)="getData()">Search</button>
+                        <button type="submit" class="btn save_btn" (click)="exportData()">Export</button>
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<mat-form-field *ngIf="blnShowData">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+<div class="card" [ngStyle]="{'display' : blnShowData ? 'block' : 'none'}">
+    <div class="card-body">
+
+        <div class="example-container mat-elevation-z8 mt-3">
+
+            <mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="product">
+                    <mat-header-cell *matHeaderCellDef> Product </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.Product}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="NetValue">
+                    <mat-header-cell *matHeaderCellDef style="justify-content: flex-end;"> Net Value </mat-header-cell>
+                    <mat-cell *matCellDef="let row" style="display: flex;justify-content: flex-end;">{{row.NetValue }} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="TaxableValue">
+                    <mat-header-cell *matHeaderCellDef style="direction: rtl"> Taxable Value </mat-header-cell>
+                    <mat-cell *matCellDef="let row" style="display: flex;justify-content: flex-end;">{{row.TaxableValue }} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="DP-Tax">
+                    <mat-header-cell *matHeaderCellDef style="direction: rtl"> DP-Tax</mat-header-cell>
+                    <mat-cell *matCellDef="let row" style="display: flex;justify-content: flex-end;"> {{row['DP-Tax']}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Profit">
+                    <mat-header-cell *matHeaderCellDef style="direction: rtl"> Profit </mat-header-cell>
+                    <mat-cell *matCellDef="let row" style="display: flex;justify-content: flex-end;"> {{row.Profit }} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="DirectDiscount">
+                    <mat-header-cell *matHeaderCellDef style="direction: rtl"> Direct Discount </mat-header-cell>
+                    <mat-cell *matCellDef="let row" style="display: flex;justify-content: flex-end;"> {{row.DirectDiscount}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="IndirectDiscount">
+                    <mat-header-cell *matHeaderCellDef class="minwidth center" style="direction: rtl"> Indirect Discount</mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="minwidth center" style="display: flex;justify-content: flex-end;">
+                        {{row.IndirectDiscount}}
+                    </mat-cell>
+                </ng-container>
+
+
+                <ng-container matColumnDef="NetProfit">
+                    <mat-header-cell *matHeaderCellDef class="minwidth" style="direction: rtl">Net Profit </mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="minwidth" style="display: flex;justify-content: flex-end;"> {{row.NetProfit }} </mat-cell>
+                </ng-container>
+
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;">
+                </mat-row>
+            </mat-table>
+            <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5,10, 25, 100]"></mat-paginator>
+        </div>
+
+    </div>
+</div>
+
+<div class="card nodata" *ngIf="!blnShowData">
+    <h5>NO DATA FOUND</h5>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

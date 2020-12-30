@@ -1,0 +1,95 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="mb-3"><b>Stock Transfer Report</b></h4>
+
+    <div class="row mt-3">
+
+        <div class="col-md-3">
+          <mat-form-field>
+            <input (click)="picker1.open()" [disabled] = "blnAsOn" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="From" [(ngModel)]="datFrom">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field>
+            <input (click)="picker2.open()" [disabled] = "blnAsOn" id ="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To" [(ngModel)]="datTo">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2>
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3" >
+          <mat-form-field>
+            <input (click)="picker3.open()" [disabled] = "!blnAsOn" id ="asOnId" #endDate required readonly matInput [matDatepicker]="picker3" name="dateAsOn" placeholder="As On" [(ngModel)]="datAsOn">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3>
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="text-center mt-3" style="margin-left: 20px">
+          <mat-checkbox name="same" [(ngModel)]="blnAsOn">As On</mat-checkbox>
+        </div>
+        <div class="col-md-3" *ngIf="blnBranchOption">
+          <mat-form-field>
+              <input matInput placeholder="From Branch" [formControl]="searchBranchFrom" [matAutocomplete]="BranchnameFrom" [(ngModel)]="selectedBranchFrom" #BranchIdFrom (ngModelChange)="branchFromNgModelChanged($event)" >
+              <mat-autocomplete #BranchnameFrom="matAutocomplete">
+                  <mat-option *ngFor="let item of lstBranchFrom" [value]="item.branchname" (onSelectionChange)="fromBranchChanged(item)">
+                      {{ item.branchname }}
+                  </mat-option>
+              </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-3" *ngIf="blnBranchOption">
+          <mat-form-field>
+              <input matInput placeholder="To Branch" [formControl]="searchBranchTo" [matAutocomplete]="BranchnameTo" [(ngModel)]="selectedBranchTo" #BranchIdTo (ngModelChange)="branchToNgModelChanged($event)" >
+              <mat-autocomplete #BranchnameTo="matAutocomplete">
+                  <mat-option *ngFor="let item of lstBranchTo" [value]="item.branchname" (onSelectionChange)="toBranchChanged(item)">
+                      {{ item.branchname }}
+                  </mat-option>
+              </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3" style="margin-top: 13px;">
+          <ngx-select-dropdown [config]="transferConfig" [options]="transferOptions" 
+          [(ngModel)]="lstTransferStatus" [multiple]="true"></ngx-select-dropdown>
+        </div>
+
+        <div class="text-center mt-3" style="margin-left: 20px" *ngIf="!blnBranchOption">
+          <mat-checkbox name="same" [(ngModel)]="blnTransfered">Transfered</mat-checkbox>
+        </div>
+        <div style="margin-left: 20px;" class="text-center mt-3" *ngIf="!blnBranchOption">
+          <mat-checkbox name="same" [(ngModel)]="blnReceived">Received</mat-checkbox>
+        </div>
+
+        
+
+
+    </div>
+
+    <div class="col-md-4  mt-2">
+      <button type="submit" class="btn btn-lg save_btn mr-2" (click)="exportData()">Export</button>
+
+    </div>
+
+    
+
+
+
+
+
+  </div>
+
+
+</div>
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

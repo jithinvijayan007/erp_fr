@@ -1,0 +1,160 @@
+
+<div class="card">
+    <div class="card-body">
+      <div class="row">
+          <h4><b><span><i aria-hidden="true"></i></span>&nbsp; Purchase Order</b></h4>
+      </div>
+     
+
+
+
+    <div class="row mt-2">
+        <div class="col-md-2">
+            <mat-form-field>
+                <input (click)="picker1.open()" id="orderDatId" #orderDateId required matInput [matDatepicker]="picker1" placeholder="Order Date" [(ngModel)]="orderDate">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1>
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2" style="margin-top: 3px;">
+            <mat-form-field>
+                <mat-select placeholder="WareHouse" [(ngModel)]="strBranch" required>
+                  <mat-option  *ngFor="let branch of lstBranch" [value]="branch.pk_bint_id">{{branch.vchr_name | titlecase}} ({{branch.branch_type}}) </mat-option>
+                </mat-select>
+              </mat-form-field>
+           </div>
+
+        <div class="col-md-3">
+            <mat-form-field>
+                <input placeholder="Supplier" matInput [(ngModel)]="strSupplier" name="supplier" [formControl]="searchSupplier" [matAutocomplete]="supplier" #idSupplier required>  
+                  <mat-autocomplete #supplier="matAutocomplete">
+                    <mat-option *ngFor="let supplier of lstSuppliers" [value]="supplier.name" (onSelectionChange)="supplierChanged(supplier)">
+                            {{ supplier.name }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            </div>
+
+        <!-- <div class="col-md-2" style="margin-top: 3px;">
+            <mat-form-field>
+                <mat-select placeholder="Branch" [(ngModel)]="strBranch">
+                  <mat-option  *ngFor="let branch of lstBranch" [value]="branch.pk_bint_id">{{branch.vchr_name | titlecase}} ({{branch.branch_type}}) </mat-option>
+                </mat-select>
+              </mat-form-field>
+           </div> -->
+  
+        <div class="col-md-5">
+        <mat-form-field>
+                <input placeholder="Remarks" matInput [(ngModel)]="strRemarks" id="remarkId">
+        </mat-form-field>
+        </div>  
+    </div>
+
+<div class="row mt-3">
+    <div class="col-md-12 mt-3">
+            <div id="table" style="position: relative;">
+                <button id="add_button"  title="Add Item" (click)="addItem()" class="addbtnround"><i class="fa fa-plus"></i></button>
+                <section class="">
+                    <div class="container1">
+              <table style="width: 100%;margin-bottom: 0;" class="table table-bordered">
+                <thead style="background-color: #f5f4f4;">
+                  <tr>
+                    <th style="width: 395px;"> <div>Item name</div></th>
+                    <th> <div>Quantity</div></th>
+                    <th> <div>Rate</div></th>
+                    <th> <div>Amount</div></th>
+                    <th  style="width: 100px;">Action <div>Action</div></th>
+                    <!-- <th style="padding-right:0px !important;width: 62px;background-color: white;text-align: center;">
+                      <button id="add_button"  title="Add Item" (click)="addItem()" class="addbutton"><i class="fa fa-plus"></i></button></th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of lstItem; let i = index">
+                    <td class="text-left">
+                      <mat-form-field appearance="none">
+                         <input matInput  [(ngModel)]="lstItem[i]['itemNa']" name="item" placeholder="Enter item name"
+                                [matAutocomplete]="item" #idItem  (keydown)="itemSearched($event,lstItem[i]['itemNa'])">
+                           <mat-autocomplete #item="matAutocomplete">
+                             <mat-option *ngFor="let item of lstItems" [value]="item.name"
+                                  (onSelectionChange)="itemChanged(item,i)">
+                                  {{ item.name }}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>                         
+                      <!-- <input matInput type="text" placeholder="Item name" [(ngModel)]="lstItem[i]['itemNa']"> -->
+
+                    </td>
+                    <td style="width: 83px;">
+                        <mat-form-field appearance="none">
+                        <input id="txtQty" matInput type="number"  placeholder="0"      [(ngModel)]="lstItem[i]['qty']" (input)="calcTot(i)">
+                        </mat-form-field>
+                    </td>
+                   <td>
+                    <mat-form-field appearance="none">
+                      <input id="txtRate" matInput type="number"  placeholder="0"    [(ngModel)]="lstItem[i]['rate']" (input)="calcTot(i)">
+                      </mat-form-field>
+                   </td>
+                    <td style="width: 83px;">
+                      <mat-form-field appearance="none">
+                      <input id="txtAmt" matInput type="number"  [(ngModel)]="lstItem[i]['totAmt']" readonly>
+                      </mat-form-field>
+                  </td>
+
+                    <td>
+                        <!-- <button class="delete_btn" (click)="deleteData(i)"><i class="ti-trash text-danger m-r-10" aria-hidden="true"></i></button> -->
+                       
+                        <button class="trashbtn"  (click)="deleteData(i)"><i class="ti-trash"></i></button>
+
+                    </td>
+                  </tr>
+                </tbody>
+                <!-- <tfoot>
+                  <tr style="background: #395b78;color:white">
+                    <td style="padding-top: 6px !important;padding-bottom: 6px !important;">Total</td>
+                    <td  colspan="2" style="padding-top: 6px !important;padding-bottom: 6px !important;">{{grandQty}}</td>
+                    <td colspan="2" style="padding-top: 6px !important;padding-bottom: 6px !important;">{{grandTot.toFixed(2)}}</td>
+                   </tr>
+                  </tfoot> -->
+              </table>
+             </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+
+<div class="row mt-3">
+  <div class="col-xl-8 col-md-8"></div>
+  <div class="col-xl-4 col-md-4">
+    <table class="table" id="table2" style="margin-bottom: 0">
+      <thead>
+            
+            <tr style=" background-color: white;">
+              <th>Total Quantity</th>
+              <th>: {{grandQty}}</th>
+            </tr>
+      </thead>
+      <tbody>
+            <tr style=" background-color: #f2f4f5;font-weight: 600;">
+              <td>Net Amount</td>
+              <td>: {{grandTot.toFixed(2)}}</td>
+           </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="row">
+       <button  class="btn save_btn m-r-10" (click)="saveOrder()">Save</button>
+       <button class="btn btn-secondary" (click)="clearFields()">Cancel</button>
+    </div>
+  </div>
+</div>

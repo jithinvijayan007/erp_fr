@@ -1,0 +1,182 @@
+<div class="card">
+    <div class="card-body">
+        <h4><b>Branch Stock List</b></h4>
+
+        <div class="row mt-3">
+
+
+
+            <!-- <div class="col-md-2 col-lg-2">
+                <mat-form-field>
+                  <input (click)="picker1.open()" id="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom"
+                    placeholder="From" [(ngModel)]="datFrom">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1>
+                  </mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-2 col-lg-2">
+                <mat-form-field>
+                  <input (click)="picker2.open()" id="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To"
+                    [(ngModel)]="datTo">
+                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker #picker2>
+                  </mat-datepicker>
+                </mat-form-field>
+              </div> -->
+
+
+
+            <div class="col-md-2">
+                <mat-form-field>
+                    <input matInput placeholder="Branch" [formControl]="searchBranch" [matAutocomplete]="branchname" [(ngModel)]="selectedBranch" #branchId>
+                    <mat-autocomplete #branchname="matAutocomplete">
+                        <mat-option *ngFor="let item of lstBranch" [value]="item.name" (onSelectionChange)="BranchChanged(item)">
+                            {{ item.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+
+
+            <div class="col-md-2">
+                <mat-form-field>
+                    <input matInput required placeholder="Product" [formControl]="searchProduct" [matAutocomplete]="productname" [(ngModel)]="selectedProduct" #idProduct>
+                    <mat-autocomplete #productname="matAutocomplete">
+                        <mat-option *ngFor="let item of lst_product" [value]="item.name" (onSelectionChange)="productChanged(item)">
+                            {{ item.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-2">
+                <mat-form-field>
+                    <input matInput required placeholder="Brand" [formControl]="searchBrand" [matAutocomplete]="brandname" [(ngModel)]="selectedBrand" #idBrand>
+                    <mat-autocomplete #brandname="matAutocomplete">
+                        <mat-option *ngFor="let item of lst_brand" [value]="item.name" (onSelectionChange)="brandChanged(item)">
+                            {{ item.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field>
+                    <input matInput placeholder="Itemgroup" [formControl]="searchItemGroup" [matAutocomplete]="itemgroupname" [(ngModel)]="selectedItemGroup" #itemId>
+                    <mat-autocomplete #itemgroupname="matAutocomplete">
+                        <mat-option *ngFor="let item of lstItemGroup" [value]="item.name" (onSelectionChange)="ItemGroupChanged(item)">
+                            {{ item.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6">
+                <mat-form-field>
+                    <input matInput placeholder="Item" [formControl]="searchItem" [matAutocomplete]="itemname" [(ngModel)]="selectedItem" #itemId>
+                    <mat-autocomplete #itemname="matAutocomplete">
+                        <mat-option *ngFor="let item of lstItem" [value]="item.code_name" (onSelectionChange)="ItemChanged(item)">
+                            {{ item.code_name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+
+ 
+
+
+            <div class="col-md-2 mt-2">
+                <button type="submit" class="btn save_btn" (click)="getListData()">Search</button>
+            </div>
+
+            <div class="col-md-2 mt-2" *ngIf="(blnExport || blnBranch) && blnDownload">
+                <button type="submit" class="btn save_btn" (click)="exportData()">Export</button>
+            </div>
+
+        </div>
+
+
+        <div class="card nodata" *ngIf="source.length==0">
+            <h5>No Data</h5>
+        </div>
+
+        <div *ngIf="source.length>0">
+            <div id="invoicetable" class="table-editable mt-3">
+                <table class="table table-responsive-md">
+                    <thead>
+                        <tr>
+                            <th style="width: 100px" class="text-left">Sl.No</th>
+                            <th style="width: 100px" class="text-left">Item Code</th>
+                            <th class="text-left">Item Name</th>
+                            <th class="text-left">Branch</th>
+                            <th style="width: 100px" class="text-left">Quantity</th>
+                            <th style="width: 100px" class="text-left">In Transit</th>
+                            <th style="width: 100px" class="text-left">Action</th>
+
+                        </tr>
+                    </thead>
+
+
+                    <tr *ngFor="let item of source; let i = index">
+                        <td class="text-left">{{i+1}}</td>
+                        <td class="text-left">{{item.fk_details__fk_item_id__vchr_item_code}}</td>
+                        <td class="text-left">{{item.fk_details__fk_item_id__vchr_name}}</td>
+                        <td class="text-left">{{item.fk_details__fk_master_id__fk_branch_id__vchr_name}}</td>
+                        <td class="text-left">{{item.total_qty}}</td>
+                        <td class="text-left">{{item.tranfer_count}}</td>
+                        <!-- <td *ngIf="groupName=='ADMIN'" class="text-left">
+                  <button class="trashbtn" (click)="viewData(content,i)">
+                    <i class="fa fa-eye"></i>
+                  </button>
+                </td> -->
+                        <td class="text-left">
+                            <button *ngIf="(item.fk_details__fk_master_id__fk_branch_id==currentBranchId && item.imei.length>0) || (branchType==2 && item.imei.length>0 || branchType==3 && item.imei.length>0 || groupName=='ADMIN' && item.imei.length>0)" class="trashbtn" (click)="viewData(content,i)">
+                    <i class="fa fa-eye"></i>
+                  </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+</div>
+
+
+
+<ng-template #content let-modal>
+    <div class="modal-body" id="imeipopup">
+        <div class="text-center mt-2" style="display: none">
+            <mat-checkbox name="same"></mat-checkbox>
+        </div>
+        <table class="table">
+            <thead class="text-white">
+                <th>Sl.No</th>
+                <th>Imei/Batch No.</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of lstImei; let i = index" [title]="item.status" [style.color]="item.status === 'available' ? '#00b300': (item.status === 'missing' ? '#FF8C00' : (item.status === 'damaged' ? '#ff3300' : ''))">
+                    <td><b>{{i+1}}</b></td>
+                    <td>
+                        <b>{{item.imei}}</b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

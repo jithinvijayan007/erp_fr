@@ -1,0 +1,167 @@
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="card-title">History</h4>
+              <div class="row">
+              <div class="col-md-4">
+                  <mat-form-field>
+                      <input matInput placeholder="Customer" (ngModelChange)="customerChanged($event)" [matAutocomplete]="customer" [(ngModel)]="selectedCustomer">
+                      <mat-autocomplete #customer="matAutocomplete">
+                          <mat-option *ngFor="let item of lstCustomer" [value]="item.vchr_name" (onSelectionChange)="CustomerClicked(item)">
+                              {{ item.int_mobile}} - {{item.vchr_name }}
+                          </mat-option>
+                      </mat-autocomplete>
+                  </mat-form-field>
+              </div>
+              <div class="col-md-4 mt-2">
+                  <button class="btn btn_redeem" type="submit" (click)="getDetails()">Search</button>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- <div class="row"> -->
+
+        <div class="card">
+            <div class="card-body">
+
+             
+              <div class="card nodata" *ngIf="!blnShowData">
+                  <h5>No Data Found</h5>
+                </div>
+                  
+              <div *ngIf="blnShowData" class="example-container mat-elevation-z8">
+                  <mat-table [dataSource]="dataSource">
+  
+                      <ng-container matColumnDef="date" sticky>
+                          <mat-header-cell *matHeaderCellDef style="max-width: 15%;"> Date </mat-header-cell>
+                          <mat-cell *matCellDef="let element" style="max-width: 15%;"> {{element.date}} </mat-cell>
+                          <!-- <mat-footer-cell *matFooterCellDef>Total</mat-footer-cell> -->
+                      </ng-container>
+  
+                      <ng-container matColumnDef="details">
+                          <mat-header-cell *matHeaderCellDef style="max-width: 75%;"> Details </mat-header-cell>
+                          <mat-cell *matCellDef="let element" style="max-width: 75%;"> <p style="margin: 0;;">{{element.details}}<span (click)='openView(element,item,i)' *ngFor=" let item of element.lst_doc_num,index as i;"><a style="cursor: pointer;color: #2768a2;">{{item}}<span *ngIf="i < element.lst_doc_num.length-1">,</span></a></span></p></mat-cell>
+                          <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                      </ng-container>
+  
+                      <ng-container matColumnDef="action">
+                        <mat-header-cell class="matheadr_right" *matHeaderCellDef style="max-width: 10%;direction: rtl;"> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let row;let i= index;"class="matheadr_right" style="max-width: 10%;direction: rtl;">
+                          <button *ngIf="row.bln_receipt && row.vchr_branch_code==branchCode" class="trashbtn" (click)="clickView(viewData,row.int_receipt_id)">
+                            <i class="fa fa-eye"></i>
+                          </button>
+                        </mat-cell>
+                      </ng-container>
+
+                      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                  </mat-table>
+              </div>
+            </div>
+        </div>
+    <!-- </div> -->
+  
+
+<ng-template #viewData let-modal>
+    <div class="modal-body" id="deliverypopup">
+        <div class="col-md-12">
+            <div class="row">
+               
+                <h4 class="otph1">Receipt Details</h4>
+                <div class="row" *ngIf="dataLoaded">
+                    <div class="col-md-12">
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Customer Name</label>
+                                    <p class="">{{strCustomerName}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Customer No</label>
+                                    <p class="">{{intNumber}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Receipt Number</label>
+                                    <p class="">{{strReceiptNumber}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Receipt Type</label>
+                                    <p class="">{{strReceiptType}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4" *ngIf = "intReceiptType == 2">
+                                <div class="form-group mt-1">
+                                    <label>Item</label>
+                                    <p class="">{{strItem}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>FOP</label>
+                                    <p class="">{{strFop}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4" *ngIf = "strPaytmReferenceNum">
+                                <div class="form-group mt-1">
+                                    <!-- <label *ngIf ="strFop == 'Paytm' || strFop == 'Paytm Mall' || 'DEBIT CARD' || 'CREDIT CARD' ">Reference Number</label> -->
+                                    <label *ngIf ="strFop == 'Paytm' || strFop == 'Paytm Mall' || strFop == 'DEBIT CARD' || strFop =='CREDIT CARD' ">Reference Number</label>
+                                    <label *ngIf ="strFop == 'RTGS' || strFop == 'NEFT' ">Transaction Number</label>
+                                    <label *ngIf ="strFop == 'CHEQUE' "> Cheque Number</label>
+                                    <p class="">{{strPaytmReferenceNum}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4" *ngIf = "strCardNumber">
+                                <div class="form-group mt-1">
+                                    <label>Card Number</label>
+                                    <p class="">{{strCardNumber}}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Amount</label>
+                                    <p class="">{{intAmount}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Date Issue</label>
+                                    <p class="">{{datIssue}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4" *ngIf = "dateApprove">
+                                <div class="form-group mt-1">
+                                    <label>Approved Date</label>
+                                    <p class="">{{dateApprove | date: 'dd-MM-yyyy'}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4" *ngIf = "strBankName">
+                                <div class="form-group mt-1">
+                                    <label>Bank Name</label>
+                                    <p class="">{{strBankName}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Remarks</label>
+                                    <p class="">{{strRemarks}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>      
+                </div>
+              
+            </div>
+        </div>
+    </div>
+</ng-template>
+

@@ -1,0 +1,75 @@
+<div class="card mt-1">
+    <div class="card-body">
+        <div class="row" style="background-color: #f2f4f5;padding-top: 8px;">
+            <h4 class="col-md-12">
+                <span style="line-height: 30px;">Internal Stock Request - {{dctMasterData['vchr_stkrqst_num']}}</span>
+                <span class="float-right">
+          <button type="submit" class="btn backbtn" style="align-content: right" (click)="goBack()">
+            <i class="fa fa-angle-left icon"></i>
+            <span style="margin-left: 15px;">Back </span>
+                </button>
+                </span>
+            </h4>
+        </div>
+        <!-- <h5 class="card-subtitle">made with bootstrap elements</h5> -->
+        <div class="row mt-2">
+            <div class="col-md-4" *ngIf="transferType == 'to'">
+                <label>Branch </label>
+                <p> {{dctMasterData['fk_to__vchr_name']}}</p>
+            </div>
+            <div class="col-md-4" *ngIf="transferType == 'from'">
+                <label>Branch </label>
+                <p> {{dctMasterData['fk_from__vchr_name']}}</p>
+            </div>
+            <div class="col-md-4">
+                <label>Order Date</label>
+                <p>{{dctMasterData['dat_request']}}</p>
+            </div>
+            <div class="col-md-4">
+                <label>Expected Date</label>
+                <p>{{dctMasterData['dat_expected']}}</p>
+            </div>
+            <div class="col-md-6">
+                <label>Remarks</label>
+                <p>{{dctMasterData['vchr_remarks']}}</p>
+            </div>
+            <div class="col-md-6" *ngIf="blnReject">
+                <label>Rejection Remarks</label>
+                <p>{{dctMasterData['vchr_rej_remark']}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="card-title mb-2">Item List</h3>
+                <div class="example-container mat-elevation-z8">
+                    <mat-table [dataSource]="dataSource">
+                        <ng-container matColumnDef="slno" sticky>
+                            <mat-header-cell *matHeaderCellDef style="max-width: 150px !important;"> No. </mat-header-cell>
+                            <mat-cell *matCellDef="let element" style="max-width: 150px !important;"> {{element.slno}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="fk_item__vchr_name">
+                            <mat-header-cell *matHeaderCellDef> Item </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.fk_item__vchr_name}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="int_qty">
+                            <mat-header-cell *matHeaderCellDef style="max-width: 150px !important;"> Quantity </mat-header-cell>
+                            <mat-cell *matCellDef="let element" style="max-width: 150px !important;"> {{element.int_qty}} </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-xl-12">
+                <!-- <button type="submit" class="btn save_btn m-r-10"  (click)="approveData()" style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);">Approve</button> -->
+                <button type="submit" class="btn btn-danger" *ngIf="dctMasterData['status'] == 'PENDING'" (click)="cancelData()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

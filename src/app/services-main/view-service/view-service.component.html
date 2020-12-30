@@ -1,0 +1,1062 @@
+
+<div class="card">
+  <div class="card-body">
+
+      <!-- header data -->
+      <div class = "row disable-select">
+          <div class="col-md-12 col-lg-12">
+              <h4 class="heading">
+                  <span>
+                      <i class="mdi mdi-book-multiple" aria-hidden="true"></i>
+                  </span>&nbsp; Service Details : <span style="color: #2c4f5e;">{{ dctServiceData['vchr_job_num'] }}</span>
+                  <span *ngIf = "blnJobVerify">
+                    <button  (click)="verifyJob()" [disabled] = "blnVerifyDisable" class="job_btn">
+                        <i class="fa fa-check" aria-hidden="true" style="padding-right: 5px;"></i>
+                        {{buttonText}}
+                    </button>
+                </span>
+                  <span *ngIf="blnAcknowledge">
+                      <button (click)="acknowledgeService()" style="background: #303f73;border-radius: 10px;color: white;margin-left: 2%;font-size: 12px;padding: 5px;">
+                          <i class="fa fa-check" aria-hidden="true" style="padding-right: 5px;"></i>
+                          Acknowledge Service
+                      </button>
+                  </span>
+                  <span *ngIf = "blnJobAccept">
+                    <button  (click)="acceptJob()" [disabled] = "blnAcceptDisable"  class="job_btn">
+                        <i class="fa fa-check" aria-hidden="true" style="padding-right: 5px;"></i>
+                        {{textAccept}}
+                    </button>
+                </span>
+                  <span style="float:right;" class="breadcrumps">
+                      <span style="color: #9089a9;font-weight: 400;">Service Details</span> / <span (click)="goBack()" 
+                          style="cursor:pointer;color: #FF6700;font-weight: 400;">Service List</span>
+                  </span>
+              </h4>
+          </div>
+      </div>
+
+      <div class="row disable-select">
+
+          <!-- comment box -->
+          <div [hidden]="!blnCommentsAccess">
+              <i class="mdi mdi-message-text" (click)="toggleCommentBox()" *ngIf="!blnCommentsOpened"></i>
+              <!-- <span matBadge="4" matBadgeOverlap="false" class="icon-count" *ngIf="intCommentCount > 0">{{ intCommentCount }}</span> -->
+              <i class="mdi mdi-close-circle-outline" (click)="toggleCommentBox()" *ngIf="blnCommentsOpened"></i>
+              <div class="comment-box" [hidden]="!blnCommentsAccess || !blnCommentsOpened">
+
+                  <div>
+                      <input placeholder="Enter Comment" type="text" class="comment-input" [(ngModel)]="strComment">
+                  </div>
+
+                  <div style="max-height: 300px;overflow-y: scroll;" #commentDiv (scroll)="onCommentScroll()">
+                      <div [ngClass]="data['bln_status'] ? 'container-me':'container-other'" *ngFor="let data of lstComments">
+                          <p style="color:black;font-family: cursive;">{{ data['txt_message'] }}</p>
+                          <small [ngStyle]="{'color': data['bln_status'] ? 'brown' : '#052679' }" style="font-size: 8px;float: left;">{{ data['full_name'] }} </small>
+                          <small [ngStyle]="{'color': data['bln_status'] ? 'brown' : '#052679' }" style="font-size: 8px;float: right;">{{ data['dat_edited'] | date }} {{ data['time_edited'] }}</small>
+                      </div>
+                      <span *ngIf="lstComments.length == 0" style="color: white;padding-left: 25%;">
+                          No Comments found..
+                      </span>
+                      <!-- <span class="scroll-info" *ngIf="blnCommentsShowMore">
+                          scroll down to see more...
+                      </span> -->
+                  </div>
+
+              </div>
+          </div>
+
+          <div class="col-md-8 col-lg-8">
+
+              <div class="row">
+              
+                  <div class="col-md-12">
+
+                      <!-- service details -->
+                      <mat-card>
+
+                          <mat-card-title class="card-title"> 
+                              <span style="padding-left:5px; text-transform: lowercase;">
+                                  {{ dctServiceData['vchr_product_name'] | titlecase }}
+                              </span>
+                              <span *ngIf="blnAssignTo" style="position: absolute;right: 25px;color: #009693;" (click)="blnShowAssign = !blnShowAssign">
+                                  Assign To
+                              </span>
+                          </mat-card-title>
+
+                          <mat-card-content>
+
+                              <div class="row">
+                                  <div class="col-md-3">
+                                      <div class=" mt-1">
+                                          <label>Brand</label>
+                                          <p *ngIf="dctServiceData['vchr_brand_name']">{{ dctServiceData['vchr_brand_name'] | titlecase }}</p>
+                                          <p *ngIf="!dctServiceData['vchr_brand_name']">{{ '----' }}</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-9">
+                                      <div class="mt-1">
+                                          <label>Item</label>
+                                          <p *ngIf="dctServiceData['vchr_item_name']">{{ dctServiceData['vchr_item_name'] | titlecase }}</p>
+                                          <p *ngIf="!dctServiceData['vchr_item_name']">{{ '----' }}</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3" *ngIf="!['ENQUIRY','JOB'].includes(dctServiceData['vchr_job_status'])">
+                                      <div class=" mt-1">
+                                          <label>Imei</label>
+                                          <p *ngIf="dctServiceData['vchr_imei']">{{ dctServiceData['vchr_imei'] | titlecase }}</p>
+                                          <p *ngIf="!dctServiceData['vchr_imei']">{{ '----' }}</p>
+                                      </div>
+                                  </div>
+                      
+                                  <div class="col-md-3" *ngIf = "dctServiceData['dat_exp_delivery']">
+                                      <div class=" mt-1">
+                                          <label>Expected delivery</label>
+                                          <p >{{ dctServiceData['dat_exp_delivery'] }}</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                      <div class=" mt-1">
+                                          <label>Job status</label>
+                                          <p *ngIf="dctServiceData['vchr_job_status']">{{ dctServiceData['vchr_job_status'] | titlecase }}</p>
+                                          <p *ngIf="!dctServiceData['vchr_job_status']">{{ '----' }}</p>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-3" *ngIf="['SERVICED','INVOICED'].includes(dctServiceData['vchr_job_status'])">
+                                      <div class=" mt-1">
+                                          <label>Service amount</label>
+                                          <p *ngIf="dctServiceData['dbl_est_amt'] && dctServiceData['dbl_spare_amt']">{{ dctServiceData['dbl_est_amt'] - dctServiceData['dbl_spare_amt'] }}</p>
+                                          <p *ngIf="dctServiceData['dbl_est_amt'] && !dctServiceData['dbl_spare_amt']">{{ dctServiceData['dbl_est_amt'] }}</p>
+                                          <p *ngIf="!dctServiceData['dbl_est_amt']">0</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3" *ngIf="['SERVICED','INVOICED'].includes(dctServiceData['vchr_job_status'])">
+                                      <div class=" mt-1">
+                                          <label>Spare amount</label>
+                                          <p>{{ dctServiceData['dbl_spare_amt'] }}</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3" *ngIf="!['ENQUIRY','JOB'].includes(dctServiceData['vchr_job_status'])">
+                                      <div class=" mt-1">
+                                          <label  *ngIf="!['SERVICED','INVOICED'].includes(dctServiceData['vchr_job_status'])">Estimated amount</label>
+                                          <label  *ngIf="['SERVICED','INVOICED'].includes(dctServiceData['vchr_job_status'])">Total amount</label>
+                                          <p *ngIf="dctServiceData['dbl_est_amt']">{{ dctServiceData['dbl_est_amt'] }}</p>
+                                          <p *ngIf="!dctServiceData['dbl_est_amt']">0</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3" *ngIf="!['ENQUIRY','JOB'].includes(dctServiceData['vchr_job_status'])">
+                                      <div class=" mt-1">
+                                          <label>Advance paid.</label>
+                                          <p *ngIf="dctServiceData['dbl_advc_paid']">{{ dctServiceData['dbl_advc_paid'] }}</p>
+                                          <p *ngIf="!dctServiceData['dbl_advc_paid']">0</p>
+                                      </div>
+                                  </div>
+                              
+                                  <div class="col-md-6" *ngIf="dctCustomerData['lst_worked_on'] && dctCustomerData['lst_worked_on'].length > 0">
+                                      <div *ngIf="dctCustomerData['lst_worked_on']['0']['worked_on']" class=" mt-1">
+                                          <label>Forward From.</label>
+                                          <p>{{ dctCustomerData['lst_worked_on']['0']['worked_on'] }} ( {{ dctCustomerData['lst_worked_on']['0']['branch'] }} )</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6" *ngIf="dctCustomerData['lst_worked_on'] && dctCustomerData['lst_worked_on'].length > 0">
+                                      <div  *ngIf="dctCustomerData['lst_worked_on']['1']['worked_on_completed']" class=" mt-1">
+                                          <label>Serviced By.</label>
+                                          <p>{{ dctCustomerData['lst_worked_on']['1']['worked_on_completed'] }} ( {{ dctCustomerData['lst_worked_on']['1']['branch'] }} )</p>
+                                      </div>
+                                  </div>
+                              
+                                  <div class="col-md-3" *ngIf ="dctServiceData['int_expenses'] && strAction == 'VIEW'">
+                                      <div class=" mt-1">
+                                          <label>Service Amt.</label>
+                                          <p>{{ dctServiceData['int_expenses'] }}</p>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-3" *ngIf="dctServiceData['vchr_job_status'] == 'INVOICED'">
+                                      <div class=" mt-1">
+                                          <label>Discount</label>
+                                          <p>{{ dctServiceData['dbl_discount'] }}</p>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-3" *ngIf="!['ENQUIRY','JOB'].includes(dctServiceData['vchr_job_status'])">
+                                      <div class=" mt-1">
+                                          <label>Balance Amt.</label>
+                                          <p>{{ dctServiceData['dbl_total_amount'] }}</p>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-3" *ngIf="dctServiceData['dat_pickup']">
+                                      <div class=" mt-1">
+                                          <label>Pickup Date</label>
+                                          <p>{{ dctServiceData['dat_pickup'] | date }} {{ dctServiceData['pickup_time'] }} </p>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-3" *ngIf="dctServiceData['vchr_landmark']">
+                                      <div class=" mt-1">
+                                          <label>Landmark</label>
+                                          <p>{{ dctServiceData['vchr_landmark'] }} </p>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-9">
+                                      <div class=" mt-1">
+                                          <label>Remarks</label>
+                                          <p *ngIf="dctServiceData['vchr_remarks']">{{ dctServiceData['vchr_remarks'] | titlecase }}</p>
+                                          <p *ngIf="!dctServiceData['vchr_remarks']">{{ '----' }}</p>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                          </mat-card-content>
+
+                      </mat-card>
+
+                      <!-- accessories data -->
+                      <mat-card class="mt-2" *ngIf = "dctServiceData['json_acc_received'] && dctServiceData['json_acc_received']['acc_received'].length > 0">
+                          <mat-card-content>
+                              <div class="row">
+                                  <div class="col-md-12" >
+                                      <div>
+                                          <!-- <label>
+                                              Accessories Received
+                                              <span class="edit_span" *ngIf="!blnAccEdit && blnEdit" (click)="blnAccEdit=true;">Edit</span>
+                                          </label> -->
+                                          <div *ngIf="!blnAccEdit">
+                                              <span *ngFor="let acc of dctServiceData['json_acc_received']['acc_received'];let i = index;" class="chip">
+                                                  {{ acc | titlecase }}
+                                                  <span *ngIf="i+1 != dctServiceData['json_acc_received']['acc_received'].length" style="font-size: 20px;color: #05a797;">&nbsp;|&nbsp;</span>
+                                              </span>
+                                          </div>
+                                          <div *ngIf="blnAccEdit && blnEdit">
+                                              <mat-form-field>
+                                                  <mat-chip-list #chipListAcc>
+                                                      <input matInput required [formControl]="searchAccessories" [matAutocomplete]="complaints" 
+                                                          [(ngModel)] = "strAccessory" [matChipInputFor]="chipListAcc">
+                                                      <mat-chip *ngFor="let data of dctServiceData['json_acc_received']['acc_received'];"
+                                                          (removed)="removeAccesories(data)" style="background: linear-gradient(87deg,#69060b 0,#f56036 100%)!important;
+                                                        color: white;font-size: 10px;"> 
+                                                          {{ data | titlecase }}
+                                                          <mat-icon matChipRemove style="margin-top: -2px;color: white;opacity: 1;">
+                                                              <i class="fa fa-times-circle"></i>
+                                                          </mat-icon>
+                                                      </mat-chip>
+                                                  </mat-chip-list>
+                                                  <mat-autocomplete #complaints="matAutocomplete" >
+                                                      <mat-option *ngFor="let item of lstAccessories" [value]="item" (onSelectionChange)="selectedAccessories(item)">
+                                                          {{ item | titlecase }}
+                                                      </mat-option>
+                                                  </mat-autocomplete>
+                                              </mat-form-field>
+                                              <div class="row">
+                                                  <button (click)="updateAccesories()" style="background: green;margin-left: 10px;"  class="save_btn">
+                                                      Update
+                                                  </button>
+                                                  <button (click)="cancelEditAccessories()" style="margin-left: 10px;"  class="save_btn">
+                                                      Cancel
+                                                  </button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </mat-card-content>
+                      </mat-card>
+                      
+                      <!-- problem category data -->
+                      <mat-card class="mt-2" *ngIf = "dctServiceData['json_problem_category'] && dctServiceData['json_problem_category']['problem_category'].length > 0" >
+                          <mat-card-content>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div>
+                                          <label class="col-md-11" >Problem Category &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                                              <span class="edit_span col-md-6" *ngIf="!blnCompEdit && blnEdit" (click)="blnCompEdit=true;">Edit</span>
+                          
+                                          <div *ngIf="!blnCompEdit">
+                                              <span *ngFor="let problem of dctServiceData['json_problem_category']['problem_category'];let i = index;" class="chip">
+                                                  {{ problem | titlecase }}
+                                                  <span *ngIf="i+1 != dctServiceData['json_problem_category']['problem_category'].length" style="font-size: 20px;color: #05a797;">&nbsp;|&nbsp;</span>
+                                              </span>
+                                          </div>
+                                          <div *ngIf="blnCompEdit && blnEdit">
+                                              <mat-form-field>
+                                                  <mat-chip-list #chipList>
+                                                      <input matInput required [formControl]="searchComplaints" [matAutocomplete]="complaints" 
+                                                          [(ngModel)] = "strComplaint" [matChipInputFor]="chipList">
+                                                      <mat-chip *ngFor="let data of dctServiceData['json_problem_category']['problem_category'];"
+                                                          (removed)="removeComplaints(data)" style="background: linear-gradient(87deg,#69060b 0,#f56036 100%)!important;
+                                                        color: white;font-size: 10px;"> 
+                                                          {{ data | titlecase }}
+                                                          <mat-icon matChipRemove style="margin-top: -2px;color: white;opacity: 1;">
+                                                              <i class="fa fa-times-circle"></i>
+                                                          </mat-icon>
+                                                      </mat-chip>
+                                                  </mat-chip-list>
+                                                  <mat-autocomplete #complaints="matAutocomplete" >
+                                                      <mat-option *ngFor="let item of lstComplaints" [value]="item" (onSelectionChange)="selectedCompaints(item)">
+                                                          {{ item | titlecase }}
+                                                      </mat-option>
+                                                  </mat-autocomplete>
+                                              </mat-form-field>
+                                              <div class="row">
+                                                  <button (click)="updateComplaints()" style="background: green;margin-left: 10px;"  class="save_btn">
+                                                      Update
+                                                  </button>
+                                                  <button (click)="cancelEditComplaints()" style="margin-left: 10px;"  class="save_btn">
+                                                      Cancel
+                                                  </button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </mat-card-content>
+                      </mat-card>
+                      <!-- ----------- -->
+                      <!-- Qc rejected- remarks and details for service engineer -->
+                      <mat-card class="mt-2" *ngIf = "dctServiceData['qc_remarks'] != null && dctServiceData['qc_remarks'].length > 0 " >
+                        <mat-card-content>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div>
+                                        <label class="col-md-11" >Serviced Product Reverted &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                                        <div class=" col-md-12">
+                                          <label>QC Engineer Remarks</label>
+                                          <p>{{ dctServiceData['qc_remarks'] }}</p>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+
+                      <!-- Service Images -------------------------------------------------------------------------------------- -->
+                      <mat-card class="mt-2" *ngIf = "( dctServiceData['lst_service_image'] && dctServiceData['lst_service_image'].length>0 ) || dctServiceData['vchr_digital_signature']"  
+                                                          style="background:none;box-shadow: none !important;padding:0">
+                          <mat-card-content>
+                              <div class="row">
+                                  <div class="col-md-12" *ngIf = " dctServiceData['lst_service_image'] && dctServiceData['lst_service_image'].length > 0">
+                                      <label>Image</label>
+                                      <div class="row">
+                                          <div class="col-md-3" style="margin-bottom: 5px;" *ngFor = "let image of dctServiceData['lst_service_image']">
+                                              <div class="imgcard" >
+                                                  <img src="{{ strNodeAddress }}{{ image }}" alt="Avatar" style="width:100%">
+                                                  <div class="overlay">
+                                                      <a (click)="popUpImage(imageShowTem, strNodeAddress+image)" class="icon" title="User Profile">
+                                                          <i class="fas fa-search-plus" ></i>
+                                                      </a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-3 mt-2" *ngIf = "dctServiceData['vchr_digital_signature']" >
+                                      <label>Signature</label>
+                                      <div class="imgcard" >
+                                          <img src="{{ strHostAddress }}{{ dctServiceData['vchr_digital_signature'] }}" 
+                                              onerror="this.onerror=null;" style="width:100%;">
+                                          <div class="overlay">
+                                              <a (click)="popUpImage(imageShowTem, strHostAddress+dctServiceData['vchr_digital_signature'])" class="icon" title="User Profile">
+                                                  <i class="fas fa-search-plus" ></i>
+                                              </a>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-9 mt-2" style="margin-top: 60px !important;">
+                                      <span style="color: #303f73;font-size: 15px;font-weight: 500;">Terms and conditions agreed!..</span>
+                                  </div>
+
+                              </div>
+                          </mat-card-content>
+                      </mat-card>
+
+                      <!-- Date Pick up and assign to adding -------------------------------------------------------------- -->
+                      <mat-card class="mt-2" *ngIf="dctServiceData['vchr_job_status'] == 'ENQUIRY'">
+                          <mat-card-content>
+                              
+                              <div class="row mt-3">
+                                  <div class="col-md-6 mt-1">
+                                      <mat-form-field>
+                                          <input (click)="picker1.open()" id="pickupId" #pickupDate required readonly matInput [matDatepicker]="picker1" name="pickupDate" placeholder="Pickup Date" [(ngModel)]="datPickup">
+                                          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                          <mat-datepicker #picker1></mat-datepicker>
+                                      </mat-form-field>
+                                  </div>
+                                  <div class="col-md-6" style="padding-top: 2px;">
+                                      <mat-form-field>
+                                          <input matInput required placeholder="Pickup time" [ngxTimepicker]="default" [(ngModel)]="strPickupTime" readonly>
+                                      </mat-form-field>
+                                      <ngx-material-timepicker #default></ngx-material-timepicker>
+                                  </div>
+                                  <div class="col-md-6 mt-1">
+                                      <mat-form-field>
+                                          <input matInput required placeholder="Assigned To" [formControl]="searchAssignUser" [matAutocomplete]="assignusername" [(ngModel)]="strSelectedAssignuser" #idAssignuser>
+                                          <mat-autocomplete #assignusername="matAutocomplete">
+                                              <mat-option *ngFor="let item of lst_assignuser" [value]="item.name" (onSelectionChange)="assignUserChanged(item)">
+                                                  {{ item.name | titlecase }}
+                                              </mat-option>
+                                          </mat-autocomplete>
+                                      </mat-form-field>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group mt-1">
+                                          <mat-form-field>
+                                              <input matInput type="text" required placeholder="Landmark" [(ngModel)]="dctServiceData['vchr_landmark']">
+                                          </mat-form-field>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <button (click)="createJob()"  class="save_btn mt-4">
+                                          CREATE JOB
+                                      </button>
+                                  </div>
+                              </div>
+
+                          </mat-card-content>
+
+                      </mat-card>
+
+                      <!-- Followup Section -------------------------------------------------------------- -->
+                      <mat-card class="mt-2" *ngIf="blnSpareRequest">
+                          <mat-card-content>
+                              
+                              <!-- <div class="row">
+                                  <div class="col-md-8">
+                                      <label>Change Status </label>
+                                      <div>
+                                          <mat-checkbox [(ngModel)]="blnServiced" (ngModelChange)="Serviced()" >
+                                              <span style="color:black !important;padding-right: 20px;">
+                                                  Serviced
+                                              </span>
+                                          </mat-checkbox>
+                                          <mat-checkbox [(ngModel)]="blnNotServiced" (ngModelChange)="NotServiced()" >
+                                              <span style="color:black !important">
+                                                  Not Serviced
+                                              </span>
+                                          </mat-checkbox>
+                                      </div>
+                                  </div>
+                              </div> -->
+
+                              <!-- <div class="row mt-3" *ngIf="true">
+                                  <div class="col-md-4">
+                                      <label>Service Charge</label>
+                                      <input matInput [(ngModel)]="intServiceCharge"  (ngModelChange)="serviceChargeAdd()" type="number" name="item" placeholder="" value="" style="border-bottom: 1px solid #d3d0d0;">
+                                  </div>
+                                  <div class="col-md-4" *ngIf="['MOBILE','TABLET','LAPTOP','TV'].includes( (dctServiceData['vchr_product_name'] | uppercase) )">
+                                      <label>IMEI*</label>
+                                      <input matInput [(ngModel)]="strImei" name="imei" placeholder="" value="" style="border-bottom: 1px solid #d3d0d0;">
+                                  </div>
+                                  <div *ngIf="blnServiced" class="col-md-4 mt-4">
+                                      <mat-checkbox [(ngModel)]="blnSparePart">Add Spare Parts </mat-checkbox>
+                                  </div>
+                              </div>
+
+                              <div *ngIf="blnNotServiced" class="row mt-12">
+                                  <div class="col-md-12">
+                                      <mat-form-field style="width: 100%;">
+                                          <input matInput placeholder="Remarks" rows="1" [(ngModel)]="strRemarks">
+                                      </mat-form-field>
+                                  </div>
+                              </div> -->
+                    <!-- SPARE PARTS REQUEST TABLE -->
+                              
+                   
+                              <div *ngIf="blnSpareRequest" class="row">
+                                  <div class="col-md-12 mt-2">
+                                      <label style="color: #12488b !important;font-weight: 500;">Request Spare Parts</label>
+                                      <div class="row">
+                                          <div class="col-md-12 mt-2">
+                                              <table class="table table-bordered">
+                                                  <thead style="background-color: #eaeef3;">
+                                                      <tr>
+                                                          <th class="subhead">Request Spare</th>
+                                                          <!-- <th class="text-right subhead"> Amount </th> -->
+                                                          <th class="text-right subhead"> Quantity </th>
+                                                          <th class="text-right subhead"> Colour </th>
+                                                          <!-- <th class="text-right subhead"> Available Quantity </th> -->
+                                                          <th class="text-right subhead"> Status </th>
+                                                          <th class="text-right subhead"> Action </th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      <tr>
+                                                          <td class="text-left">
+                                                            <div class="col-md-6">
+                                                                <mat-form-field>
+                                                                    <input matInput required placeholder="Enter spare" [formControl]="searchItem" [matAutocomplete]="Itemname" [(ngModel)]="strItemTyped" (ngModelChange) = "itemChanged()"#idItem>
+                                                                    <mat-autocomplete #Itemname="matAutocomplete">
+                                                                        <mat-option *ngFor="let item of lstItem" [value]="item.name" (onSelectionChange)="itemSelectionChanged(item)">
+                                                                            {{ item.name }}
+                                                                        </mat-option>
+                                                                    </mat-autocomplete>
+                                                                </mat-form-field>
+                                                            </div>
+                                                              <!-- <input matInput [(ngModel)]="strSelectedItem"  name="item" type="text" placeholder="Spare Item" value="" > -->
+                                                          </td>
+                                                          <td style="vertical-align:middle;text-align:right">
+                                                            <input [disabled] = "true" matInput [(ngModel)]="intSpareQtyNeeded" type="number" style="width: 78px" name="item" placeholder="Quantity" value="0">
+                                                          </td>
+                                                          <!-- colour etering field -->
+                                                          <td style="vertical-align:middle;text-align:right">
+                                                            <input  matInput [(ngModel)]="strColourRequired" type="text" style="width: 78px" name="item" placeholder="colour" value="">
+                                                          </td>
+                                                          <!-- **** -->
+                                                          <td style="vertical-align:middle;text-align:right">
+                                                            <span *ngIf = " (intSpareQtyNeeded <intQuantity || intSpareQtyNeeded == intQuantity) && blnQty && intSpareQtyNeeded != 0 && intSpareQtyNeeded != null">
+                                                                <button   [disabled] = "true" style=" background-color: #009933;border-radius: 10px;color: white;margin-left: 2%;font-size: 12px;padding: 5px;">
+                                                                    Available
+                                                                </button>
+                                                            </span>
+                                                            <span *ngIf = "(intSpareQtyNeeded > intQuantity) && blnQty && intSpareQtyNeeded != 0 && intSpareQtyNeeded != null">
+                                                                <button   [disabled] = "true" style=" background-color: #F90000;border-radius: 10px;color: white;margin-left: 2%;font-size: 12px;padding: 5px;">   
+                                                                Unavailable
+                                                                </button>
+                                                            </span>
+                                                        </td>
+                                                          <td style="vertical-align:middle;text-align: right">
+                                                              <button id="view" title="add" class="addnew" (click)="addSpareItems()">
+                                                                  <i class="fa fa-plus" aria-hidden="true"></i>
+                                                              </button>
+                                                          </td>
+                                                      </tr>
+                                                      <tr *ngFor="let item of lstSpare;let index=index">
+                                                          <td class="text-left">{{item.intName}}</td>
+                                                          <td style="text-align:right">{{item.intQuantity}}</td>
+                                                          <td style="text-align:right">{{item.strColour}}</td>
+                                                          <td style="text-align:right">
+                                                            <span *ngIf = "item.blnStatus">
+                                                                <button  [disabled] = "true" style=" background-color: #009933;border-radius: 10px;color: white;margin-left: 2%;font-size: 12px;padding: 5px;">
+                                                                    Available
+                                                                </button>
+                                                            </span>
+                                                            <span *ngIf = "!item.blnStatus">
+                                                                <button  [disabled] = "true" style=" background-color: #F90000;border-radius: 10px;color: white;margin-left: 2%;font-size: 12px;padding: 5px;">
+                                                                    unvailable
+                                                                </button>
+                                                            </span>
+                                                        </td>
+                                                          <td style="vertical-align:middle;text-align: right">
+                                                              <button class="delete" (click)="deleteSparePart(index,item)">
+                                                                  <i class="ti-trash" aria-hidden="true"></i> Delete
+                                                              </button>
+                                                          </td>
+                                                      </tr>
+                                                  </tbody>
+                                                  <!-- <tfoot>
+                                                      <tr>
+                                                          <td colspan="2" style="text-align: right;border-left: none;border-bottom: none;font-weight: 500;">Total Amount</td>
+                                                          <td> <span style="float:right;font-weight: 500;"> {{intSpareTotal}}</span></td>
+                                                      </tr>
+                                                  </tfoot> -->
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                     <!-- SPARE PARTS REQUEST TABLE ENDS HERE -->
+                              <!-- <div class="row">
+
+                                  <div class="col-md-12 mt-3">
+                                      <div class="row" style="border-bottom: 1px dashed #cac7c7;">
+                                          <div class="col-md-3">
+                                                  <label class="calculation">Total </label>
+                                          </div>
+                                          <div class="col-md-9 text-right">
+                                              <p style="color: #12488b !important;font-weight: 500;"> {{ intTotalAmount }}</p>
+                                          </div>
+                                      </div>
+                                      <div class="row mt-2" style="border-bottom: 1px dashed #cac7c7;">
+                                          <div class="col-md-3">
+                                                  <label class="calculation">To Pay  </label>
+                                          </div>
+                                          <div class="col-md-9 text-right">
+                                              <p style="font-weight: 500;"> {{ intGrandTotal }}</p>
+                                          </div>
+                                      </div>
+                                      <div class="row mt-2" style="border-bottom: 1px dashed #cac7c7;">
+                                          <div class="col-md-3">
+                                                  <label class="calculation">Estimated  </label>
+                                          </div>
+                                          <div class="col-md-9 text-right">
+                                              <p style="font-weight: 500;">  {{ dctServiceData['dbl_est_amt'] }}</p>
+                                          </div>
+                                      </div>
+                                      <div class="row mt-2">
+                                          <div class="col-md-3">
+                                                  <label class="calculation">Advance  </label>
+                                          </div>
+                                          <div class="col-md-9 text-right">
+                                              <p style="font-weight: 500;">{{ dctServiceData['dbl_advc_paid'] }}</p>
+                                          </div>
+                                      </div>
+                                          
+                                  </div>
+                                  
+                              </div> -->
+
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <button (click)="saveDetails()"  class="save_btn mt-4">
+                                          SAVE
+                                      </button>
+                                  </div>
+                              </div>
+
+                          </mat-card-content>
+
+                      </mat-card>
+
+                      <!-- spare parts data --------------------------------------------------------------------------------- -->
+                      <mat-card class="mt-2" *ngIf="blnSpareTable">
+                          <mat-card-content>
+                              <div class="mt-2">
+                                  <label style="color: #12488b !important;">Requested Spare List</label>
+                                  <div class="row">
+                                      <div class="col-md-12">
+                                          <table class="table table-bordered mt-2">
+                                              <thead style="background-color: #eaeef3;">
+                                                  <tr>
+                                                      <th class="subhead">Spare Name</th>
+                                                      <th class="text-right subhead">Qty.</th>
+                                                      <th class="text-right subhead">Colour</th>
+                                                      <th class="text-right subhead">Date Requested</th>
+                                                      <th class="text-right subhead">Status</th>
+                                                      <th style="width: 10%;"> </th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <tr *ngFor="let item of lstSpareList">
+                                                      <td class="text-left">{{ item.fk_item_id__vchr_name }}</td>
+                                                      <td class="text-right">{{ item.int_qty }}</td>
+                                                      <td class="text-right">{{ item.vchr_colour}}</td>
+                                                      <td class="text-right">{{ item.request_dat }}</td>
+                                                      <td class="text-right" >
+                                                        <span *ngIf = "item.bln_status">
+                                                            <button  [disabled] = "true" style=" background-color: #22934d;border-radius: 10px;color: white;margin-left: 2%;font-size: 12px;padding: 5px;">
+                                                                Allocated
+                                                            </button>
+                                                        </span>
+            
+                                                        <span *ngIf = "!item.bln_status">
+                                                            <button   [disabled] = "true" class="assigned">   
+                                                                Not Allocated
+                                                            </button>
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-right" >
+                                                        <button *ngIf="(item.bln_status && item.int_status != 1 )&& !(intSpareAknowledgedStatus == item.pk_bint_id) && blnSE" title="acknowledge" class="assign-btn" (click)="AknowledgeSpare(item)"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                                     
+                                                        <button [disabled] = "true" *ngIf="item.bln_status && (item.int_status == 1 || intSpareAknowledgedStatus == item.pk_bint_id) && blnSE" title="acknowledged" class="assign-btn-changed" ><i class="fa fa-check" aria-hidden="true"></i></button>
+                                                      </td>
+                                                    </tr>
+                  
+                                              </tbody>
+                                              <!-- <tfoot>
+                                                  <tr>
+                                                      <td colspan="1" style="border: none !important;text-align:right;font-weight:500;background-color: #f5f5f5">Total Amount</td>
+                                                      <td style="font-weight: 500;background-color: #f5f5f5;text-align: right;">₹ <span style="font-size:18px;color: #009688;">{{ dctServiceData['dbl_spare_amt'] }}</span></td>
+                                                  </tr>
+                                              </tfoot> -->
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+                          </mat-card-content>
+                      </mat-card>
+
+                      <!-- service assign --------------------------------------------------------------------------------- -->
+                      <mat-card class="mt-2 assigncard" *ngIf="blnShowAssign">
+                          <mat-card-content>
+                              <mat-card-title class="card-title">Service Assign</mat-card-title>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <mat-form-field>
+                                          <input matInput placeholder=" Service Engineer " [formControl]="searchServiceEngineer"
+                                                  [matAutocomplete]="engineername" [(ngModel)]="selectedSerEngineer">
+                                          <mat-autocomplete #engineername="matAutocomplete">
+                                              <mat-option *ngFor="let item of lstSerEngineer" [value]="item.name" (onSelectionChange)="serEngineerChanged(item)">
+                                                  {{ item.name }}
+                                              </mat-option>
+                                          </mat-autocomplete>
+                                      </mat-form-field>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <button   type="submit" (click)="saveServiceAssign()" class="save_btn">Save</button>
+                                  </div>
+                              </div>
+                          </mat-card-content>
+                      </mat-card>
+
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-md-4">
+
+              <!-- customer data ----------------------------------------------------------------------------------------- -->
+              <mat-card *ngIf = "!blnQc && !blnSE">
+
+                  <mat-card-title class="card-title"> 
+                      <span style="padding-left:5px;">Customer Details </span>
+                      <span class="pull-right accent" style="padding-right:5px;float:right">
+                          <i class="fa fa-chevron-up" (click)="blnShowCustFullDetails = !blnShowCustFullDetails" *ngIf="blnShowCustFullDetails"></i>
+                          <i class="fa fa-chevron-down" (click)="blnShowCustFullDetails = !blnShowCustFullDetails" *ngIf="!blnShowCustFullDetails"></i>
+                      </span>
+                  </mat-card-title>
+
+                  <mat-card-content >
+                      <div class="row mb-3">
+                          <!-- <div class="col-md-5">
+                              <div><img src="assets/images/man.png" style="width:100%;"></div>
+                          </div> -->
+                          <div class="col-md-7 mt-3">
+                              <p *ngIf="dctCustomerData['cust_fname']" class="name">{{ dctCustomerData['cust_fname'] | titlecase }} {{ dctCustomerData['cust_lname'] | titlecase }}</p>
+                              <p *ngIf="!dctCustomerData['cust_fname']">{{ '----' }}</p>
+                              <!-- Mobile number -->
+                              <p *ngIf="dctCustomerData['cust_mobile']"><i class=" fas fa-phone" style="color:#8489a9"></i> {{dctCustomerData['cust_mobile'] }}</p>
+                              <p *ngIf="!dctCustomerData['cust_mobile']">{{ '----' }}</p>
+                              <!-- email id -->
+                              <p *ngIf="dctCustomerData['cust_email']"><i class="mdi mdi-email" style="color:#8489a9"></i>&nbsp;{{dctCustomerData['cust_email'] }}</p>
+                              <p *ngIf="!dctCustomerData['cust_email']">{{ '----' }}</p>
+                          </div>
+                      </div>
+                      
+                      <div  *ngIf="blnShowCustFullDetails && strAction == 'VIEW'">
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <label>Alternate Mobile Number</label>
+                              </div>
+                              <div class="col-md-7">
+                                  <p *ngIf="dctCustomerData['cust_alternatemobile']">{{ dctCustomerData['cust_alternatemobile'] }}</p>
+                                  <p *ngIf="!dctCustomerData['cust_alternatemobile']">{{ '----' }}</p>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <label>Alternate Email Id</label>
+                              </div>
+                              <div class="col-md-7">
+                                  <p *ngIf="dctCustomerData['cust_alternatemail']">{{ dctCustomerData['cust_alternatemail'] }}</p>
+                                  <p *ngIf="!dctCustomerData['cust_alternatemail']">{{ '----' }}</p>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div *ngIf="blnShowCustFullDetails">
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <label>Enquiry Source</label>
+                              </div>
+                              <div class="col-md-7">
+                                  <p *ngIf="dctCustomerData['vchr_source_name']">{{ dctCustomerData['vchr_source_name'] | titlecase }}</p>
+                                  <p *ngIf="!dctCustomerData['vchr_source_name']">{{ '----' }}</p>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <label>Contact Source</label>
+                              </div>
+                              <div class="col-md-7">
+                                  <p *ngIf="dctCustomerData['cust_contactsrc']">{{ dctCustomerData['cust_contactsrc'] | titlecase }}</p>
+                                  <p *ngIf="!dctCustomerData['cust_contactsrc']">{{ '----' }}</p>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div *ngIf="blnShowCustFullDetails">
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <label>Send SMS</label>
+                              </div>
+                              <div class="col-md-7">
+                                  <p *ngIf="dctCustomerData['bln_sms']">{{ 'Yes' }}</p>
+                                  <p *ngIf="!dctCustomerData['bln_sms']">{{ 'No' }}</p>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <label>Branch</label>
+                              </div>
+                              <div class="col-md-7">
+                                  <p *ngIf="dctCustomerData['vchr_branch_name']">{{ dctCustomerData['vchr_branch_name'] | titlecase }}</p>
+                                  <p *ngIf="!dctCustomerData['vchr_branch_name']">{{ '----' }}</p>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div *ngIf="blnShowCustFullDetails">
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <label>Staff Name</label>
+                              </div>
+                              <div class="col-md-7">
+                                  <p *ngIf="dctCustomerData['staff_full_name']">{{ dctCustomerData['staff_full_name'] | titlecase }}</p>
+                                  <p *ngIf="!dctCustomerData['staff_full_name']">{{ '----' }}</p>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <label>Date</label>
+                              </div>
+                              <div class="col-md-7">
+                                  <p *ngIf="dctCustomerData['dat_created_at']">{{ dctCustomerData['dat_created_at'] | date:'dd-MM-yyyy' }}</p>
+                                  <p *ngIf="!dctCustomerData['dat_created_at']">{{ '----' }}</p>
+                              </div>
+                          </div>
+                      </div>
+
+                  </mat-card-content>
+
+              </mat-card>
+
+              <!-- invoice details ------------------------------------------------------------------------------------ -->
+              <mat-card class="mt-2" *ngIf="blnSE && ['JOB PENDING'].includes(dctServiceData['vchr_job_status'])">
+                   <mat-card-title class="card-title"> 
+                    <span >Complete Service</span>
+                      <!-- <span *ngIf="dctServiceData['vchr_job_status'] == 'INVOICED'">
+                          {{ dctServiceData['vchr_invoice_num'] }}
+                          <button (click)="invoicePrint(dctServiceData['invoice_id'])" class="printbtn" title="Print">
+                              <i class="ti-printer" aria-hidden="true"></i>
+                          </button>
+                      </span> -->
+                  </mat-card-title> 
+                  <mat-card-content style="margin-top: 12px;">
+                      <div >
+                          <!-- <div>
+                              <label for="payoption" *ngIf="dctServiceData['vchr_job_status'] == 'SERVICED'">Select payment option</label><br>
+                              <label for="payoption" *ngIf="dctServiceData['vchr_job_status'] == 'INVOICED'">Payment option</label><br>
+                              <mat-radio-group #payoption aria-label="Select an option" [(ngModel)]="strPaymentMethod" [disabled]="blnInvoiceReadOnly">
+                                  <mat-radio-button value="CASH">Cash</mat-radio-button>
+                                  <mat-radio-button value="DEBIT">Debit</mat-radio-button>
+                                  <mat-radio-button value="CREDIT">Credit</mat-radio-button>
+                                  <mat-radio-button value="BHARAT QR">Bharat QR</mat-radio-button>
+                              </mat-radio-group>
+                          </div> -->
+                          <div class="form-group">
+                              <div class="row">
+                                  
+                                    <div class="col-lg-12"> 
+                                    <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedRadio">
+                                        <mat-radio-button  value="1">Serviced</mat-radio-button>
+                                        <mat-radio-button  value="2">Not Serviced</mat-radio-button>
+                                      </mat-radio-group>
+                                      </div> 
+                                      <div class="col-md-12">
+                                      <mat-form-field  *ngIf = "selectedRadio == 1" style="width: 100%;">
+                                          <label for="invamt">Service Charge</label>
+                                          <input #invamt matInput [(ngModel)]="dblServiceCharge">
+                                      </mat-form-field>
+                                  </div>
+                                  <!-- <div class="col-md-6">
+                                      <mat-form-field style="width: 100%;">
+                                          <label for="invtax">Tax %</label>
+                                          <input type="number" #invtax matInput [(ngModel)]="dblTaxPercent" [readonly]="blnInvoiceReadOnly">
+                                      </mat-form-field>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <mat-form-field style="width: 100%;">
+                                          <label for="disc"> Discount</label>
+                                          <input type="number" #disc matInput [readonly]="blnInvoiceReadOnly" [(ngModel)]="dblDiscount" (ngModelChange)="calculateInvoiceAmount()">
+                                      </mat-form-field>
+                                  </div> -->
+                                  <div class="col-md-12" >
+                                      <mat-form-field style="width: 100%;">
+                                          <label for="invadvpaid">Remarks</label>
+                                          <input #invadvpaid matInput [(ngModel)]="strSeRemarks">
+                                      </mat-form-field>
+                                  </div>
+                                  <!-- <div class="col-md-6" *ngIf="dctServiceData['vchr_job_status'] == 'SERVICED'">
+                                      <mat-form-field style="width: 100%;">
+                                          <label for="invbalamt">Balance Amount</label>
+                                          <input #invbalamt matInput readonly [(ngModel)]="dctServiceData['dbl_total_amount']">
+                                      </mat-form-field>
+                                  </div> -->
+                              </div>
+                          </div>
+                          <div >
+                              <button class="save_btn" type="submit" (click)="completeService()" 
+                                          style="transform: none;width: 100%;">Complete Service</button>
+                          </div>
+                      </div>
+                  </mat-card-content>
+              </mat-card>
+
+              <!-- observations data ------------------------------------------------------------------------------ -->
+              <mat-card class="col-md-12 mt-3" *ngIf="!['ENQUIRY','JOB'].includes(dctServiceData['vchr_job_status']) &&!blnQc">
+                  <mat-card-title class="card-title" style="padding-bottom: 0px;"> 
+                      <label class="col-md-9" style="color: currentColor;">Observations</label>
+                      <span *ngIf="!blnObsEdit && blnEdit" class="edit_span" (click)="blnObsEdit = !blnObsEdit">Edit</span>
+                  </mat-card-title>
+                  <mat-card-content>
+                      <div *ngIf="dctServiceData['json_observation'] && objectKeys(dctServiceData['json_observation']).length > 0 && !blnObsEdit">
+                          <table class="table observationtable">
+                              <thead>
+                                  <tr>
+                                      <th scope="col"></th>
+                                      <th scope="col" style="text-align: center;">Working</th>
+                                      <th scope="col" style="text-align: center;">Not Working</th>
+                                  </tr>
+                              </thead>
+                              <tbody *ngIf="!blnObsEdit">
+                                  <tr *ngFor="let key of objectKeys(dctServiceData['json_observation']);let tempId=index">
+                                      <td>{{ key | titlecase }} </td>
+                                      <td style="text-align: center;">
+                                          <i *ngIf="isWorking(dctServiceData['json_observation'][key])" class="mdi mdi-check" style="color: #4CAF50;"></i>
+                                      </td>
+                                      <td style="text-align: center;">
+                                          <i *ngIf="isNotWorking(dctServiceData['json_observation'][key])" class="mdi mdi-close" style="color: #F44336;"></i>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                      <div *ngIf="blnObsEdit">
+                          <table class="table observationtable">
+                              <thead>
+                                  <tr>
+                                      <th scope="col">Parts</th>
+                                      <th scope="col" style="text-align: center;">Working</th>
+                                      <th scope="col" style="text-align: center;">Not Working</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let key of lstObservations;let tempId=index">
+                                      <td>{{ key | titlecase }} </td>
+                                      <td style="text-align: center;">
+                                          <mat-checkbox [checked]="isWorking(dctServiceData['json_observation'][key])" 
+                                              (change)="editObservation('W',key,$event.checked)"></mat-checkbox>
+                                      </td>
+                                      <td style="text-align: center;">
+                                          <mat-checkbox [checked]="isNotWorking(dctServiceData['json_observation'][key])" 
+                                              (change)="editObservation('NW',key,$event.checked)"></mat-checkbox>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="form-group mt-1" *ngIf="dctServiceData['json_observation'] && objectKeys(dctServiceData['json_observation']).length == 0 && !blnObsEdit">
+                          <span>No Observations found.</span>
+                      </div>
+                      <div *ngIf="blnObsEdit">
+                          <button  class="save_btn" type="submit" (click)="updateObservations()" 
+                              style="transform: none;width: 100%;background-color: green;">Update</button>
+                      </div>
+                  </mat-card-content>
+              </mat-card>
+
+              <!-- Observations for QUALITY CHECK -->
+              <mat-card class="col-md-12 mt-3" *ngIf="!['ENQUIRY','JOB'].includes(dctServiceData['vchr_job_status']) && blnQc">
+                <mat-card-title class="card-title" style="padding-bottom: 0px;"> 
+                    <label class="col-md-9" style="color: currentColor;">Service Engineer Observations</label>
+                </mat-card-title>
+                <mat-card-content>
+                    <div *ngIf="dctServiceData['json_observation'] && objectKeys(dctServiceData['json_observation']).length > 0 && !blnObsEdit">
+                        <table class="table observationtable">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col" style="text-align: center;">Working</th>
+                                    <th scope="col" style="text-align: center;">Not Working</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="!blnObsEdit">
+                                <tr *ngFor="let key of objectKeys(dctServiceData['json_observation']);let tempId=index">
+                                    <td>{{ key | titlecase }} </td>
+                                    <td style="text-align: center;">
+                                        <i *ngIf="isWorking(dctServiceData['json_observation'][key])" class="mdi mdi-check" style="color: #4CAF50;"></i>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <i *ngIf="isNotWorking(dctServiceData['json_observation'][key])" class="mdi mdi-close" style="color: #F44336;"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </mat-card-content>
+            </mat-card>
+              <mat-card class="col-md-12 mt-3" *ngIf="!['ENQUIRY','JOB'].includes(dctServiceData['vchr_job_status']) && blnQc">
+                <mat-card-title class="card-title" style="padding-bottom: 0px;"> 
+                    <label class="col-md-9" style="color: currentColor;">Verify Forum</label>
+                </mat-card-title>
+                <mat-card-content>
+                    <!-- <div *ngIf="dctServiceData['json_observation'] && objectKeys(dctServiceData['json_observation']).length > 0 && !blnObsEdit">
+                        <table class="table observationtable">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col" style="text-align: center;">Working</th>
+                                    <th scope="col" style="text-align: center;">Not Working</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="!blnObsEdit">
+                                <tr *ngFor="let key of objectKeys(dctServiceData['json_observation']);let tempId=index">
+                                    <td>{{ key | titlecase }} </td>
+                                    <td style="text-align: center;">
+                                        <i *ngIf="isWorking(dctServiceData['json_observation'][key])" class="mdi mdi-check" style="color: #4CAF50;"></i>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <i *ngIf="isNotWorking(dctServiceData['json_observation'][key])" class="mdi mdi-close" style="color: #F44336;"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
+                    <div>
+                        <table class="table observationtable">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col" style="text-align: center;">Status</th>
+                                    <th scope="col" style="text-align: center;">Assign Condition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let key of lstObservations;let tempId=index">
+                                    <td>{{ key | titlecase }} </td>
+                                    <td style="text-align: center;">
+                                        <i *ngIf="isWorking(dctVerifyForm[key])" class="mdi mdi-check" style="color: #4CAF50;"></i>
+                                        <i *ngIf="isNotWorking(dctVerifyForm[key])" class="mdi mdi-close" style="color: #F44336;"></i>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <mat-checkbox (change)="editQcObservation('NW',key,$event.checked)"></mat-checkbox>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <button  class="save_btn" type="submit" (click)="updateQcVerification( status = true)" 
+                            style="transform: none;width: 100%;background-color: green;">Verify</button>
+                            <div *ngIf = "blnQcRemarks">
+                                <br> <br>
+                            <input matInput  [(ngModel)]="qcRemarks" name="remarks" placeholder="Enter remarks " value="" style="border-bottom: 1px solid #d3d0d0;">
+                             </div>
+                            <br><br>
+                            <button  class="save_btn" type="submit" (click)="updateQcVerification( status = false)" 
+                            style="transform: none;width: 100%;background-color: green;">Fault Detected</button>
+                        
+                    </div>
+                </mat-card-content>
+            </mat-card>
+          </div>
+
+      </div>
+
+  </div>
+</div>
+
+<ng-template #imageShowTem let-modal>
+  <div id="template">
+      <img src="{{ urlImage }}" class="img-show">
+  </div>
+</ng-template>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#f80000" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

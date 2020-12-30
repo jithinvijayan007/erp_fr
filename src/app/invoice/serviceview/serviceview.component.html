@@ -1,0 +1,708 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">
+           <b>Service View <small><b>{{'- ' + dctMaster['vchr_job_num']}}</b></small></b></h4> 
+        
+      
+        <div class="form p-t-10 row">
+          <div class="col-md-4" *ngIf="dctMaster['dat_created_at']">
+            <div class="form-group mt-1">
+              <h6>Date</h6>
+              <p class="">{{dctMaster['dat_created_at']| date: 'dd/MM/yyyy'}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="dctMaster['vchr_cust_name']">
+            <div class="form-group mt-1">
+              <h6>Customer Name</h6>
+              <p class="">{{dctMaster['vchr_cust_name']| titlecase}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="dctMaster['int_cust_mob']">
+            <div class="form-group mt-1">
+              <h6>Contact No.</h6>
+              <p class="">{{dctMaster['int_cust_mob']}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-4" *ngIf="dctMaster['vchr_cust_email']">
+            <div class="form-group mt-1">
+              <h6>Mail ID</h6>
+              <p class="">{{dctMaster['vchr_cust_email']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="dctMaster['vchr_bname']">
+            <div class="form-group mt-1">
+              <h6>Branch</h6>
+              <p class="">{{dctMaster['vchr_bname'] | titlecase}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="dctMaster['staff_full_name']">
+            <div class="form-group mt-1">
+              <h6>Staff</h6>
+              <p class="">{{dctMaster['staff_full_name'] | titlecase}}</p>
+            </div>
+          </div>
+     
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <div class="col-lg-12">
+    <div class="card" *ngFor="let key of enqKeys">
+      <span class="card-body" *ngFor="let item of dctEnquiryDetails[key];let tempId=index" >
+        <h4 class="card-title heading" style="font-weight: 600;color: cadetblue;font-size:16px">
+          <span> {{key | titlecase}} {{tempId+1}} &nbsp;</span>
+          
+          <span *ngIf="salesStatus==6">
+            <span (click)="changeFollowUp(tempId,key,0,item)" *ngIf="(!(intFollowUpFlag == tempId && strFollowUpService == key)) && item['vchr_job_status'] == 'CHECKED'">
+              <i class="fa fa-chevron-right" title="Follow-up" aria-hidden="true"></i></span>
+            <span (click)="changeFollowUp(-1,'',1,item)" *ngIf="(intFollowUpFlag == tempId && strFollowUpService == key) && item['vchr_job_status'] == 'CHECKED'">
+              <i class="fa fa-chevron-down" title="Follow-up" aria-hidden="true"></i></span>
+                <!-- <button type="submit" >Reject</button> -->
+          </span>      
+         <!-- assign staff to service center delivery start -->
+           
+         <span *ngIf=" item['vchr_job_status'] == 'GDP NORMAL NEW' ||  item['vchr_job_status'] == 'GDEW NEW'">
+          <span (click)="changeGDP(tempId,key,0,item)" *ngIf="(!(intGDPFlag == tempId && strGDPService == key)) && (item['vchr_job_status'] == 'GDP NORMAL NEW' || item['vchr_job_status'] == 'GDEW NEW' ) ">
+            <i class="fa fa-chevron-right" title="Follow-up" aria-hidden="true"></i></span>
+          <span (click)="changeGDP(-1,'',1,item)" *ngIf="(intGDPFlag == tempId && strGDPService == key) && (item['vchr_job_status'] == 'GDP NORMAL NEW' || item['vchr_job_status'] == 'GDEW NEW' )">
+            <i class="fa fa-chevron-down" title="Follow-up" aria-hidden="true"></i></span>
+              <!-- <button type="submit" >Reject</button> -->
+        </span>  
+
+        <span class="text-right" *ngIf="salesStatus==10 && strAssignedStaff['staff_name_assigned'] == '' ">
+          <span class="text-right" (click)="assignDelivery(deliveryassign)">
+            <i class="fa fa-car" title="Delivery Assign" aria-hidden="true"></i>Delivery Assign</span>
+        </span>
+        </h4>
+              
+
+        <div class="form  row mt-3">
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Brand</h6>
+              <p *ngIf="item.vchr_brand">{{item['vchr_brand'] }}</p>
+              <p *ngIf="!item.vchr_brand">{{'----'}}</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group mt-1">
+              <h6>Item</h6>
+              <p *ngIf="item.vchr_item_name">{{item['vchr_item_name'] | titlecase}}</p>
+              <p *ngIf="!item.vchr_item_name">{{'----'}}</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>IMEI</h6>
+              <p *ngIf="item.vchr_imei">{{item['vchr_imei']}}</p>
+              <p *ngIf="!item.vchr_imei">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div *ngIf="item.dat_exp_delivery" class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Expected delivery</h6>
+              <p >{{item['dat_exp_delivery']|date:'dd-MM-yyyy'}}</p>
+              <!-- <p *ngIf="!item.dat_exp_delivery">{{'----'}}</p> -->
+              <!-- <p>{{item['dat_exp_delivery']|date:'dd-MM-yyyy'}}</p> -->
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Job status</h6>
+              <p *ngIf="item.vchr_job_status">{{item['vchr_job_status']|titlecase}}</p>
+              <p *ngIf="!item.vchr_job_status">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Warranty</h6>
+              <p *ngIf="item.vchr_type">{{item['vchr_type']|titlecase}}</p>
+              <p *ngIf="!item.vchr_type">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div  *ngIf="item.vchr_type=='NON-WARRANTY'" class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Estimated amount</h6>
+              <p *ngIf="item.vchr_job_status">{{item['dbl_est_amt']}}</p>
+              <p *ngIf="!item.vchr_job_status">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div *ngIf="item.vchr_type=='NON-WARRANTY'" class="col-md-3">
+            <div class="form-group mt-1">
+              <h6 *ngIf="salesStatusNa=='CHECKED'">Advance Need to Pay</h6>
+              <h6 *ngIf="salesStatusNa!='CHECKED'">Advance Paid</h6>
+
+              <p *ngIf="item.vchr_job_status">{{item['dbl_advc_paid'] | number:'2.0-0'}}</p>
+              <p *ngIf="!item.vchr_job_status">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div *ngIf="item.vchr_type=='GDP-Normal' || item.vchr_type=='GDEW-Normal'" class="col-md-3">
+            <div class="form-group mt-1">
+              <h6 *ngIf="salesStatusNa=='GDP NORMAL NEW' || salesStatusNa=='GDEW NEW' ">Advance Need to Pay</h6>
+              <h6 *ngIf="salesStatusNa!='GDP NORMAL NEW' && salesStatusNa!='GDEW NEW' ">Advance Paid</h6>
+              
+              <p *ngIf="item.int_adv_amount">{{item['int_adv_amount'] | number:'2.0-0'}}</p>
+              <p *ngIf="!item.int_adv_amount">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3" *ngIf="item.vchr_gdp_type">
+            <div class="form-group mt-1">
+              <h6>Transfer To.</h6>
+              <p *ngIf="item.vchr_gdp_type">{{item['vchr_gdp_type']}}</p>
+              <p *ngIf="!item.vchr_gdp_type">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3" *ngIf ="item['int_service_expense']" >
+            <div class="form-group mt-1">
+              <h6>Service Amt.</h6>
+              <p>{{item['int_service_expense']}}</p>
+            </div>
+          </div>
+
+          <div  *ngIf="item.vchr_type=='NON-WARRANTY'" class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Discount Amt</h6>
+              <p *ngIf="item.vchr_job_status">{{item['dbl_discount']}}</p>
+              <p *ngIf="!item.vchr_job_status">{{'----'}}</p>
+            </div>
+          </div>
+
+          <!-- <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Warranty</h6>
+              <p *ngIf="item.vchr_job_status">{{item['dbl_total_amount']}}</p>
+              <p *ngIf="!item.vchr_job_status">{{'----'}}</p>
+            </div>
+          </div> -->
+
+          <div  *ngIf="item.vchr_type=='NON-WARRANTY'" class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Balance Amt</h6>
+              <p *ngIf="item.vchr_job_status">{{item['dbl_total_amount']}}</p>
+              <p *ngIf="!item.vchr_job_status">{{'----'}}</p>
+            </div>
+          </div>
+          
+          <div class="col-md-3" *ngIf="salesStatus==10">
+              <div class="form-group mt-1">
+                <h6>Assigned Staff</h6>
+                <p *ngIf="item.staff_name_assigned != '' ">{{item['staff_name_assigned']}}</p>
+                <p *ngIf="item.staff_name_assigned == '' ">{{'Staff not assigned'}}</p>
+              </div>
+          </div>
+          
+        </div>
+
+        <div *ngIf="item['json_acc_received']['acc_received'].length>0" class="form  row">
+          <div class="col-md-12">
+            <div class="form-group mt-1">
+              <h6>Accessories Received</h6>
+              <p *ngIf="item['json_acc_received']">
+                <span *ngFor="let acc of item['json_acc_received']['acc_received'];let i = index;">{{acc | titlecase}}
+                  <span *ngIf="i+1 != item['json_acc_received']['acc_received'].length">,</span>
+                </span>
+              </p>
+              <p *ngIf="!item['json_acc_received']">{{'----'}}</p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="item['json_problem_category']['problem_category'].length>0" class="form  row">
+          <div class="col-md-12">
+            <div class="form-group mt-1">
+              <h6>Problem Category</h6>
+              <p *ngIf="item['json_problem_category']">
+                <span *ngFor="let acc of item['json_problem_category']['problem_category'];let i = index;">{{acc | titlecase}}
+                  <span *ngIf="i+1 != item['json_problem_category']['problem_category'].length">,</span>
+                </span>
+              </p>
+              <p *ngIf="!item['json_problem_category']">{{'----'}}</p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="objectKeys(item['json_observation']).length>0" class="form  row">
+          <div class="col-md-6">
+            <div class="form-group mt-1">
+              <h6>Observations</h6>
+              <div class="row" *ngFor="let observ of objectKeys(item['json_observation'])">
+                <div class="col-md-6">
+                  <p *ngIf="item['json_observation']">{{observ | titlecase}}  </p>
+              
+                </div>
+                <div class="col-md-4">
+                  <span *ngIf="item['json_observation'][observ] == 'W'"> : Working</span>
+                  <span *ngIf="item['json_observation'][observ] == 'NW'">: Not Working</span>
+                 
+                </div>
+                <p *ngIf="!item['json_observation']">{{'----'}}</p>
+
+              </div>
+              <!-- <span *ngFor="let observ of objectKeys(item['json_observation'])">
+                <p *ngIf="item['json_observation']">{{observ | titlecase}} :
+                  <span *ngIf="item['json_observation'][observ] == 'W'">Working</span>
+                  <span *ngIf="item['json_observation'][observ] == 'NW'">Not Working</span>
+                </p>
+                <p *ngIf="!item['json_observation']">{{'----'}}</p>
+              </span> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="form  row">
+          <div class="col-md-12">
+            <div class="form-group mt-1">
+              <h6>Remarks</h6>
+                <p *ngIf="item['str_remarks']">{{item['str_remarks'] | titlecase}}</p>
+                <p *ngIf="!item['str_remarks']">{{'----'}}</p>
+            </div>
+          </div>
+        </div>
+<!--         
+          <div class="col-md-12">
+            <div class="form-group mt-1">
+              <h6>Pin Lock</h6>
+                <p *ngIf="item['vchr_pin_lock']">{{item['vchr_pin_lock']}}</p>
+                <p *ngIf="!item['vchr_pin_lock']">{{'----'}}</p>
+            </div>
+          </div>
+        </div> -->
+
+
+        <!-- <label>Image</label>
+        <div class="form  row">
+          <div class="col-md-6" *ngFor="let element of item['vchr_service_image']['image']">
+            <div class="imagebox">
+              <img class="image" src="{{nodeURL}}{{element}}" style="width:100%;height: 180px;" alt="Image is temporarily unavailable" />
+              <div class="middle">
+                <div class="text" (click)="openzoomimage(zoomimage,image)">
+                  <i class="fa fa-search-plus fa-2x"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        
+
+        <!-- <label>Image</label>  
+        <div class="form  row">
+          <div class="col-md-6" *ngFor="let element of item['vchr_service_image']['image']">
+            <div class="form-group mt-1">
+              <img src="{{nodeURL}}{{element}}" alt="">
+            </div>
+          </div>
+        </div> -->
+
+
+
+
+
+        <div class="row">
+          <!-- <h6 style="background-color: #f2f4f5;padding: 5px;">Images: </h6> -->
+          <div class="col-md-12"  *ngIf="item['vchr_service_image']">
+          <h6 style="width:100%;">Image</h6>
+        
+            <div >
+              <div class="imagebox">
+                <img class="image" src="{{nodeURL}}{{image}}" style="width:180px;height: 180px;margin-right: 10px;" alt="Image is temporarily unavailable"    *ngFor="let image of item['vchr_service_image']['image']"/>
+                <div class="middle">
+                  <!-- <div class="text" (click)="openzoomimage(zoomimage,image)">
+                    <i class="fa fa-search-plus fa-2x"></i>
+                  </div> -->
+                </div>
+              </div>
+        
+            </div>
+          </div>
+
+          <div class="col-md-3 mt-3" *ngIf="item['vchr_digital_signature']">
+            <h6 style="width:100%;">Signature</h6>
+              
+                  <!-- <label >Signature</label> -->
+                <div class="form-group mt-1">
+                  <img src="{{item['vchr_digital_signature']}}" alt="" style="width:100%;height:150px;">
+                
+              </div>
+          </div>
+          <div class="col-md-3 mt-3" *ngIf="item['vchr_screen_lock']">
+            <h6 style="width:100%;">Screen Lock</h6>
+              
+                  <!-- <label >Signature</label> -->
+                <div class="form-group mt-1">
+                  <img src="{{nodeURL}}{{item['vchr_screen_lock']}}" alt="" style="width:100%;height:150px;">
+               
+              </div>
+          </div>
+          <div class="col-md-3 mt-3" *ngIf="item['vchr_pin_lock']">
+            <div class="form-group mt-1">
+              <h6>Pin Lock</h6>
+                <p *ngIf="item['vchr_pin_lock']">{{item['vchr_pin_lock']}}</p>
+                <p *ngIf="!item['vchr_pin_lock']">{{'----'}}</p>
+            </div>
+          </div>
+        </div>
+        
+    
+
+        <!-- <div *ngIf="item['vchr_digital_signature']" class="row">
+          <h6 style="background-color: #f2f4f5;padding: 5px;">Images: </h6> -->
+          <!-- <div class="col-md-6">
+          <h6 style="width:100%;">Signature</h6>
+            <div class="col-md-6" >
+  
+              <div class="form-group mt-1">
+                <img src="{{hostName}}{{item['vchr_digital_signature']}}" alt="" style="width:100%;height:150px;">
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+
+        <div class="row" *ngIf="(salesStatus==10 && item['vchr_job_status'] == 'SENT TO SERVICE CENTRE') || (salesStatus==10 && item['vchr_job_status'] == 'SERVICED') ||  (salesStatus==10 && item['vchr_job_status'] == 'SERVICED & DELIVERED')">
+          <!-- <h6 style="background-color: #f2f4f5;padding: 5px;">Images: </h6> -->
+          <div class="col-md-2">
+          <label style="width:100%;">Service Center Slip</label>
+              <div class="imagebox">
+                <img class="image" src="{{nodeURL}}{{item['image']}}" style="width:100%;height: 180px;" alt="Image is temporarily unavailable" />
+                <div class="middle">
+                  <!-- <div class="text" (click)="openzoomimage(zoomimage,image)">
+                    <i class="fa fa-search-plus fa-2x"></i>
+                  </div> -->
+                </div>
+              </div>
+          </div>
+        </div>
+        
+        <div class="col-md-12" *ngIf="salesStatus==10 && item['vchr_job_status'] == 'SENT TO SERVICE CENTRE' ">
+          <button class="btn save_btn mr-2" type="submit" (click) ="saveAlertService()">Sent Alert</button>
+        </div>
+
+        <div class="col-md-12" *ngIf="dctMaster['bln_mail_button']">
+          <button class="btn save_btn mr-2" type="submit" (click) ="saveAlertGdpNormal()">Sent Alert</button>
+        </div>
+         
+        <div class="col-md-12" *ngIf="salesStatus==10 && item['vchr_job_status'] == 'SERVICED' ">
+          <button class="btn save_btn mr-2" type="submit" (click) ="saveService()">Delivery Confirm</button>
+        </div>
+        
+        <div class="col-md-12" *ngIf="salesStatus==5">
+          <button type="submit" (click) ="saveNotService()">Save</button>
+        </div>
+      
+
+        <div class="form  row mt-3" *ngIf="intFollowUpFlag == tempId && strFollowUpService == key">
+        
+          <div class="col-md-12">
+            <h6>Add Follow-up</h6>
+          </div>
+        
+          <!-- <div class="col-md-3">
+            <mat-form-field>
+              <input matInput required readonly [matDatepicker]="picker" placeholder="Expected delivery" [(ngModel)]="datFollowup" name="datFollowup"
+                #followupDate>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        
+          <div class="col-md-3">
+            <mat-form-field>
+              <input type="number" required [(ngModel)]="intEstAmt" name="intEstAmt" matInput placeholder="Estimated Amount" #estAmtId>
+            </mat-form-field>
+          </div> -->
+        
+          <div *ngIf="strFollowUpStatus=='PENDING'" class="col-md-3">
+            <mat-form-field>
+              <input type="number" [(ngModel)]="intDiscount" name="intDiscount" matInput placeholder="Discount Amount" #discId>
+            </mat-form-field>
+          </div>
+        
+          <div *ngIf="strFollowUpStatus=='PENDING'"  class="col-md-3">
+            <mat-form-field>
+              <input type="number"  [(ngModel)]="intAdvanceAmt" name="intAdvanceAmt" matInput placeholder="Advance Paid" #advanceAmtId>
+            </mat-form-field>
+          </div>
+        
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Service Status">
+                <mat-option *ngFor="let status of ['PENDING','LOST']" (onSelectionChange)="changeStatus()"[value]="status">{{status}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+
+          <!-- Receipt -->
+            
+          <div class="row col-md-12" *ngIf="strFollowUpStatus=='PENDING'"> 
+
+          <div class="col-md-12 row">
+
+          <div class="col-md-2">
+            <mat-form-field>
+                <mat-select required [(ngModel)]="fopSelected" name="fopSelected" placeholder="FOP" (ngModelChange)=fopchange(fopSelected)>
+                    <mat-option [value]=1>CASH</mat-option>
+                    <mat-option [value]=2>DEBIT CARD</mat-option>
+                    <mat-option [value]=3>CREDIT CARD</mat-option>
+                    <!-- <mat-option [value]=4>CHEQUE</mat-option> -->
+                    <!-- <mat-option [value]=5>RTGS</mat-option> -->
+                    <!-- <mat-option [value]=6>NEFT</mat-option> -->
+                    <!-- <mat-option [value]=7>PAYTM</mat-option>
+                    <mat-option [value]=8>PAYTM MALL</mat-option> -->
+                    <mat-option [value]=9>BHARATH QR</mat-option>
+
+                </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2" *ngIf = "fopSelected==2 || fopSelected==3">
+              <mat-form-field>
+                  <input #cardNum OnlyInteger="true"   [(ngModel)]="strCardNumber" name="strCardNumber" matInput placeholder="Card Number*" #cardId>
+              </mat-form-field>
+          </div>
+          <div class="col-md-3" *ngIf = "fopSelected==7 || fopSelected==8 || fopSelected==9 || fopSelected==2 || fopSelected==3">
+              <mat-form-field>
+                  <input #refe  [(ngModel)]="strPaytmRefereNumber" name="strPaytmRefereNumber" matInput placeholder="Reference Number*" #paytmRefId>
+              </mat-form-field>
+          </div>
+
+          <div class="col-md-3" *ngIf="fopSelected==2 || fopSelected==3">
+            <mat-form-field>
+              <mat-select [(ngModel)]="intBankId" name="bankSelected" placeholder="Bank Name">
+                <mat-option *ngFor="let item of lstBankNames;"  [value]="item.pk_bint_id">{{item.vchr_name | titlecase}} </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+
+          <div class="col-md-2">
+              <mat-form-field>
+                  <input #Amnt type="number" [(ngModel)]="intAmount" name="intAmount" matInput placeholder="Amount*" #amountId>
+              </mat-form-field>
+          </div>
+
+          <!-- <div class="col-md-3">
+              <mat-form-field>
+                  <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Date Issue*" [(ngModel)]="datIssue" name="issueDate" #issueDate>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+          </div> -->
+
+          </div>
+
+        </div> 
+          <!-- Receipt End-->
+          
+
+
+
+          <div class="col-md-6">
+            <mat-form-field>
+              <input matInput required placeholder="Remarks" [(ngModel)]="strRemarks" value="" name="Remarks" #idName>
+            </mat-form-field>
+          </div>
+        
+          <div class="col-md-12">
+            <button  type="submit" (click) = "saveFollowup(item['vchr_item_code'],item['int_service_id'])" class="btn save_btn mr-2">Save</button>
+            <button (click) = "changeFollowUp(-1,'',1,item)" class="btn cancel_btn">Cancel</button>
+          </div>
+
+        
+        </div>
+
+        <!-- GDP Normal follow up start--> 
+       
+
+        <div class="form  row mt-3" *ngIf="intGDPFlag == tempId && strGDPService == key">
+        
+          <div class="col-md-12">
+            <h6>Add Follow-up</h6>
+          </div>
+        
+         
+          <div class="col-md-6">
+            <mat-form-field>
+              <input matInput type="number" required placeholder="Advance Paid" [(ngModel)]="strGDPAdv" value="" name="adv" >
+            </mat-form-field>
+          </div>
+
+
+
+            <!-- Receipt in GDP normal new -->
+            
+            <div class="row col-md-12"> 
+
+                <div class="col-md-12 row">
+      
+                <div class="col-md-2">
+                  <mat-form-field>
+                      <mat-select required [(ngModel)]="fopSelected" name="fopSelected" placeholder="FOP" (ngModelChange)=fopchange(fopSelected)>
+                          <mat-option [value]=1>CASH</mat-option>
+                          <mat-option [value]=2>DEBIT CARD</mat-option>
+                          <mat-option [value]=3>CREDIT CARD</mat-option>
+                          <!-- <mat-option [value]=4>CHEQUE</mat-option> -->
+                          <!-- <mat-option [value]=5>RTGS</mat-option> -->
+                          <!-- <mat-option [value]=6>NEFT</mat-option> -->
+                          <!-- <mat-option [value]=7>PAYTM</mat-option>
+                          <mat-option [value]=8>PAYTM MALL</mat-option> -->
+                          <mat-option [value]=9>BHARATH QR</mat-option>
+      
+                      </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2" *ngIf = "fopSelected==2 || fopSelected==3">
+                    <mat-form-field>
+                        <input #cardNum OnlyInteger="true"   [(ngModel)]="strCardNumber" name="strCardNumber" matInput placeholder="Card Number*" #cardId>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3" *ngIf = "fopSelected==7 || fopSelected==8  || fopSelected==9 || fopSelected==2 || fopSelected==3">
+                    <mat-form-field>
+                        <input #refe  [(ngModel)]="strPaytmRefereNumber" name="strPaytmRefereNumber" matInput placeholder="Reference Number*" #paytmRefId>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3" *ngIf="fopSelected==2 || fopSelected==3">
+                  <mat-form-field>
+                    <mat-select [(ngModel)]="intBankId" name="bankSelected" placeholder="Bank Name">
+                      <mat-option *ngFor="let item of lstBankNames;" [value]="item.pk_bint_id">{{item.vchr_name | titlecase}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+                    <mat-form-field>
+                        <input #Amnt type="number" [(ngModel)]="intAmount" name="intAmount" matInput placeholder="Amount*" #amountId>
+                    </mat-form-field>
+                </div>
+                <!-- <div class="col-md-3">
+                    <mat-form-field>
+                        <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Date Issue*" [(ngModel)]="datIssue" name="issueDate" #issueDate>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div> -->
+      
+                </div>
+      
+              </div> 
+                <!-- Receipt End-->
+
+
+        
+          <div class="col-md-12">
+            <button  type="submit" (click) = "saveGDPFollowup(dctMaster.partial_id,item['int_service_id'],item['vchr_item_code'])" class="btn save_btn mr-2">Savel</button>
+            <button (click) = "changeGDP(-1,'',1,item)" class="btn cancel_btn">Cancel</button>
+          </div>
+        
+        </div>
+        <!-- GDP Normal follow up end --> 
+        
+      
+
+      </span>
+
+    </div>
+  </div>
+
+  <!-- ----------------------------------------------------------------------- -->
+  <div class="col-lg-12" *ngIf="lstSpare.length>0">
+    <div class="card" >
+      <span class="card-body" >
+        <h4 class="card-title heading" style="font-weight: 600;color: cadetblue;font-size:16px">
+          <span> Spare Item &nbsp;</span>
+        </h4>
+          <table class="table">
+            <tr style="background: #e4f7ffb5;">
+              <th>Item Code</th>
+              <th>Item</th>
+              <th>Batch No</th>
+              <th>Amount</th>
+            </tr>
+            <tr *ngFor="let item of lstSpare">
+              <td>
+                  <span *ngIf="item.vchr_item_code">{{item['vchr_item_code']}}</span>
+                  <span *ngIf="!item.vchr_item_code">{{'----'}}</span>
+              </td>
+              <td>
+                  <span *ngIf="item.vchr_item_name">{{item['vchr_item_name'] | titlecase}}</span>
+                  <span *ngIf="!item.vchr_item_name">{{'----'}}</span>
+              </td>
+              <td>
+                  <span *ngIf="item.vchr_imei">{{item['vchr_imei'] }}</span>
+                  <span *ngIf="!item.vchr_imei">{{'----'}}</span>
+              </td>
+              <td>
+                  <span *ngIf="item.amount">{{item['amount'] }}</span>
+                  <span *ngIf="!item.amount">{{'----'}}</span>
+              </td>
+
+            </tr>
+          </table>
+        </span>
+     </div>
+
+  
+ </div>
+<!-- ----------------------------------------------------------------------- -->
+</div>
+
+
+<!-- Job Assign Popup -->
+
+<ng-template #deliveryassign let-modal>
+  <div class="modal-header">
+       <h4 class="modal-title" id="modal-basic-title">Delivery Assign</h4>        
+  </div>
+       <div class="modal-body">
+           <div class="form-group">
+               <mat-form-field >
+                   <input matInput placeholder=" Delivery Staff " name="deliveryStaff" [formControl]="searchDeliveryStaff" [matAutocomplete]="staffname" [(ngModel)]="selectedDeliveryStaff" #staffId>
+                   <mat-autocomplete #staffname="matAutocomplete">
+                       <mat-option *ngFor="let item of lstDeliveryStaffs" [value]="item.name" (onSelectionChange)="deliveryStaffChanged(item)">
+                           {{ item.name}}
+                       </mat-option>
+                   </mat-autocomplete>
+               </mat-form-field>
+           </div>
+       </div>
+  
+   <div class="modal-footer">
+       <button class="btn save_btn" type="submit" (click)="saveDeliveryStaffAssign()">Save</button>
+       <button class="btn cancel_btn" type="submit" (click)="cancelDeliveryStaffAssign()">Cancel</button>
+   </div>
+
+</ng-template>
+<!-- Job Assign popup end here -->
+
+<!-- Payment Details -->
+<div class="col-lg-12" *ngIf="lstPayment.length>0">
+  <div class="card">
+      <div class="card-body">
+          <h4 class="mb-4" style="background: #e7f2fb; padding: 9px 10px;  color: #2c465b;">Payment Details &nbsp;</h4>
+          <div class="form-group mt-1 row">
+              <div class="col-md-2" *ngFor="let item of lstPayment">
+                  <h6>{{item.payment_type}}</h6>
+                  <label >Amount</label>
+                  <p class="">{{item.dbl_receved_amt}}</p>
+                  <label *ngIf="item.vchr_reff_number">Reference Number</label>
+                  <p class="" *ngIf="item.vchr_reff_number">{{item.vchr_reff_number}}</p>
+                  <label *ngIf="item.vchr_card_number">Card Number</label>
+                  <p class="" *ngIf="item.vchr_card_number">{{item.vchr_card_number}}</p>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Payment Details -->

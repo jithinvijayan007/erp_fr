@@ -1,0 +1,22 @@
+.icon{
+    position: absolute;
+    left: 8px;
+    top: 4px;
+    background: white;
+    border-radius: 50%;
+    color: black;
+    width: 20px;
+    height: 20px;
+    
+  }
+  .btn {
+    height: 30px  !important;
+    line-height: 7px !important;
+    min-width: 82px;
+}
+  .fa-angle-left:before {
+  
+    content: "\f104";
+    vertical-align: middle;
+    
+}

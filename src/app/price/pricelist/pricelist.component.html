@@ -1,0 +1,64 @@
+
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="card-title"> Price List</h4>
+              <div class="row">
+                <div class="card">
+                    <form class="form-inline">
+
+                        <div class="col-md-4 col-lg-4">
+                            <mat-form-field>
+                              <input (click)="picker1.open()" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="From" [(ngModel)]="datFrom">
+                              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                              <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-md-4 col-lg-4">
+                            <mat-form-field>
+                              <input (click)="picker2.open()" id ="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To" [(ngModel)]="datTo">
+                              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                              <mat-datepicker #picker2>
+                              </mat-datepicker>
+                            </mat-form-field>
+                          </div>
+                                
+
+                          <!-- <div class="col-md-4">
+                              <mat-form-field>
+                                  <input matInput type="number" placeholder="Mobile No" maxlength="10" [(ngModel)]="intPhone" name="no1" >
+                              </mat-form-field>
+                          </div> -->
+
+                          <div class="col-md-4">
+                            <button type="submit" class="btn save_btn m-r-10" (click)="getData()">Search</button>
+
+                          </div>
+                     
+                    </form>
+                </div>
+            </div>
+              <div>
+                  <div class="table table-responsive smart-table"  *ngIf="blnShowData">
+                      <ng2-smart-table [settings]="settings" [source]="source" class="" (deleteConfirm)="onDeleteConfirm($event)"  (custom)="onCustomAction($event)" ></ng2-smart-table>
+                  </div>
+                  <div class="card nodata" *ngIf="!blnShowData">
+                    <div>NO DATA FOUND</div>
+                  </div>
+              </div>
+           
+          </div>
+      </div>
+  </div>
+ 
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

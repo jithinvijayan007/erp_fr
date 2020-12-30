@@ -1,0 +1,199 @@
+
+<div class="card">
+    <div class="card-body">
+
+        <mat-tab-group dynamicHeight [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanges($event)" selectedTabLabel = "selectedTabLabel" #tabGroup>
+            <mat-tab label="All"></mat-tab>
+            <mat-tab label="Pending" *ngIf="blnPending"></mat-tab>
+            <mat-tab label="Assigned" *ngIf="blnAssign"></mat-tab>
+           
+            <mat-tab label="Completed" *ngIf="blnCompleted"></mat-tab>
+        </mat-tab-group>
+
+    
+        <div class="row mt-3">
+            <!-- <div class="col-md-3">
+                <app-date-range-picker (onSelectDate)="getEnquiry($event)"></app-date-range-picker>
+            </div> -->
+            <div class="col-md-6" style="max-width: 240px;" >
+                <div class="input-container cal_cont">
+                    <i class="mdi mdi-calendar cal_icon" ></i>
+                    <input  type="text" class="ngx_dtp "matInput ngxDaterangepickerMd [locale]="locale" showDropdowns = "true" alwaysShowCalendars = "true" (datesUpdated) = "getEnquiry($event)" [ranges]="ranges" [(ngModel)]="selected"  name="daterange"/>
+                </div>           
+            </div>
+            <div class="col-md-12">
+                <div class="example-header">
+                    <mat-form-field style="width: 100%;">
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Advance search">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div  class="col-md-12" style="margin-top: 28px;margin-bottom: 28px;">
+        <div class="container-fluid" [hidden]="!blnChart">
+            <div class="row">
+                <div  class="col-md-5 chart-div">
+                    <div *ngIf="blnChart">
+                        <span class="mdi mdi-eye" style="position: absolute;z-index: 1;margin-left: 0vw;
+                            font-size: 18px;margin-top: -3px;color: #021e58;" title="view" (click)="showReportData(reportData, 'STATUS')"></span>
+                        <!-- <span style="position: absolute;z-index: 1;margin-left: 26vw;
+                            font-size: 13px;font-weight: 500;color: black;" (click)="applyStatusFilter('ALL')">All</span> -->
+                    </div>
+                    <div id="status-container"></div>
+                </div>
+                <div class=" col-md-6 chart-div">
+                    <div *ngIf="blnChart">
+                        <span class="mdi mdi-eye" style="position: absolute;z-index: 1;margin-left: 0vw;
+                            font-size: 18px;margin-top: -3px;color: #021e58;"  title="view" (click)="showReportData(reportData, 'PRODUCT')"></span>
+                        <!-- <span style="position: absolute;z-index: 1;margin-left: 39vw;
+                            font-size: 13px;font-weight: 500;color: black;" (click)="applyProductFilter('ALL')">All</span> -->
+                    </div>
+                    <div id="product-container"></div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div *ngIf="lstServiceFiltered.length == 0" style="margin-top: 3vh;  text-align: center;">
+            <h5 class="no_list_data">No Data</h5>
+        </div>
+
+        <mat-table [dataSource]="dataSource" matSort style="margin-top: 3vh;" 
+                [ngStyle]="{'display': blnShowTable ? 'block' : 'none'}">
+
+            <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef mat-sort-header="date"> Date </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.date | date:'dd-MM-yyyy' }} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="servNo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header="job"> Service no </mat-header-cell>
+                <mat-cell *matCellDef="let row">{{ row.job }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="branchName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header="branch"> Branch </mat-header-cell>
+                <mat-cell *matCellDef="let row">{{ row.branch | titlecase }}</mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="customerName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header="customer_name"> Customer </mat-header-cell>
+                <mat-cell *matCellDef="let row">{{ row.customer_name | titlecase }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="customerNumber">
+                <mat-header-cell *matHeaderCellDef mat-sort-header="cust_mobile"> Number </mat-header-cell>
+                <mat-cell *matCellDef="let row">{{ row.cust_mobile }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="pexname">
+                <mat-header-cell *matHeaderCellDef mat-sort-header="staff_assigned"> Picked by </mat-header-cell>
+                <mat-cell *matCellDef="let row" [style.color]="row.color">
+                {{ row.staff_assigned ? (row.staff_assigned | titlecase) : '------' }}
+                </mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="staffName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header="staff_service"> Assigned to </mat-header-cell>
+                <mat-cell *matCellDef="let row" [style.color]="row.color">
+                {{ row.staff_service ? (row.staff_service | titlecase) : '------' }}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <span *ngFor="let status of row.status | slice:0:1;let tempId=index;">
+                        <span *ngIf="tempId==1">, </span> {{ status }}
+                    </span>
+                    <span *ngIf="row.status.length>1"> , ...</span>
+                </mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="product">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Product </mat-header-cell>
+                <mat-cell *matCellDef="let row" [style.color]="row.color">
+                    <span *ngFor="let service of row.services | slice:0:2;let tempId=index;">
+                        <span *ngIf="tempId==1">, </span> {{ service }}
+                    </span>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="itemName">
+                <mat-header-cell style="min-width: 20%;" *matHeaderCellDef mat-sort-header> Item </mat-header-cell>
+                <mat-cell style="min-width: 20%;" *matCellDef="let row" [style.color]="row.color">
+                {{ row.item_name | titlecase }}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="imei">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Imei </mat-header-cell>
+                <mat-cell *matCellDef="let row" [style.color]="row.color">
+                {{ row.item_imei ? row.item_imei: '------' }}
+                </mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="change" stickyEnd>
+                <mat-header-cell *matHeaderCellDef style="justify-content: center;">Actions</mat-header-cell>
+                <mat-cell *matCellDef="let row" [style.color]="row.color" 
+                    style="justify-content: center;background: #ffffffdb;padding-left: 10px;padding-right: 10px;">
+                    <button (click)="viewServiceDetails(row.job_id)" class="viewbtn mr-2" title="View Details">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                    <button *ngIf="blnFc && blnPrintJob" (click)="printServiceDetails(row.job_id,false)" class="printbtn-list mr-2" title="Print">
+                        <i class="ti-printer" aria-hidden="true"></i>
+                    </button>
+                    <!-- <button *ngIf="blnPrintInv" (click)="printInvoiceSlip(row.invoice_id,false)" class="printbtn-list mr-2" title="Print">
+                        <i class="ti-printer" aria-hidden="true"></i>
+                    </button> -->
+                    <button *ngIf="blnEmail" (click)="printInvoiceSlip(row.invoice_id,true)" class="emailbtn mr-2" title="Email">
+                        <i class="ti-email" aria-hidden="true"></i>
+                    </button>
+                </mat-cell>
+            </ng-container>
+            
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 100]" [ngStyle]="{'display': blnShowTable ? 'block' : 'none'}"></mat-paginator>
+
+    </div>
+</div>
+
+<ng-template #reportData let-modal>
+
+    <div id="eyebutton" class="modal-body">
+        <div class="row" style="padding: 5px;margin-left: -10px;background: black;color: aliceblue;font-weight: 500;">
+            <div class="col-md-7" style="padding-left: 20px;">Type</div>
+            <div class="col-md-5" style="padding-left: 20px;">No Of Jobs</div>
+        </div>
+        <div class="row" style="overflow-y: scroll;height: 40vh;width: 485px;">
+            <mat-table [dataSource]="reportDataSource" style="width: 500px;overflow-x: hidden;">
+                <ng-container matColumnDef="type">
+                    <mat-cell class="minwidth10" *matCellDef="let row" >{{ row.Type }} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="noOfJobs">
+                    <mat-cell class="minwidth10" *matCellDef="let row"> {{ row.Count }} </mat-cell>
+                </ng-container>
+                <mat-row *matRowDef="let row; columns: displayedReportColumns;"></mat-row>
+            </mat-table>
+        </div>
+        <!-- <div class="row">
+            <div class="col-md-12" style="text-align:center;">
+                <button class="btn cancel_btn mt-3" (click)="hideModal()" style="background: #1d3557;
+                    color: white;">cancel</button>
+            </div> -->
+        <div class="row justify-content-end">
+            <div class="col-3">
+                <button  (click)="exportData()" style="background: #04640c;color: white;width: 100%;border-radius: 2px;">Export</button>
+            </div>
+            <div class="col-3">
+                <button  (click)="closeModal()" style="background: #ae0202;color: white;width: 100%;border-radius: 2px;">Cancel</button>
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+</ng-template>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#f80000" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

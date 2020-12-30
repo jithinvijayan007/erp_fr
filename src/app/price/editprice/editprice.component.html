@@ -1,0 +1,91 @@
+<div class="card">
+  <div class="card-body">
+        <div class="col-md-12 col-lg-12">
+            <h3 class="form-head">Edit Price</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <mat-form-field>
+                         <input matInput required placeholder="Item" [formControl]="searchItem" [matAutocomplete]="Itemname" [(ngModel)]="strItem" style="width: 96% !important"
+                         #idItem>
+                         <mat-icon matSuffix><i class="fa fa-history" title="History" *ngIf="blnshowHistory" mat-raised-button (click)="openDialog()" style="font-size: 16px;color: #4080e4;"></i> </mat-icon>
+                          <mat-autocomplete #Itemname="matAutocomplete">
+                         <mat-option *ngFor="let item of lst_item" [value]="item.code_name" (onSelectionChange)="itemChanged(item)">
+                           {{ item.code_name }}
+                         </mat-option>
+                       </mat-autocomplete>
+                       <mat-error *ngIf="form.controls['item'].hasError('required') && form.controls['item'].touched ">
+                            you must select a item
+                        </mat-error>
+                      </mat-form-field>
+                      <!-- <i class="fa fa-history" title="History" *ngIf="blnshowHistory" mat-raised-button (click)="openDialog()" ></i>     -->
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input #idSupAmnt type="number" required [(ngModel)]="intSupplierAmount" name="intSupplierAmount" matInput placeholder="Supplier Amount" [formControl]="form.controls['suppamount']">
+                        <mat-error *ngIf="form.controls['suppamount'].hasError('required') && form.controls['suppamount'].touched ">
+                            you must enter Supplier amount
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input #idMRP type="number" required [(ngModel)]="intMrp" name="intMrp" matInput placeholder="MRP" [formControl]="form.controls['mrp']">
+                        <mat-error *ngIf="form.controls['mrp'].hasError('required') && form.controls['mrp'].touched ">
+                            you must enter MRP
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input #idMOP type="number" required [(ngModel)]="intMOP" name="intMOP" matInput placeholder="MOP" [formControl]="form.controls['mop']">
+                        <mat-error *ngIf="form.controls['mop'].hasError('required') && form.controls['mop'].touched ">
+                            you must enter MOP
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input #idCostPrice type="number" required [(ngModel)]="intCostPrice" name="intCostPrice" matInput placeholder="Cost Price" [formControl]="form.controls['costprice']">
+                        <mat-error *ngIf="form.controls['costprice'].hasError('required') && form.controls['costprice'].touched ">
+                            you must enter Cost Price
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker" placeholder="Date effective from" [(ngModel)]="datEffectiveFrom" name="datEffectiveFrom" [formControl]="form.controls['dateffefrom']" #idEfectiveDate>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="form.controls['dateffefrom'].hasError('required') && form.controls['dateffefrom'].touched ">
+                            you must enter Date effective from
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input #idDealerPrice type="number" required [(ngModel)]="intDealerAmount" name="intDealerAmount" matInput placeholder="Dealer Amount" [formControl]="form.controls['dealeramount']">
+                        <mat-error *ngIf="form.controls['dealeramount'].hasError('required') && form.controls['dealeramount'].touched ">
+                            you must enter Dealer Amount
+                        </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-4">
+                    <mat-form-field>
+                        <input #idMygPrice type="number" required [(ngModel)]="intMygPrice" name="intMygPrice" matInput placeholder="myG Price" [formControl]="form.controls['mygprice']">
+                        <mat-error *ngIf="form.controls['mygprice'].hasError('required') && form.controls['mygprice'].touched ">
+                            you must enter myG price
+                        </mat-error>
+                    </mat-form-field>
+                  </div>
+            </div>
+            <div class="row">
+                <button class="btn save_btn m-r-10" color="accent" (click)="savePrice()" style="margin-right: 10px;">Update</button>
+                <button class="btn btn-secondary" [routerLink]="['/price/listprice']">Cancel</button>
+            </div> 
+            
+            
+        </div>
+  </div>
+
+</div>
+

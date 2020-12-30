@@ -1,0 +1,131 @@
+<div class="card">
+  <div class="card-body">
+      <h4 class="form-head">Add Loyalty Card</h4>
+      <div class="row mt-3">
+        <div class="col-md-3">
+          <mat-form-field>
+            <input [formControl]="form.controls['name']" id="cardId" type="text" trim="blur" required [(ngModel)]="name" name="name" (blur)='checkCardName()'
+              matInput placeholder="Name" maxlength="30">
+            <mat-error *ngIf="form.controls['name'].hasError('required')">
+              Name required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input [formControl]="form.controls['priceFrom']" type="number" trim="blur" required [(ngModel)]="priceFrom" name="priceFrom"
+              matInput (blur)='checkPriceRange()' placeholder="Price Range From" maxlength="10">
+            <mat-error *ngIf="form.controls['priceFrom'].hasError('required')">
+              Price range required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input [formControl]="form.controls['priceTo']" type="number" trim="blur" required [(ngModel)]="priceTo" name="priceTo" matInput
+              placeholder="To" maxlength="10" (blur)='checkPriceRangeTo()'>
+            <mat-error *ngIf="form.controls['priceTo'].hasError('required')">
+              Price limit required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input [formControl]="form.controls['loyPercentage']" type="number" trim="blur" required [(ngModel)]="loyPercentage" name="loyPercentage"
+              matInput placeholder="Loyalty Percentage" maxlength="10">
+            <mat-error *ngIf="form.controls['loyPercentage'].hasError('required')">
+              Loyalty Percentage required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input [formControl]="form.controls['minPurchaseAmt']" type="number" trim="blur" required [(ngModel)]="minPurchaseAmt" name="minPurchaseAmt"
+              matInput placeholder="Min Purchase Amount" maxlength="10">
+            <mat-error *ngIf="form.controls['minPurchaseAmt'].hasError('required')">
+              Minimum Purchase Amount required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input [formControl]="form.controls['minRedeemDays']" type="number" trim="blur" required [(ngModel)]="minRedeemDays" name="minRedeemDays"
+              matInput placeholder="Min Redeem Days" maxlength="6">
+            <mat-error *ngIf="form.controls['minRedeemDays'].hasError('required')">
+              Minimum Redeem Days required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input [formControl]="form.controls['minRedeemPoints']" type="number" trim="blur" required [(ngModel)]="minRedeemPoints"
+              name="minRedeemPoints" matInput placeholder="Min Redeem Point" maxlength="6">
+            <mat-error *ngIf="form.controls['minRedeemPoints'].hasError('required')">
+              Minimum Redeem Points required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="mt-2 mb-4">
+        <button class="btn save_btn mr-10" (click)="addLoyaltyCard()" *ngIf="!btnUpdate">Save</button>
+        <button class="btn save_btn mr-10" (click)="updateLoyaltyCard()" *ngIf="btnUpdate">Update</button>
+        <button class="btn btn-secondary" type="button" (click)="clearForm()" mat-raised-button>Cancel</button>
+      </div>
+    
+
+ 
+        <div class="row">
+            <div class="col-md-12">
+              <div class="card nodata mt-2" *ngIf="lstLength==0">
+                <h5>No data to dislay</h5>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div [ngClass]="{show:lstLength!=0,hide:lstLength==0}">
+                    <div class="example-container mat-elevation-z8">
+                      <mat-table [dataSource]="dataSource" matSort>
+                        <ng-container matColumnDef="name">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header='name'> Card Name </mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.vchr_card_name|uppercase}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="priceRange">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header='priceRange'> Price range </mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.int_price_range_from}} to {{row.int_price_range_to}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="loyPercentage">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header='loyPercentage'> Loyalty% </mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.dbl_loyalty_percentage}}% </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="minRedeemDays">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header='minRedeemDays'> Min Redeem Days </mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.int_min_redeem_days}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="action">
+                          <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                          <mat-cell *matCellDef="let row">
+                            <button class="edit_btn" (click)="editLoyaltyCard(row.pk_bint_id,row.vchr_card_name,row.int_price_range_from,row.int_price_range_to,row.dbl_loyalty_percentage,row.dbl_min_purchase_amount,row.int_min_redeem_days,row.int_min_redeem_point)">
+                              <i class="ti-pencil text-info mr-10" aria-hidden="true"></i>
+                            </button>
+                            <button class="delete_btn" (click)="deleteLoyaltyCard(row.pk_bint_id,row.vchr_card_name)">
+                              <i class="ti-trash text-danger" aria-hidden="true"></i>
+                            </button>
+                          </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </mat-row>
+                      </mat-table>
+                      <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           
+            </div>
+          </div>
+    </div>
+  </div>
+ 
+
+
+

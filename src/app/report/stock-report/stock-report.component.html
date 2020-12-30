@@ -1,0 +1,384 @@
+
+  <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Branch Stock Report<span style="float:right;cursor: pointer;" >
+                    <div>
+                        <div *ngIf="!blnFilterOn">
+                            <!-- &nbsp;<span>More Filter</span> -->
+                            <span class="cursor" (click)="filterClick()" style="font-size:15px;">
+                                More Filter<i class="fa fa-chevron-down" title="More Filter" style="margin-left: 5px;color: #58c2ec;"></i>
+                            </span>
+                        </div>
+                        <div *ngIf="blnFilterOn">
+                            <!-- &nbsp;<span>More Filter</span> -->
+                            <span class="cursor" (click)="filterClickOff()" style="font-size:15px;">
+                                More Filter<i class="fa fa-chevron-up" title="More Filter" style="margin-left: 5px;color: #58c2ec;"></i>
+                            </span>
+                        </div>
+                   </div>
+            </span></h4>
+            <!-- <div class="row"> -->
+              
+                <div class="row">
+              
+                    <div class="col-md-3">
+                              <mat-form-field>
+                                <input (click)="picker1.open()" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="As On" [(ngModel)]="date">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                              </mat-form-field>
+                    </div>
+
+                  
+                    <div class="col-md-3" style="margin-top: 13px;" *ngIf="blnBranch">
+                            <ngx-select-dropdown [config]="branchConfig" [options]="branchOptions" 
+                            [(ngModel)]="lstBranch" [multiple]="true"></ngx-select-dropdown>
+                    </div>
+
+                    <div class="col-md-3" style="margin-top: 13px;">
+                        <ngx-select-dropdown [config]="productConfig" [options]="productOptions" 
+                        [(ngModel)]="lstProduct" [multiple]="true"></ngx-select-dropdown>
+                    </div>
+              
+                    <div class="col-md-3" style="margin-top: 13px;">
+                            <ngx-select-dropdown [config]="brandConfig" [options]="brandOptions" 
+                            [(ngModel)]="lstBrand" [multiple]="true"></ngx-select-dropdown>
+                    </div>
+
+                    <div class="col-md-3" style="margin-top: 13px;">
+                            <ngx-select-dropdown [config]="itemCategoryConfig" [options]="itemCategoryOptions" 
+                            [(ngModel)]="lstItemCategory" [multiple]="true"></ngx-select-dropdown>
+                    </div>
+                    
+                    <div class="col-md-3" style="margin-top: 13px;">
+                        <ngx-select-dropdown [config]="itemGroupConfig" [options]="itemGroupOptions" 
+                        [(ngModel)]="lstItemGroup" [multiple]="true"></ngx-select-dropdown>
+                    </div>
+                    <div class="col-md-6" >
+                            <mat-form-field>
+                              <input matInput  placeholder="Item" [formControl]="searchItem" [matAutocomplete]="Itemname" [(ngModel)]="strSelectedItem" #idItem (ngModelChange)="itemNgModelChanged($event)">
+                                <mat-autocomplete #Itemname="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstItem" [value]="item.code_name" (onSelectionChange)="itemChanged(item)">
+                                        {{ item.code_name }}
+                                    </mat-option>                                      
+                                </mat-autocomplete>
+                            </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                          <mat-select #idPriceTemplate matInput required [(ngModel)]="intSaleable" name="intPriceTemplate" matInput placeholder="Saleable" >
+                              <mat-option [value]="3">All</mat-option >
+                              <mat-option [value]="2">Saleable</mat-option>
+                              <mat-option [value]="1">Non Saleable</mat-option>
+                              
+                          </mat-select>  
+                      </mat-form-field>
+                      </div>
+                      <div class="col-md-3" >
+                        <mat-form-field>
+                          <input matInput placeholder="Imei/Batch"  [(ngModel)]="strImeiBatch">
+                      </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-3" >
+                      <mat-form-field>
+                          <input matInput required placeholder="Vendor" [formControl]="searchVentor" [matAutocomplete]="Ventorname" [(ngModel)]="selectedVentor" #idVentor>
+                          <mat-autocomplete #Ventorname="matAutocomplete">
+                              <mat-option *ngFor="let item of lstVentor" [value]="item.name" (onSelectionChange)="VentorChanged(item)">
+                                  {{ item.name }}
+                              </mat-option>
+                          </mat-autocomplete>     
+                      </mat-form-field>
+                  </div> -->
+                    <div class="col-md-3" style="margin-top: 12px;">
+                        <button  *ngIf="!blnFilterOn" type="submit" class="btn save_btn mr-2" (click)="normalSearch()">Search</button>
+                       <button  *ngIf="!blnFilterOn && blnDownload" type="submit"  class="btn save_btn" (click)="exportData()">Export</button>
+                    </div> 
+                   
+                
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-12" style="margin-top: 12px;">
+                        <button  *ngIf="!blnFilterOn" type="submit" class="btn save_btn mr-2" (click)="normalSearch()">Search</button>
+                       <button  *ngIf="!blnFilterOn && blnDownload" type="submit"  class="btn save_btn" (click)="exportData()">Export</button>
+                    </div> 
+                </div> -->
+            <!-- <div class="row" style="margin-top: 24px;">
+                <div class="col-md-12" *ngIf="!blnFilterOn">
+                  &nbsp;<span>More Filter</span>
+                  <span class="cursor" (click)="filterClick()">
+                   <i class="fa fa-chevron-down" title="Click here" style="margin-left: 5px;color: #58c2ec;"></i>
+                  </span>
+                </div>
+              <div class="col-md-12"  *ngIf="blnFilterOn">
+                  &nbsp;<span>More Filter</span>
+                  <span class="cursor" (click)="filterClickOff()" >
+                      <i class="fa fa-chevron-up" title="Click here" style="margin-left: 5px;color: #58c2ec;"></i>
+                  </span>
+              </div>
+            </div>
+               -->
+            <!-- </div> -->
+            <!-- latest -->
+            <div class="row mt-3" *ngIf="blnFilterOn">
+                <div class="col-md-9">
+                    <mat-form-field class="example-chip-list">
+                        <mat-chip-list #chipList aria-label="More Filters" maxLength="10">
+                            <mat-chip
+                            *ngFor="let filter of moreFilters"
+                            [selectable]="selectable"
+                            [removable]="removable"
+                            (removed)="remove(filter)">
+                            {{filter}}
+                            <mat-icon matChipRemove *ngIf="removable" style="margin-top: -2px;"><i class="fa fa-times-circle"></i></mat-icon>
+                            </mat-chip>
+                            <input
+                            placeholder="Columns"
+                            #filterInput
+                            [formControl]="searchMoreFilter"
+                            [matAutocomplete]="auto"
+                            [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            [matChipInputAddOnBlur]="addOnBlur"
+                            
+                            >
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                            <mat-option *ngFor="let filter of lstShowFilterOptions" [value]="filter" >
+                            {{filter}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+            </div>
+            
+            
+            <div class="col-md-3 mt-4">
+            <button *ngIf="blnFilterOn" type="submit" class="btn save_btn mr-2" (click)="moreFilterClicked()">Search</button>
+            <button  *ngIf="blnFilterOn && blnDownload"  type="submit" class="btn save_btn" (click)="exportData()">Export</button>
+           </div>
+            
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- ['branch','product','brand','item_cat','item_grp','item','stock','imei','age','branch_age','first_date'] -->
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+  
+  <div class="card" *ngIf="blnShowData">
+  <div class="card-body">
+                
+    <div  class="example-container mat-elevation-z8 mt-3">
+       
+      <mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="branch">
+            <mat-header-cell class="minwidth10" [style.display]="strBranchShow" *matHeaderCellDef > Branch </mat-header-cell>
+            <mat-cell *matCellDef="let row" [style.display]="strBranchShow" class="minwidth10" >{{row.vchr_branch_name}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef  [style.display]="strBranchShow" class="minwidth10">
+                    <div *ngIf="strBranchShowTot==''" ><b>Total</b></div>
+                    <div *ngIf="strBranchShowTot=='none'" ></div>
+            </mat-footer-cell>
+        </ng-container> 
+                
+                
+
+        <ng-container matColumnDef="product"> 
+          <mat-header-cell class="minwidth10" [style.display]="strProductShow" *matHeaderCellDef> Product </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.display]="strProductShow" class="minwidth10">{{row.vchr_product_name}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef [style.display]="strProductShow" class="minwidth10">
+                <div *ngIf="strProductShowTot==''" ><b>Total</b></div>
+                <div *ngIf="strProductShowTot=='none'" ></div>
+        </mat-footer-cell>
+        </ng-container> 
+        
+        <ng-container matColumnDef="brand">
+          <mat-header-cell class="minwidth10" [style.display]="strBrandShow" *matHeaderCellDef> Brand </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.display]="strBrandShow" class="minwidth10">{{row.vchr_brand_name}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef [style.display]="strBrandShow" class="minwidth10">
+                <div *ngIf="strBrandShowTot==''" ><b>Total</b></div>
+                <div *ngIf="strBrandShowTot=='none'" ></div>
+        </mat-footer-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="item_cat">
+          <mat-header-cell class="minwidth13" [style.display]="strItemCategShow" *matHeaderCellDef > Item Category </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.display]="strItemCategShow" class="minwidth13" >{{row.vchr_item_cat_name}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef  [style.display]="strItemCategShow" class="minwidth13">
+                <div *ngIf="strItemCategShowTot==''" ><b>Total</b></div>
+                <div *ngIf="strItemCategShowTot=='none'" ></div>
+        </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="item_grp">
+          <mat-header-cell class="minwidth15" [style.display]="strItemGrpShow" *matHeaderCellDef> Item Group</mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.display]="strItemGrpShow" class="minwidth15">{{row.vchr_item_group_name}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef [style.display]="strItemGrpShow" class="minwidth15">
+                <div *ngIf="strItemGrpShowTot==''" ><b>Total</b></div>
+                <div *ngIf="strItemGrpShowTot=='none'" ></div>
+        </mat-footer-cell>
+        </ng-container> 
+
+       <ng-container matColumnDef="item_code">
+            <mat-header-cell class="minwidth13" [style.display]="strItemCodeShow" *matHeaderCellDef> Item Code</mat-header-cell>
+            <mat-cell *matCellDef="let row" [style.display]="strItemCodeShow" class="minwidth13">{{row.vchr_item_code}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef [style.display]="strItemCodeShow" class="minwidth13">
+                <div *ngIf="strItemCodeShowTot==''" ><b>Total</b></div>
+                <div *ngIf="strItemCodeShowTot=='none'" ></div>
+            </mat-footer-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="item">
+          <mat-header-cell class="minwidth43" [style.display]="strItemShow" *matHeaderCellDef > Item </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.display]="strItemShow" class="minwidth43" >{{row.vchr_item_name}}</mat-cell>
+          <mat-footer-cell *matFooterCellDef  [style.display]="strItemShow" class="minwidth43">
+                <div *ngIf="strItemShowTot==''" ><b>Total</b></div>
+                <div *ngIf="strItemShowTot=='none'" ></div>
+            </mat-footer-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="mrp">
+          <mat-header-cell class="minwidth10" [style.display]="strMrpShow"  *matHeaderCellDef  style="display: flex;justify-content: flex-end;"> MRP </mat-header-cell>
+          <mat-cell *matCellDef="let row"  [style.display]="strMrpShow" class="minwidth10" style="display: flex;justify-content: flex-end;">{{row.dbl_mrp}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef [style.display]="strMrpShow" class="minwidth10"></mat-footer-cell>      
+        </ng-container>
+
+          <ng-container matColumnDef="mop">
+            <mat-header-cell class="minwidth10" [style.display]="strMopShow"  *matHeaderCellDef  style="display: flex;justify-content: flex-end;"> MOP </mat-header-cell>
+            <mat-cell *matCellDef="let row"  [style.display]="strMopShow" class="minwidth10" style="display: flex;justify-content: flex-end;">{{row.dbl_mop}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef [style.display]="strMopShow" class="minwidth10"></mat-footer-cell>      
+        </ng-container>
+
+
+          <ng-container matColumnDef="dp">
+              <mat-header-cell class="minwidth10" [style.display]="strDpShow"  *matHeaderCellDef  style="display: flex;justify-content: flex-end;"> Dealer Price </mat-header-cell>
+              <mat-cell *matCellDef="let row"  [style.display]="strDpShow" class="minwidth10" style="display: flex;justify-content: flex-end;">{{row.dbl_dp}} </mat-cell>
+              <mat-footer-cell *matFooterCellDef [style.display]="strDpShow" class="minwidth10"></mat-footer-cell>      
+          </ng-container>
+
+          <ng-container matColumnDef="cp">
+            <mat-header-cell class="minwidth10" [style.display]="strCpShow"  *matHeaderCellDef  style="display: flex;justify-content: flex-end;"> Cost Price </mat-header-cell>
+            <mat-cell *matCellDef="let row"  [style.display]="strCpShow" class="minwidth10" style="display: flex;justify-content: flex-end;">{{row.dbl_cost_price}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef [style.display]="strCpShow" class="minwidth10"></mat-footer-cell>      
+        </ng-container>
+    
+
+        <ng-container matColumnDef="stock" >
+          <mat-header-cell class="minwidth10" *matHeaderCellDef style="direction:rtl;"> Stock</mat-header-cell>
+          <mat-cell *matCellDef="let row" class="minwidth10" style="direction:rtl;">{{row.int_qty}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef  class="minwidth10"  style="direction:rtl;"> <b>{{intStockTot}}</b>
+               
+          </mat-footer-cell>
+        </ng-container>
+        <!-- <ng-container matColumnDef="stockValue">
+            <mat-header-cell class="minwidth10" [style.display]="strStockValueShow" *matHeaderCellDef style="direction:rtl;"> Stock Value</mat-header-cell>
+            <mat-cell *matCellDef="let row" [style.display]="strStockValueShow" class="minwidth10" style="direction:rtl;">{{row.int_value}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef  class="minwidth10"  style="direction:rtl;"> <b>{{intStockValueTot}}</b>
+                 
+            </mat-footer-cell>
+          </ng-container> -->
+      
+        <ng-container matColumnDef="imei">
+          <mat-header-cell class="minwidth15" [style.display]="strImeiShow" *matHeaderCellDef> Imei/Batch No</mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.display]="strImeiShow" class="minwidth15">
+            <span *ngIf="row.jsn_imei">  {{row.jsn_imei}}</span>
+            <span *ngIf="row.jsn_batch_no">  {{row.jsn_batch_no}}</span>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef  [style.display]="strImeiShow" class="minwidth15">
+                <div *ngIf="strImeiShowTot==''" ><b>Total</b></div>
+                <div *ngIf="strImeiShowTot=='none'" ></div>
+          </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="intransist">
+            <mat-header-cell class="minwidth10"  *matHeaderCellDef style="direction:rtl;"> In Transit</mat-header-cell>
+            <mat-cell *matCellDef="let row"  class="minwidth10" style="direction:rtl;">{{row.int_transit}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef  class="minwidth10"  style="direction:rtl;"  > <b>{{intTransistTot}}</b>
+            </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+                <mat-header-cell class="minwidth10"  *matHeaderCellDef style="direction:rtl;padding-right: 10px;"> Total</mat-header-cell>
+                <mat-cell *matCellDef="let row"  class="minwidth10" style="direction:rtl;padding-right: 10px;">{{row.int_qty_transit_sum}}</mat-cell>
+                <mat-footer-cell *matFooterCellDef  class="minwidth10"  style="direction:rtl;padding-right: 10px;"  > <b>{{intTotal}}</b>
+                </mat-footer-cell>
+         </ng-container>
+
+        <ng-container matColumnDef="branch_date">
+             <mat-header-cell class="minwidth10"   [style.display]="strImeiShow" *matHeaderCellDef> Branch Date </mat-header-cell>
+             <mat-cell *matCellDef="let row" [style.display]="strImeiShow"   class="minwidth10"> 
+                <span *ngIf="row.dat_branch_stock">  {{row.dat_branch_stock }}</span>
+                <span *ngIf="!row.dat_branch_stock">  ---</span>
+             </mat-cell>
+             <mat-footer-cell *matFooterCellDef   [style.display]="strImeiShow" class="minwidth10" ></mat-footer-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="branch_age">
+            <mat-header-cell class="minwidth10" [style.display]="strImeiShow" *matHeaderCellDef style="direction:rtl"> Branch Age </mat-header-cell>
+            <mat-cell *matCellDef="let row" [style.display]="strImeiShow" class="minwidth10" style="direction:rtl">
+                    <span *ngIf="row.int_branch_age">  {{row.int_branch_age }}</span>
+                    <span *ngIf="!row.int_branch_age">  ---</span>
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef [style.display]="strImeiShow" style="direction:rtl" class="minwidth10"> </mat-footer-cell>
+        </ng-container>
+
+                   
+        <ng-container matColumnDef="first_date">
+            <mat-header-cell class="minwidth10"  [style.display]="strImeiShow" *matHeaderCellDef> First in Date </mat-header-cell>
+            <mat-cell *matCellDef="let row" [style.display]="strImeiShow"  class="minwidth10">
+                    <span *ngIf="row.dat_purchase_stock">  {{row.dat_purchase_stock }}</span>
+                    <span *ngIf="!row.dat_purchase_stock">  ---</span> 
+             </mat-cell>
+             <mat-footer-cell *matFooterCellDef [style.display]="strImeiShow" class="minwidth10"> </mat-footer-cell>
+            </ng-container>
+
+
+         
+        <ng-container matColumnDef="age">
+          <mat-header-cell class="minwidth10" [style.display]="strImeiShow" *matHeaderCellDef style="direction:rtl"> Total Age </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.display]="strImeiShow" class="minwidth10" style="direction:rtl">
+                <span *ngIf="row.int_total_age">  {{row.int_total_age }}</span>
+                    <span *ngIf="!row.int_total_age">  ---</span> 
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef [style.display]="strImeiShow"  style="direction:rtl" class="minwidth10"> </mat-footer-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="lstDisplayedColumns;sticky: true" class="blnMore"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: lstDisplayedColumns; let i = index;"  class="blnMore">
+        </mat-row>
+      <mat-footer-row *matFooterRowDef="lstDisplayedColumns; sticky: true"></mat-footer-row>
+        
+      </mat-table>
+        <!-- <mat-paginator [pageSizeOptions]="[25, 50, 100]"></mat-paginator> -->
+    </div>
+   
+  </div>
+  </div>
+  
+  <div class="card nodata" *ngIf="!blnShowData">
+    <h5>NO DATA FOUND</h5>
+  </div>
+
+  <!-- <div class="overlay" *ngIf="showSpinner">
+
+    <mat-progress-spinner  style="margin:0 auto;" class="spinner"
+    [color]="color"
+    [mode]="mode"
+    [value]="value"
+     [strokeWidth]="strokeWidth">
+    </mat-progress-spinner>
+    </div> -->
+
+    <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

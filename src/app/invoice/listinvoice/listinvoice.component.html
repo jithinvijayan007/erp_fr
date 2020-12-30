@@ -1,0 +1,125 @@
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+           <div class="col-md-12">
+              <h4 class="card-title">Invoice List
+                  <span *ngIf="!blnFilterOn" style="float: right;font-size: 16px;">Advanced Filter
+                      <span class="cursor" (click)="filterClick()">
+                       <i class="fa fa-chevron-down" title="Click here" style="margin-left: 5px;color: #58c2ec;"></i>
+                      </span>
+                  </span>
+                 
+                  <span  *ngIf="blnFilterOn" style="float: right;font-size: 16px;"> Advanced Filter
+                      <span class="cursor" (click)="filterClickOff()" >
+                          <i class="fa fa-chevron-up" title="Click here" style="margin-left: 5px;color: #58c2ec;"></i>
+                      </span>
+                  </span>
+                </h4>
+           </div>
+        </div>
+        <div class="row mt-3">
+
+                          <div class="col-md-3">
+                              <mat-form-field>
+                                <input (click)="picker1.open()" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="From" [(ngModel)]="datFrom">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+
+                            <div class="col-md-3">
+                              <mat-form-field>
+                                <input (click)="picker2.open()" id ="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To" [(ngModel)]="datTo">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2>
+                                </mat-datepicker>
+                              </mat-form-field>
+                            </div>
+
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Mobile No" maxlength="10" [(ngModel)]="intPhone" name="no1" >
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                              <mat-form-field>
+                                  <input matInput placeholder="Branch" [formControl]="searchBranch" [matAutocomplete]="Branchname" [(ngModel)]="selectedBranch" #BranchId (ngModelChange)="branchNgModelChanged($event)" >
+                                  <mat-autocomplete #Branchname="matAutocomplete">
+                                      <mat-option *ngFor="let item of lstBranch" [value]="item.branchname" (onSelectionChange)="BranchChanged(item)">
+                                          {{ item.branchname }}
+                                      </mat-option>
+                                  </mat-autocomplete>
+                              </mat-form-field>
+                          </div>
+
+                            <div class="col-md-3 mt-2" *ngIf="!blnFilterOn">
+                              <button   type="submit" class="btn save_btn m-r-10" (click)="getData()">Search</button>
+
+                            </div>
+                          
+                           
+                         
+                              <div class="col-md-3" *ngIf="blnFilterOn">
+                                  <mat-form-field>
+                                    <input matInput placeholder="Product" [formControl]="searchProduct" [matAutocomplete]="productName" [(ngModel)]="strSelectedProduct"  (ngModelChange)="productNgModelChanged($event)" >
+                                       <mat-autocomplete #productName="matAutocomplete">
+                                          <mat-option *ngFor="let item of lstProduct" [value]="item.name"  (onSelectionChange)="productChanged(item)">{{ item.name }} </mat-option>
+                                       </mat-autocomplete>
+                                  </mat-form-field>
+                              </div>
+                              <div class="col-md-3" *ngIf="blnFilterOn" >
+                                  <mat-form-field>
+                                    <input matInput placeholder="Brand" [formControl]="searchBrand" [matAutocomplete]="brandName" [(ngModel)]="strSelectedBrand"  (ngModelChange)="brandNgModelChanged($event)">
+                                       <mat-autocomplete #brandName="matAutocomplete">
+                                          <mat-option *ngFor="let item of lstBrand" [value]="item.name" (onSelectionChange)="brandChanged(item)">{{ item.name }} </mat-option>
+                                       </mat-autocomplete>
+                                  </mat-form-field>
+                              </div>
+                              <div class="col-md-3" *ngIf="blnFilterOn">
+                                  <mat-form-field>
+                                    <input matInput placeholder="Item" [formControl]="searchItem" [matAutocomplete]="itemName" [(ngModel)]="strSelectedItem"  (ngModelChange)="itemNgModelChanged($event)">
+                                       <mat-autocomplete #itemName="matAutocomplete">
+                                          <mat-option *ngFor="let item of lstItem" [value]="item.code_name" (onSelectionChange)="itemChanged(item)">{{ item.code_name }} </mat-option>
+                                       </mat-autocomplete>
+                                  </mat-form-field>
+                              </div>
+                              <div class="col-md-3" *ngIf="blnFilterOn">
+                                  <mat-form-field>
+                                    <input matInput placeholder="Staff" [formControl]="searchStaff" [matAutocomplete]="staffName" [(ngModel)]="strSelectedStaff"  (ngModelChange)="staffNgModelChanged($event)">
+                                       <mat-autocomplete #staffName="matAutocomplete">
+                                          <mat-option *ngFor="let item of lstStaff" [value]="item.strUserName" (onSelectionChange)="staffChanged(item)">{{ item.strUserName }} </mat-option>
+                                       </mat-autocomplete>
+                                  </mat-form-field>
+                              </div>
+
+                            <div class="col-md-3 mt-2" *ngIf="blnFilterOn">
+                                <button   type="submit" class="btn save_btn" (click)="getData()">Search</button>
+  
+                              </div>
+                           
+                         
+                            </div>
+                 
+              
+
+              <!-- <h6 class="card-subtitle">Smart data table library with sorting, filtering, pagination & add/edit/delete functions.</h6> -->
+              <div>
+              <div *ngIf="blnShowData" class="table table-responsive smart-table">
+                  <ng2-smart-table [settings]="settings" [source]="source" class="" (custom)="onCustomAction($event)"></ng2-smart-table>
+              </div>
+              <div class="card nodata" *ngIf="!blnShowData">
+                <div>NO DATA FOUND</div>
+              </div>
+            </div>
+      </div>
+    </div>
+ 
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

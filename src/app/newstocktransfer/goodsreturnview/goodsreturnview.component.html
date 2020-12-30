@@ -1,0 +1,47 @@
+<div class="card">
+  <div class="card-body">
+      <h4><b>Goods Return View</b></h4>
+
+      <div>
+        <div *ngIf="blnShowData" class="table table-responsive smart-table mt-2">
+            <ng2-smart-table [settings]="settings" [source]="source" class="" (custom)="onCustomAction($event,imeipopup)"></ng2-smart-table>
+        </div>
+        <div class="card nodata" *ngIf="!blnShowData">
+          <div>NO DATA FOUND</div>
+        </div>
+      </div>
+
+  </div>
+</div>
+
+
+
+<ng-template #imeipopup let-modal>
+  <div class="modal-body" id="imeipopup">
+      <div class="text-center mt-2" style="display: none">
+          <mat-checkbox name="same"></mat-checkbox>
+      </div>
+      <table class="table">
+          <thead class="text-white">
+              <th>Sl.No</th>
+              <th>{{heading}}<span *ngIf="heading=='Batch'">(Qty)</span></th>
+          </thead>
+          <tbody>
+              <tr *ngFor="let item of lstImei; let i = index">
+                  <td><b>{{i+1}}</b></td>
+                  <td>
+                      <b>{{item.imei[0]}}<span *ngIf="heading=='Batch'">({{item.qty}})</span></b>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</ng-template>
+<!-- <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner> -->

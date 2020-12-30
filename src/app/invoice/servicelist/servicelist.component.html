@@ -1,0 +1,125 @@
+
+  <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Jobsheet List</h4>
+                <!-- <h6 class="card-subtitle">Smart data table library with sorting, filtering, pagination & add/edit/delete functions.</h6> -->
+                <!-- <div>
+                <div *ngIf="blnShowData" class="table table-responsive smart-table">
+                    <ng2-smart-table [settings]="settings" [source]="source" class="" (custom)="onCustomAction($event)"></ng2-smart-table>
+                </div>
+                <div class="card nodata" *ngIf="!blnShowData">
+                  <div>NO DATA FOUND</div>
+                </div>
+              </div> -->
+              <div class="row">
+                <div class="card">
+                    <form class="form-inline">
+
+                        <div class="col-md-4 col-lg-4">
+                            <mat-form-field>
+                              <input (click)="picker1.open()" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="From" [(ngModel)]="datFrom">
+                              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                              <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-md-4 col-lg-4">
+                            <mat-form-field>
+                              <input (click)="picker2.open()" id ="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To" [(ngModel)]="datTo">
+                              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                              <mat-datepicker #picker2>
+                              </mat-datepicker>
+                            </mat-form-field>
+                          </div>
+
+                          <!-- <div class="col-md-4">
+                              <mat-form-field>
+                                  <input matInput type="number" placeholder="Mobile No" maxlength="10" [(ngModel)]="intPhone" name="no1" >
+                              </mat-form-field>
+                          </div> -->
+
+                          <div class="col-md-2">
+                            <button type="submit" class="btn save_btn m-r-10" (click)="getData()">Search</button>
+
+                          </div>
+                     
+                    </form>
+                </div>
+            </div>
+              <div class="card nodata" *ngIf="blnShowData=='none'">
+                  <h5>No Data Found</h5>
+                </div>
+                <div class="example-header" *ngIf="blnShowData!='none'">
+                    <mat-form-field>
+                      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Advance search">
+                    </mat-form-field>
+                  </div>
+              <div [ngStyle]="{'display':blnShowData}" class="example-container mat-elevation-z8">
+                  <mat-table [dataSource]="dataSource">
+  
+                      <ng-container matColumnDef="datBooked" sticky>
+                          <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.datBooked}} </mat-cell>
+                          <!-- <mat-footer-cell *matFooterCellDef>Total</mat-footer-cell> -->
+                      </ng-container>
+
+                      <ng-container matColumnDef="vchr_job_num">
+                        <mat-header-cell *matHeaderCellDef> Job No </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.vchr_job_num}} </mat-cell>
+                        <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                      </ng-container>
+
+                      <ng-container matColumnDef="strCustomer">
+                          <mat-header-cell *matHeaderCellDef> Customer </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.strCustomer}} </mat-cell>
+                          <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                      </ng-container>
+  
+                      <ng-container matColumnDef="strStaff">
+                          <mat-header-cell *matHeaderCellDef> Staff </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.strStaff}} </mat-cell>
+                          <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                      </ng-container>
+  
+                      <ng-container matColumnDef="strItem">
+                          <mat-header-cell *matHeaderCellDef style="min-width:300px;"> Item </mat-header-cell>
+                          <mat-cell *matCellDef="let element" style="min-width:300px;"> {{element.strItem}} </mat-cell>
+                          <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                      </ng-container>
+                      <ng-container matColumnDef="vchr_status">
+                        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.vchr_status}} </mat-cell>
+                        <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                    </ng-container>
+                      <ng-container matColumnDef="action">
+                          <mat-header-cell class="matheadr_right" *matHeaderCellDef> Action </mat-header-cell>
+                          <mat-cell *matCellDef="let row;let i= index;"class="matheadr_right">
+                            <button  *ngIf="row.vchr_status!='NOT SERVICED' && blnView" title="View" (click)="onView(row)" class="view_btn mr-2">
+                              <i class="fa fa-eye"></i>
+                            </button>
+                            <button *ngIf="row.bln_view" title="Print" (click)="onPrint(row)" class="edit_btn">
+                              <i class="fa fa-print"></i>
+                            </button>
+  
+                          </mat-cell>
+                        </ng-container>
+                      <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+                      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                  </mat-table>
+                  <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+                  <mat-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[10, 25, 100]" (page)="onPaginateChange($event)"></mat-paginator>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

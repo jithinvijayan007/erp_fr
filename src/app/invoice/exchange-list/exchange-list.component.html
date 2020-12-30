@@ -1,0 +1,215 @@
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="card-title">Exchange List
+                <span class="cursor" (click)="filterClick()" style="float:right;">
+                    <i class="mdi mdi-filter" title="Advance Filter" style="padding: 7px; color: #07b998; border-radius: 6px;"></i>
+                   </span>
+              </h4>
+              <!-- <h6 class="card-subtitle">Smart data table library with sorting, filtering, pagination & add/edit/delete functions.</h6> -->
+              <!-- <div>
+              <div *ngIf="blnShowData" class="table table-responsive smart-table">
+                  <ng2-smart-table [settings]="settings" [source]="source" class="" (custom)="onCustomAction($event)"></ng2-smart-table>
+              </div>
+              <div class="card nodata" *ngIf="!blnShowData">
+                <div>NO DATA FOUND</div>
+              </div>
+            </div> -->
+            <div class="row">
+              <div class="card">
+                  <form class="form-inline">
+
+                      <div class="col-md-2">
+                          <mat-form-field>
+                            <input (click)="picker1.open()" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="From" [(ngModel)]="datFrom">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="col-md-2">
+                          <mat-form-field>
+                            <input (click)="picker2.open()" id ="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To" [(ngModel)]="datTo">
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2>
+                            </mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                          <mat-form-field>
+                              <input matInput placeholder="Branch" [formControl]="searchBranch" [matAutocomplete]="Branchname" [(ngModel)]="selectedBranch" #BranchId (ngModelChange)="branchNgModelChanged($event)" >
+                              <mat-autocomplete #Branchname="matAutocomplete">
+                                  <mat-option *ngFor="let item of lstBranch" [value]="item.branchname" (onSelectionChange)="BranchChanged(item)">
+                                      {{ item.branchname }}
+                                  </mat-option>
+                              </mat-autocomplete>
+                          </mat-form-field>
+                      </div>
+
+
+                        <!-- <div class="col-md-4">
+                            <mat-form-field>
+                                <input matInput type="number" placeholder="Mobile No" maxlength="10" [(ngModel)]="intPhone" name="no1" >
+                            </mat-form-field>
+                        </div> -->
+
+                        <div class="col-md-2" *ngIf="!blnFilterOn">
+                          <button type="submit" class="btn save_btn m-r-10" (click)="getData()" >Search</button>
+
+                        </div>
+
+                        <div class="col-md-2" *ngIf="!blnFilterOn">
+                          <button type="submit" class="btn save_btn m-r-10" (click)="exportData()" >Export</button>
+
+                        </div>
+                        
+                        <!-- <div class="padd_l_r filter" *ngIf="!blnFilterOn">
+                            &nbsp;<span>Advanced Filter</span>
+                            <span class="cursor" (click)="filterClick()">
+                             <i class="fa fa-chevron-down" title="Click here" style="margin-left: 5px;color: #58c2ec;"></i>
+                            </span>
+                          </div>
+                        <div class="padd_l_rfilter"  *ngIf="blnFilterOn">
+                            &nbsp;<span>Advanced Filter</span>
+                            <span class="cursor" (click)="filterClickOff()" >
+                                <i class="fa fa-chevron-up" title="Click here" style="margin-left: 5px;color: #58c2ec;"></i>
+                            </span>
+                        </div> -->
+                        <div class="col-md-3" *ngIf="blnFilterOn">
+                            <mat-form-field>
+                              <input matInput placeholder="Product" [formControl]="searchProduct" [matAutocomplete]="productName" [(ngModel)]="strSelectedProduct"  (ngModelChange)="productNgModelChanged($event)" >
+                                 <mat-autocomplete #productName="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstProduct" [value]="item.name"  (onSelectionChange)="productChanged(item)">{{ item.name }} </mat-option>
+                                 </mat-autocomplete>
+                            </mat-form-field>
+                        </div> 
+                        <div class="col-md-3" *ngIf="blnFilterOn">
+                            <mat-form-field>
+                              <input matInput placeholder="Brand" [formControl]="searchBrand" [matAutocomplete]="brandName" [(ngModel)]="strSelectedBrand"  (ngModelChange)="brandNgModelChanged($event)">
+                                 <mat-autocomplete #brandName="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstBrand" [value]="item.name" (onSelectionChange)="brandChanged(item)">{{ item.name }} </mat-option>
+                                 </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3" *ngIf="blnFilterOn">
+                            <mat-form-field>
+                              <input matInput placeholder="Item" [formControl]="searchItem" [matAutocomplete]="itemName" [(ngModel)]="strSelectedItem"  (ngModelChange)="itemNgModelChanged($event)">
+                                 <mat-autocomplete #itemName="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstItem" [value]="item.code_name" (onSelectionChange)="itemChanged(item)">{{ item.code_name }} </mat-option>
+                                 </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3" *ngIf="blnFilterOn">
+                            <mat-form-field>
+                              <input matInput placeholder="Imei" [formControl]="searchImei" [matAutocomplete]="imei" [(ngModel)]="strSelectedImei"  (ngModelChange)="imeiNgModelChanged($event)">
+                                 <mat-autocomplete #imei="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstImei" [value]="item.imei" (onSelectionChange)="imeiChanged(item)">{{ item.imei}} </mat-option>
+                                 </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2 mt-2">
+                            <button  *ngIf="blnFilterOn" type="submit" class="btn save_btn" (click)="getData()">Search</button>
+              
+                          </div>
+
+                          <div class="col-md-2 mt-2 export_btn" >
+                            <button style="margin-left: 60px;" *ngIf="blnFilterOn" type="submit" class="btn save_btn" (click)="exportData()">Export</button>
+              
+                          </div>
+                   
+                  </form>
+              </div>
+          </div>
+          <!-- advanced filter start -->
+          <div class="col-md-12 row" *ngIf="blnFilterOn"> 
+       
+
+          
+         
+      </div>  
+      <!-- advcanced filter ends -->
+            <div class="card nodata" *ngIf="blnShowData=='none'">
+                <h5>No Data Found</h5>
+              </div>
+              <div class="example-header" *ngIf="blnShowData!='none'">
+                <mat-form-field>
+                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Advance search">
+                </mat-form-field>
+              </div>
+            <div [ngStyle]="{'display':blnShowData}" class="example-container mat-elevation-z8">
+                <mat-table [dataSource]="dataSource">
+                  
+                  
+                  <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef style="min-width: 110px;"> Date </mat-header-cell>
+                    <mat-cell *matCellDef="let element" style="min-width: 110px;"> {{element.dat_exchanged_words}} </mat-cell>
+                   
+                </ng-container>
+                   
+                    <!-- <ng-container matColumnDef="product">
+                        <mat-header-cell *matHeaderCellDef> Product </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.fk_item__fk_product__vchr_name}} </mat-cell>
+                       
+                    </ng-container> -->
+                    <ng-container matColumnDef="brand">
+                        <mat-header-cell *matHeaderCellDef style="min-width: 110px;"> Brand </mat-header-cell>
+                        <mat-cell *matCellDef="let element" style="min-width: 110px;"> {{element.fk_item__fk_brand__vchr_name}} </mat-cell>
+                       
+                    </ng-container>
+
+                    <ng-container matColumnDef="strItem">
+                        <mat-header-cell *matHeaderCellDef style="min-width:180px;"> Item </mat-header-cell>
+                        <mat-cell *matCellDef="let element" style="min-width:180px;"> {{element.fk_item__vchr_name}} </mat-cell>
+                        
+                    </ng-container>
+                    <ng-container matColumnDef="imei">
+                        <mat-header-cell *matHeaderCellDef style="min-width:120px;"> Imei </mat-header-cell>
+                        <mat-cell *matCellDef="let element" style="min-width:120px;"> {{element.jsn_imei[0]}} </mat-cell>
+                        
+                    </ng-container>
+                      <ng-container matColumnDef="age">
+                      <mat-header-cell *matHeaderCellDef> Age</mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.item_age }} D </mat-cell>
+                     
+                  </ng-container>
+                    <ng-container matColumnDef="rate">
+                      <mat-header-cell *matHeaderCellDef> Rate </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.fk_sales_details__dbl_amount}} </mat-cell>
+                     
+                  </ng-container>
+                    <!-- <ng-container matColumnDef="vchr_status">
+                      <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.vchr_status}} </mat-cell>
+                     
+                  </ng-container> -->
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell class="matheadr_right" *matHeaderCellDef> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let row;let i= index;"class="matheadr_right">
+                          <button *ngIf="blnView" title="View" (click)="onView(row)" class="view_btn mr-2">
+                            <i class="fa fa-eye"></i>
+                          </button>
+                          <!-- <button *ngIf="row.vchr_status=='PENDING'" title="Reciept" (click)="onPrint(row)" class="edit_btn">
+                            <i class="fa fa-print"></i>
+                          </button> -->
+
+                        </mat-cell>
+                      </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                
+                <mat-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

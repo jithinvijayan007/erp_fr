@@ -1,0 +1,151 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title" *ngIf="!blnEdit || bln_AdvanceReceipt=='true'">Add Receipt</h3>
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 class="card-title" *ngIf="blnEdit && bln_AdvanceReceipt!='true'">Edit Receipt</h3>
+                    </div>
+                    <!-- <div class="col-md-4" style="text-align:right;">
+                        <button type="submit" class="btn btn-secondary  ml-2" (click)="ChangeAddreceipt()" *ngIf="blnEdit">Add Receipt</button>
+                    </div> -->
+                </div>
+
+
+                <form class="form p-t-10 row">
+                    <div class="col-md-3">
+                        <mat-form-field [ngStyle]="{'width':!blnCustAddDisabled ? '70%' : '100%' }">
+                            <input matInput  [readonly]="bln_AdvanceReceipt=='true'" placeholder="Customer" required [formControl]="searchCustomer" [matAutocomplete]="customername" [(ngModel)]="selectedCustomer" #customerId>
+                            <mat-autocomplete #customername="matAutocomplete">
+                                <mat-option *ngFor="let item of lstCustomer" [value]="item.name" (onSelectionChange)="CustomerChanged(item)">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+
+                        <span class="col-md-6">
+                            <img title="Customer Add" *ngIf="!blnCustAddDisabled"  src="assets/images/useradd.png" class="mr-3 cursor" (click)="opencustomeredit()">
+                            <!--   -->
+                        </span>
+                    </div>
+                    
+                    <!-- <div class="col-md-3">
+              <mat-form-field>
+                <input matInput required placeholder="Receipt Number" [(ngModel)]="strReceiptNumber" value="" name="receiptNumber" #idReceiptNum>
+              </mat-form-field>
+             </div>  -->
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-select [disabled]="bln_AdvanceReceipt=='true'" [(ngModel)]="intReceiptType" name="intReceiptType" placeholder="Receipt Type">
+                                <mat-option [value]=1>ADVANCE</mat-option>
+                                <mat-option [value]=2>PRE BOOKING</mat-option>
+                                <mat-option [value]=3>OTHERS</mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3" *ngIf="intReceiptType == 2">
+                        <mat-form-field>
+                            <input matInput [readonly]="bln_AdvanceReceipt=='true'" placeholder="Product*" [formControl]="searchProduct" [matAutocomplete]="productname" [(ngModel)]="selectedProduct" #productId>
+                            <mat-autocomplete #productname="matAutocomplete">
+                                <mat-option *ngFor="let item of lstProduct" [value]="item.name" (onSelectionChange)="ProductChanged(item)">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3" *ngIf="intReceiptType == 2">
+                        <mat-form-field>
+                            <input matInput [readonly]="bln_AdvanceReceipt=='true'" required placeholder="Item" [formControl]="searchItemCategory" (ngModelChange)="itemTypeahead()" [matAutocomplete]="ItemCategoryname" [(ngModel)]="strSelectedItemCategory" #idItemCategory>
+                            <mat-autocomplete #ItemCategoryname="matAutocomplete">
+                                <mat-option *ngFor="let item of lst_item_category" [value]="item.code_name" (onSelectionChange)="itemcategoryChanged(item)">
+                                    {{ item.code_name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <!-- <mat-error *ngIf="form.controls['itemcategory'].hasError('required') && form.controls['itemcategory'].touched ">
+                        you must select a item category.
+                    </mat-error> -->
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="fopSelected" name="fopSelected" placeholder="FOP" (ngModelChange)=fopchange(fopSelected)>
+                                <mat-option [value]=1>CASH</mat-option>
+                                <mat-option [value]=2>DEBIT CARD</mat-option>
+                                <mat-option [value]=3>CREDIT CARD</mat-option>
+                                <mat-option [value]=4>CHEQUE</mat-option>
+                                <mat-option [value]=5>RTGS</mat-option>
+                                <mat-option [value]=6>NEFT</mat-option>
+                                <!-- <mat-option [value]=7>PAYTM</mat-option>
+                                <mat-option [value]=8>PAYTM MALL</mat-option> -->
+                                <mat-option [value]=9>Bharath QR </mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3" *ngIf = "fopSelected==2 || fopSelected==3">
+                        <mat-form-field>
+                            <input #cardNum  [(ngModel)]="strCardNumber" OnlyInteger="true" maxlength="4" type="text" minlength="4" name="strCardNumber" matInput placeholder="Card No (Last 4 digits)*" #cardId>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3" *ngIf = "fopSelected==7 || fopSelected==8 || fopSelected==9 || fopSelected==2 || fopSelected==3">
+                        <mat-form-field>
+                            <input #refe  [(ngModel)]="strPaytmRefereNumber" name="strPaytmRefereNumber" OnlyAlphaNum="true" type="text"  matInput placeholder="Reference Number*" #paytmRefId>
+                        </mat-form-field>
+                    </div>
+
+                    <div  class="col-md-3" *ngIf = "fopSelected==2 || fopSelected==3">
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="intBankId" name="bankSelected" placeholder="Bank Name">
+                                <mat-option *ngFor="let item of lstBankNames;" [value]="item.pk_bint_id">{{item.vchr_name | titlecase}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div  class="col-md-3" *ngIf = "fopSelected==4">
+                        <mat-form-field>
+                            <input [(ngModel)]="strPaytmRefereNumber" name="strChequeNumber" OnlyAlphaNum="true" type="number"  matInput placeholder="Cheque Number*" #chequeId>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input #Amnt type="number" [readonly]="bln_AdvanceReceipt=='true'" [(ngModel)]="intAmount" name="intAmount" matInput placeholder="Amount" required #amountId>
+                        </mat-form-field>
+                    </div>
+
+                    <div  *ngIf ="strGroup == 'ADMIN'" class="col-md-3">
+                        <mat-form-field>
+                            <input matInput readonly [matDatepicker]="picker" placeholder="Date Issue*" [(ngModel)]="datIssue" name="issueDate" #issueDate>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <div *ngIf ="strGroup != 'ADMIN'" class="col-md-3">
+                        <mat-form-field>
+                            <input matInput readonly [matDatepicker]="picker" placeholder="Date Issue*" [(ngModel)]="datIssue" name="issueDate" #issueDate>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Remarks" required [(ngModel)]="remarks" value="" name="remarks" #idName>
+                        </mat-form-field>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-md-3">
+                        <!-- <div class="col-md-12 row"> -->
+                        <button type="submit" class="btn save_btn  mt-2"  [disabled]="saveDisable" *ngIf="!blnEdit || bln_AdvanceReceipt=='true'" (click)="AddReceipt()">Save</button>
+                        <button type="submit" class="btn btn-info  mt-2"  [disabled]="saveDisable" *ngIf="blnEdit && bln_AdvanceReceipt!='true'" (click)="AddReceipt()">Update</button>
+                        <button type="submit" class="btn btn-secondary  ml-2 mt-2" (click)="clearFields()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

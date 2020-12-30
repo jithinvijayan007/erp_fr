@@ -1,0 +1,61 @@
+<h1 mat-dialog-title  style="text-align: center">Item History</h1>
+<div mat-dialog-content >
+        <!-- <div class="col-md-4">
+                <div class="form-group mt-1">
+                    <label>Date of purchase</label>
+                    <p class="">{{data.datePurchase}}</p>
+                </div>
+                <div class="form-group mt-1">
+                        <label>Quantity Purchased</label>
+                        <p class="">{{data.quantityPurchased}}</p>
+                </div>
+                <div class="form-group mt-1">
+                        <label>Quantity left</label>
+                        <p class="">{{data.quantityLeft}}</p>
+                </div>
+                <div class="form-group mt-1">
+                        <label>Unit Price</label>
+                        <p class="">{{data.unitprice}}</p>
+                </div>
+               
+        </div> -->
+        <div class="container1" *ngIf='data.blnNoData' >
+          <table style="width: 100%;box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);" class="table table-bordered">
+              <thead style="background-color: #00adad;color: white !important;">
+                  <tr>
+                      <th style="padding: 10px !important;">Date Purchased</th>
+                      <th style="padding: 10px !important;">Qty Purchased</th>
+                      <th style="padding: 10px !important;">Qty Left</th>
+                      <th style="padding: 10px !important;">Unit Amount
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of data.dictData; let i = index">
+                      <td>
+                          <p>{{data.dictData[i]['fk_purchase__dat_purchase']}}</p>
+                      </td>
+                      <td style="text-align: right;">
+                          <p>{{data.dictData[i]['int_qty']}}</p>
+                      </td>
+                      <td style="text-align: right;">
+                        <p>{{data.dictData[i]['int_left']}}</p>
+                      </td>
+                      <td style="text-align: right;">
+                         <p>{{data.dictData[i]['dbl_unitprice']}}</p>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      <div *ngIf="!data.blnNoData">
+        <p>No History</p>
+      </div>
+
+</div>
+<div mat-dialog-actions>
+        <div style="text-align: center;width: 100%;">
+                <button class="btn btn-secondary" (click)="onNoClick()">Ok</button>
+        </div>
+  <!-- <button mat-button [mat-dialog-close]="data.datePurchase" cdkFocusInitial>Ok</button> -->
+</div>

@@ -1,0 +1,191 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-body">
+              <h3 class="card-title form-head1">Quotation Details &nbsp;</h3>
+                  <div class="form p-t-10 row">
+                      <div class="col-md-2">
+                           <div class="form-group mt-1">
+                              <h6>Date</h6>
+                              <p class="">{{dctMaster['dat_created_formated']}}</p>
+                           </div>
+                      </div>
+                      <div class="col-md-2" *ngIf="dctMaster['vchr_cust_name']" >
+                            <div class="form-group mt-1">
+                                <h6>Name</h6>
+                                <p class="">{{dctMaster['vchr_cust_name']| titlecase}}</p>
+                            </div>
+                        </div>
+                      <div class="col-md-2" *ngIf="dctMaster['bint_mobile']" >
+                          <div class="form-group mt-1">
+                              <h6>Contact No.</h6>
+                              <p class="">{{dctMaster['bint_mobile']}}</p>
+                          </div>
+                      </div>
+                      <div class="col-md-2" *ngIf="dctMaster['vchr_gst_no']" >
+                          <div class="form-group mt-1">
+                              <h6>GST No.</h6>
+                              <p class="">{{dctMaster['vchr_gst_no']}}</p>
+                          </div>
+                      </div>
+                    
+                      <div class="col-md-2" *ngIf="dctMaster['fk_branch__vchr_name']" >
+                        <div class="form-group mt-1">
+                            <h6>Branch</h6>
+                            <p class="">{{dctMaster['fk_branch__vchr_name'] | titlecase}}</p>
+                        </div>
+                      </div>
+                      <div class="col-md-2" *ngIf="dctMaster['vchr_staff_name']" >
+                          <div class="form-group mt-1">
+                              <h6>Staff</h6>
+                              <p class="">{{dctMaster['vchr_staff_name'] | titlecase}}</p>
+                          </div>
+                      </div>
+                      <div class="col-md-4" *ngIf="dctMaster['vchr_email']">
+                          <div class="form-group mt-1">
+                              <h6>Mail ID</h6>
+                              <p class="">{{dctMaster['vchr_email'] | lowercase}}</p>
+                          </div>
+                      </div>
+
+                      <div class="col-md-6" *ngIf="dctMaster['txt_address']">
+                        <div class="form-group mt-1">
+                            <h6>Address</h6>
+                            <p class="">{{dctMaster['txt_address']}}</p>
+                        </div>
+                    </div> 
+                    <div class="col-md-2" *ngIf="dctMaster['dat_exp_formated']">
+                        <div class="form-group mt-1">
+                            <h6>Valid Till</h6>
+                            <p class="">{{dctMaster['dat_exp_formated']}}</p>
+                        </div>
+                    </div>
+
+
+                      <div class="col-md-6" *ngIf="dctMaster['txt_remarks']">
+                          <div class="form-group mt-1">
+                              <h6>Remark</h6>
+                              <p class="">{{dctMaster['txt_remarks']}}</p>
+                          </div>
+                      </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+              <div class="card" *ngFor="let item of dctDetails">
+                  <div class="card-body" >
+                      <!-- <h4 *ngIf="item.intSaleStatus==0" style="background: #f7e9e9;  padding: 10px;" class="card form-head">{{item['strProductName']| titlecase}} <small style="color: #d22a0e;display: contents;">(Return item)</small></h4> -->
+                      <h4 style="background: #e9f7f3;padding: 10px;" class="card form-head">{{item['strProduct']| titlecase}}  &nbsp;</h4>
+                      <!-- <h4 *ngIf="item.intSaleStatus==2" style="background: #fffbe2;padding: 10px;" class="card form-head">{{item['strProductName']| titlecase}}  <small style="color: #666666;display: contents;">(Exchange item)</small></h4>
+                      <h4 *ngIf="item.intSaleStatus==3" style="background: #e9f7f3;padding: 10px;" class="card form-head">{{item['strProductName']| titlecase}}  <small style="color: #666666;display: contents;">(Service)</small></h4> -->
+                       
+                      
+                      <div class="form p-t-10 row">
+                              <div class="col-md-2">
+                                   <div class="form-group mt-1">
+                                      <h6>Brand</h6>
+                                      <p class="">{{item['strBrand']| titlecase}}</p>
+                                   </div>
+                              </div>
+                              <div class="col-md-2">
+                                  <div class="form-group mt-1">
+                                      <h6>Item Code</h6>
+                                      <p class="">{{item['strItemCode']}}</p>
+                                  </div>
+                              </div>
+                              <div class="col-md-3">
+                                  <div class="form-group mt-1">
+                                      <h6>Item</h6>
+                                      <p class="">{{item['strItemName']| titlecase}}</p>
+                                  </div>
+                              </div>
+                              <div class="col-md-1">
+                                  <div class="form-group mt-1">
+                                      <h6> Qty</h6>
+                                      <p class="">{{item['intQuantity']}}</p>
+                                  </div>
+                              </div>
+                      
+                              <div class="col-md-1" *ngIf="item['dblDiscount']">
+                                  <div class="form-group mt-1">
+                                      <h6> Discount</h6>
+                                      <!-- <p *ngIf="item.intSaleStatus==0 || item.intSaleStatus==2 "  class="">{{((item['dblDiscount'])*-1).toFixed(2)}}</p> -->
+                                      <p class="">{{(item['dblDiscount']).toFixed(2)}}</p>
+                                      
+                                  </div>
+                              </div>
+                              <div class="col-md-2" *ngIf="item['dblBuyBack']">
+                                <div class="form-group mt-1">
+                                    <h6>Buy back amt</h6>
+                                    <!-- <p *ngIf="item.intSaleStatus==0 || item.intSaleStatus==2 " class="">{{((item['dblBuyBack'])*-1).toFixed(2)}}</p> -->
+                                    <p class="">{{(item['dblBuyBack']).toFixed(2)}}</p>
+                                    
+                                </div>
+                              </div>
+                              <div class="col-md-1" *ngIf="!blnIGST">
+                                      <div class="form-group mt-1">
+                                          <h6>CGST</h6>
+                                          <p class="">{{(item['dblCGST']).toFixed(2)}}</p>
+                                      </div>
+                              </div>
+                              <div class="col-md-1" *ngIf="blnIGST">
+                                      <div class="form-group mt-1">
+                                          <h6>IGST</h6>
+                                          <p class="">{{(item['dblIGST']).toFixed(2)}}</p>
+                                      </div>
+                              </div>
+                              <div class="col-md-1" *ngIf="!blnIGST">
+                                  <div class="form-group mt-1">
+                                    <h6>SGST</h6>
+                                     <p class="">{{(item['dblSGST']).toFixed(2)}}</p>
+                                  </div>
+                              </div> 
+                             
+                           <div class="col-md-2">
+                                <div class="form-group mt-1">
+                                    <h6> Rate </h6>
+                                    <!-- <p  *ngIf="item.intSaleStatus==0 || item.intSaleStatus==2 " class="">{{((item['dblRate'])*-1).toFixed(2)}}</p> -->
+                                    <p  class="">{{(item['dblRate']).toFixed(2)}}</p>
+                                    
+                              </div>
+                           </div>
+                           <!-- <div class="col-md-1" *ngIf="item.intSaleStatus==0" >
+                              <div class="form-group mt-1">
+                                <h6>Status</h6>
+                                 <p  *ngIf="item['blnDamage']" class="">Damaged</p>
+                                 <p  *ngIf="!item['blnDamage']" class="">Working</p>
+                                 
+                              </div>
+                          </div>     -->
+                          <div class="col-md-2">
+                            <div class="form-group mt-1">
+                                <h6> Total Amt</h6>
+                                <!-- <p  *ngIf="item.intSaleStatus==0 || item.intSaleStatus==2 " class="">{{((item['dblAmount'])*-1).toFixed(2)}}</p> -->
+                                <p class="">{{(item['dblAmount']).toFixed(2)}}</p>
+                          
+                              </div>
+                           </div>
+                          <div class="col-md-12">
+                              <div class="form-group mt-1">
+                                  <h6> Imei </h6>
+                                  <p *ngIf="item['strImei']" class="">{{item['strImei']}} </p>
+                                  <p *ngIf="!item['strImei']" class="">--- </p>
+                                  
+                            </div>
+                         </div> 
+                           
+                             <div class="col-md-9" *ngIf="item['strRemarks']">
+                                  <div class="form-group mt-1">
+                                    <h6>Remarks</h6>
+                                     <p class="">{{item['strRemarks']}}</p>
+                                  </div>
+                              </div>
+           
+                  </div>
+              </div>
+          </div>
+      </div>
+
+   

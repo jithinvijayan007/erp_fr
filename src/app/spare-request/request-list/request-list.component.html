@@ -1,0 +1,163 @@
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="card-title">Spare Request List</h4>
+            <div class="row">
+              <div class="card">
+                <div class="col-md-6" style="max-width: 240px;" >
+                  <div class="input-container cal_cont">
+                      <i class="mdi mdi-calendar cal_icon" ></i>
+                      <input  type="text" class="ngx_dtp "matInput ngxDaterangepickerMd [locale]="locale" showDropdowns = "true" alwaysShowCalendars = "true" (datesUpdated) = "getEnquiry($event)" [ranges]="ranges" [(ngModel)]="selected"  name="daterange"/>
+                  </div>           
+              </div>
+              </div>
+          </div>
+          </div>
+      </div>
+      <!-- REQUEST LIST FOR CENTRAL MANAGER -->
+      <div class="card" *ngIf = "intTableStatus == 1">
+        <div class="card-body">
+            <div class="card nodata" *ngIf="!blnShowData">
+                <h5>No Data Found</h5>
+              </div>
+              <div class="example-header" *ngIf="blnShowData">
+                  <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Advance search">
+                  </mat-form-field>
+                </div>
+            <div *ngIf = "blnShowData && intTableStatus == 1" class="example-container mat-elevation-z8">
+                <mat-table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="vchr_job_num">
+                      <mat-header-cell *matHeaderCellDef> JOB NO </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.vchr_job_num}} </mat-cell>
+                      <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                    </ng-container>
+
+                    <ng-container matColumnDef="servicer_full_name">
+                        <mat-header-cell *matHeaderCellDef> REQUESTED BY </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.servicer_full_name}} </mat-cell>
+                        <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef> STATUS </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> 
+                          <span *ngIf = "element.vchr_status == 'ASSIGNED'">
+                            <button  [disabled] = "true" style=" background-color: #22934d; margin-left: -2%; border-radius: 10px;color: white;margin-left: 2%;font-size: 12px;padding: 6px;">
+                              {{element.vchr_status}} 
+                            </button>
+                        </span>
+
+                        <span *ngIf = "element.vchr_status == 'NOT ASSIGNED'">
+                            <button   [disabled] = "true" style=" background-color: #bc3030;margin-left: -2%;border-radius: 10px;color: white;margin-left: 2%;font-size: 12px;padding: 6px;">   
+                              {{element.vchr_status}} 
+                            </button>
+                        </span>
+
+                        <span *ngIf = "element.vchr_status == 'PARTIALLY ASSIGNED'">
+                          <button   [disabled] = "true" style=" background-color: #bc3030;margin-left: -2%;border-radius: 10px;color: white;margin-left: 2%;font-size: 12px;padding: 6px;">   
+                            {{element.vchr_status}} 
+                          </button>
+                      </span>
+                        </mat-cell>
+                        <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                    <!-- </ng-container> --> 
+
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell class="matheadr_right" *matHeaderCellDef> ACTION </mat-header-cell>
+                        <mat-cell *matCellDef="let row;let i= index;"class="matheadr_right">
+                          <button  title="View" (click)="onView(row)" class="viewbtn mr-2">
+                            <i class="fa fa-eye"></i>
+                          </button>
+                          <!-- <button *ngIf="row.bln_view" title="Print" (click)="onPrint(row)" class="edit_btn">
+                            <i class="fa fa-print"></i>
+                          </button> -->
+
+                        </mat-cell>
+                      </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+                <!-- <mat-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[10, 25, 100]" (page)="onPaginateChange($event)"></mat-paginator> -->
+            </div>
+          </div>
+      </div>
+
+
+      <!-- REQUEST LIST FOR PROCUREMENT TEAM (PET)  -->
+      <div class="card" *ngIf = "intTableStatus == 2">
+        <div class="card-body">
+            <div class="card nodata" *ngIf="!blnShowData">
+                <h5>No Data Found</h5>
+              </div>
+              <div class="example-header" *ngIf="blnShowData">
+                  <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Advance search">
+                  </mat-form-field>
+                </div>
+            <div *ngIf = "blnShowData && intTableStatus == 2" class="example-container mat-elevation-z8">
+                <mat-table [dataSource]="dataSource2">
+
+                    <ng-container matColumnDef="no">
+                      <mat-header-cell *matHeaderCellDef> NO </mat-header-cell>
+                      <mat-cell *matCellDef="let elemen;let j = index"> {{j+1}} </mat-cell>
+                      <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                    </ng-container>
+
+                    <ng-container matColumnDef="item_name">
+                        <mat-header-cell *matHeaderCellDef> ITEM NAME </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.item_name}} </mat-cell>
+                        <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="item_code">
+                        <mat-header-cell *matHeaderCellDef> ITEM CODE</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.item_code}}  </mat-cell>
+                        <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                    </ng-container>
+                    <ng-container matColumnDef="branch_name">
+                      <mat-header-cell *matHeaderCellDef> REQUESTED BRANCH</mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.branch_name}}  </mat-cell>
+                      <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                  </ng-container>
+                  <ng-container matColumnDef="quantity">
+                    <mat-header-cell *matHeaderCellDef> QUANTITY</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.qty_needed}}  </mat-cell>
+                    <!-- <mat-footer-cell *matFooterCellDef></mat-footer-cell> -->
+                  </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell class="matheadr_right" *matHeaderCellDef> ACTION </mat-header-cell>
+                        <mat-cell *matCellDef="let row;let i= index;"class="matheadr_right">
+                          <button  title="View" (click)="viewSpareRequestDetails(row.request_id)" class="viewbtn mr-2">
+                            <i class="fa fa-eye"></i>
+                          </button>
+                          <!-- <button *ngIf="row.bln_view" title="Print" (click)="onPrint(row)" class="edit_btn">
+                            <i class="fa fa-print"></i>
+                          </button> -->
+
+                        </mat-cell>
+                      </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns2;"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns2;"></mat-row>
+                </mat-table>
+                <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+                <!-- <mat-paginator #paginator [length]="data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[10, 25, 100]" (page)="onPaginateChange($event)"></mat-paginator> -->
+            </div>
+          </div>
+      </div>
+
+      
+  </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

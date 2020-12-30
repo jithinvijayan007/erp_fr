@@ -1,0 +1,274 @@
+<div class="blur">
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="form-head1">
+          <span> GDP Service View 
+          </span>
+        </h4>
+        <div class="form p-t-10 row">
+          <div class="col-md-4" *ngIf="dctMaster['dat_created_at']">
+            <div class="form-group mt-1">
+              <h6>Date</h6>
+              <p class="">{{dctMaster['dat_created_at']| date: 'dd/MM/yyyy'}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="dctMaster['vchr_cust_name']">
+            <div class="form-group mt-1">
+              <h6>Customer Name</h6>
+              <p class="">{{dctMaster['vchr_cust_name']| titlecase}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="dctMaster['int_cust_mob']">
+            <div class="form-group mt-1">
+              <h6>Contact No.</h6>
+              <p class="">{{dctMaster['int_cust_mob']}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-4" *ngIf="dctMaster['vchr_cust_email']">
+            <div class="form-group mt-1">
+              <h6>Mail ID</h6>
+              <p class="">{{dctMaster['vchr_cust_email']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="dctMaster['vchr_bname']">
+            <div class="form-group mt-1">
+              <h6>Branch</h6>
+              <p class="">{{dctMaster['vchr_bname'] | titlecase}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="dctMaster['staff_full_name']">
+            <div class="form-group mt-1">
+              <h6>Staff</h6>
+              <p class="">{{dctMaster['staff_full_name'] | titlecase}}</p>
+            </div>
+          </div>
+     
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <div class="col-lg-12">
+    <div class="card" *ngFor="let key of enqKeys">
+      <span class="card-body" *ngFor="let item of dctEnquiryDetails[key];let tempId=index" >
+        <h4 class="card form-head" style="background: #e9f7f3;padding: 10px;" style="color: azure;background: #395b78;padding: 10px;">
+          <span> {{key | titlecase}} {{tempId+1}} &nbsp;</span>
+          
+          <span >
+            <span (click)="changeFollowUp(tempId,key,0,item)" *ngIf="(!(intFollowUpFlag == tempId && strFollowUpService == key)) && item['vchr_job_status'] == 'CHECKED'">
+              <i class="fa fa-chevron-right" title="Follow-up" aria-hidden="true"></i></span>
+            <span (click)="changeFollowUp(-1,'',1,item)" *ngIf="(intFollowUpFlag == tempId && strFollowUpService == key) && item['vchr_job_status'] == 'CHECKED'">
+              <i class="fa fa-chevron-down" title="Follow-up" aria-hidden="true"></i></span>
+                <!-- <button type="submit" >Reject</button> -->
+          </span>
+        </h4>
+              
+
+        <div class="form  row">
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Brand</h6>
+              <p *ngIf="item.vchr_brand">{{item['vchr_brand'] }}</p>
+              <p *ngIf="!item.vchr_brand">{{'----'}}</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group mt-1">
+              <h6>Item</h6>
+              <p *ngIf="item.vchr_item_name">{{item['vchr_item_name'] | titlecase}}</p>
+              <p *ngIf="!item.vchr_item_name">{{'----'}}</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>IMEI</h6>
+              <p *ngIf="item.vchr_imei">{{item['vchr_imei']}}</p>
+              <p *ngIf="!item.vchr_imei">{{'----'}}</p>
+            </div>
+          </div>
+
+          
+
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Status</h6>
+              <p *ngIf="item.vchr_job_status">{{item['vchr_job_status']|titlecase}}</p>
+              <p *ngIf="!item.vchr_job_status">{{'----'}}</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Days of missing</h6>
+              <p *ngIf="item.int_days_missing">{{item['int_days_missing']}}</p>
+              <p *ngIf="!item.int_days_missing">{{'0'}}</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Compensation Amount</h6>
+              <p *ngIf="item.int_depreciation_amt">{{item['int_depreciation_amt']}}</p>
+              <p *ngIf="!item.int_depreciation_amt">{{'----'}}</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Purchase Branch</h6>
+              <p *ngIf="item.purchase_branch">{{item['purchase_branch'] }}</p>
+              <p *ngIf="!item.purchase_branch">{{'----'}}</p>
+            </div>
+          </div>
+
+        
+          
+        </div>
+
+       
+
+        <!-- gdp stolen input data start -->
+        <div class="form  row" *ngIf="item['vchr_job_status'] == 'MISSING'">
+          <div class="col-md-12">
+            <h6>Upload Files</h6>
+          </div>
+        
+          <div class="col-md-4">
+            <label><small> GDOT Protection Certificate*</small></label>
+            <span style="color:red;" *ngIf="message">{{message}}</span>
+            <input #file1 type="file" accept='image/*' (change)="Preview1(file1.files,$event)" max-file-size="100kb" />
+          </div>
+          <div class="col-md-4">
+            <label><small> Police Intimation Letter*</small></label>
+            <span style="color:red;" *ngIf="message">{{message}}</span>
+            <input #file2 type="file" accept='image/*' (change)="Preview2(file2.files,$event)" max-file-size="100kb" />
+          </div>
+          <div class="col-md-4">
+            <label><small> NTC Certificate*</small></label>
+            <span style="color:red;" *ngIf="message">{{message}}</span>
+            <input #file3 type="file" accept='image/*' (change)="Preview3(file3.files,$event)" max-file-size="100kb" />
+          </div>
+          <div class="col-md-4">
+            <label><small> Notary Subgration Letter*</small></label>
+            <span style="color:red;" *ngIf="message">{{message}}</span>
+            <input #file4 type="file" accept='image/*' (change)="Preview4(file4.files,$event)" max-file-size="100kb" />
+          </div>
+          <div class="col-md-4">
+            <label><small> ID Proof *</small></label>
+            <span style="color:red;" *ngIf="message">{{message}}</span>
+            <input #file5 type="file" accept='image/*' (change)="Preview5(file5.files,$event)" max-file-size="100kb" />
+          </div>
+          <div class="col-md-4">
+            <label><small> Digital Signature *</small></label>
+            <span style="color:red;" *ngIf="message">{{message}}</span>
+            <input #file6 type="file" accept='image/*' (change)="Preview6(file6.files,$event)" max-file-size="100kb" />
+          </div>
+
+        </div>
+        <div class="col-md-12" *ngIf="item['vchr_job_status'] == 'MISSING'">
+          <button  type="submit" class="btn save_btn" (click) = "uploadDocument(item['vchr_imei'],item['vchr_item_code'])">Submit</button>
+          <button [routerLink]="['/invoice/servicelist']" class="btn btn-secondary">Cancel</button>
+        </div>
+        
+          <!-- gdp stolen input data ends -->
+
+          <!-- UPLOADED DOCUMNET   -->
+          <label *ngIf = "item['vchr_job_status'] == 'MISSING & PENDING' || item['vchr_job_status'] == 'MISSING & APPROVED'">Uploaded Documents</label>
+          <div class="row" *ngIf = "item['vchr_job_status'] == 'MISSING & PENDING' || item['vchr_job_status'] == 'MISSING & APPROVED'">
+            
+            <div class="col-md-2" *ngFor = " let key of item['json_documents'];let Id=index" >
+                <label style="color:black !important">Document {{Id+1}}</label>  
+            <div class="form-group mt-1" (mouseover)="hover=true" (mouseleave)="hover=false">
+             
+              <img src="{{key}}" alt="" (click)="imagePopUp(key)" [ngStyle]="{cursor: hover==true  ? 'zoom-in' : 'default' }"  style="width:100%;height: 150px;">
+            </div>
+            </div>
+          </div>
+
+          <!-- UPLOADED DOCUMENT -->
+<!-- Compensation amount-receipt starts -->
+<div class="row col-md-12" *ngIf="item['vchr_job_status'] == 'MISSING & APPROVED'">
+  <form class="form p-t-10 row">
+
+    <div class="col-md-3">
+        <mat-form-field>
+            <mat-select [(ngModel)]="fopSelected" name="fopSelected" placeholder="FOP" (ngModelChange)=fopchange(fopSelected)>
+                <mat-option [value]=1>CASH</mat-option>
+                <mat-option [value]=2>DEBIT CARD</mat-option>
+                <mat-option [value]=3>CREDIT CARD</mat-option>
+                <mat-option [value]=4>CHEQUE</mat-option>
+                <mat-option [value]=5>RTGS</mat-option>
+                <mat-option [value]=6>NEFT</mat-option>
+                <!-- <mat-option [value]=7>PAYTM</mat-option>
+                <mat-option [value]=8>PAYTM MALL</mat-option> -->
+                <mat-option [value]=9>Bharath QR </mat-option>
+
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-md-3" *ngIf = "fopSelected==2 || fopSelected==3">
+        <mat-form-field>
+            <input #cardNum  [(ngModel)]="strCardNumber" OnlyInteger="true" maxlength="4" type="text" minlength="4" name="strCardNumber" matInput placeholder="Card No (Last 4 digits)*" #cardId>
+        </mat-form-field>
+    </div>
+
+    <div class="col-md-3" *ngIf = "fopSelected==7 || fopSelected==8 || fopSelected==9 || fopSelected==2 || fopSelected==3">
+        <mat-form-field>
+            <input #refe  [(ngModel)]="strPaytmRefereNumber" name="strPaytmRefereNumber" OnlyAlphaNum="true" type="text"  matInput placeholder="Reference Number*" #paytmRefId>
+        </mat-form-field>
+    </div>
+
+    <div  class="col-md-3" *ngIf = "fopSelected==2 || fopSelected==3">
+        <mat-form-field>
+            <mat-select [(ngModel)]="intBankId" name="bankSelected" placeholder="Bank Name">
+                <mat-option *ngFor="let item of lstBankNames;" [value]="item.pk_bint_id">{{item.vchr_name | titlecase}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div  class="col-md-3" *ngIf = "fopSelected==4">
+        <mat-form-field>
+            <input [(ngModel)]="strPaytmRefereNumber" name="strChequeNumber" OnlyAlphaNum="true" type="number"  matInput placeholder="Cheque Number*" #chequeId>
+        </mat-form-field>
+    </div>
+
+
+    <div class="col-md-3">
+        <mat-form-field>
+            <input #Amnt readonly type="number" [(ngModel)]="intAmount" name="intAmount" matInput placeholder="Amount" (ngModelChange)=amountValidate() required #amountId>
+        </mat-form-field>
+    </div>
+
+    
+
+    <div class="col-md-3">
+        <mat-form-field>
+            <input matInput placeholder="Remarks" required [(ngModel)]="remarks" value="" name="remarks" #idName>
+        </mat-form-field>
+    </div>
+</form>
+</div>
+<!-- Compensation amount-receipt ends -->
+          <div class="col-md-12" *ngIf="item['vchr_job_status'] == 'MISSING & APPROVED'">
+            <button  type="submit" class="btn save_btn" (click) = "paidDepreciationAmount(item)">Paid Depreciation</button>
+            <button [routerLink]="['/invoice/servicelist']" class="btn btn-secondary">Cancel</button>
+          </div>
+
+      </span>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal" id="myModal" role="dialog" [style.display]="showModal ? 'block' : 'none'" appOutside (click)="ClickedOut($event)" >
+  <div class="modal-dialog" [style.display]="showModal ? 'block' : 'none'">
+      <div class="modal-content" >
+       
+          
+          <div class="modal-body">
+              <img src="{{imgPath}}" alt=""  style="width:100%">
+          </div>
+
+      </div>
+  </div>
+</div>

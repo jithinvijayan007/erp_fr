@@ -1,0 +1,25 @@
+/* :host /deep/ ng2-smart-table.highlightOwner {
+    background: yellowgreen
+}
+.aborted {
+    background: rgba(243, 69, 69, 0.5);
+}
+
+:host /deep/ ng2-smart-table { 
+    font-size: 16px;
+    color: brown
+} */
+
+
+  :host /deep/ tr.solved {
+  background: #f9000014  
+  }
+  :host /deep/ tr.aborted {
+  background: #a3e8142b;
+  }
+
+
+/* :host /deep/ ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom:hover {
+    color: #5dcfe3;
+  } */
+

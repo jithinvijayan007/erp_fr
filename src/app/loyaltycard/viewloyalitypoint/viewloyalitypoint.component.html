@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mb-3" style="font-weight: 600">Loyalty Point</h4> 
+               <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput placeholder="Customer" (ngModelChange)="customerChanged($event)" [matAutocomplete]="customer" [(ngModel)]="selectedCustomer">
+                            <mat-autocomplete #customer="matAutocomplete">
+                                <mat-option *ngFor="let item of lstCustomer" [value]="item.vchr_name" (onSelectionChange)="CustomerClicked(item)">
+                                    {{ item.int_mobile}} - {{item.vchr_name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2 mt-2">
+                        <button class="btn save_btn" type="submit" (click)="getPoint()">Search</button>
+                    </div>
+            </div>
+            <div class="row mt-2" *ngIf="blnShowData">
+                   
+                     <div class="col-md-8">
+                         <div class="row">
+                             <div class="col-md-3">
+                                 <p> Customer Name</p>
+                             </div>
+                             <div class="col-md-9">
+                                  <p> : {{dctData['vchr_name']}}</p>
+                            </div>
+                         </div>
+                     </div>
+                     <div class="col-md-8">
+                             <div class="row">
+                                     <div class="col-md-3">
+                                         <p> Mobile No</p>
+                                     </div>
+                                     <div class="col-md-9">
+                                         <p>: {{dctData['int_mobile']}}</p>
+                                    </div>
+                             </div>
+                      </div>
+                     <div class="col-md-8">
+                             <div class="row">
+                                     <div class="col-md-3">
+                                             <p style="font-weight: 600"> Loyalty Point</p>
+                                     </div>
+                                     <div class="col-md-9">
+                                             <p style="font-weight: 600">: {{dctData['total_loyalty_point']}}</p>
+                                    </div>
+                             </div>
+                     </div>
+                     <!-- <div class="col-md-3">
+                         <div class="form-group mt-1">
+                             <h6> Quantity</h6>
+                             <p class="">{{dctData['intQuantity']}}</p>
+                         </div>
+                     </div> -->
+                   
+                 </div>
+
+         </div>
+    </div>
+       
+    </div>
+</div>

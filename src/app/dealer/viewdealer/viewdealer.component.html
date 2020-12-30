@@ -1,0 +1,203 @@
+<div class="card">
+<div class="card-body">
+<h3><span><i class="fa fa-users" aria-hidden="true"></i></span>&nbsp; View Dealer
+  <!-- <span class="float-right">
+  <button mat-raised-button [routerLink]="['/dealer/editdealer']"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit </button>
+  <button mat-raised-button [routerLink]="['/dealer/listdealer']">Back</button>
+  
+</span> -->
+  </h3>
+  
+  <div class="row">
+  <div class="col-md-12">
+  <div>
+  <div class="row">
+  
+  
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Dealer Code</label>
+   <p class="">{{strDealerCode}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Dealer Name</label>
+  <p class="">{{strDealerName}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Dealer From</label>
+  <p class="">{{strDealerFrom}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Credit Days</label>
+  <p class="">{{intCreditDays}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Credit Limit</label>
+  <p class="">{{intCreditLimit}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>PO Expiry Days</label>
+  <p class="">{{poExpiryDays}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>TIN No</label>
+  <p class="">{{strTINNo}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>CST No</label>
+  <p class="">{{strCSTNo}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>GSTIN</label>
+  <p class="">{{strGSTIN}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>GSTIN Status</label>
+  <p class="">{{strGSTStatus}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Dealer Category</label>
+  <p class="">{{strCategory}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Dealer Tax Class</label>
+  <p class="">{{strTax}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group mt-1">
+    <label>Status</label>
+    <p class="">{{status}}</p>
+    </div>
+    </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Account Group</label>
+  <p class="">{{strGroup}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Bank Account</label>
+  <p class="">{{strAccount}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>PAN No</label>
+  <p class="">{{strPanNo}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>PAN Status</label>
+  <p class="">{{strPanStatus}}</p>
+  </div>
+  </div>
+  </div>
+  <!-- view address detials start -->
+  <div class = "row mt-2" *ngFor="let item of dctData['lstaddress'];let i=index">
+    
+  <h5 class="heading">Address #{{i+1}}</h5>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Address</label>
+  <p class="">{{item.strAddress}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Email Id</label>
+  <p class="">{{item.strEmail}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Phone No</label>
+  <p class="">{{item.intContact}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Pin Code</label>
+  <p class="">{{item.intPinCode}}</p>
+  </div>
+  </div>
+
+  </div>
+  <!-- adrees view ends         -->
+  
+  <!-- conatct view starts -->
+  
+  <div class = "row mt-2" *ngFor="let item of dctData['lstcontact'];let i=index">
+  <h5 class="heading">Contact #{{i+1}}</h5>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Name</label>
+   <p class="">{{item.strName}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Designation</label>
+   <p class="">{{item.strDesig}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Department</label>
+   <p class="">{{item.strDept}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Office</label>
+   <p class="">{{item.strOffice}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Mobile No.1</label>
+   <p class="">{{item.intPhone1}}</p>
+  </div>
+  </div>
+  <div class="col-md-4">
+  <div class="form-group mt-1">
+  <label>Mobile No.2</label>
+   <p class="">{{item.intPhone2}}</p>
+  </div>
+  </div>
+  
+  </div>
+  
+  <!-- contact view ends             -->
+  
+  
+  </div>
+  </div>
+  
+  </div>
+</div>
+</div>

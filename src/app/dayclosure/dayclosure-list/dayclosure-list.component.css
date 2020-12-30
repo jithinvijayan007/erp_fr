@@ -1,0 +1,15 @@
+.righttext{
+    display: flex;
+    justify-content: flex-end;
+}
+.acktable th{
+    font-weight: 600;
+}
+.minwidth{
+    min-width: 160px;
+}
+.center{
+    display:flex !important;
+    justify-content:center!important;
+
+}

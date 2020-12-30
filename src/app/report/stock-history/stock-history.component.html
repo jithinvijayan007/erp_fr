@@ -1,0 +1,256 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">
+          Stock History<span style="float: right; cursor: pointer;"> </span>
+        </h4>
+        <!-- <div class="row"> -->
+
+        <div class="row">
+          <div class="col-md-2 col-lg-2">
+            <mat-form-field>
+              <input
+                (click)="picker1.open()"
+                id="fromId"
+                #startDate
+                required
+                readonly
+                matInput
+                [matDatepicker]="picker1"
+                name="dateFrom"
+                placeholder="From"
+                [(ngModel)]="datFrom"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2 col-lg-2">
+            <mat-form-field>
+              <input
+                (click)="picker2.open()"
+                id="toId"
+                #endDate
+                required
+                readonly
+                matInput
+                [matDatepicker]="picker2"
+                name="dateTo"
+                placeholder="To"
+                [(ngModel)]="datTo"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker2"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker2> </mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3" *ngIf="blnBranch">
+            <mat-form-field>
+              <input
+                matInput
+                required
+                placeholder="Branch"
+                [formControl]="searchBranch"
+                [matAutocomplete]="branchname"
+                [(ngModel)]="selectedBranch"
+                #branchId
+              />
+              <mat-autocomplete #branchname="matAutocomplete">
+                <mat-option
+                  *ngFor="let item of lstBranch"
+                  [value]="item.name"
+                  (onSelectionChange)="BranchChanged(item)"
+                >
+                  {{ item.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Product"
+                [formControl]="searchProduct"
+                [matAutocomplete]="productname"
+                [(ngModel)]="selectedProduct"
+                #idProduct
+              />
+              <mat-autocomplete #productname="matAutocomplete">
+                <mat-option
+                  *ngFor="let item of lst_product"
+                  [value]="item.name"
+                  (onSelectionChange)="productChanged(item)"
+                >
+                  {{ item.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Brand"
+                [formControl]="searchBrand"
+                [matAutocomplete]="brandname"
+                [(ngModel)]="selectedBrand"
+                #idBrand
+              />
+              <mat-autocomplete #brandname="matAutocomplete">
+                <mat-option
+                  *ngFor="let item of lst_brand"
+                  [value]="item.name"
+                  (onSelectionChange)="brandChanged(item)"
+                >
+                  {{ item.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field>
+              <input
+                matInput
+                required
+                placeholder="Item"
+                [formControl]="searchItem"
+                [matAutocomplete]="itemname"
+                [(ngModel)]="selectedItem"
+                #itemId
+                (ngModelChange)="itemNgModelChanged($event)"
+              />
+              <mat-autocomplete #itemname="matAutocomplete">
+                <mat-option
+                  *ngFor="let item of lstItem"
+                  [value]="item.code_name"
+                  (onSelectionChange)="itemChanged(item)"
+                >
+                  {{ item.code_name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3" style="margin-top: 12px;">
+            <button
+              type="submit"
+              class="btn save_btn mr-2"
+              (click)="searchData()"
+            >
+              Search
+            </button>
+            <!-- <button  *ngIf="!blnFilterOn && blnDownload" type="submit"  class="btn save_btn" (click)="exportData()">Export</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card" *ngIf="blnShowData">
+  <div class="card-body">
+    <div class="example-container mat-elevation-z8 mt-3">
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="date">
+          <mat-header-cell class="minwidth10" *matHeaderCellDef>
+            Date
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="minwidth10"
+            >{{ row.dat_transac }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef class="minwidth10">
+            <div><b>Total</b></div>
+          </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="docno">
+          <mat-header-cell class="minwidth10" *matHeaderCellDef>
+            Doc No
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="minwidth10"
+            >{{ row.vchr_doc_num }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef class="minwidth10">
+            <!-- <div><b>{{intStockIn}}</b></div> -->
+          </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="conbranch">
+          <mat-header-cell class="minwidth10" *matHeaderCellDef
+            >Concern Branch
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="minwidth10"
+            >{{ row.vchr_branch_transac }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef class="minwidth10">
+          </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <mat-header-cell class="minwidth15" *matHeaderCellDef>
+            Type
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="minwidth15"
+            >{{ row.vchr_type }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef class="minwidth15">
+            <!-- <div><b>Stock Out</b></div> -->
+          </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="qty">
+          <mat-header-cell
+            *matHeaderCellDef
+            class="minwidth10"
+            style="display: flex; justify-content: flex-end;"
+            >Quantity
+          </mat-header-cell>
+          <mat-cell
+            *matCellDef="let row"
+               class="minwidth10"
+            style="display: flex; justify-content: flex-end;"
+            >{{ row.int_qty }}
+          </mat-cell>
+          <mat-footer-cell
+            *matFooterCellDef
+            class="minwidth10"
+            style="display: flex; justify-content: flex-end;"
+          >
+            <div>
+              <b>{{ intTotQty }}</b>
+            </div>
+          </mat-footer-cell>
+        </ng-container>
+
+        <mat-header-row
+          *matHeaderRowDef="lstDisplayedColumns; sticky: true"
+          class="blnMore"
+        ></mat-header-row>
+        <mat-row
+          *matRowDef="let row; columns: lstDisplayedColumns; let i = index"
+          class="blnMore"
+        >
+        </mat-row>
+        <mat-footer-row
+          *matFooterRowDef="lstDisplayedColumns; sticky: true"
+        ></mat-footer-row>
+      </mat-table>
+      <!-- <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+    </div>
+  </div>
+</div>
+
+<div class="card nodata" *ngIf="!blnShowData">
+  <h5>NO DATA FOUND</h5>
+</div>

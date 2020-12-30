@@ -1,0 +1,122 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+        <div class="col-md-4 col-lg-4">
+            <mat-form-field>
+                <input placeholder="Group name" matInput type="text" [(ngModel)]="strName">
+            </mat-form-field>
+        </div>
+        <div class="col-md-4 col-lg-4">
+          <mat-form-field>
+              <input placeholder="Group code" matInput type="text" [(ngModel)]="strCode">
+          </mat-form-field>
+      </div>
+      
+        <div class="col-md-4 col-lg-4" *ngIf="userType =='superuser' ">
+
+            <mat-form-field>
+                <input matInput placeholder="Company*" [formControl]="searchCompany" [matAutocomplete]="company" [(ngModel)]="companyName">
+                <mat-autocomplete #company="matAutocomplete">
+                    <mat-option *ngFor="let item of lstCompany" [value]="item.name" (click)="companyChanged(item)">
+                        {{ item.name }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+        </div>
+        <div class="col-md-3 mt-2">
+            <button class="btn save_btn m-r-10" color="accent" (click)="saveGroup()" style="margin-right: 10px;">ADD</button>
+            <button class="btn btn-secondary" [routerLink]="['/group/listgroup']">Cancel</button>
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <ul>
+                    <li style="padding: 5px 10px;background: #eee;font-weight:600;margin: 0px;">Module</li>
+                    <li style="padding: 5px 10px;background: #eee;font-weight:600;margin: 0px;">Add</li>
+                    <li style="padding: 5px 10px;background: #eee;font-weight:600;margin: 0px;">Edit</li>
+                    <li style="padding: 5px 10px;background: #eee;font-weight:600;margin: 0px;">Delete</li>
+                    <li style="padding: 5px 10px;background: #eee;font-weight:600;margin: 0px;">View</li>
+                    <li style="padding: 5px 10px;background: #eee;font-weight:600;margin: 0px;">Download</li>
+                </ul>
+                <!-- test case -->
+
+                <ul *ngFor="let item of lstPermsKeys; let i = index">
+                    <li style="padding: 5px 10px;font-weight:600;" class="cursor" scope="row" (click)="levelOneClicked(item)">{{item}}</li>
+                    <li style="padding: 5px 10px;">
+                        <mat-checkbox [disabled]="isAllDisabled(item,i, 'bln_add_perm')" [indeterminate]="isAllDisabled(item,i, 'bln_add_perm')" [checked]="isAllChecked(item,i, 'bln_add_perm')" (change)="mainChanged($event, item,i, 'bln_add_perm')" style="padding: 5px;"></mat-checkbox>
+                    </li>
+                    <li style="padding: 5px 10px;">
+                        <mat-checkbox [disabled]="isAllDisabled(item,i, 'bln_edit_perm')" [indeterminate]="isAllDisabled(item,i, 'bln_edit_perm')" [checked]="isAllChecked(item,i, 'bln_edit_perm')" (change)="mainChanged($event,item, i, 'bln_edit_perm')" style="padding: 5px ; "></mat-checkbox>
+                    </li>
+                    <li style="padding: 5px 10px;">
+                        <mat-checkbox [disabled]="isAllDisabled(item,i, 'bln_delete_perm')" [indeterminate]="isAllDisabled(item,i, 'bln_delete_perm')" [checked]="isAllChecked(item,i, 'bln_delete_perm')" (change)="mainChanged($event,item, i, 'bln_delete_perm')" style="padding: 5px; "></mat-checkbox>
+                    </li>
+                    <li style="padding: 5px 10px;">
+                        <mat-checkbox [disabled]="isAllDisabled(item,i, 'bln_view_perm')" [indeterminate]="isAllDisabled(item,i, 'bln_view_perm')" [checked]="isAllChecked(item,i, 'bln_view_perm')" (change)="mainChanged($event,item,i, 'bln_view_perm')" style="padding: 5px; "></mat-checkbox>
+                    </li>
+                    <li style="padding: 5px 10px;">
+                        <mat-checkbox [disabled]="isAllDisabled(item,i, 'bln_download_perm')" [indeterminate]="isAllDisabled(item,i, 'bln_download_perm')" [checked]="isAllChecked(item,i, 'bln_download_perm')" (change)="mainChanged($event,item,i, 'bln_download_perm')" style="padding: 5px; "></mat-checkbox>
+                    </li>
+                    <ul *ngFor="let subItem of lst_subItem; let j = index">
+                        <li scope="row" (click)="levelTwoClicked(item,subItem)" style="cursor:pointer;padding: 0px 25px; font-size: 13px;font-weight:600;" *ngIf="lstPerms[item]['levelOneClicked']">{{subItem}}</li>
+                        <li style=" padding-left: 15px;" *ngIf="lstPerms[item]['levelOneClicked']">
+                            <mat-checkbox [disabled]="isAllDisabledSub(item,subItem,'bln_add_perm')" [indeterminate]="isAllDisabledSub(item,subItem,'bln_add_perm')" [checked]="isAllCheckedSub(item,subItem,'bln_add_perm')" (change)="mainChangedSub($event,item,subItem,'bln_add_perm')"
+                                [(ngModel)]="lstPerms[item][subItem]['bln_add_perm']"></mat-checkbox>
+                        </li>
+                        <li style=" padding-left: 15px;" *ngIf="lstPerms[item]['levelOneClicked']">
+                            <mat-checkbox [disabled]="isAllDisabledSub(item,subItem, 'bln_edit_perm')" [indeterminate]="isAllDisabledSub(item,subItem, 'bln_edit_perm')" [checked]="isAllCheckedSub(item,subItem,'bln_edit_perm')" (change)="mainChangedSub($event,item,subItem,'bln_edit_perm')"
+                                [(ngModel)]="lstPerms[item][subItem]['bln_edit_perm']"></mat-checkbox>
+                        </li>
+                        <li style=" padding-left: 15px;" *ngIf="lstPerms[item]['levelOneClicked']">
+                            <mat-checkbox [disabled]="isAllDisabledSub(item,subItem,'bln_delete_perm')" [indeterminate]="isAllDisabledSub(item,subItem,'bln_delete_perm')" [checked]="isAllCheckedSub(item,subItem,'bln_delete_perm')" (change)="mainChangedSub($event, item,subItem,'bln_delete_perm')"
+                                [(ngModel)]="lstPerms[item][subItem]['bln_delete_perm']"></mat-checkbox>
+                        </li>
+                        <li style=" padding-left: 15px;" *ngIf="lstPerms[item]['levelOneClicked']">
+                            <mat-checkbox [disabled]="isAllDisabledSub(item,subItem,'bln_view_perm')" [indeterminate]="isAllDisabledSub(item,subItem,'bln_view_perm')" [checked]="isAllCheckedSub(item,subItem,'bln_view_perm')" (change)="mainChangedSub($event,item,subItem,'bln_view_perm')"
+                                [(ngModel)]="lstPerms[item][subItem]['bln_view_perm']"></mat-checkbox>
+                        </li>
+                        <li style=" padding-left: 15px;" *ngIf="lstPerms[item]['levelOneClicked']">
+                            <mat-checkbox [disabled]="isAllDisabledSub(item,subItem,'bln_download_perm')" [indeterminate]="isAllDisabledSub(item,subItem,'bln_download_perm')" [checked]="isAllCheckedSub(item,subItem,'bln_download_perm')" (change)="mainChangedSub($event,item,subItem,'bln_download_perm')"
+                                [(ngModel)]="lstPerms[item][subItem]['bln_download_perm']"></mat-checkbox>
+                        </li>
+
+                        <ul *ngFor="let menuSubItem of dictMenuItems[subItem]">
+                          
+                            <li style="padding-left: 50px;font-size: 14px;" scope="row" *ngIf="lstPerms[item][subItem]['levelTwoClicked']">{{menuSubItem}}</li>
+
+                            <li style="padding-left: 15px;">
+                                <mat-checkbox [(ngModel)]="lstPerms[item][subItem][menuSubItem]['bln_add_perm']" *ngIf="lstPerms[item][subItem]['levelTwoClicked']" (change)="menuItemChanged($event,item,subItem,menuSubItem,'bln_add_perm')"></mat-checkbox>
+                            </li>
+                            <li style="padding-left: 15px;">
+                                <mat-checkbox [(ngModel)]="lstPerms[item][subItem][menuSubItem]['bln_edit_perm']" *ngIf="lstPerms[item][subItem]['levelTwoClicked']" (change)="menuItemChanged($event,item,subItem,menuSubItem,'bln_edit_perm')"></mat-checkbox>
+                            </li>
+                            <li style="padding-left: 15px;">
+                                <mat-checkbox [(ngModel)]="lstPerms[item][subItem][menuSubItem]['bln_delete_perm']" *ngIf="lstPerms[item][subItem]['levelTwoClicked']" (change)="menuItemChanged($event,item,subItem,menuSubItem,'bln_delete_perm')"></mat-checkbox>
+                            </li>
+                            <li style="padding-left: 15px;">
+                                <mat-checkbox [(ngModel)]="lstPerms[item][subItem][menuSubItem]['bln_view_perm']" *ngIf="lstPerms[item][subItem]['levelTwoClicked']" (change)="menuItemChanged($event,item,subItem,menuSubItem,'bln_view_perm')"></mat-checkbox>
+                            </li>
+                            <li style="padding-left: 15px;">
+                                <mat-checkbox [(ngModel)]="lstPerms[item][subItem][menuSubItem]['bln_download_perm']" *ngIf="lstPerms[item][subItem]['levelTwoClicked']" (change)="menuItemChanged($event,item,subItem,menuSubItem,'bln_download_perm')"></mat-checkbox>
+                            </li>
+
+
+                        </ul>
+                    </ul>
+                </ul>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="card">
+  <div class="card-body">
+   
+            <h4 class="card-title">Scheme List</h4>
+        
+      <!-- <div class="row">
+
+        <div class="col-md-3">
+            <mat-form-field>
+                <input matInput required readonly [matDatepicker]="picker" placeholder="From Date" [(ngModel)]="datFrom" name="fromDate" #fromDate>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field>
+                <input matInput required readonly [matDatepicker]="picker1" placeholder="To Date" [(ngModel)]="datTo" name="toDate" #toDate>
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn save_btn  mt-2" (click)="searchData()">OK</button>
+        </div>
+
+    </div> -->
+  </div>
+</div>
+
+ <div class="card"  *ngIf = "blnShowData">
+    <div class="card-body">
+                  
+      <div  class="example-container mat-elevation-z8 mt-3">
+         
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="fromdate">
+            <mat-header-cell class="minwidth10"  *matHeaderCellDef> From Date </mat-header-cell>
+            <mat-cell *matCellDef="let row"  class="minwidth10">{{row.dat_from}} </mat-cell>
+          
+         
+          </ng-container>
+      
+          <ng-container matColumnDef="todate">
+            <mat-header-cell class="minwidth10"  *matHeaderCellDef> To Date </mat-header-cell>
+            <mat-cell *matCellDef="let row"  class="minwidth10">{{row.dat_to}} </mat-cell>
+          
+         
+          </ng-container>
+
+          <ng-container matColumnDef="schema">
+            <mat-header-cell class="minwidth10"  *matHeaderCellDef> Schema </mat-header-cell>
+            <mat-cell *matCellDef="let row"  class="minwidth10">{{row.vchr_schema}} </mat-cell>
+  
+          </ng-container>
+    
+          <!-- <ng-container matColumnDef="amount">
+            <mat-header-cell class="minwidth43"  *matHeaderCellDef> Amount </mat-header-cell>
+            <mat-cell *matCellDef="let row"  class="minwidth43">{{row.dbl_amount}} </mat-cell>
+         
+          </ng-container> -->
+
+          <!-- <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <button id="view" title="View" class="view_btn" (click)="viewSchema(row)" class="viewbtn mr-2"><i class="fa fa-eye" style="color: cornflowerblue;" aria-hidden="true"></i></button>
+            </mat-cell>
+        </ng-container> -->
+    
+        
+        
+        
+          <mat-header-row *matHeaderRowDef="lstDisplayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: lstDisplayedColumns; let i = index;">
+          </mat-row>
+         
+        </mat-table>
+     
+      </div>
+     
+    </div>
+    </div>
+
+    <div class="card nodata" *ngIf="!blnShowData">
+      <h5>NO DATA FOUND</h5>
+    </div> 
+    
+    
+   
+  

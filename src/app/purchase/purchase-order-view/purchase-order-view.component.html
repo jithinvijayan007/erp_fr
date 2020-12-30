@@ -1,0 +1,92 @@
+<div class="card">
+  <div class="card-body">
+      <div class="row">
+          <div class="col-md-10" style="padding-left:0">
+                <h4 class="heading"><b><span><i aria-hidden="true"></i></span>&nbsp; Purchase Order View </b> {{dctMasterData['vchr_stkrqst_num']}}</h4>
+          </div>
+          <div class="col-md-2" style="text-align:right">
+                <button type="submit" class="btn backbtn" (click)="goBack()" style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);"><i class="fa fa-angle-left icon"></i>  <span style="margin-left: 15px;">Back </span></button>
+          </div>
+              
+      </div>
+     
+      <!-- <h5 class="card-subtitle">made with bootstrap elements</h5> -->
+      <div class="row mt-3">
+          <div class="col-md-4">
+              <label>Supplier </label>
+              <p> {{dctMasterData['supplier_name']}}</p>
+          </div>
+          <div class="col-md-4">
+              <label>Branch </label>
+              <p> {{dctMasterData['branch_name']}}</p>
+          </div>
+          <div class="col-md-4">
+              <label>Order Date</label>
+              <p>{{dctMasterData['dat_po']}}</p>
+          </div>
+          <div class="col-md-4">
+              <label>Order Expiry Date</label>
+              <p>{{dctMasterData['dat_po_expiry']}}</p>
+          </div>
+          <div class="col-md-6">
+              <label>Remarks</label>
+              <p>{{dctMasterData['notes']}}</p>
+          </div>
+      </div>
+  </div></div>
+
+  <div class="card">
+      <div class="card-body">
+      <div class="row mt-3">
+          <div class="col-12">
+             
+                
+                      <h4 class="card-title mb-4"><b>Item List</b></h4>
+                      <div class="example-container mat-elevation-z8">
+                          <mat-table [dataSource]="dataSource">
+
+                              <ng-container matColumnDef="slno" sticky>
+                                  <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.slno}} </mat-cell>
+                                  <mat-footer-cell *matFooterCellDef>Total</mat-footer-cell>
+                              </ng-container>
+
+                              <ng-container matColumnDef="fk_item__vchr_name">
+                                  <mat-header-cell *matHeaderCellDef> Item </mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.item_name}} </mat-cell>
+                                  <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                              </ng-container>
+
+                              <ng-container matColumnDef="rate">
+                                  <mat-header-cell *matHeaderCellDef> Rate </mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.rate}} </mat-cell>
+                                  <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                              </ng-container>
+
+                              <ng-container matColumnDef="int_qty">
+                                  <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.int_qty}} </mat-cell>
+                                  <mat-footer-cell *matFooterCellDef>  {{ dctMasterData['netQty']}}</mat-footer-cell>
+                              </ng-container>
+
+                              <ng-container matColumnDef="amount">
+                                  <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
+                                  <mat-footer-cell *matFooterCellDef>{{ dctMasterData['netAmount'] }}</mat-footer-cell>
+                              </ng-container>
+
+
+                              <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" style="font-weight: 600 !important;"></mat-header-row>
+                              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+                              <mat-footer-row *matFooterRowDef="displayedColumns; sticky: true" style="background-color: ghostwhite;font-weight: 600;"></mat-footer-row>
+                          </mat-table>
+                      </div>
+                  
+              
+          </div>
+
+      </div>
+      
+  </div>
+</div>

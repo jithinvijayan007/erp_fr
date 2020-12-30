@@ -1,0 +1,159 @@
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="card-title">Sales Return List</h4>
+              <div class="row">
+                  <div class="card">
+                      <form class="form-inline">
+
+                          <div class="col-md-3 col-lg-3">
+                              <mat-form-field>
+                                <input (click)="picker1.open()" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="From" [(ngModel)]="datFrom">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1>
+                                </mat-datepicker>
+                              </mat-form-field>
+                            </div>
+
+                            <div class="col-md-3 col-lg-3">
+                              <mat-form-field>
+                                <input (click)="picker2.open()" id ="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To" [(ngModel)]="datTo">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2>
+                                </mat-datepicker>
+                              </mat-form-field>
+                            </div>
+
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Mobile No" maxlength="10" [(ngModel)]="intPhone" name="no1" >
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-2">
+                              <button  type="submit" class="btn save_btn m-r-10" (click)="getData()">Search</button>
+
+                            </div>
+
+
+            </form>
+        </div>
+      </div>
+      <!-- advance filter start -->
+      
+        
+            <div class="row">
+                <div class="padd_l_r filter" *ngIf = "!blnAdvanceFilter">
+                        &nbsp;<span>Advanced Filter</span>
+                        <span class="cursor" (click)="changeAdvanceFilter()">
+                         <i class="fa fa-chevron-down filter_btn" title="Click here"></i>
+                        </span>
+                      </div>
+                    <div class="padd_l_rfilter" *ngIf = "blnAdvanceFilter">
+                        &nbsp;<span>Advanced Filter</span>
+                        <span class="cursor" (click)="changeAdvanceFilter()">
+                            <i class="fa fa-chevron-up filter_btn" title="Click here" *ngIf = "blnAdvanceFilter"></i>
+                        </span>
+                    </div>
+                </div>
+            <!-- <p class="text-center mt-3" style="color: #647d78;font-weight:600;" (click)="changeAdvanceFilter()">Advance filter</p> -->
+
+        
+        <div class="row mt-2" *ngIf = "blnAdvanceFilter">
+            <div class="col-md-3">
+                <mat-form-field>
+                    <input matInput  [(ngModel)]="selectedProduct" [formControl]="searchProduct" [matAutocomplete]="product" name="product" type="text" placeholder="Product" value="">
+                    <mat-autocomplete #product="matAutocomplete">
+                        <mat-option *ngFor="let item of lstProduct" [value]="item.name" (onSelectionChange)="productChanged(item)">
+                            {{ item.name | titlecase }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field>
+                    <input matInput  [(ngModel)]="selectedBrand" [formControl]="searchBrand" [matAutocomplete]="brand" name="brand" type="text" placeholder="Brand" value="">
+                    <mat-autocomplete #brand="matAutocomplete">
+                        <mat-option *ngFor="let item of lstBrand" [value]="item.name " (onSelectionChange)="brandChanged(item)">
+                            {{ item.name | titlecase }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+          
+            <div class="col-md-6">
+                <mat-form-field>
+                    <input matInput [(ngModel)]="selectedItem" [formControl]="searchItem" [matAutocomplete]="items" name="item" type="text" placeholder="Item" value="">
+                    <mat-autocomplete #items="matAutocomplete">
+                        <mat-option *ngFor="let item of lstItem" [value]="item.code_name" (onSelectionChange)="itemChanged(item)">
+                            {{ item.code_name | titlecase }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                    <mat-form-field>
+                            <input matInput placeholder="Staff" [formControl]="searchStaff" [matAutocomplete]="Staffname" [(ngModel)]="selectedStaff"
+                            #idStaff>
+                             <mat-autocomplete #Staffname="matAutocomplete">
+                            <mat-option *ngFor="let item of lstStaff" [value]="item.strUserName" (onSelectionChange)="StaffChanged(item)">
+                              {{ item.strUserName }}
+                            </mat-option>
+                          </mat-autocomplete>
+                          
+                    </mat-form-field> 
+            </div>    
+            <!-- <div class="form-group col-md-3 mt-4">
+                <div class="custom-control custom-checkbox mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" [(ngModel)]="blnAvailStock" id="checkbox12">
+                    <label class="custom-control-label" for="checkbox12">Available Stock</label>
+                </div>
+            </div> -->
+            <div class="col-md-2 mt-2">
+                    <button  type="submit" class="btn save_btn" (click)="getData()">Search</button>
+          
+         
+            </div>
+            
+            <!-- <div class="table-responsive col-md-12 mt-3" *ngIf="blnShowData==0">
+                <p class="tablehint">Double click on item for select,</p>
+                <table class="table">
+                    <thead class="bg-info text-white">
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Brand</th>
+                            <th class="text-right">Availability</th>
+                            <th class="text-right">Amt(Per piece)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of lstFilterData;let i=index" (dblclick)="clickRow(i)">
+                            <td>{{item.strItemName}}</td>
+                            <td>{{item.strBrandName}}</td>
+                            <td class="text-right">{{item.intQuantity}}</td>
+                            <td class="text-right">{{item.dblPrice}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+      
+        </div>
+        
+      
+      <!-- advance filter ends      -->
+
+             <!-- smart table start -->
+              <div class="mt-2">
+              <div *ngIf="blnShowData" class="table table-responsive smart-table">
+                  <ng2-smart-table [settings]="settings" [source]="source" class="" (custom)="onCustomAction($event)"></ng2-smart-table>
+              </div>
+              <!-- smart table ends -->
+              <div class="card nodata" *ngIf="!blnShowData">
+                <div>NO DATA FOUND</div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>

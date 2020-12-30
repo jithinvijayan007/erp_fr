@@ -1,0 +1,217 @@
+<!-- VIEW FOR PROCUREMENT TEAM -->
+<div class="card">
+    <div class="card-body">
+            <div class = "row disable-select">
+                <div class="col-md-12 col-lg-12">
+                    <h4 class="heading">
+                        <span>
+                          <i class="mdi mdi-book-multiple" aria-hidden="true"></i>
+                        </span>&nbsp;  Spare Request Details  <span style="color: #2c4f5e;"></span>
+                    </h4>
+                </div>
+            </div>
+            <div class="row"  style="padding-top: 15px;">
+                <div class="col-md-12">
+                    <fieldset style="width:100% !important" class="fieldset">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class=" mt-1">
+                                    <label>Branch Code</label>
+                                    <p *ngIf="dctData['branch_code']">{{ dctData['branch_code'] }}</p>
+                                    <p *ngIf="!dctData['branch_code']">{{ '----' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mt-1">
+                                    <label>Branch Name</label>
+                                    <p *ngIf="dctData['branch_name']">{{ dctData['branch_name'] | titlecase }}</p>
+                                    <p *ngIf="!dctData['branch_name']">{{ '----' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class=" mt-1">
+                                    <label>Date Request</label>
+                                    <p *ngIf="dctData['dat_request']">{{ dctData['dat_request'] | date : 'dd-MM-yyyy' }}</p>
+                                    <p *ngIf="!dctData['dat_request']">{{ '----' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class=" mt-1">
+                                    <label>Item Code</label>
+                                    <p *ngIf="dctData['item_code']">{{ dctData['item_code'] }}</p>
+                                    <p *ngIf="!dctData['item_code']">{{ '----' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class=" mt-1">
+                                    <label>Item Name</label>
+                                    <p *ngIf="dctData['item_name']">{{ dctData['item_name'] | titlecase }}</p>
+                                    <p *ngIf="!dctData['item_name']">{{ '----' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class=" mt-1">
+                                    <label>Item Colour</label>
+                                    <p *ngIf="dctData['vchr_colour']">{{ dctData['vchr_colour'] | titlecase }}</p>
+                                    <p *ngIf="!dctData['vchr_colour']">{{ '----' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12" *ngIf = "this.dctData['lst_item_details'].length > 0">
+                                <div class=" mt-1">
+                                    <label>Spare Item Details</label>
+                                    <!-- <p *ngIf="dctData['lst_item_details']">{{ dctData['lst_item_details'] | titlecase }}</p>
+                                    <p *ngIf="!dctData['lst_item_details']">{{ '----' }}</p> -->
+                                    <table style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="background: #f1f3f7;">Item name</th>
+                                                <th class="center" style="background: #f1f3f7;"> Amount </th>
+                                                <th class="center" style="background: #f1f3f7;"> Remarks </th>
+                                                <th class="center" style="background: #f1f3f7;"> Status </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of this.dctData['lst_item_details']">
+                                                <td>
+                                                    <p>{{ item.vchr_item_name }}</p>
+                                                </td>
+                                                <td class="center">
+                                                    <p>{{ item.dbl_amount }}</p>
+                                                </td>
+                                                <td class="center">
+                                                    <p>{{ item.vchr_remarks }}</p>
+                                                </td>
+                                                <td style="display: flex;justify-content: center;">
+                                                    <div class="rotate20" *ngIf="item.int_status == 1" style="color: green;width: 30%;border: 2px solid green;font-size: 10px;transform: rotate(-5deg)">
+                                                        <i class="mdi mdi-check"></i>Approved
+                                                    </div>
+                                                    <div class="rotate20" *ngIf="item.int_status == 0" style="color: #ff5454;width: 30%;border: 2px solid #ff5454;font-size: 10px;transform: rotate(-5deg)">
+                                                        <i class="mdi mdi-close"></i>Not Approved
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 15px;">
+                <div class="col-md-12">
+                    <fieldset style="width:100% !important" class="fieldset">
+               
+                        <legend class="legend">Add Spare</legend>
+                            <table class="table table-bordered">
+                                <thead style="background-color: #eaeef3;">
+                                    <tr>
+                                        <th class="subhead">Item name</th>
+                                        <th class="text-right subhead"> Amount </th>
+                                        <th class="text-right subhead"> Remarks </th>
+                                        <th class="text-right subhead"> Action </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-left">
+                                          <div class="col-md-12">
+                                            <input class="base-input" matInput [(ngModel)]="strItemName" type="text"  name="item" placeholder="Enter item name" value="0">
+                                          </div>
+                                        </td>
+                                        
+                                        <td style="vertical-align:middle;text-align:right">
+                                          <input  class="base-input" matInput [(ngModel)]="dblAmount" type="number" style="width: 78px;text-align: right;justify-content: right;" name="item" placeholder="" value="0">
+                                        </td>
+                                        <td style="vertical-align:middle;text-align:right">
+                                         <div class="col-md-12">
+                                            <input class="base-input" matInput [(ngModel)]="strRemarks" type="text" name="item" placeholder="Enter Remarks"> 
+                                        </div>
+                                      </td>
+                                        <td style="vertical-align:middle;text-align: right">
+                                            <button id="view" title="View" class="add" (click)="addSpareItems()">
+                                                <i class=" ti-plus" aria-hidden="true"></i>Add
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngFor="let item of lstSpare;let index=index">
+                                        <td class="text-left">{{item.strItemName}}</td>
+                                        <td style="text-align:right">{{item.intAmount}}</td>
+                                        <td style="text-align:right">{{item.strRemarks}}</td>
+                                        <td style="vertical-align:middle;text-align: right">
+                                            <button class="delete" (click)="deleteSparePart(index,item)">
+                                                <i class="ti-trash" aria-hidden="true"></i> Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                             
+                            </table>
+                    </fieldset>
+                </div>
+                <div class="col-md-12">
+                    <button class="btn save_btn mr-2" style="margin: 15px;" color="accent" (click)="saveSpare()">Save</button>
+                </div>
+            </div>
+    </div>
+</div>
+      
+
+<!-- VIEW FOR CENTRAL MANAGER TEAM -->
+<!-- <div class="card">
+    <div class="card-body">
+        <div class = "row disable-select">
+            <div class="col-md-12 col-lg-12">
+                <h4 class="heading">
+                    <span>
+                      <i class="mdi mdi-book-multiple" aria-hidden="true"></i>
+                    </span>&nbsp;  Spare Request Details : <span style="color: #2c4f5e;"></span>
+                  
+                </h4>
+          </div>
+      </div>
+      <mat-card class="mt-2" *ngIf="blnSpareTable">
+        <mat-card-content>
+            <div class="mt-2">
+                <label style="color: #12488b !important;"></label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered mt-2">
+                            <thead style="background-color: #eaeef3;">
+                                <tr>
+                                    <th class="subhead">Item Name</th>
+                                    <th class="text-right subhead">Quantity</th>
+                                    <th class="text-right subhead">Date Requested</th>
+                                    <th class="text-right subhead">Status</th>
+                                    <th class="text-right subhead">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of lstSpareList">
+                                    <td class="text-left">{{ item.fk_item_id__vchr_name }}</td>
+                                    <td class="text-right">{{ item.int_qty }}</td>
+                                    <td class="text-right">{{ item.request_dat }}</td>
+                                    <td class="text-right" >
+                                      <span *ngIf = "item.blnStatus">
+                                          <button  [disabled] = "true" style=" background-color: #22934d;border-radius: 10px;color: white;margin-left: 2%;font-size: 12px;padding: 5px;">
+                                              Assigned
+                                          </button>
+                                      </span>
+
+                                      <span *ngIf = "!item.blnStatus">
+                                          <button   [disabled] = "true" style=" background-color: #bc3030;;border-radius: 10px;color: white;margin-left: 2%;font-size: 12px;padding: 5px;">   
+                                              Not Assigned
+                                          </button>
+                                      </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+  </div>
+</div> -->

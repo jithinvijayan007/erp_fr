@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Ledger Statement  List</h4>
+            <div class="row">
+              <div class="col-md-2 col-lg-2">
+                <mat-form-field>
+                  <input (click)="picker1.open()" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="From" [(ngModel)]="datStartDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-2 col-lg-2">
+                <mat-form-field>
+                  <input (click)="picker2.open()" id ="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To" [(ngModel)]="datEndDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker #picker2>
+                  </mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field>
+                    <mat-select [(ngModel)]="intType" name="intType"  (ngModelChange)="TypeChanged(intType)" placeholder="Ledger Type">
+                        <mat-option [value]=1> Customer</mat-option>
+                        <mat-option [value]=2>Staff</mat-option>
+                        <mat-option [value]=3>Expense</mat-option>
+                        <mat-option [value]=4>System A/c</mat-option>
+
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3" *ngIf="intType == 1">
+              <mat-form-field>
+                <input  matInput placeholder="Customer" required [formControl]="searchCustomer" [matAutocomplete]="customername" [(ngModel)]="strSelectedCustomer" (ngModelChange)="customerNgModelChanged($event)" #customerId>
+                <mat-autocomplete #customername="matAutocomplete">
+                  <mat-option *ngFor="let item of lstCustomer" [value]="item.name" (onSelectionChange)="CustomerChanged(item)">
+                      {{ item.name }}
+                  </mat-option>
+              </mat-autocomplete>
+              </mat-form-field>
+          </div>
+          <div class="col-md-3" *ngIf="intType == 2">
+            <mat-form-field>
+              <input matInput required placeholder="Staff" [formControl]="searchStaff" [matAutocomplete]="Staffname" [(ngModel)]="strSelectedStaff" (ngModelChange)="staffNgModelChanged($event)" #idStaff>
+                            <mat-autocomplete #Staffname="matAutocomplete">
+                                <mat-option *ngFor="let item of lstStaff" [value]="item.name" (onSelectionChange)="StaffChanged(item)">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3" *ngIf="intType == 3">
+          <mat-form-field>
+            <input matInput required placeholder="Expense Name" [formControl]="searchExpenseName" [matAutocomplete]="expensename" [(ngModel)]="strSelectedExpense" (ngModelChange)="expenseNgModelChanged($event)" #expenseId>
+            <mat-autocomplete #expensename="matAutocomplete">
+                <mat-option *ngFor="let item of lstExpenseName" [value]="item.vchr_category" (onSelectionChange)="expenseNameChanged(item)">
+                    {{ item.vchr_category }}
+                </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+      </div>
+      <div class="col-md-3" *ngIf="intType == 4">
+        <mat-form-field>
+          <input matInput required placeholder="System A/c Name" [formControl]="searchSystemAcName" [matAutocomplete]="systemacname" [(ngModel)]="strSelectedSystemAc" (ngModelChange)="systemAcNgModelChanged($event)" #systemacId>
+          <mat-autocomplete #systemacname="matAutocomplete">
+              <mat-option *ngFor="let item of  lstSystemAc" [value]="item.vchr_acc_name" (onSelectionChange)="SystemAcChanged(item)">
+                  {{ item.vchr_acc_name }}
+              </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <div class="col-md-1 mt-3"  >
+      <mat-checkbox  [(ngModel)]="blnShowOB" (change)="getData()">Include OB</mat-checkbox>
+    </div>
+              <div class="col-md-2 col-lg-10 mt-2" style="padding-left: 0px;">
+                <button type="submit" class="btn save_btn m-r-10" (click)="getData()">Search</button>
+
+              </div>
+              </div>
+
+              <!-- <h6 class="card-subtitle">Smart data table library with sorting, filtering, pagination & add/edit/delete functions.</h6> -->
+              <div>
+              <div *ngIf="blnShowData" class="table table-responsive smart-table">
+                  <ng2-smart-table [settings]="settings" [source]="source" class="" (custom)="onCustomAction($event)"></ng2-smart-table>
+              </div>
+              <div class="card nodata" *ngIf="!blnShowData">
+                <div>NO DATA FOUND</div>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,18 @@
+.form-head{
+
+    background-color: #e8e9ec;
+    padding: 5px 0px 5px 7px;
+}
+.form-head1:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 60px;
+    height: 1px;
+    background: #bbc4c8;
+    left: 20px;
+    top: 45px;
+}
+h6{
+    font-weight: 600;
+}

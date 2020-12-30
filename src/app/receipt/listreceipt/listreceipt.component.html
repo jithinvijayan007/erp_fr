@@ -1,0 +1,65 @@
+<div class="row" >
+    <div class="col-12" >
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Receipt List</h3>
+                <div class="row">
+                    <div class="card" style="width: 80%">
+                        <form class="form-inline">
+    
+                            <div class="col-md-4 col-lg-4">
+                                <mat-form-field>
+                                  <input (click)="picker1.open()" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="From" [(ngModel)]="datFrom">
+                                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                              </div>
+    
+                              <div class="col-md-4 col-lg-4">
+                                <mat-form-field>
+                                  <input (click)="picker2.open()" id ="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To" [(ngModel)]="datTo">
+                                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker2>
+                                  </mat-datepicker>
+                                </mat-form-field>
+                              </div>
+                                    
+    
+                              <!-- <div class="col-md-4">
+                                  <mat-form-field>
+                                      <input matInput type="number" placeholder="Mobile No" maxlength="10" [(ngModel)]="intPhone" name="no1" >
+                                  </mat-form-field>
+                              </div> -->
+    
+                              <div class="col-md-1">
+                                <button type="submit" class="btn save_btn m-r-10" (click)="getListData()">Search</button>
+    
+                              </div>
+                              <div class="col-md-1">
+                                <button type="submit" style = "margin-left: 30px;" class="btn save_btn m-r-10" (click)="exportPayment()">Export</button>
+    
+                              </div>
+                        </form>
+                    </div>
+                <!-- <h6 class="card-subtitle">Smart data table library with sorting, filtering, pagination & add/edit/delete functions.</h6> -->
+                <div class="table table-responsive smart-table">
+                    <ng2-smart-table [settings]="settings" [source]="source" class="" (deleteConfirm)="onDeleteConfirm($event)" (custom)="customAction($event)"
+                    ></ng2-smart-table>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+<!-- <div class="card nodata" *ngIf="!dataLoaded">
+        <h5>No Data</h5>
+</div> -->
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

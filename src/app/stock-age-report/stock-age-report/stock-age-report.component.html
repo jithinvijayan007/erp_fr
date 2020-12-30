@@ -1,0 +1,122 @@
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+
+              <h4 class="card-title">Stock Age Report</h4>
+              <div class="row" >
+                 
+
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input matInput required placeholder="Branch" [formControl]="searchBranch" [matAutocomplete]="Branchname" [(ngModel)]="selectedBranch" #BranchId>
+                                <mat-autocomplete #Branchname="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstBranch" [value]="item.name" (onSelectionChange)="BranchChanged(item)">
+                                        {{ item.name }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field> 
+                                <input matInput  placeholder="Product" [formControl]="searchProduct" [matAutocomplete]="productname" [(ngModel)]="strSelectedProduct"
+                                #idProduct>
+                                <mat-autocomplete #productname="matAutocomplete">
+                                <mat-option *ngFor="let item of lst_product" [value]="item.name" (onSelectionChange)="productChanged(item)">
+                                  {{ item.name }}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                 <input matInput  placeholder="Brand" [formControl]="searchBrand" [matAutocomplete]="brandname" [(ngModel)]="strSelectedBrand"
+                                 #idBrand>
+                                  <mat-autocomplete #brandname="matAutocomplete">
+                                 <mat-option *ngFor="let item of lst_brand" [value]="item.name" (onSelectionChange)="brandChanged(item)">
+                                   {{ item.name }}
+                                 </mat-option>
+                                 </mat-autocomplete>
+                              </mat-form-field>   
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                              <input matInput placeholder="Item" [formControl]="searchItem" [matAutocomplete]="itemName" [(ngModel)]="strSelectedItem"  >
+                                 <mat-autocomplete #itemName="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstItem" [value]="item.code_name" (onSelectionChange)="itemChanged(item)">{{ item.code_name }} </mat-option>
+                                 </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+
+                      <div class="col-md-3">
+                          <button type="submit" class="btn save_btn" (click)="SearchStock()">Search</button>
+
+                      </div>
+
+                  
+              </div>
+              <!-- table start here -->
+              <div *ngIf="blnShowData" class="example-container mat-elevation-z8">
+                <div class="avimeiscroll mt-3">
+                  <mat-table [dataSource]="dataSource">
+  
+                   
+                      <ng-container matColumnDef="branch">
+                          <mat-header-cell *matHeaderCellDef> Branch</mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.fk_details__fk_master__fk_branch__vchr_name}} </mat-cell>
+                        
+                      </ng-container>
+  
+                      <ng-container matColumnDef="product">
+                          <mat-header-cell *matHeaderCellDef> Product </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.fk_details__fk_item__fk_product__vchr_name}} </mat-cell>
+                        
+                      </ng-container>
+  
+                      <ng-container matColumnDef="brand">
+                          <mat-header-cell *matHeaderCellDef> Brand </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.fk_details__fk_item__fk_brand__vchr_name}} </mat-cell>
+                   
+                      </ng-container>
+                      <ng-container matColumnDef="item">
+                          <mat-header-cell *matHeaderCellDef style="min-width: 155px;"> Item </mat-header-cell>
+                          <mat-cell *matCellDef="let element" style="min-width: 155px;"> {{element.fk_details__fk_item__vchr_name}} </mat-cell>
+                   
+                      </ng-container>
+                      <ng-container matColumnDef="imei" >
+                          <mat-header-cell *matHeaderCellDef style="min-width: 150px;"> Imei </mat-header-cell>
+                          <mat-cell *matCellDef="let element" style="min-width: 150px;"> {{element.imei}} </mat-cell>
+                   
+                      </ng-container>
+                      <ng-container matColumnDef="batch" >
+                          <mat-header-cell *matHeaderCellDef > Batch </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.batch_no}} </mat-cell>
+                   
+                      </ng-container>
+                      <ng-container matColumnDef="branchage">
+                          <mat-header-cell *matHeaderCellDef style="max-width: 100px;"> Branch Age </mat-header-cell>
+                          <mat-cell *matCellDef="let element" style="max-width: 100px;"> {{element.branch_age}} </mat-cell>
+                   
+                      </ng-container>
+                     
+                      <ng-container matColumnDef="totalage">
+                          <mat-header-cell *matHeaderCellDef style="max-width: 100px;"> Total Age </mat-header-cell>
+                          <mat-cell *matCellDef="let element" style="max-width: 100px;"> {{element.total_age}} </mat-cell>
+                   
+                      </ng-container>
+                     
+                      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                  </mat-table>
+                </div>
+              </div>
+
+              <!-- table end here -->
+
+
+          </div>
+      </div>
+  </div>
+</div>            

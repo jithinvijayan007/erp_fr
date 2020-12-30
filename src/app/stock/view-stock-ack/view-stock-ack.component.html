@@ -1,0 +1,138 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Stock Acknowledgement 
+          <span class="float-right">
+              <button type="submit" class="backbtn" (click)="backButton()">
+                  <i class="fa fa-angle-left"></i> Back
+                </button>
+          </span>
+        </h3>
+        <!-- <button type="submit" class="btn save_btn" (click)="backButton()">Back</button> -->
+        <div class="card" *ngIf="source.length>0">
+          <div id="invoicetable" class="table-editable mt-3">
+            <table class="table table-responsive-md">
+              <thead>
+                <tr>
+                  <th style="width: 100px" class="text-left">Item Code</th>
+                  <th class="text-left">Item Name</th>
+                  <th style="width: 100px" class="text-left">Quantity</th>
+                  <th style="width: 100px" class="text-right">Action</th>
+                  <th style="width: 100px" class="text-right">Acknowledge</th>
+                </tr>
+              </thead>
+              <tr *ngFor="let item of source; let i = index">
+                <td class="text-left">{{item.vchr_item_code}}</td>
+                <td class="text-left">{{item.vchr_name}}</td>
+                <td class="text-left">{{item.int_qty}}</td>
+                <td class="text-right">
+                  <span class="cursor" (click)="openfilteritem(filteritem,item,i)">
+                    <i class="ti-eye text-info m-r-10"></i>
+                  </span>
+                </td>
+                <td class="text-right">
+                  <span *ngIf="item.ack==1" class="ack_btn">
+                    <i class="mdi mdi-checkbox-marked-circle-outline"></i>                      
+                  </span>
+                  <span *ngIf="item.ack==0" class="notack_btn">
+                    <i class="mdi mdi-close-circle-outline"></i>                      
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-md-1">
+            <button type="submit" class="btn save_btn" (click)="SaveData()" [disabled]="blnSubmitAck">Submit Ack</button>
+            <!-- <button type="submit" class="btn save_btn" (click)="cancel()">Cancel</button>                                                                      -->
+          </div>
+        </div>
+        <div class="nodata" *ngIf="source.length==0"> No Data</div>
+      </div>
+    </div>
+  </div>
+  <ng-template #filteritem let-modal>
+    <div id="filteritem" class="modal-body">
+      <p class="text-center mt-3" style="color: #828466;font-size: 17px;font-weight: 500;">Acknowledgement IMEI</p>
+      <div class="row mt-3" *ngIf="lst_batch.length>0 || lst_imei.length>0">
+        <!-- Batch No Check -->
+        <div *ngIf="lst_batch.length>0" class="acktable table-responsive col-md-12 mt-3">
+          <p class="tablehint">Check Batch No :</p>
+          <table class="table">
+            <thead class="text-white">
+              <tr>
+                <th>Sl.No</th>
+                <th>Batch No</th>
+                <th class="text-right">
+                  <!-- <input type="checkbox" [(ngModel)]="dct_current_item['batch_all']" (ngModelChange)=SetSelectAll(3)>&nbsp;Available -->
+                  <mat-checkbox [(ngModel)]="dct_current_item['batch_all']" (ngModelChange)=SetSelectAll(3)>&nbsp;Available</mat-checkbox>
+                </th>
+                <th class="text-right">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of lst_batch; let i = index">
+                <td>{{i+1}}</td>
+                <td class="text-left">{{item}}</td>
+                <td class="text-right">
+                  <!-- <input type="checkbox" [(ngModel)]="dct_batch[int_item_id][item]['batch']" (ngModelChange)=OnBatchChange(item)> -->
+                  <mat-checkbox [(ngModel)]="dct_batch[int_item_id][item]['batch']" (ngModelChange)=OnBatchChange(item)></mat-checkbox>
+                </td>
+                <td class="text-right">
+                  <span *ngIf="dct_batch[int_item_id][item]['batch']">
+                    <input readonly type="number" [(ngModel)]="dct_batch[int_item_id][item]['qty']" value="" name=" " placeholder="Quantity" >
+                  </span>
+                  <span *ngIf="!dct_batch[int_item_id][item]['batch']">
+                    0
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- IMEI Check -->
+        <div *ngIf="lst_imei.length>0" class="acktable table-responsive col-md-12 mt-3">
+          <p class="tablehint">Check IMEI :</p>
+          <table class="table">
+            <thead class="text-white">
+              <tr>
+                <th>Sl.No</th>
+                <th>IMEI No</th>
+                <th class="text-right">
+                  <!-- <input type="checkbox" [(ngModel)]="dct_current_item['avl_all']" (ngModelChange)=SetSelectAll(1)>&nbsp;Available -->
+                  <mat-checkbox [(ngModel)]="dct_current_item['avl_all']" (ngModelChange)=SetSelectAll(1)>Available</mat-checkbox>
+                </th>
+                <!-- <th class="text-right">
+                  <mat-checkbox [(ngModel)]="dct_current_item['dmg_all']" (ngModelChange)=SetSelectAll(2)>Damaged</mat-checkbox>
+                </th> -->
+                <!-- <input type="checkbox" [(ngModel)]="dct_current_item['dmg_all']" (ngModelChange)=SetSelectAll(2)>&nbsp;Damaged -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of lst_imei; let i = index">
+                <td>{{i+1}}</td>
+                <td class="text-left">{{item}}</td>
+                <td class="text-right">
+                  <!-- <input type="checkbox" [(ngModel)]="dct_imei[int_item_id][item]['avl']" (ngModelChange)=setImei(item,1)> -->
+                  <mat-checkbox [(ngModel)]="dct_imei[int_item_id][item]['avl']" (ngModelChange)=setImei(item,1)></mat-checkbox>
+                </td>
+                <!-- <td class="text-right">
+                  <mat-checkbox [(ngModel)]="dct_imei[int_item_id][item]['dmg']" (ngModelChange)=setImei(item,0)></mat-checkbox>
+                </td> -->
+                <!-- <input type="checkbox" [(ngModel)]="dct_imei[int_item_id][item]['dmg']" (ngModelChange)=setImei(item,0)> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-12 text-center mb-3">
+          <button type="submit" class="btn save_btn" style="background: linear-gradient(to right, #008080, #49d0bd);" (click)="itemAcknowledge()">Acknowledge</button>
+        </div>
+      </div>
+      <div class="row mt-3" *ngIf="lst_batch.length==0 && lst_imei.length==0">
+        <div class="table-responsive col-md-12 mt-3">
+          <p class="tablehint">No Batch/IMEI Data</p>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+

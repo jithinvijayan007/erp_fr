@@ -1,0 +1,247 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <h4>
+                <b>
+          <span>
+            <i aria-hidden="true"></i>
+          </span>&nbsp; Imei Transfer </b>
+            </h4>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-2">
+                <mat-form-field>
+                    <input matInput readonly placeholder="From Branch*" [formControl]="searchBranchFrom" [matAutocomplete]="branchfromname" [(ngModel)]="selectedBranchFrom">
+                    <mat-autocomplete #branchfromname="matAutocomplete">
+                        <mat-option *ngFor="let item of lstBranch" [value]="item.vchr_name">
+                            {{ item.vchr_name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field>
+                    <input matInput placeholder="To Branch*" [formControl]="searchBranch" [matAutocomplete]="branchname" [(ngModel)]="selectedBranch"  #branchId>
+                    <mat-autocomplete #branchname="matAutocomplete">
+                        <mat-option *ngFor="let item of lstBranchTo" [value]="item.vchr_name" (onSelectionChange)="BranchChanged(item)">
+                            {{ item.vchr_name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+           
+            <div *ngIf="strGroup == 'ADMIN'" class="col-md-2">
+                <mat-form-field>
+                    <input (click)="picker1.open()" matInput [matDatepicker]="picker1" placeholder="Transfer Date *" [(ngModel)]="datTransfer">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1>
+                    </mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div *ngIf="strGroup != 'ADMIN'" class="col-md-2">
+                <mat-form-field>
+                    <input readonly matInput [matDatepicker]="picker1" placeholder="Transfer Date *" [(ngModel)]="datTransfer">
+  
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field>
+                    <input type="text" placeholder="Remarks *" matInput [(ngModel)]="strRemarks" />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt-3">
+                <div style="position: relative;">
+                    <button id="add_button" title="Add Item" (click)="addItem()" class="addbtnround float-right">
+            <i class="fa fa-plus"></i>
+          </button>
+                    <section class="">
+                        <div class="container1">
+                            <table style="width: 100%;margin-bottom: 0;" class="table table-bordered">
+                                <thead style="background-color: #f5f4f4;">
+                                    <tr>
+                                        <th>Sl No
+                                          <div>Sl No</div>
+                                        </th>
+                                        
+                                        <th style="min-width: 554px;">Item name
+                                            <div>Item name</div>
+                                        </th>
+                                        <th>Qty
+                                            <div>Qty</div>
+                                        </th>
+                                        <th>Rate
+                                            <div>Rate</div>
+                                        </th>
+                                        <th>Total
+                                            <div>Total</div>
+                                        </th>
+                                        <th>Action
+                                            <div style="min-width:100px;text-align:center;">Action </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of lstItems; let i = index">
+                                        <td>
+                                            {{i+1}}
+                                        </td>
+                                        <td class="text-left">
+                                            <mat-form-field style="width:15%;margin-right: 5px;margin-top:10px;">
+                                                <input matInput [disabled]="lstItems[i]['qtyDisabled']" [(ngModel)]="lstItems[i]['product_name']" placeholder="Product" [matAutocomplete]="product" #idProduct (ngModelChange)="productSearched(lstItems[i]['product_name'],i)">
+                                                <mat-autocomplete #product="matAutocomplete">
+                                                    <mat-option *ngFor="let item of lstProductList" [value]="item.name" (onSelectionChange)="productSelected(item,i)">
+                                                        {{ item.name|titlecase }}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+  
+                                            <mat-form-field  style="width:80%;margin-top:10px;">
+                                                <input matInput [disabled]="lstItems[i]['qtyDisabled']" [(ngModel)]="lstItems[i]['item_name']" placeholder="Item" [matAutocomplete]="item" #idItem (ngModelChange)="itemSearched(lstItems[i]['item_name'],i)">
+                                                <mat-autocomplete #item="matAutocomplete">
+                                                    <mat-option *ngFor="let item of lstItemsList" [value]="item.name" (onSelectionChange)="itemSelected(item,i,$event)">
+                                                        {{ item.name|titlecase }}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </td>
+                                        <td style="width: 60px; position: relative;">
+                                            <input id="txtQty" [disabled]=true matInput type="number" placeholder="0" [(ngModel)]="lstItems[i]['int_qty']"  >
+                                            <!-- <button *ngIf="objectKeys(dctItemIdExist).length==0" title={{lstItems[i].item_qty}} class="view_btn" style="position: absolute; right: 0px;">
+                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                            </button>
+                                            <button *ngIf="objectKeys(dctItemIdExist).length>0" title={{dctItemIdExist[lstItems[i].fk_item_id]}} class="view_btn" style="position: absolute; right: 0px;">
+                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                            </button> -->
+                                            <button  title={{lstItems[i].avail_qty}} class="view_btn" style="position: absolute; right: 0px;">
+                                              <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                          </button>
+                                        </td>
+                                        <td  style="width: 65px; position: relative;">
+                                            <input  [disabled]=true id="txtQty" matInput type="number" placeholder="0" [(ngModel)]="lstItems[i]['flt_price']" (ngModelChange)="lstItems[i]['flt_total'] = lstItems[i]['int_qty'] * lstItems[i]['flt_price']">
+                                        </td>
+                                        <td  style="width: 70px; position: relative;">
+                                            <input [disabled]=true id="txtQty" matInput type="number" [(ngModel)]="lstItems[i]['flt_total']">
+                                        </td>
+                                        <td style="text-align:center;min-width:100px;"> 
+                                            <button  id="idImei" class="imeigreen" type="submit" (click)="openimeipopup(imeipopup,i)">Imei</button>
+                                            <button *ngIf="!lstItems[i]['qtyDisabled']" class="trashbtn" (click)="deleteItem(i,lstItems[i])">
+                        <i class="ti-trash"></i>
+                      </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                      <tr style="font-weight: bold;">
+                                        <td >Total</td>
+                                        <td></td>
+                                        <td>{{intTotalQty}}</td>
+                                        <td></td>
+                                        <td>{{intTotalAmount}}</td>
+                                        <td></td>
+                                      </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <button [disabled]="blnSaveDisable" type="submit" class="btn save_btn m-r-10" (click)="saveData()">Save</button>
+            <button type="submit" class="btn btn-secondary" (click)="clearAll()">Cancel</button>
+        </div>
+  
+    </div>
+  </div>
+  <!-- IMEI Popup -->
+  <ng-template #imeipopup let-modal>
+    <div class="modal-header" style="background-color: #6ad4b4;">
+        <div class="col-md-12" style="text-align: center;">
+            <h4 class="modal-title">
+                <span style="color: white;text-align: center; margin-top: 5px; margin-bottom: 5px;">Enter IMEI Number</span>
+            </h4>
+        </div>
+    </div>
+    <div class="modal-body" id="imeipopup">
+        <div class="text-center mt-2" style="display: none">
+            <mat-checkbox name="same"></mat-checkbox>
+        </div>
+      <div *ngIf="blnItemHasImei && lstImeiAvial.length != 0">
+        <span *ngIf="lstImeiShow.length!=0">Quantity: <label for="Quantity">{{lstImeiShow.length}}</label></span>
+        <div class="avimeiscroll">
+        <table id="imeiTable" class="table" *ngIf="lstImeiShow.length!=0">
+            <thead class="imeihead">
+                <th>No</th>
+                <th>Imei</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of lstImeiShow; let i = index">
+                    <td>{{i+1}}</td>
+                    <label for="">{{item}}</label>
+                    <!-- <td><input readonly type="text" class="form-control" [(ngModel)]=item ></td> -->
+                    <td><button  class="trashbtn" (click)="removeImei(item)">
+                          <i class="ti-close"></i>
+                        </button></td>
+                </tr>
+                
+            </tbody>
+        </table>
+      </div>
+        <div class="row" *ngIf="selectedBranchFrom=='ANGAMALY' && lstImeiShow.length==0">
+          <div class="col-md-12">
+              <div class="form-group">
+                  <input type="text" class="form-control" [(ngModel)]=strImei placeholder="Imei" (keyup.enter)="imeiSearched()">
+              </div>
+          </div>     
+      </div>
+      <div class="row" *ngIf="selectedBranchFrom!='ANGAMALY'">
+          <div class="col-md-12">
+              <div class="form-group">
+                  <input type="text" class="form-control" [(ngModel)]=strImei placeholder="Imei" (keyup.enter)="imeiSearched()">
+              </div>
+          </div>     
+      </div>
+    </div>
+    <div *ngIf="blnItemHasImei && lstImeiAvial.length == 0">
+          <p class="card nodata">No Imei</p>
+    </div>
+    <!-- <div *ngIf="!blnItemHasImei && lstBatchAvail.length != 0">
+          <table *ngIf='!blnItemHasImei' class="table table-bordered table-responsive-md text-center" style="width:100%">
+                  <thead>
+                      <tr class="bgclr">
+                          <th style="position:sticky;top:-1px;">Batch No</th>
+                          <th style="position:sticky;top:-1px;">Available Qty</th>
+                          <th style="position:sticky;top:-1px;">Qty</th>
+                      </tr>
+                  </thead>
+                  <tbody *ngIf="lstBatchAvail.length != 0">
+                      <tr *ngFor="let item of lstBatchAvail; let i = index">
+                          <td style="padding:10px !important">{{item.strBatch}} </td>
+                          <td>{{item.availQty}}</td>
+                          <td><input type="number" class="form-control" [(ngModel)]=item.intQty placeholder="0" (keyup)="checkBatchQty(item,i)"> </td>
+                      </tr>
+                  </tbody>
+                  <tbody *ngIf="lstBatchAvail.length == 0">
+                      <tr>
+                          <p class="card nodata">No Batch Number</p>
+                      </tr>
+                  </tbody>
+              </table>
+    </div>
+    <div *ngIf="!blnItemHasImei && lstBatchAvail.length == 0">
+          <p class="card nodata">No Batch Number</p>
+    </div> -->
+  </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-12" style="text-align:center;">
+                <button *ngIf="blnItemHasImei && lstImeiAvial.length != 0" type="button" class="btn btn-default m-r-10" (click)="saveImei()" style="background-color: #6ad4b4;">Save</button>
+                <button type="button" class="btn close1" (click)="closeImei(lst_imei)">Close</button>
+            </div>
+        </div>
+    </div>
+  </ng-template>
+  <!-- IMEi popup end here -->

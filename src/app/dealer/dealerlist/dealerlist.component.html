@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Dealer List</h4>
+                <div>
+                    <div class="mt-3">
+                        <mat-radio-group name="planType" [(ngModel)]="intActive">
+                            <mat-radio-button value="0">Active</mat-radio-button>
+                            <mat-radio-button value="2">Deactive</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput type="number" [(ngModel)]="intCreditDays" placeholder="Credit Days" value="" name="creditDays">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput type="number" [(ngModel)]="intCreditLimit" placeholder="Credit Limit" value="" name="creditLimit">
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-3">
+                <mat-form-field>
+                <input matInput [(ngModel)]="strCategory" placeholder="Dealer Category" value="" name="category"  >
+                </mat-form-field>
+            </div> -->
+                    <div class="col-md-4">
+                        <mat-form-field class="mat-icon-left">
+                            <mat-select placeholder="Dealer Category" [(ngModel)]="selectedCategory" name="category">
+                                <mat-option *ngFor="let item of lstCategory" [value]="item.pk_bint_id" (click)="categoryChanged(item)">
+                                    {{ item.vchr_name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn save_btn m-r-10 m-t-10" (click)="search()">Search</button>
+                    </div>
+                </div>
+                <div>
+                <div *ngIf="blnShowData" class="table table-responsive smart-table">
+                    <ng2-smart-table [settings]="settings" [source]="source" class="" (deleteConfirm)="onDeleteConfirm($event)" (custom)="onCustomAction($event)"></ng2-smart-table>
+                </div>
+                <div class="card nodata" *ngIf="!blnShowData">
+                    <div>NO DATA FOUND</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

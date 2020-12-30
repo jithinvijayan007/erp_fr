@@ -1,0 +1,77 @@
+<div class="card">
+<div class="card-body">
+    <div class="row">
+     <div class="col-12">
+        <h4 class="card-title">Admin Settings</h4>
+      </div>
+    </div>
+  <div class="row">
+    <div class="col-md-12">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </div>
+  </div>
+<span style="float:right;" *ngIf="blnShowData" title="Set additions/deductions">
+<button (click) = "addAddition()" class="modaladdbtn">+</button>
+</span>
+<!-- <button class="btn save_btn m-r-10" color="accent"  [routerLink]="['/tools/set-add-deduct']" style="margin-right: 10px;">Add</button> -->
+<div class="row">
+  <div class="col-md-12">
+ 
+<div class="card" [ngClass]="{show:blnShowData,hide:!blnShowData}">
+
+                
+    <div  class="example-container mat-elevation-z8 mt-3">
+       
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="tool">
+          <mat-header-cell class="matheadr_right" *matHeaderCellDef> Tool </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="matheadr_right">{{row.vchr_tool_name |titlecase }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="branches">
+          <mat-header-cell  class="matheadr_right" *matHeaderCellDef > Branches </mat-header-cell>
+          <mat-cell *matCellDef="let row"  class="matheadr_right" >{{row.branch}} </mat-cell>
+          <!-- <ng-container *ngIf="row['content'].length >= 1">
+              <mat-cell *matCellDef="let row" >
+                Admin          
+              </mat-cell>
+            </ng-container> -->
+        </ng-container>
+        <ng-container matColumnDef="content">
+          <mat-header-cell class="matheadr_right" *matHeaderCellDef> Contents </mat-header-cell>
+          <mat-cell *matCellDef="let row"  class="matheadr_right">{{row.additions }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <mat-header-cell class="matheadr_right" *matHeaderCellDef> Date </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="matheadr_right">{{row.dat_from}} - {{row.dat_to}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell class="matheadr_right"  *matHeaderCellDef style="min-width: 200px"> Action </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="matheadr_right" style="min-width: 200px">
+            <!-- <span class="cursor" title="View"  (click)="openAction('view',row)" *ngIf="row.bln_view == true">
+              <i class="ti-eye text-info mr-2"></i>
+            </span> -->
+            <span class="cursor" title="Edit"  (click)="openAction('edit',row)">
+              <i class="ti-pencil text-info m-r-10"></i>
+            </span>
+            
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="lstDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: lstDisplayedColumns; let i = index;">
+        </mat-row>
+      </mat-table>
+        <!-- <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5,10, 25, 100]"></mat-paginator> -->
+        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+   
+   
+  </div>
+</div>
+  </div>
+</div>
+</div> 
+  <div class="card nodata" *ngIf="!blnShowData">
+    <h5>NO DATA FOUND</h5>
+  </div>

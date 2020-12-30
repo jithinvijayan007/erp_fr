@@ -1,0 +1,166 @@
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">Internal Stock Request</h3>
+        <div class="row">
+            <!-- <div class="col-md-2">
+                  <mat-label>{{strCurrBranch}}</mat-label>
+              </div> -->
+            <div class="col-md-3">
+                <mat-form-field>
+                    <input matInput placeholder="Branch*" [formControl]="searchBranch" [matAutocomplete]="branchname" [(ngModel)]="selectedBranch" #branchId>
+                    <mat-autocomplete #branchname="matAutocomplete">
+                        <mat-option *ngFor="let item of lstBranch" [value]="item.vchr_name" (onSelectionChange)="BranchChanged(item)">
+                            {{ item.vchr_name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+            <div *ngIf ="strGroup != 'ADMIN'" class="col-md-3">
+                <mat-form-field>
+                    <input readonly matInput [matDatepicker]="picker1" placeholder="Order Date *" [(ngModel)]="datOrder">
+                </mat-form-field>
+            </div>
+
+            <div *ngIf ="strGroup == 'ADMIN'" class="col-md-3">
+                <mat-form-field>
+                    <input (click)="picker1.open()" matInput [matDatepicker]="picker1" placeholder="Order Date *" [(ngModel)]="datOrder">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1>
+                    </mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+                <mat-form-field>
+                    <input (click)="picker2.open()" matInput [matDatepicker]="picker2" placeholder="Expected before * (Date)" [(ngModel)]="datExpected">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2>
+                    </mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field>
+                        <input type="time" matInput placeholder="Expected before* (Time)" [(ngModel)]="timExpected"
+                        value="" name="inaugurationTime" #inaugurationTime>
+                    <!-- <input matInput placeholder="Expected before* (Time)" type="time" atp-time-picker [(ngModel)]="timExpected"> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-12">
+                <mat-form-field>
+                    <input placeholder="Remarks *" matInput [(ngModel)]="strRemarks">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt-3">
+                <div style="position: relative;">
+                    <button id="add_button" title="Add Item" (click)="addItem()" class="addbtnround float-right mb-2">
+            <i class="fa fa-plus"></i>
+          </button>
+                    <section class="">
+                        <div class="container1">
+                            <table style="width: 100%;margin-bottom: 0;" class="table table-bordered">
+                                <thead style="background-color: #f5f4f4;">
+                                    <tr>
+                                        <th>Sl No
+                                            <div>Sl No</div>
+                                        </th>
+                                        <th>Item name
+                                            <div>Item name </div>
+                                        </th>
+                                        <th>Quantity
+                                            <div>Quantity </div>
+                                        </th>
+                                        <th style="width: 100px;">Action
+                                            <div>Action</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of lstItems; let i = index">
+                                        <td>
+                                            {{i+1}}
+                                        </td>
+                                        <td class="text-left">
+                                            
+                                            <!-- <mat-form-field appearance="none">
+                                                <input matInput [(ngModel)]="lstItems[i]['strItem']" placeholder="Enter item name" [matAutocomplete]="item" #idItem (keydown)="itemSearched(lstItems[i]['strItem'],i)">
+                                                <mat-autocomplete #item="matAutocomplete">
+                                                    <mat-option *ngFor="let item of lstItemsList" [value]="item.name" (onSelectionChange)="itemSelected(item,i)">
+                                                        {{ item.name }}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field> -->
+
+
+                                            <mat-form-field  style="width:20%;">
+                                                    <input matInput [(ngModel)]="lstItems[i]['product_name']" placeholder="Product" [matAutocomplete]="product" #idProduct (ngModelChange)="productSearched(lstItems[i]['product_name'],i)">
+                                                    <mat-autocomplete #product="matAutocomplete">
+                                                        <mat-option *ngFor="let item of lstProductList" [value]="item.name" (onSelectionChange)="productSelected(item,i)">
+                                                            {{ item.name|titlecase }}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+                                                </mat-form-field>
+                                                <!-- <mat-form-field  style="width:28%;margin-right: 10px;">
+                                                    <input matInput [(ngModel)]="lstItems[i]['brand_name']" placeholder="Brand" [matAutocomplete]="brand" #idBrand (ngModelChange)="brandSearched(lstItems[i]['brand_name'],i)">
+                                                    <mat-autocomplete #brand="matAutocomplete">
+                                                        <mat-option *ngFor="let item of lstBrandList" [value]="item.name" (onSelectionChange)="brandSelected(item,i)">
+                                                            {{ item.name|titlecase }}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+                                                </mat-form-field> -->
+                                                <mat-form-field appearance="none" style="width:80%">
+                                                    <!-- <input matInput [(ngModel)]="lstItems[i]['item_name']" placeholder="Enter item name" [matAutocomplete]="item" #idItem (ngModelChange)="itemSearched(lstItems[i]['item_name'],i)">
+                                                    <mat-autocomplete #item="matAutocomplete">
+                                                        <mat-option *ngFor="let item of lstItemsList" [value]="item.name" (onSelectionChange)="itemSelected(item,i)">
+                                                            {{ item.name|titlecase }}
+                                                        </mat-option>
+                                                    </mat-autocomplete> -->
+                                                    <input matInput [(ngModel)]="lstItems[i]['strItem']" placeholder="Enter item name" [matAutocomplete]="item" #idItem (ngModelChange)="itemSearched(lstItems[i]['strItem'],i)">
+                                                    <mat-autocomplete #item="matAutocomplete">
+                                                        <mat-option *ngFor="let item of lstItemsList" [value]="item.name" (onSelectionChange)="itemSelected(item,i,$event)">
+                                                            {{ item.name }}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+
+                                                </mat-form-field>
+
+
+                                        </td>
+                                        <td style="width: 30px;">
+                                            <mat-form-field appearance="none">
+                                                <input id="txtQty" matInput type="number" placeholder="0" [(ngModel)]="lstItems[i]['intQty']" (keyup)="tableGrandTotalCalculation(lstItems)" min=0 oninput="validity.valid||(value='');">
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <!-- <button class="delete_btn" (click)="deleteItem(i)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button> -->
+                                            <button (click)="deleteItem(i)" class="trashbtn">
+                        <i class="ti-trash"></i>
+                      </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                        <tr style="font-weight: bold;">
+                                          <td >Total</td>
+                                          <td></td>
+                                          <td>{{intTotalQty}}</td>
+                                          <td></td>
+                        
+                                        </tr>
+                                  </tfoot>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <button type="submit" class="btn save_btn m-r-10" (click)="saveData()" [disabled] ="blnSaveDisable">Save</button>
+            <button type="submit" class="btn btn-secondary" (click)="clearAll()">Cancel</button>
+        </div>
+    </div>
+</div>

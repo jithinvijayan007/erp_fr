@@ -1,0 +1,536 @@
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12"> <h4> <b> IMEI Lookup</b></h4></div>
+       </div>
+      <div class="row">
+        <div style="margin-left: 20px;" class="text-center mt-3" >
+          <mat-checkbox name="same" [(ngModel)]="blnSmartchoice">Smart Choice</mat-checkbox>
+        </div>
+        <div class="mt-3 col-md-3">
+          <mat-radio-group name="radlookup" [(ngModel)]="intLookup" (change)="clearText()">
+            <!-- <mat-radio-button [value]='1'>Batch No.</mat-radio-button> -->
+            <mat-radio-button [value]='2'>IMEI No.</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="col-md-3 buttonInside mt-2" *ngIf="intLookup==1">
+          <!-- <input type="text" name="txtBatch" id="batchId" [(ngModel)]="strBatch">
+                  <span title="Search item" (click)="getDetails()">
+                    <i class="icon-magnifier"></i>
+                  </span> -->
+          <input placeholder="Search batch no" type="text" class="input" name="txtBatch" id="batchId" [(ngModel)]="strBatch" (keypress) ="OnEnter($event)">
+          <button class="button1" (click)="getDetails()">
+            <i class="icon-magnifier"></i>
+          </button>
+        </div>
+
+        <div class="col-md-3 buttonInside mt-2" *ngIf="intLookup==2">
+          <!-- <input type="text" name="txtImei" id="imeiId" [(ngModel)]="strImei">
+          <span title="Search item" (click)="getDetails()">
+            <i class="icon-magnifier"></i>
+          </span> -->
+          <input placeholder="Search IMEI no" type="text" class="input" name="txtImei" id="imeiId" [(ngModel)]="strImei" (keypress) ="OnEnter($event)">
+          <button class="button1" (click)="getDetails()">
+            <i class="icon-magnifier"></i>
+          </button>
+        </div>
+      </div>
+
+      </div>
+      </div>
+
+      <!-- <div class="card">
+        <div class="col-md-12" *ngIf="showData">
+        <div class="col-md-12">
+          <div class="col-md-4" *ngIf="intLookup==1" >
+            <label>GRN No :</label>
+            <label>{{lstData['purchase_no']}}</label>
+          </div>
+          <div class="col-md-4">
+            <label>GRN Date :</label>
+            <label>{{lstData['dat_purchase']}}</label>
+          </div>
+          <div class="col-md-4">
+            <label>Supplier :</label>
+            <label>{{lstData['str_supplier_name']}}</label>
+          </div>
+          
+          <h4>
+            <span>
+              <i aria-hidden="true"></i>
+            </span>&nbsp; Item Details
+          </h4>
+          <table class="table table-bordered" id="table1" style="margin-bottom:0px;">
+            <thead>
+              <tr>
+                <th style="width: 250px;">
+                  <div>Item name</div>
+                </th>
+
+                <th style="width: 238px;" *ngIf="intLookup==2">
+                  <div>Status</div>
+                </th>
+
+                <th style="width: 56px;"  *ngIf="intLookup==1">
+                  <div>Qty</div>
+                </th>
+
+                <th style="width: 56px;"  *ngIf="intLookup==1">
+                  <div>Available</div>
+                </th>
+
+                <th style="width: 56px;" *ngIf="intLookup==1">
+                  <div>Damaged</div>
+                </th>
+
+                <th style="width: 240px;" *ngIf="intLookup==1">
+                  <div>Branch</div>
+                </th>
+
+                <th  class="text-left" style="width: 200px;">
+                  <div>Rate</div>
+                </th>
+
+                <th style="width: 56pxpx;" *ngIf="intLookup==1">
+                  <div>View</div>
+                </th>
+               
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of lstData['lst_item_details']">
+                <td class="text-left">
+                  <label>{{item['vchr_item']}}</label>
+                </td>
+                <td class="text-left" *ngIf="intLookup==2">
+                  <label>{{item['current_status']}}</label>
+                </td>
+
+                <td *ngIf="intLookup==1">
+                  <label>{{item['int_quantity']}}</label>
+                </td>
+
+                <td *ngIf="intLookup==1">
+                  <label>{{item['int_avail']}}</label>
+                </td>
+
+                <td *ngIf="intLookup==1">
+                  <label>{{item['int_damaged']}}</label>
+                </td>
+
+                <td *ngIf="intLookup==1">
+                  <label>{{item['branch']}}</label>
+                </td>
+
+                <td class="text-right">
+                  <label>{{item['rate']}}</label>
+                </td>
+
+                <td *ngIf="intLookup==1">
+                  <span  *ngIf="item['branch']!= '---'" class="cursor" (click)="openfilteritem(filteritem,item['item_code'],item['vchr_item'])">
+                    <i class="ti-eye text-info m-r-10"></i>
+                  </span>
+                </td>
+              
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card nodata" *ngIf="!showData">
+          <div>NO DATA FOUND</div>
+      </div>
+    </div> -->
+
+    <div *ngIf="showData">
+      
+    <!-- Item Details -->
+<!-- 
+    <div class="card" *ngIf="showImei">
+      <div class="card-body">
+        <h4 class="form-head">
+            <span>
+              <i aria-hidden="true"></i>
+            </span>&nbsp; Item Details
+        </h4>    
+
+        <div class="row">
+            <div class="col-md-4">
+                 <div class="mt-2">
+                    <h6>ItemName</h6>
+                    <p class="">{{dctItem['vchr_item'] | titlecase}}</p>
+                 </div>
+            </div>
+            <div class="col-md-4">
+                  <div class="mt-2">
+                      <h6>Status</h6>
+                      <p class="">{{dctItem['item_status']}}</p>
+                  </div>
+              </div>
+            <div class="col-md-4">
+                <div class="mt-2">
+                    <h6>Product</h6>
+                    <p class="">{{dctItem['vchr_product'] | titlecase}}</p>
+                </div>
+            </div>
+         
+            <div class="col-md-4">
+                <div class="mt-2">
+                    <h6>Brand</h6>
+                    <p class="">{{dctItem['vchr_brand'] | titlecase}}</p>
+                </div>
+            </div>
+          
+          </div>
+    </div>
+    </div> -->
+
+<!-- <div class="card">
+  <div class="card-body">
+      <div class="col-md-12" *ngIf="showBatch">
+          <h4 class="form-head">
+              <span>
+                <i aria-hidden="true"></i>
+              </span>Item Details
+          </h4>  
+        
+    
+              <table class="table table-bordered" id="table1" style="margin-bottom:0px;width: 100%;">
+                  <thead>
+                    <tr>
+                      <th style="width: 250px;">
+                        <div>ItemName</div>
+                      </th>
+      
+                      <th style="width: 145px;">
+                        <div>Product</div>
+                      </th>
+    
+                      <th style="width: 145px;">
+                        <div>Brand</div>
+                      </th>
+    
+                      <th style="width: 145px;">
+                        <div>Qty</div>
+                      </th>
+    
+                      <th style="width: 145px;">
+                        <div>Damaged Qty</div>
+                      </th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of lstItem">
+                      <td class="text-left">
+                        <label>{{item['vchr_item'] | titlecase}}</label>
+                      </td>
+    
+                      <td class="text-left">
+                        <label>{{item['vchr_product']}}</label>
+                      </td>
+    
+                      <td class="text-left">
+                        <label>{{item['vchr_brand']}}</label>
+                      </td>
+    
+                      <td class="text-left">
+                        <label>{{item['int_quantity']}}</label>
+                      </td>
+    
+                      <td class="text-left">
+                        <label>{{item['int_damaged']}}</label>
+                      </td>
+                    
+                    </tr>
+                  </tbody>
+              </table>
+    
+           
+      </div>
+  </div>
+</div> -->
+   
+
+
+
+    <!-- Purchase Details -->
+
+    <!-- <div class="card"> 
+      <div class="card-body"> 
+        <h4 class="form-head">
+            <span>
+              <i aria-hidden="true"></i>
+            </span>&nbsp; Purchase Details
+        </h4>    
+
+        <div class="row">
+            <div class="col-md-4">
+                 <div class="mt-2">
+                    <h6>GRN No.</h6>
+                    <p class="">{{dctPurchase['grn_num'] | titlecase}}</p>
+                 </div>
+            </div>
+            <div class="col-md-4">
+                  <div class="mt-2">
+                      <h6>GRN Date</h6>
+                      <p class="">{{dctPurchase['dat_purchase']}}</p>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="mt-2">
+                      <h6>Batch No.</h6>
+                      <p class="">{{dctPurchase['batch_no']}}</p>
+                  </div>
+              </div>
+            <div class="col-md-4">
+                <div class="mt-2">
+                    <h6>Supplier</h6>
+                    <p class="">{{dctPurchase['supplier_name'] | titlecase}}</p>
+                </div>
+            </div>
+         
+            <div class="col-md-4">
+                <div class="mt-2">
+                    <h6>Branch</h6>
+                    <p class="">{{dctPurchase['branch_name'] | titlecase}}</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="mt-2">
+                    <h6>Amount</h6>
+                    <p class="">{{dctPurchase['costprice']}}</p>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+  </div> -->
+
+
+
+
+        <!-- <div class="card">  
+          <div class="card-body">
+          <div class="row"> -->
+
+            <!-- Branch Stock Details -->
+<!-- 
+                <div class="col-md-6" *ngIf="lstStock.length>0">
+                    <h4>
+                        <span>
+                          <i aria-hidden="true"></i>
+                        </span>Branch Stock Details
+                    </h4>  
+                  
+
+                        <table class="table table-bordered" id="table1" style="margin-bottom:0px;width: 100%;">
+                            <thead>
+                              <tr>
+                                <th style="width: 250px;">
+                                  <div>Branch</div>
+                                </th>
+                
+                                <th style="width: 145px;">
+                                  <div>Transfer Date</div>
+                                </th>
+
+
+                                <th style="width: 145px;" *ngIf="showBatch">
+                                  <div>Qty Transfered</div>
+                                </th>
+                               
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let stock of lstStock">
+                                <td class="text-left">
+                                  <label>{{stock['branch'] | titlecase}}</label>
+                                </td>
+        
+                                <td class="text-left">
+                                  <label>{{stock['dat_transfer']}}</label>
+                                </td>
+
+                                <td class="text-left" *ngIf="showBatch">
+                                  <label>{{stock['qty']}}</label>
+                                </td>
+                              
+                              </tr>
+                            </tbody>
+                        </table>
+        
+                     
+                </div> -->
+
+               <!-- Sales Details -->
+
+                <!-- <div class="col-md-6" *ngIf="lstSales.length>0">
+                    <h4>
+                        <span>
+                          <i aria-hidden="true"></i>
+                        </span>Sales Details
+                    </h4>    
+                   
+
+                        <table class="table table-bordered" id="table1" style="margin-bottom:0px;width: 100%;">
+                            <thead>
+                              <tr>
+                                <th style="width: 250px;">
+                                  <div>Invoice No.</div>
+                                </th>
+                
+                                <th style="width: 238px;">
+                                  <div>Invoice Date</div>
+                                </th>
+                                <th style="width: 250px;">
+                                    <div>Branch</div>
+                                </th>
+                  
+                                <th style="width: 238px;">
+                                    <div>Selling Price</div>
+                                </th>
+                               
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let sale of lstSales">
+                                <td class="text-left">
+                                  <label>{{sale['invoice_num']}}</label>
+                                </td>
+        
+                                <td class="text-left">
+                                  <label>{{sale['invoice_date']}}</label>
+                                </td>
+        
+                                <td class="text-left">
+                                    <label>{{sale['branch']}}</label>
+                                </td>
+          
+                                <td class="text-left">
+                                  <label>{{sale['selling_price']}}</label>
+                                </td>
+                              
+                              </tr>
+                            </tbody>
+                        </table>
+        
+                   
+                  </div> -->
+          <!-- </div>
+          
+
+           
+        </div>
+
+
+      </div> -->
+      <div class="card" *ngIf="showData" >
+          <div class="avimeiscroll">
+        <div class="col-md-12" *ngFor = " let imei of lstImeis ">
+            <div class="col-md-12" >
+              <div class="card-body">
+                <h3 class="card-title">
+                    <span>
+                      <i aria-hidden="true"></i>
+                    </span>{{dctItem1[imei].item | uppercase}} - {{imei}} &nbsp;
+                </h3>
+
+                <table class="table table-bordered" id="table1" style="margin-bottom:0px;width: 100%;">
+                    <thead>
+                      <tr>
+                        <th style="width: 250px;">
+                          <div>Date</div>
+                        </th>
+        
+                        <th style="width: 238px;">
+                          <div>Action</div>
+                        </th>
+                        <th style="width: 250px;">
+                            <div>Branch</div>
+                        </th>
+          
+                        <th style="width: 238px;">
+                            <div>Remarks</div>
+                        </th>
+                       
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let detail of dctItem1[imei].details">
+                        <td class="text-left">
+                          <label>{{detail.date}}</label>
+                        </td>
+
+                        <td class="text-left">
+                          <label>{{detail.action}}</label>
+                        </td>
+
+                        <td class="text-left">
+                            <label>{{detail.branch}}</label>
+                        </td>
+  
+                        <td class="text-left">
+                          <label>{{detail.remark}}</label>
+                        </td>
+                      
+                      </tr>
+                    </tbody>
+                </table>
+
+                </div>
+
+            </div>
+        </div>
+        </div>
+      </div>      
+
+
+
+
+    </div>
+
+
+<div class="card nodata" *ngIf="!showData">
+    <div>NO DATA FOUND</div>
+</div>
+
+
+
+    <!-- <ng-template #filteritem let-modal>
+      <div id="filteritem" class="modal-body">
+        <p class="text-center mt-3" style="color: #828466;font-size: 17px;font-weight: 500;">{{strItem}}</p>
+        <div class="row mt-3">
+
+         Batch No Check 
+
+          <div class="acktable table-responsive col-md-12 mt-3">
+            <p class="tablehint"></p>
+            <table class="table">
+              <thead class="text-white">
+                <tr>
+                  <th class="text-left" >Branch</th>
+                  <th class="" >Date</th>
+                  <th class="text-right" >Quantity</th>
+                  <th class="text-right" >Available</th>
+                  <th class="text-right" >Damaged</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of lst_item;">
+                  <td class="text-left">{{item.branch}}</td>
+                  <td class="">{{item.dat_stock}}</td>
+                  <td class="text-right">{{item.qty}}</td>
+                  <td class="text-right">{{item.avail_qty}}</td>
+                  <td class="text-right">{{item.damaged}}</td>
+                 
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </ng-template> -->
+

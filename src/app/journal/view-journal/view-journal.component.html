@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="form-head1">
+                  <span>Journal Details</span>
+              </h4>
+                  <div class="form p-t-10 row">
+                      <div class="col-md-4">
+                           <div class="form-group mt-1">
+                              <h6>Date of Journal</h6>
+                              <p class=""> {{dctJournalData['dat_journal_format']}}</p>
+                           </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group mt-1">
+                           <h6>Journal Id</h6>
+                           <p class=""> {{dctJournalData['vchr_jv_num']}}</p>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-4">
+                          <div class="form-group mt-1">
+                              <h6>Amount</h6>
+                              <p class="">{{dctJournalData['dbl_amount']}}</p>
+                          </div>
+                      </div>
+                   
+                      <div class="col-md-4">
+                          <div class="form-group mt-1">
+                              <h6>Created By</h6>
+                              <p class="">{{dctJournalData['vchr_created_name']}}</p>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <h6>Credit Branch</h6>
+                            <p class=""> {{dctJournalData['fk_credit_branch_id__vchr_name']}}</p>
+                        </div>
+                    </div>
+                      <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <h6>Credit Type</h6>
+                            <p class="">{{dctJournalData['vchr_credit_type']}}</p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <h6>Credit Name</h6>
+                            <p class="">{{dctJournalData['vchr_credit_name']}}</p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <h6>Debit Branch</h6>
+                            <p class=""> {{dctJournalData['fk_debit_branch_id__vchr_name']}}</p>
+                        </div>
+                    </div>
+                      <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <h6>Debit Type</h6>
+                            <p class="">{{dctJournalData['vchr_debit_type']}}</p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <h6>Debit Name</h6>
+                            <p class="">{{dctJournalData['vchr_debit_name']}}</p>
+                        </div>
+                      </div>
+                      <div class="col-md-6" >
+                          <div class="form-group mt-1">
+                              <h6>Remark</h6>
+                              <p class="">{{dctJournalData['vchr_remarks']}}</p>
+                          </div>
+                      </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+  </div>      

@@ -1,0 +1,27 @@
+.mat-table{
+     
+    overflow-x: auto;  
+    max-height: 499px;
+}
+
+
+.mat-column-debit {
+
+    flex: 0 0 15% !important;
+    direction: rtl;
+  }
+  .mat-column-credit {
+
+    flex: 0 0 15% !important;
+    direction: rtl;
+  }
+  .mat-column-customer {
+
+    flex: 0 0 40% !important;
+   
+  }
+  .mat-column-branch {
+
+    flex: 0 0 30% !important;
+    text-align: center;
+  }

@@ -1,0 +1,167 @@
+thead th {
+   padding: 8px;
+    
+    background-color: #f2f4f5;
+}
+
+table td {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 0px !important;
+    padding-top: 8px;
+    vertical-align: middle;
+}
+
+.form-control {
+    border: none;
+}
+
+.po input[type=text] {
+    border:none;
+    width: 100%;
+    text-align: right;
+   }
+   .bgclr{
+     background-color: #f2f4f5;
+   }
+   .modal-content {
+     border: none !important;
+   }
+   .close1{
+     border: none;
+     background-color: #da524e;
+     color: white;
+   }
+   
+   /* modal scroll */
+   .scroll{
+    overflow-y: scroll;
+    max-height: 494px;
+  }
+  .modal-footer {
+    
+    justify-content: center !important;
+    
+  }
+  .padding{
+  padding: 10px !important;
+  }
+  
+   /* modal scroll */
+
+   section {
+    position: relative;
+    border: none; 
+    padding-top: 29px;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  }
+  section.positioned {
+    position: absolute;
+    top:100px;
+    left:100px;
+    width:800px;
+    box-shadow: 0 0 15px #333;
+  }
+  .container1 {
+    overflow-y: auto;
+    max-height: 382px;
+    
+  }
+  .container1 th {
+    height: 0;
+    line-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: transparent;
+    border: none;
+    white-space: nowrap;
+  }
+  .container1 th div{
+    position: absolute;
+    background: transparent;
+    color: white;
+    padding: 9px 9px;
+    top: 0;
+    margin-left: -8px;
+    line-height: normal;
+    border-left: 1px solid #ced0d2;
+  }
+  .container1 th:first-child div{
+    border: none;
+    background: #395b78;
+    width: 100%;
+  }
+
+  /* scrollbar style */
+  /* width */
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: #F5F5F5;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #AAA;
+	border-radius: 10px;
+	background-image: -webkit-linear-gradient(90deg,
+	                                          rgba(0, 0, 0, .2) 25%,
+											  transparent 25%,
+											  transparent 50%,
+											  rgba(0, 0, 0, .2) 50%,
+											  rgba(0, 0, 0, .2) 75%,
+											  transparent 75%,
+											  transparent)
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+.modaladdbtn{
+  background: #0fbf8a;
+  border: none;
+  color: white;
+  border-radius: 50%;
+  padding: 0px;
+  padding: -6px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+.modalminusbtn{
+  background: #da524e;
+  border: none;
+  color: white;
+  border-radius: 50%;
+  padding: 0px;
+  padding: -6px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+.avimeiscroll{
+ 
+  max-height: 247px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.view_btn{
+  background: none;
+  border: none;
+  color: #6495ed;
+  cursor: pointer;
+  padding-left: 0;
+}
+.addbtnround {
+  right: -4px;
+  top: -25px;
+ }

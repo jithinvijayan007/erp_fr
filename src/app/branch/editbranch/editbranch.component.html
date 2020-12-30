@@ -1,0 +1,250 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Edit Branch</h3>
+                <form class="form p-t-10 row">
+                    <div class="col-md-6 mb-4">
+                        <mat-radio-group name="type" [(ngModel)]="type">
+                            <mat-radio-button value="1">Branch</mat-radio-button>
+                            <mat-radio-button value="2">Head Office</mat-radio-button>
+                            <mat-radio-button value="3">Warehouse</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="col-md-6 mb-4" style="text-align:right">
+                        <mat-radio-group name="activeStatus" [(ngModel)]="activeStatus">
+                            <mat-radio-button value="0">Active</mat-radio-button>
+                            <mat-radio-button value="2">Deactive</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput placeholder="Branch Code." [formControl]="registerForm.controls['branchCode']" [(ngModel)]="strCode" value="" name="code" #branchCode>
+                            <mat-error *ngIf="registerForm.controls['branchCode'].hasError('required') && registerForm.controls['branchCode'].touched ">
+                                You must enter a Branch Code.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput placeholder="Branch Name*" [formControl]="registerForm.controls['branch']" [(ngModel)]="strBranch" name="branch" #branchName>
+                            <mat-error *ngIf="registerForm.controls['branch'].hasError('required') && registerForm.controls['branch'].touched ">
+                                You must enter a Branch Name.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 mt-1">
+                        <mat-form-field>
+                            <mat-select matInput placeholder="Branch Category*" [formControl]="registerForm.controls['branchCategory']" [(ngModel)]="strBranchCategory" name="branchCategory" #branchCategory>
+                                <mat-option *ngFor="let category of lstCategory" [value]="category.vchr_category" (onSelectionChange)="BranchCategoryChanged(category)">
+                                    {{ category.vchr_category }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="registerForm.controls['branchCategory'].hasError('required') && registerForm.controls['branchCategory'].touched ">
+                                You must select a branch category.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <mat-select #idPriceTemplate matInput required [(ngModel)]="intPriceTemplate" name="intPriceTemplate" matInput placeholder="Price Template" [formControl]="registerForm.controls['pricetemplate']">
+                                <mat-option [value]="0">COST PRICE</mat-option >
+                                <mat-option [value]="1">DEALER PRICE</mat-option>
+                                <mat-option [value]="2">MOP</mat-option>
+                                <mat-option [value]="3">MYG PRICE</mat-option>
+                                <mat-option [value]="4">MRP</mat-option>    
+                            </mat-select>  
+                            <mat-error *ngIf="registerForm.controls['pricetemplate'].hasError('required') && registerForm.controls['pricetemplate'].touched ">
+                                you must select a price template
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-8">
+                        <mat-form-field>
+                            <input matInput placeholder="Address" [(ngModel)]="strAddress" [formControl]="registerForm.controls['address']" value="" name="address" #address>
+                            <!-- <mat-error *ngIf="registerForm.controls['address'].hasError('required') && registerForm.controls['address'].touched ">
+                  You must enter a Address.
+                </mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 mt-1">
+                        <mat-form-field>
+                            <mat-select matInput placeholder="State*" [formControl]="registerForm.controls['branchState']" [(ngModel)]="strState" name="branchState" #branchState>
+                                <mat-option *ngFor="let state of lstStates" [value]="state.vchr_name" (click)="stateChanged(state)">
+                                    {{ state.vchr_name }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="registerForm.controls['branchState'].hasError('required') && registerForm.controls['branchState'].touched ">
+                                You must select a State.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Branch Category*" [(ngModel)]="strBranchCategory" [formControl]="registerForm.controls['branchCategory']" value=""
+                    name="branchCategory" #branchCategory>
+                  <mat-error *ngIf="registerForm.controls['branchCategory'].hasError('required') && registerForm.controls['branchCategory'].touched ">
+                    You must enter a  branch category.
+                  </mat-error>
+                </mat-form-field>
+              </div> -->
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input matInput placeholder="Email*" [formControl]="registerForm.controls['email']" [(ngModel)]="strEmail" name="email" #emailId>
+                            <mat-error *ngIf="registerForm.controls['email'].hasError('required') && registerForm.controls['email'].touched ">
+                                You must enter a email.
+                            </mat-error>
+                            <mat-error *ngIf="registerForm.controls['email'].errors?.email && registerForm.controls['email'].touched && strEmail">
+                                Please enter valid email address
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Myg care Number" [(ngModel)]="intMygCareNo" [formControl]="registerForm.controls['mygcareno']" value="" name="mygcareno" #mygcarenoId>
+                            <!-- <mat-error *ngIf="registerForm.controls['address'].hasError('required') && registerForm.controls['address'].touched ">
+                  You must enter a Address.
+                </mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput type="number" [formControl]="registerForm.controls['contact']" placeholder="Contact No*" maxlength="10" [(ngModel)]="intContact" name="contactId" #contactId>
+                            <mat-error *ngIf="registerForm.controls['contact'].hasError('required') && registerForm.controls['contact'].touched ">
+                                You must enter a number.
+                            </mat-error>
+                            <mat-error *ngIf="registerForm.controls['contact'].hasError('minlength') && registerForm.controls['contact'].touched">
+                                Must be a valid number
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!--  <div class="col-md-4">
+              <mat-form-field>
+                  <input matInput placeholder="Branch Closed date*" [(ngModel)]="strBranchCloseDate" [formControl]="registerForm.controls['BranchCloseDate']" value=""
+                      name="BranchCloseDate" #BranchCloseDate>
+                  <mat-error *ngIf="registerForm.controls['BranchCloseDate'].hasError('required') && registerForm.controls['BranchCloseDate'].touched ">
+                      You must enter a close date
+                  </mat-error>
+              </mat-form-field>
+            </div> -->
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput placeholder="Branch Stock Limit*" [(ngModel)]="intStockLimit" [formControl]="registerForm.controls['branchStockLimit']" value="" name="branchStockLimit" #branchStockLimit>
+                            <mat-error *ngIf="registerForm.controls['branchStockLimit'].hasError('required') && registerForm.controls['branchStockLimit'].touched ">
+                                You must enter a stock limit.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <label class="col-md-12 mb-0" style="color: lightseagreen">Branch location Details :</label>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Latitude*" [(ngModel)]="intlocationLattitude" [formControl]="registerForm.controls['locationLattitude']" value="" name="locationLattitude" #locationLattitude>
+                            <mat-error *ngIf="registerForm.controls['locationLattitude'].hasError('required') && registerForm.controls['locationLattitude'].touched ">
+                                Enter a location lattitude.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Longitude*" [(ngModel)]="intlocationLongitude" [formControl]="registerForm.controls['locationLongitude']" value="" name="locationLongitude" #locationLongitude>
+                            <mat-error *ngIf="registerForm.controls['locationLongitude'].hasError('required') && registerForm.controls['locationLongitude'].touched ">
+                                You must enter a location longitude.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Size in sqft.*" [(ngModel)]="fltSize" [formControl]="registerForm.controls['branchSize']" value="" name="branchSize" #branchSize>
+                            <mat-error *ngIf="registerForm.controls['branchSize'].hasError('required') && registerForm.controls['branchSize'].touched ">
+                                You must enter size.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Static IP*" [(ngModel)]="intStaticIp" [formControl]="registerForm.controls['branchStaticIp']" value="" name="branchStaticIp" #branchStaticIp>
+                            <mat-error *ngIf="registerForm.controls['branchStaticIp'].hasError('required') && registerForm.controls['branchStaticIp'].touched ">
+                                You must enter a static IP.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-4">
+              <mat-form-field>
+                  <input matInput placeholder="Inauguration Date*" [(ngModel)]="datIngtn" [formControl]="registerForm.controls['inaugurationDate']" value=""
+                      name="inaugurationDate" #inaugurationDate>
+                  <mat-error *ngIf="registerForm.controls['inaugurationDate'].hasError('required') && registerForm.controls['inaugurationDate'].touched ">
+                      You must enter an Inauguration date.
+                  </mat-error>
+                </mat-form-field>
+                  </div> -->
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="picker" placeholder="Inauguration Date*" [(ngModel)]="datIngtn" name="inaugurationDate" [formControl]="registerForm.controls['inaugurationDate']" #inaugurationDate>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error *ngIf="registerForm.controls['inaugurationDate'].hasError('required') && registerForm.controls['inaugurationDate'].touched ">
+                                You must select an Inauguration date.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-4">
+                <mat-form-field>
+                    <input matInput placeholder="Inauguration Time*" [(ngModel)]="intIngtnTime" [formControl]="registerForm.controls['inaugurationTime']" value=""
+                        name="inaugurationTime" #inaugurationTime>
+                    <mat-error *ngIf="registerForm.controls['inaugurationTime'].hasError('required') && registerForm.controls['inaugurationTime'].touched ">
+                        You must enter an Inauguration date.
+                    </mat-error>
+                  </mat-form-field>
+              </div> -->
+                    <!-- <div class="col-md-4">
+            <mat-form-field>
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon18">
+                  <i class="far fa-clock"></i>
+                </span>
+                <input type="time" matInput placeholder="Inauguration Time" [(ngModel)]="intIngtnTime" [formControl]="registerForm.controls['inaugurationTime']"
+                  value="" name="inaugurationTime" #inaugurationTime>
+              </div>
+            </mat-form-field>
+          </div> -->
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput placeholder="Inauguration Time* (Time)" type="time" atp-time-picker [(ngModel)]="intIngtnTime" [formControl]="registerForm.controls['inaugurationTime']">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput placeholder="Inaugurated By" [(ngModel)]="strIngtedBy" [formControl]="registerForm.controls['inauguratedBy']" value="" name="inauguratedBy" #inauguratedBy>
+                            <!-- <mat-error *ngIf="registerForm.controls['inaugurationTime'].hasError('required') && registerForm.controls['inaugurationTime'].touched ">
+                                  You must enter an Inauguration date.
+                              </mat-error> -->
+                        </mat-form-field>
+                    </div>
+
+                    <label class="col-md-12 mb-0" style="color: lightseagreen">Stock Request Limit:</label>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput placeholder="Quantity*" [(ngModel)]="intStockRqstQty" type="number" [formControl]="registerForm.controls['stockRqstQuantity']" value="" name="stockRqstQuantity" #stockRqstQuantity>
+                            <mat-error *ngIf="registerForm.controls['stockRqstQuantity'].hasError('required') && registerForm.controls['stockRqstQuantity'].touched ">
+                                You must enter a stock request quantity.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput placeholder="Amount*" [(ngModel)]="intStockRqstAmt" type="number" [formControl]="registerForm.controls['stockRqstAmount']" value="" name="stockRqstAmount" #stockRqstAmount>
+                            <mat-error *ngIf="registerForm.controls['stockRqstAmount'].hasError('required') && registerForm.controls['stockRqstAmount'].touched ">
+                                You must enter a stock request amount.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12 row">
+                        <button type="submit" class="btn save_btn m-r-10 m-t-10" (click)="AddBranch()">Save</button>
+                        <button type="submit" class="btn btn-secondary m-t-10" (click)="cancel()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row -->

@@ -1,0 +1,110 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <h4>Initiate Purchase Voucher </h4>
+    </div>
+    <div class="row mt-3">
+      <div class="col-xl-3 col-md-3">
+        <mat-form-field>
+            <input readonly placeholder="Supplier" matInput [(ngModel)]="strSupplierName">
+        </mat-form-field>
+        <!-- <label>Supplier </label>
+        <p> {{dctPurchaseData['supplier_name']}}</p> -->
+      </div>
+      <div class="col-xl-3 col-md-3">
+        <!-- <label>GRN Number </label>
+        <p> {{dctPurchaseData['purchase_num']}}</p> -->
+        <mat-form-field>
+            <input readonly placeholder="GRN Number" matInput [(ngModel)]="strGrnNumber">
+        </mat-form-field>
+      </div>
+      <div class="col-xl-3 col-md-3">
+        <!-- <label>Bill Number</label> -->
+        <!-- <p>{{dctPurchaseData['bill_no']}}</p> -->
+        <mat-form-field>
+          <input placeholder="Bill Number" matInput [(ngModel)]="intBillNum" [formControl]="registerForm.controls['billNumber']" value="intBillNum"
+            name="billNumber" #billNumber>
+          <mat-error *ngIf="registerForm.controls['billNumber'].hasError('required') && registerForm.controls['billNumber'].touched ">
+            Enter a Bill Number
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-xl-3 col-md-3">
+        <!-- <label>Bill Date</label> -->
+        <!-- <p>{{ dctPurchaseData['bill_date']}}</p> -->
+        <mat-form-field>
+          <input placeholder="Bill Date" matInput [matDatepicker]="picker" [(ngModel)]="intBillDat" name="billDate" [formControl]="registerForm.controls['billDate']"
+            #billDate>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="registerForm.controls['billDate'].hasError('required') && registerForm.controls['billDate'].touched ">
+            Select a Bill Date.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 col-lg-3">
+        <!-- <label>Amount</label> -->
+        <!-- <p>{{ dctPurchaseData['dbl_total']}}</p> -->
+        <mat-form-field>
+          <input placeholder="Amount" matInput [(ngModel)]="intTotAmount" [formControl]="registerForm.controls['totalAmount']" value="intTotAmount"
+            name="totalAmount" #totalAmount>
+          <mat-error *ngIf="registerForm.controls['totalAmount'].hasError('required') && registerForm.controls['totalAmount'].touched ">
+            Enter an Amount
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-xl-9 col-md-9">
+        <!-- <label>Remarks</label> -->
+        <mat-form-field>
+          <input placeholder="Remarks" matInput [(ngModel)]="strRemarks" [formControl]="registerForm.controls['remarks']" value=""
+            name="remarks" #remarks>
+          <!-- <mat-error *ngIf="registerForm.controls['remarks'].hasError('required') && registerForm.controls['remarks'].touched ">
+                        Enter a Bill Number
+                    </mat-error> -->
+        </mat-form-field>
+      </div>
+      
+    </div>
+    <div class="row">
+    <div class="col-md-3 col-lg-3">
+      <div class="row">
+          <div class="col-md-12">
+              <label>Bill image</label>
+          </div>
+          <div class="col-md-12">
+            <div class="imagebox">
+                  <img src="{{hostname}}{{imgBillSrc}}" alt="Image is temporrarly unavailable" class="image" style="max-width: 100%;width: 60%;">
+                    <div class="middle">
+                      <div class="text" (click)="openzoomimage(zoomimage)"><i class="fa fa-search-plus fa-2x"></i></div>
+                  </div>
+              </div>
+              <!-- <img (click)="openzoomimage(zoomimage)" class="img" src="{{hostname}}{{imgBillSrc}}" alt="Image is temporrarly unavailable" style="max-width: 100%;width: 50%;" /> -->
+              <!-- <p>{{ dctPurchaseData['dbl_total']}}</p> -->
+          </div>
+      </div>
+   </div>
+  </div>
+  
+    <div class="row">
+      <button class="mt-3 btn save_btn m-r-10" (click)="saveVoucher()">
+        Save
+      </button>
+      <button class="mt-3 btn btn-secondary" (click)="goBack()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+ <!-- Zoom view Popup -->
+ <ng-template #zoomimage let-modal>
+    <div class="modal-content">       
+      <div class="modal-body">
+          <div class="row">
+              <img class="img" src="{{hostname}}{{imgBillSrc}}" style="width:100%;" />
+          </div>
+      </div>
+    </div>    
+  </ng-template>
+  <!-- Zoom view popup end here -->
+  

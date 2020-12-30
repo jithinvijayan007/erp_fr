@@ -1,0 +1,10 @@
+.view_btn{
+    background: none;
+    border: none;
+    color: #6495ed;
+    cursor: pointer;
+    padding-left: 0;
+}
+.export_btn{
+margin-left: -117px
+}

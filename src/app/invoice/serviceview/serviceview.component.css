@@ -1,0 +1,29 @@
+.heading{
+    color: #0c0e01;
+    background: #c2c4c538;
+    padding: 6px;
+    font-size: 19PX;
+}
+h6{
+    font-weight: 600;
+    color: #6d6b6b;
+}
+.text-right {
+    text-align: right !important;
+    padding: 4px 300px;
+}
+.modal-header {
+    padding: 15px;
+    /* border-bottom: 1px solid #e5e5e5; */
+    /* min-height: 9.428571px; */
+    background: -webkit-gradient(linear, left top, right top, from(#2e3d50), to(#3e6392));
+    background: linear-gradient(90deg, #5dade0, #b7d6fc);
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.table th {
+    border-top: 0px;
+    font-weight: 600;
+    padding: 8px 15px;
+}

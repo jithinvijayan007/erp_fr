@@ -1,0 +1,244 @@
+<!-- Row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Add Dealer</h3>
+                <!-- <h5 class="card-subtitle">made with bootstrap elements</h5> -->
+                <form class="form p-t-10 row">
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Dealer Name*" [formControl]="registerForm.controls['dealerName']" [(ngModel)]="strDealerName" name="dealer" #dealerNameId>
+                            <mat-error *ngIf="registerForm.controls['dealerName'].hasError('required') && registerForm.controls['dealerName'].touched ">
+                                You must enter a Dealer Name.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-3">
+                <mat-form-field>
+                  <input matInput placeholder="Dealer From*" [formControl]="registerForm.controls['dealerFrom']" [(ngModel)]="strDealerFrom" name="dealerFrom"
+                    #dealerFromId>
+                  <mat-error *ngIf="registerForm.controls['dealerFrom'].hasError('required') && registerForm.controls['dealerFrom'].touched ">
+                    You must enter a Dealer From.
+                  </mat-error>
+                </mat-form-field>
+              </div> -->
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput readonly [matDatepicker]="picker" placeholder="Dealer From*" [(ngModel)]="datDealerFrom" name="dealerFrom" [formControl]="registerForm.controls['dealerFrom']" #dealerFromId>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error *ngIf="registerForm.controls['dealerFrom'].hasError('required') && registerForm.controls['dealerFrom'].touched ">
+                                You must select an Inauguration date.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Dealer Code*" [formControl]="registerForm.controls['dealerCode']" [(ngModel)]="strDealerCode" value="" name="dealerCode" #dealerCodeId>
+                            <mat-error *ngIf="registerForm.controls['dealerCode'].hasError('required') && registerForm.controls['dealerCode'].touched ">
+                                You must enter a Dealer Code.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mt-4">
+                            <mat-radio-group name="planType" [(ngModel)]="intActive">
+                                <mat-radio-button value="0">Active</mat-radio-button>
+                                <mat-radio-button value="2">Deactive</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput type="number" [formControl]="registerForm.controls['days']" placeholder="Credit Days*" [(ngModel)]="intCreditDays" name="creditDays" #creditDays>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput type="number" [(ngModel)]="intCreditLimit" [formControl]="registerForm.controls['limit']" placeholder="Credit Limit*" value="" name="creditLimit" #creditLimit>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input required matInput [(ngModel)]="poExpiryDays" [formControl]="registerForm.controls['poExpiryDays']" placeholder="PO Expiry Days" value="" name="poExpiry" #idpoExpiryDays>
+                        </mat-form-field>
+                    </div>
+                    <!-- address -->
+                    <div class="row col-lg-12 mt-2" *ngFor="let item of dctData['lstaddress'];let i=index">
+                        <div class="col-xl-12">
+                            <div class="row" style="color: #2d475d !important;background: #ecf7ff;">
+                                <div class="col-xl-8 col-md-8">
+                                    <h5 style="margin-top: 10px;">Address #{{i+1}}</h5>
+                                </div>
+                                <div *ngIf="i==0" class="col-xl-4 col-md-4">
+                                    <button id="add_button" title="Add Address" (click)="addAddress()" class="addbtnround float-right mt-3">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <mat-form-field>
+                                        <input matInput name="email_{{i}}" placeholder="Email*" [(ngModel)]="item.strEmail" #emailId>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field>
+                                        <input matInput name="no_{{i}}" type="number" placeholder="Contact No*" maxlength="10" [(ngModel)]="item.intContact" #contactId>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field>
+                                        <input matInput type="number" name="pincode_{{i}}" placeholder="Pin Code*" [(ngModel)]="item.intPinCode" #pinCodeId>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-1" *ngIf="dctData['lstaddress'].length>1" style="margin-top: 25px !important;text-align: center;">
+                                    <i class="close_btn_round mdi mdi-close-circle-outline" (click)="closeAddress(i)"></i>
+                                </div>
+                                <div class="col-md-11">
+                                    <mat-form-field>
+                                        <input matInput name="address_{{i}}" placeholder="Address *" [(ngModel)]="item.strAddress" #addressId>
+                                    </mat-form-field>
+                                </div>
+                                <!-- 
+                <div class="col-md-1 button__holder">
+                    <button id="add_button" title="Add" (click)="addAddress()" mat-mini-fab
+                      color="primary" class="float-right" style="top: 10px !important;">
+                          <i class="ti-plus"></i> 
+                    </button>
+                  </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="strTINNo" [formControl]="registerForm.controls['TIN']" placeholder="TIN No*" value="" name="tinno" #tinNo>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="strCSTNo" [formControl]="registerForm.controls['CST']" placeholder="CST No*" value="" name="cstno" #cstNo>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="strGSTIN" [formControl]="registerForm.controls['GSTIN']" placeholder="GSTIN*" value="" name="gstno" #gstinNo>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="strGSTStatus" [formControl]="registerForm.controls['GSTstatus']" placeholder="GSTIN Status*" value="" name="gststatus" #gstinStatus>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-4">
+              <mat-form-field>
+                <input matInput [(ngModel)]="strCategory" [formControl]="registerForm.controls['category']" placeholder="Dealer Category*" value="" name="category" #categoryId >
+              </mat-form-field>
+          </div> -->
+                    <div class="col-md-4">
+                        <mat-form-field class="mat-icon-left">
+                            <mat-select required placeholder="Dealer Category " [(ngModel)]="selectedCategory" name="category">
+                                <mat-option *ngFor="let item of lstCategory" [value]="item.pk_bint_id" (click)="categoryChanged(item)">
+                                    {{ item.vchr_name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field class="mat-icon-left">
+                            <mat-select required placeholder="Dealer Tax Class" [formControl]="registerForm.controls['tax']" [(ngModel)]="selectedTax" name="tax">
+                                <mat-option *ngFor="let item of lstTax" [value]="item[0]" (click)="taxChanged(item)">
+                                    {{ item[1] }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-4">
+              <mat-form-field>
+                <input matInput [(ngModel)]="lstTax" [formControl]="registerForm.controls['tax']" placeholder="Dealer Tax Class*" value="" name="tax" #taxId >
+              </mat-form-field>
+          </div> -->
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="strGroup" [formControl]="registerForm.controls['accGroup']" placeholder="Account Group*" value="" name="group" #groupId>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="strAccount" [formControl]="registerForm.controls['account']" placeholder="Bank Account *" value="" name="acc" #accId>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="strPanNo" [formControl]="registerForm.controls['panNo']" placeholder="PAN No  *" value="" name="panNo" #panNoId>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="strPanStatus" [formControl]="registerForm.controls['panStatus']" placeholder="PAN Status  *" value="" name="panStatus" #panStatusId>
+                        </mat-form-field>
+                    </div>
+                    <!-- contact person -->
+                    <div class="row mt-2 col-lg-12" *ngFor="let item of dctData['lstcontact'];let i=index">
+                        <div class="col-xl-12">
+                            <div class="row" style="color: #2d475d !important;background: #ecf7ff;">
+                                <div class="col-xl-8 col-md-8">
+                                    <h5 style="margin-top: 10px;">Contact Person #{{i+1}}</h5>
+                                </div>
+                                <div *ngIf="i==0" class="col-xl-4 col-md-4">
+                                    <button id="add_button" title="Add Person" (click)="addContact()" class="addbtnround float-right mt-3">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Name *" [(ngModel)]="item.strName" name="name_{{i}}" #nameId>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Designation*" [(ngModel)]="item.strDesig" name="desig_{{i}}" #desigId>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Department*" [(ngModel)]="item.strDept" name="dept_{{i}}" #deptId>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-1" *ngIf="dctData['lstcontact'].length>1" style="margin-top: 25px !important;text-align: center;">
+                                    <i class="close_btn_round mdi mdi-close-circle-outline" (click)="closeContact(i)"></i>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Office*" [(ngModel)]="item.strOffice" name="office_{{i}}" #officeId>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field>
+                                        <input matInput type="number" placeholder="Mobile No. #1*" maxlength="10" [(ngModel)]="item.intPhone1" name="no1_{{i}}" #Phone1Id>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field>
+                                        <input matInput type="number" placeholder="Mobile No. #2*" maxlength="10" [(ngModel)]="item.intPhone2" name="no2_{{i}}" #Phone2Id>
+                                    </mat-form-field>
+                                </div>
+                                <!-- <div class="col-md-1 button__holder">
+                     <button id="add_button" title="Add" (click)="addContact()" mat-mini-fab
+                       color="primary" class="float-right" style="top: 10px !important;"> <i class="ti-plus"></i> 
+                     </button>
+                   </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn save_btn m-r-10 m-t-10" (click)="saveDealer()">Save</button>
+                    <button type="submit" class="btn btn-secondary m-t-10" (click)="cancel()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row -->

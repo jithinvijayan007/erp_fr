@@ -1,0 +1,81 @@
+ /* inputbox with icon */
+.input2 {
+    width: 100%;
+    border: 1px solid #e9ecef;
+    margin: 8px 0;
+    outline: none;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: 0.3s;
+  }
+  
+  .input2:focus {
+    border-color: #bcbcbc;
+  }
+ 
+  .inputWithIcon .input2 {
+    padding-right: 40px;
+    padding-left:55px;
+  }
+  
+  .inputWithIcon {
+    position: relative;
+    width:100%;
+  }
+  
+  .inputWithIcon i {
+    position: absolute;
+    right: 9px;
+    top: 14px;
+    font-size: 15px;
+    padding: 9px 8px;
+    color: #d6d6d6;
+    transition: 0.3s;
+  }
+  
+  .inputWithIcon .input2:focus + i {
+    color: #066f9f;
+  }
+  
+  .inputWithIcon.inputIconBg i {
+    background-color: #aaa;
+    color: #fff;
+    padding: 9px 4px;
+    border-radius: 4px 0 0 4px;
+  }
+  
+  .inputWithIcon.inputIconBg .input2:focus + i {
+    color: #fff;
+    background-color: #066f9f;
+  }
+  .pencil{
+    float: left;
+    left: 1px;
+    width: 39px;
+    padding: 14px 5px 10px 9px !important;
+    height: 40px;
+    top: 17px;
+    background: #f6fafe;
+    border-right: 1px solid #e9ecef;
+    color: #066f9f !important;
+  }
+  .video{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+ 
+    opacity: 0.3;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  }
+  .text-dark {
+    color: #c7c1c1 !important;
+  }
+  .text-dark:hover {
+    color: red !important;
+  }
+  

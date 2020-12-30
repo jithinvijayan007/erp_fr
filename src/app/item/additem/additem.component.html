@@ -1,0 +1,163 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-0">Item</h4>
+                <form class="form row">
+                    <div class="col-md-3">
+                        <div class="mt-4">
+                            <!-- <label class="pr-10">Title</label><br> -->
+                            <mat-radio-group name="planType" [(ngModel)]="bln_sale">
+                                <mat-radio-button value="True">Saleable</mat-radio-button>
+                                <mat-radio-button value="False">Non Saleable</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Product*" [formControl]="searchProduct" [matAutocomplete]="productname" [(ngModel)]="selectedProduct" #productId>
+                            <mat-autocomplete #productname="matAutocomplete">
+                                <mat-option *ngFor="let item of lstProduct" [value]="item.name" (onSelectionChange)="ProductChanged(item)">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Brand*" [formControl]="searchBrand" [matAutocomplete]="brandname" [(ngModel)]="selectedBrand" #brandId>
+                            <mat-autocomplete #brandname="matAutocomplete">
+                                <mat-option *ngFor="let item of lstBrand" [value]="item.name" (onSelectionChange)="BrandChanged(item)">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mt-4">
+                            <!-- <label class="pr-10">Title</label> <br> -->
+                            <mat-checkbox name="imei" [checked]="false" [(ngModel)]="bln_imei">IMEI No.</mat-checkbox>
+
+                            <!-- <mat-radio-group name="planType1" [(ngModel)]="bln_imei">
+                <mat-radio-button value="True">IMEI No.</mat-radio-button>
+                <mat-radio-button value="False">Auto. Serial No.</mat-radio-button>
+              </mat-radio-group> -->
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Prefix" [(ngModel)]="strPrefix" name="prefix" #prefixId>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input type="text" matInput placeholder="Item Code*" [(ngModel)]="strCode" name="code" #codeId>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Item Name*" [(ngModel)]="strItem" name="item" #itemId>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-select matInput placeholder="Item Category*" [(ngModel)]="strCategory" name="category" #categoryId>
+                                <mat-option *ngFor="let item of lstCategory" [value]="item.vchr_item_category" (click)="CategoryChanged(item)">
+                                    {{ item.vchr_item_category }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-3">
+            <mat-form-field>
+              <mat-select matInput placeholder="Item Group*"  [(ngModel)]="strGroup" name="group" #groupId>
+                <mat-option *ngFor="let item of lstGroup" [value]="item.vchr_item_group" (click)="GroupChanged(item)">
+                  {{ item.vchr_item_group }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>  -->
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Item Group*" [formControl]="searchItemGroup" [matAutocomplete]="itemgroupname" [(ngModel)]="selectedGroup" #groupId>
+                            <mat-autocomplete #itemgroupname="matAutocomplete">
+                                <mat-option *ngFor="let item of lstGroup" [value]="item.name" (onSelectionChange)="GroupChanged(item)">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput type="number" placeholder="Supplier Cost*" [(ngModel)]="intSupplierCost" name="suppliercost" #suppliercostId>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput type="number" placeholder="Dealer Cost*" [(ngModel)]="intDealerCost" name="dealercost" #dealercostId>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput type="number" placeholder="MOP*" [(ngModel)]="mop" name="mop" #mopId>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput type="number" placeholder="MRP*" [(ngModel)]="mrp" name="mrp" #mrpId>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput type="number" placeholder="Reorder Level*" [(ngModel)]="intReorderlevel" name="reorder" #reorderId>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-3">
+            <mat-form-field>
+              <mat-select matInput placeholder="Specifications*" multiple [(ngModel)]="specList" name="spec" #specId>
+                <mat-option *ngFor="let item of lstSpec" [value]="item.vchr_name" >
+                  {{ item.vchr_name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> -->
+                    <div class="col-md-4">
+                        <label><small>Item Image1*</small></label>
+                        <span style="color:red;" *ngIf="message">{{message}}</span>
+                        <input #file1 type="file" accept='image/*' (change)="Preview1(file1.files,$event)" max-file-size="100kb" />
+                    </div>
+                    <div class="row col-xl-12">
+                        <span class="col-md-12" *ngIf="strCategory">
+              <b>Specifications:</b>
+            </span>
+                        <div class="col-md-3" *ngFor="let item of lstSpec">
+                            <mat-form-field>
+                                <input matInput placeholder="{{item.vchr_name}}" [(ngModel)]="dctSpec[item.pk_bint_id]" [name]="item.pk_bint_id" #specId>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" *ngIf="imgURL1">
+                            <label style="color: #8fbc8f;" class="mt-4">Preview 1 : &nbsp;&nbsp;</label>
+                            <span>
+                <img [src]="imgURL1" style="width:50%">
+              </span>
+                        </div>
+                    </div>
+                    <div class="col-md-5" *ngIf="blnEdit && !imgURL1">
+                        <label style="color: #8fbc8f;" class="mt-4">Preview1:&nbsp;&nbsp;</label>
+                        <span>
+              <img src="{{hostaddress}}{{vchr_image}}" style="width:35%">
+            </span>
+                    </div>
+                    <div class="col-md-12 row">
+                        <button *ngIf="!blnEdit" type="submit" class="btn save_btn m-r-10 m-t-10" (click)="AddItem()">Save</button>
+                        <button *ngIf="!blnEdit" class="btn btn-secondary m-t-10" (click)="ClearData()">Cancel</button>
+                        <button *ngIf="blnEdit" type="submit" class="btn save_btn m-r-10 m-t-10" (click)="AddItem()">Update</button>
+                        <button *ngIf="blnEdit" class="btn btn-secondary m-t-10" (click)="CancelUpdate()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

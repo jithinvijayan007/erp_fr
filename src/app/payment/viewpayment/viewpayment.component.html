@@ -1,0 +1,126 @@
+<div class="card">
+  <div class="card-body">
+      <h3><span><i class="fa fa-users" aria-hidden="true"></i></span>&nbsp; View Payment
+        <!-- <span class="float-right"> -->
+            
+            <!-- <button class="btn backbtn"  (click)="backButton()"><i class="fa fa-angle-left icon"></i><span style="margin-left: 15px;">Back </span></button> -->
+        <!-- </span> -->
+      </h3>
+      <!-- <div class="row" *ngIf="data"> -->
+      <div class="row">
+          <div class="col-md-12">
+              <div class="row mt-2">
+                  <div class="col-md-3">
+                      <div class="form-group mt-1">
+                          <label>Date of Payment</label>
+                          <p class="">{{datPayment}}</p>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="form-group mt-1">
+                          <label>FOP</label>
+                          <p class="">{{strFop| titlecase}}</p>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="form-group mt-1">
+                          <label>Payee Type</label>
+                          <p class="">{{strPayeeType| titlecase}}</p>
+                      </div>
+                  </div>
+                  <div class="col-md-3" *ngIf="strExpenseName">
+                    <div class="form-group mt-1">
+                        <label>Expense Name </label>
+                        <p class="">{{strExpenseName| titlecase}}</p>
+                    </div>
+                </div>
+                  <div class="col-md-3">
+                    <div class="form-group mt-1">
+                        <label> Branch</label>
+                        <p class="">{{strBranch| titlecase}}</p>
+                    </div>
+                </div>
+                  <div class="col-md-3" *ngIf = "intPayeeType == 1">
+                      <div class="form-group mt-1">
+                          <label>Customer Name</label>
+                          <p class="">{{strCustomerName| titlecase}}</p>
+                      </div>
+                  </div>
+                  <div class="col-md-3" *ngIf = "intPayeeType == 5">
+                      <div class="form-group mt-1">
+                          <label>Customer Name</label>
+                          <p class="">{{strCustomerName| titlecase}}</p>
+                      </div>
+                  </div>
+                  <div class="col-md-3" *ngIf = "intPayeeType == 6">
+                      <div class="form-group mt-1">
+                          <label>Vendor Name</label>
+                          <p class="">{{strVentorName| titlecase}}</p>
+                      </div>
+                  </div>
+                  <div class="col-md-3" *ngIf = "intPayeeType == 1">
+                    <div class="form-group mt-1">
+                        <label>Used Receipt</label>
+                        <p class="">{{strReceipt}}</p>
+                    </div>
+                </div>
+                  <div class="col-md-3" *ngIf = "intPayeeType == 2">
+                      <div class="form-group mt-1">
+                          <label>Staff Incentives</label>
+                          <p class="">{{strStaff| titlecase}}</p>
+                      </div>
+                  </div>
+                  <div class="col-md-3" *ngIf = "intPayeeType == 3">
+                      <div class="form-group mt-1">
+                          <label>Payee</label>
+                          <p class="">{{strExpenses| titlecase}}</p>
+                      </div>
+                  </div>
+
+                  <div class="col-md-3" *ngIf = "intPayeeType == 4">
+                      <div class="form-group mt-1">
+                          <label>Bank</label>
+                          <p class="">{{strBank}}</p>
+                      </div>
+                  </div>
+                  
+                  <div class="col-md-3">
+                      <div class="form-group mt-1">
+                          <label>Amount</label>
+                          <p class="">{{intAmount}}</p>
+                      </div>
+                  </div>
+               
+                  <div class="col-md-6">
+                      <div class="form-group mt-1">
+                          <label>Remarks</label>
+                          <p class="">{{strRemarks}}</p>
+                      </div>
+                  </div>
+              </div>
+          </div>      
+      </div>
+      <div class="row" *ngIf="intPayeeType==4">
+          <table class="table">
+              <thead>
+                  <tr>
+                        <th>Denominations</th>
+                        <th>No. of notes</th>
+                        <th>Total </th>
+                  </tr>
+
+              </thead>
+              <tbody *ngFor="let item of lstDenominations">
+                  <tr>
+                      <td>{{item['note']}}</td>
+                      <td>{{item['count']}}</td>
+                      <td>{{item['total']}}</td>
+                  </tr>
+              </tbody>
+
+          </table>
+      </div>
+  </div>
+</div>
+
+        

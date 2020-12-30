@@ -1,0 +1,87 @@
+<div class="auth-wrapper d-flex no-block justify-content-center align-items-center" >
+    <video autoplay muted loop oncanplay="this.play()" onloadedmetadata="this.muted = true" class="video">
+        <source src="assets/video/home_video.mp4" type="video/mp4">
+      </video>
+    <div class="auth-box" style="background: #0e0000;">
+        <div id="loginform" [ngClass]="{'d-none': recoverform}">
+            <div class="logo">
+                <span class="db"><img src="assets/images/logo.png" alt="elogo" style="width: 257px"/></span>
+                <h5 class="font-medium m-b-20" style="color: #ff1207;margin-top: 20px;">Login To Your Account </h5>
+            </div>
+            <!-- Form -->
+            <div class="row">
+                <div class="col-12">
+                    <form class="form-horizontal m-t-10" id="loginform" (ngSubmit)="onSubmit(openMail,lockKey)">
+                        <div class="input-group mb-2">
+                            <div class="inputWithIcon">
+                                <i class="ti-user pencil" style="color: #066f9f !important; top: 9px;"></i>
+                            
+                            <input type="text" #openMail class="input2" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                           </div>
+                        </div>
+                        <div class="input-group mb-2">
+                            <!-- <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
+                            </div>
+                            <input type="password" #lockKey class="form-control form-control-lg pass" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" style="border-right: 0;"> -->
+                            
+                            <div class="inputWithIcon">
+                                    <i class="ti-pencil pencil" style="top: 9px;"></i>
+                                <input [type]="blnPaswrdShow ? 'text' : 'password'"  placeholder="Password" class="input2" #lockKey value="" name="" id="password">
+                                <i *ngIf="!blnPaswrdShow" class="fa fa-eye" style="
+                                color: #ce2a45;" (click)="blnPaswrdShow=!blnPaswrdShow"></i> <i *ngIf="blnPaswrdShow" class="fa fa-eye-slash" (click)="blnPaswrdShow=!blnPaswrdShow"></i>
+                              </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">Remember me</label>
+                                    <a (click)="showRecoverForm()" href="javascript:void(0)" id="to-recover" class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <div class="col-xs-12">
+                                <button class="btn btn-block btn-lg login_btn" type="submit" style="
+                                background: #ca273f;">Log In</button>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group m-b-0 m-t-10">
+                          <div class="col-sm-12 text-center">
+                              Don't have an account? <a href="#/authentication/signup" class="text-info m-l-5"><b>Sign Up</b></a>
+                          </div>
+                      </div> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="recoverform" [ngClass]="{'d-block': recoverform}">
+            <div class="logo">
+                <span class="db"><img src="assets/images/logo.png" alt="logo"  style="width: 257px" /></span>
+                <h5 class="font-medium m-b-20"  style="color: #ff1207;margin-top: 20px;">Recover Password</h5>
+                <span style="color: #b8b8cc;">Enter your Email and instructions will be sent to you!</span>
+            </div>
+            <div class="row m-t-20">
+                <!-- Form -->
+                <form class="col-12">
+                    <!-- email -->
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <input class="form-control form-control-lg" type="email" required="" placeholder="Username">
+                        </div>
+                    </div>
+                    <!-- pwd -->
+                    <div class="row m-t-20">
+                        <div class="col-12">
+                            <button class="btn btn-block btn-lg login_btn" type="submit" name="action" style="
+                            background: #ca273f;">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#f80000" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

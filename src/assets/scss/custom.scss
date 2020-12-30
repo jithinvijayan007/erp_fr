@@ -1,0 +1,65 @@
+// In this scss you can overwrite all our scss, we suggested you to add your scss into this, so whenever the update comes it will not affect your code.
+
+
+.addbtnround{
+   
+    
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        outline: 0;
+        border: none;
+        text-align: center;
+        padding: 8px;
+        font-size: 10px;
+        width: 30px;
+        border-radius: 50%;
+        background: linear-gradient(to right, #43cea2, #29879f);
+        color: white;
+        box-shadow: 0 5px 15px 0 rgba(62, 57, 107, 0.44);
+        position: absolute;
+        right: 7px;
+        top: -20px;
+        z-index: 30;
+      
+}
+
+.imeigreen {
+    background-color: #28a745;
+    border: 1px solid #28a745;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    width: 34px;
+    height: 21px;
+    padding: 0px !important;
+    font-size: 12px;
+    margin-right: 5px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.trashbtn {
+    background: #da524e;
+    color: #fff;
+    cursor: pointer;
+    vertical-align: middle;
+    width: 23px;
+    height: 23px;
+    padding: 1px !important;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+.backbtn{
+    border-radius: 50px;
+    position:relative;
+    color: #fff;
+    font-size: 15px;
+    padding: 3px 10px;  
+    cursor: pointer;
+    border: none;
+    background: linear-gradient(-180deg, #BCC5CE 0%, #929EAD 98%), radial-gradient(at top left, rgba(255,255,255,0.30) 0%, rgba(0,0,0,0.30) 100%);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}

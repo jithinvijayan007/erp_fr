@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card-body">
+    <div>
+      <h4 class="card-title">Supplier List</h4>
+      <div class="mt-4">
+        <mat-radio-group name="planType" [(ngModel)]="bln_active">
+          <mat-radio-button value="0">Active</mat-radio-button>
+          <mat-radio-button value="2">Deactive</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-3">
+          <mat-form-field>
+            <input #idCreditDays required [(ngModel)]="intCreditDays" name="intCreditDays" matInput placeholder="Credit Days">
+            <mat-error *ngIf="form.controls['code'].hasError('required') && form.controls['code'].touched ">
+              you must enter Credit Days.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input #idCreditLimit required [(ngModel)]="intCreditLimit" name="intCreditLimit" matInput placeholder="Credit Limit">
+            <mat-error *ngIf="form.controls['code'].hasError('required') && form.controls['code'].touched ">
+              you must enter Credit Limit.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <mat-select required placeholder="Supplier Category" [(ngModel)]="strSupplierCategory" name="strSupplierCategory">
+              <mat-option *ngFor="let item of lst_category" [value]="item.id" (onSelectionChange)="supplierCategoryChanged(item)">
+                {{ item.categoryname }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <button (click) = listSupplierData() class="btn save_btn m-r-10 mt-2"> Search</button>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col-12">
+          <div class="table table-responsive smart-table">
+            <ng2-smart-table [settings]="settings" [source]="source" class="" (deleteConfirm)="onDeleteConfirm($event)" (custom)="onCustomAction($event)"></ng2-smart-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

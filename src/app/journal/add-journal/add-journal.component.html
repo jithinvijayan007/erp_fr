@@ -1,0 +1,227 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-body">
+              <h3 class="card-title">Add Journal</h3>
+          
+              <form #myForm="ngForm" class="form p-t-10 row" >
+
+   
+
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input matInput required readonly [matDatepicker]="picker" placeholder="Date Issue" [(ngModel)]="datIssue" name="issueDate" #issueDate>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                  
+
+
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input matInput required placeholder="Debit Branch" [formControl]="searchBranch" [matAutocomplete]="Branchname" [(ngModel)]="selectedBranch" #BranchId>
+                                <mat-autocomplete #Branchname="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstBranch" [value]="item.name" (onSelectionChange)="BranchChanged(item)">
+                                        {{ item.name }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+  
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                      <mat-select  [(ngModel)]="intDebitType" name="intDebitType" (ngModelChange)="debitTypeChanged()" placeholder="Debit Type">
+                        <mat-option [value]=3>EXPENSE</mat-option>
+                        <mat-option [value]=1>CUSTOMER</mat-option>
+                        <mat-option [value]=2>STAFF</mat-option>
+                        <mat-option [value]=4>VENDOR</mat-option>
+                        <mat-option [value]=5>CASH</mat-option>
+                        <mat-option [value]=6>BANK</mat-option>
+                        <mat-option [value]=7>System A/c</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3" *ngIf="intDebitType== 3">
+                    <mat-form-field>
+                        <input matInput required placeholder="Debit Expense" [formControl]="searchExpenseName" [matAutocomplete]="expensename" [(ngModel)]="selectedExpenseName" #expenseId>
+                        <mat-autocomplete #expensename="matAutocomplete">
+                            <mat-option *ngFor="let item of lstExpenseName" [value]="item.vchr_category" (onSelectionChange)="expenseNameChanged(item)">
+                                {{ item.vchr_category }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3" *ngIf="intDebitType == 1">
+                    <mat-form-field>
+                        <input matInput required placeholder="Debit Customer" [formControl]="searchCustomer" [matAutocomplete]="Customername" [(ngModel)]="selectedCustomer" #idCustomer>
+                        <mat-autocomplete #Customername="matAutocomplete">
+                            <mat-option *ngFor="let item of lstCustomer" [value]="item.name" (onSelectionChange)="CustomerChanged(item)">
+                                {{ item.name }}
+                            </mat-option>
+                        </mat-autocomplete>
+                   
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3" *ngIf="intDebitType == 4">
+                    <mat-form-field>
+                        <input matInput required placeholder="Debit Vendor" [formControl]="searchVentor" [matAutocomplete]="Ventorname" [(ngModel)]="selectedVentor" #idVentor>
+                        <mat-autocomplete #Ventorname="matAutocomplete">
+                            <mat-option *ngFor="let item of lstVentor" [value]="item.name" (onSelectionChange)="VentorChanged(item)">
+                                {{ item.name }}
+                            </mat-option>
+                        </mat-autocomplete>
+                       
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2" *ngIf="intDebitType == 2">
+                    <mat-form-field>
+                      <input matInput placeholder="Debit Staff" [formControl]="searchStaff" [matAutocomplete]="StaffName" [(ngModel)]="strSelectedStaff"  (ngModelChange)="StaffNgModelChanged($event)">
+                         <mat-autocomplete #StaffName="matAutocomplete">
+                            <mat-option *ngFor="let item of lstStaff" [value]="item.strUserName" (onSelectionChange)="StaffChanged(item)">{{ item.strUserName }} </mat-option>
+                         </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+     
+                <div class="col-md-2" *ngIf="intDebitType == 7">
+                    <mat-form-field>
+                      <input matInput required placeholder="Debit A/c Name" [formControl]="searchDebitSystemAcName" [matAutocomplete]="debitsystemacname" [(ngModel)]="strDebitSelectedSystemAc" (ngModelChange)="systemAcNgModelChangedDebit($event)" #systemacId>
+                      <mat-autocomplete #debitsystemacname="matAutocomplete">
+                          <mat-option *ngFor="let item of  lstDebitSystemAc" [value]="item.vchr_acc_name" (onSelectionChange)="SystemDebitAcChanged(item)">
+                              {{ item.vchr_acc_name }}
+                          </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+<!--                 
+
+                <div class="col-md-3" *ngIf="intDebitType == '1'">
+                    <mat-form-field>
+                        <input matInput required placeholder="Payee" [formControl]="searchExpenses" [matAutocomplete]="Expensesname" [(ngModel)]="selectedExpenses" #idExpenses>
+                        <mat-autocomplete #Expensesname="matAutocomplete">
+                            <mat-option *ngFor="let item of lstExpenses" [value]="item.name" (onSelectionChange)="ExpensesChanged(item)">
+                                {{ item.name }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div> -->
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <input matInput required placeholder="Credit Branch" [formControl]="searchCreditBranch" [matAutocomplete]="CreditBranchname" [(ngModel)]="selectedCreditBranch" #BranchId>
+                        <mat-autocomplete #CreditBranchname="matAutocomplete">
+                            <mat-option *ngFor="let item of lstCreditBranch" [value]="item.name" (onSelectionChange)="BranchChangedCredit(item)">
+                                {{ item.name }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                      <mat-select  [(ngModel)]="intCreditType" name="intCreditType" (ngModelChange)="creditTypeChanged()" placeholder="Credit Type">
+                          <mat-option [value]=3>EXPENSE</mat-option>
+                          <mat-option [value]=1>CUSTOMER</mat-option>
+                          <mat-option [value]=2>STAFF</mat-option>
+                          <mat-option [value]=4>VENDOR</mat-option>
+                          <mat-option [value]=5>CASH</mat-option>
+                          <mat-option [value]=6>BANK</mat-option>
+                          <mat-option [value]=7>System A/c</mat-option>
+                        
+                      </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3" *ngIf="intCreditType==3">
+                    <mat-form-field>
+                        <input matInput required placeholder="Expense Name" [formControl]="searchCreditExpenseName" [matAutocomplete]="creditExpensename" [(ngModel)]="selectedCreditExpenseName" #creditExpenseId>
+                        <mat-autocomplete #creditExpensename="matAutocomplete">
+                            <mat-option *ngFor="let item of lstCreditExpenseName" [value]="item.vchr_category" (onSelectionChange)="creditExpenseNameChanged(item)">
+                                {{ item.vchr_category }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3" *ngIf="intCreditType == 1">
+                    <mat-form-field>
+                        <input matInput required placeholder="Customer" [formControl]="searchCreditCustomer" [matAutocomplete]="creditCustomername" [(ngModel)]="selectedCreditCustomer" #idCreditCustomer>
+                        <mat-autocomplete #creditCustomername="matAutocomplete">
+                            <mat-option *ngFor="let item of lstCreditCustomer" [value]="item.name" (onSelectionChange)="creditCustomerChanged(item)">
+                                {{ item.name }}
+                            </mat-option>
+                        </mat-autocomplete>
+                   
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3" *ngIf="intCreditType == 4">
+                    <mat-form-field>
+                        <input matInput required placeholder="Vendor" [formControl]="searchCreditVentor" [matAutocomplete]="CreditVentorname" [(ngModel)]="selectedCreditVentor" #idCreditVentor>
+                        <mat-autocomplete #CreditVentorname="matAutocomplete">
+                            <mat-option *ngFor="let item of lstCreditVentor" [value]="item.name" (onSelectionChange)="creditVentorChanged(item)">
+                                {{ item.name }}
+                            </mat-option>
+                        </mat-autocomplete>
+                       
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2" *ngIf="intCreditType == 2">
+                    <mat-form-field>
+                      <input matInput placeholder="Staff" [formControl]="searchCreditStaff" [matAutocomplete]="creditStaffName" [(ngModel)]="strSelectedCreditStaff"  (ngModelChange)="creditStaffNgModelChanged($event)">
+                         <mat-autocomplete #creditStaffName="matAutocomplete">
+                            <mat-option *ngFor="let item of lstCreditStaff" [value]="item.strUserName" (onSelectionChange)="creditStaffChanged(item)">{{ item.strUserName }} </mat-option>
+                         </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2" *ngIf="intCreditType == 7">
+                    <mat-form-field>
+                      <input matInput required placeholder="Credit A/c Name" [formControl]="searchCreditSystemAcName" [matAutocomplete]="creditsystemacname" [(ngModel)]="strCreditSelectedSystemAc" (ngModelChange)="systemAcNgModelChangedCredit($event)" #systemacId>
+                      <mat-autocomplete #creditsystemacname="matAutocomplete">
+                          <mat-option *ngFor="let item of  lstCreditSystemAc" [value]="item.vchr_acc_name" (onSelectionChange)="SystemCreditAcChanged(item)">
+                              {{ item.vchr_acc_name }}
+                          </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+
+
+                <!-- <div class="col-md-3" *ngIf="intCreditType == '1'">
+                    <mat-form-field>
+                        <input matInput required placeholder="Payee" [formControl]="searchCreditExpenses" [matAutocomplete]="creditExpensesname" [(ngModel)]="selectedCreditExpenses" #idCreditExpenses>
+                        <mat-autocomplete #creditExpensesname="matAutocomplete">
+                            <mat-option *ngFor="let item of lstCreditExpenses" [value]="item.name" (onSelectionChange)="creditExpensesChanged(item)">
+                                {{ item.name }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div> -->
+
+
+               
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                      <input matInput type="number" placeholder="Amount" required [(ngModel)]="intAmount" value="" name="amount" min=0 oninput="validity.valid||(value='');" #idAmount>
+                  </mat-form-field>
+                </div>
+                
+
+                  <div class="col-md-3">
+                      <mat-form-field>
+                          <input matInput placeholder="Remarks" required [(ngModel)]="strRemarks" value="" name="remarks" #idRemarks>
+                      </mat-form-field>
+                  </div>
+              </form>
+              <div class="row">
+                  <div class="col-md-3">
+  
+                      <button type="submit" class="btn save_btn  mt-2" (click)="saveJournal()" [disabled]="saveDisable">Save</button>
+                      <button type="submit" class="btn btn-secondary  ml-2 mt-2" (click)="clearFields(myForm)">Cancel</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

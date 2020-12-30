@@ -1,0 +1,97 @@
+<div class="card">
+  <div class="card-body">
+    <h3>
+      <span>
+        <i class="fa fa-users" aria-hidden="true"></i>
+      </span>&nbsp; View Coupon
+      <span class="float-right">
+        <!-- <button class="edit_btn mr-2" [routerLink]="['/coupon/editcoupon']">
+          <i class="mdi mdi-tooltip-edit"></i> Edit </button> -->
+        <button class="backbtn" [routerLink]="['/coupon/listcoupon']">
+          <i class="fa fa-angle-left"></i> Back</button>
+      </span>
+    </h3>
+    <div class="row" *ngIf="dataLoaded">
+      <div class="col-md-12">
+        <div class="row mt-2">
+          <div class="col-md-4">
+            <div class="form-group mt-1">
+              <label>Coupon Code</label>
+              <p class="">{{couponDetails['vchr_coupon_code']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group mt-1">
+              <label>Coupon Type</label>
+              <p class=""> {{couponDetails['package']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="couponDetails['int_which']=='1'">
+            <div class="form-group mt-1">
+              <label>{{couponDetails['package']}} Name</label>
+              <p class="">{{couponDetails['fk_product__vchr_name']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="couponDetails['int_which']=='2'">
+            <div class="form-group mt-1">
+              <label>{{couponDetails['package']}} Name</label>
+              <p class="">{{couponDetails['fk_brand__vchr_name']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="couponDetails['int_which']=='3'">
+            <div class="form-group mt-1">
+              <label>{{couponDetails['package']}} Name</label>
+              <p class="">{{couponDetails['fk_item_category__vchr_item_category']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="couponDetails['int_which']=='4'">
+            <div class="form-group mt-1">
+              <label>{{couponDetails['package']}} Name</label>
+              <p class="">{{couponDetails['fk_item_group__vchr_item_group']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="couponDetails['int_which']=='5'">
+            <div class="form-group mt-1">
+              <label>{{couponDetails['package']}} Name</label>
+              <p class="">{{couponDetails['fk_item__vchr_name']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group mt-1">
+              <label>Date Expiry</label>
+              <p class="">{{couponDetails['dat_expiry']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group mt-1">
+              <label>Maximum Discount Amount</label>
+              <p class="">{{couponDetails['bint_max_discount_amt']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group mt-1">
+              <label>Minimum Purchase Amount</label>
+              <p class="">{{couponDetails['bint_min_purchase_amt']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group mt-1">
+              <label>Discount Percentage</label>
+              <p class="">{{couponDetails['int_discount_percentage']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group mt-1">
+              <label>Usage Count</label>
+              <p class="">{{couponDetails['int_max_usage_no']}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="!dataLoaded">
+      <p>No Data</p>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,137 @@
+<div class="card">
+<div class="card-body">
+<div class="row">
+  <div class="col-md-12">
+      <h4 class="card-title">Set Addition/Deduction</h4>
+  </div>
+  <!-- <div class="col-lg-12"> -->
+ 
+         
+          <div class="col-md-3">
+            <mat-form-field>
+              <input (click)="picker1.open()" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="From" [(ngModel)]="datFrom">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <input (click)="picker2.open()" id ="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To" [(ngModel)]="datTo">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2>
+              </mat-datepicker>
+            </mat-form-field>
+          </div>
+      
+      <!-- <div class="row"> -->
+        <div class="col-md-6">
+          <!-- Additions -->
+          <!-- <mat-form-field>
+              <input  [disabled]="disable" matInput [(ngModel)]="strName" id="idName">
+          </mat-form-field> -->
+          <mat-form-field>
+              <!-- <mat-label></mat-label> -->
+              <!-- <input  [disabled]="disable" matInput [(ngModel)]="strName" id="idName"> -->
+              <mat-select [(ngModel)]="strName" id="idName">
+                <mat-option *ngFor="let name of lstName" [value]="name"  >
+                  {{name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field class="example-chip-list">
+            <mat-chip-list #chipList aria-label="Fruit selection">
+              <mat-chip
+                *ngFor="let item of ccCharges"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="remove(item)">
+                {{item}}
+                <mat-icon matChipRemove *ngIf="removable" style="margin-top: -2px;"><i class="fa fa-times-circle"></i></mat-icon>
+              </mat-chip>
+              <input
+                placeholder="Additions/Deductions..."
+                #fruitInput
+                [formControl]="searchCharge"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur"
+              
+                [(ngModel)]="strCcCharge">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let charge of filteredCharges" [value]="charge.name">
+                {{charge.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+       
+
+      <!-- </div> -->
+
+       
+      <!-- <div class="row" *ngIf="!blnShow">
+          <div class="col-md-4">
+            Deductions
+              <mat-form-field>
+                  <textarea  [disabled]="disable" matInput placeholder="Add your Remarks" [(ngModel)]="strDeduction"></textarea>
+
+              </mat-form-field>
+          </div>
+  
+        </div> -->
+        <div class="row" *ngIf = "!blnBranch">
+          <div class="col-md-12">
+                  <button [disabled]="disable"  type="button" class="btn save_btn mr-2" (click)="branchData()">Get Branch</button>
+                  <button  type="button" class="btn btn-secondary" (click)="viewList()">Cancel</button>
+           </div>
+        </div>
+
+    
+  
+       <!-- </div> -->
+    </div>
+     
+    <div class="row" *ngIf = "blnBranch">
+      <div class="col-md-12">
+        <div class="scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" style="position: sticky;top: 0;background: #ecf7ff;z-index: 1;font-size: 15px;">Branch</th>
+              <th scope="col" style="position: sticky;top: 0;background: #ecf7ff;z-index: 1;font-size: 15px;">
+                <mat-checkbox [checked]="isAllChecked()" (change) = "mainChecked($event)">
+    
+                </mat-checkbox>
+              </th>
+           
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of lstBranch">
+              <td>{{data['vchr_name']}}</td>
+              <td>
+                <mat-checkbox [(ngModel)] = "data['blnClicked']" (change)  ="subChanged($event,data['pk_bint_id'])">
+                 
+                </mat-checkbox>
+              </td>
+            </tr>
+           </tbody>
+        </table>
+      </div>
+       
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+                <button [disabled]="disable"  type="button" class="btn save_btn mr-2" (click)="saveData()">Save</button>
+                <button  type="button" class="btn btn-secondary" (click)="viewList()">Cancel</button>
+         </div>
+      </div>
+    </div>
+    
+  </div>
+</div> 

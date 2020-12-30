@@ -1,0 +1,66 @@
+label[for="file-input"] {
+    display: block;
+    margin-bottom: 3px;
+    color: #666;
+    opacity: 0.9;
+  }
+  input[type="file"] {
+    cursor: pointer !Important;
+    margin-bottom: 10px;
+  }
+  input[type="file"]::-webkit-file-upload-button {
+    background: linear-gradient(40deg,#45cafc,#303f9f)!important;
+    border: 0;
+    padding: 0.3em 1em;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 0.2em;
+  }
+  input[type="file"]::-ms-browse {
+    background: linear-gradient(40deg,#45cafc,#303f9f)!important;
+    border: 0;
+    padding: 0.3em 1em;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 0.2em;
+  }
+  .example-container {
+    height: 400px;
+    width: 1000px;
+    overflow: auto;
+  }
+  
+  .mat-table {
+    width: 1000px;
+  }
+  
+  .mat-column-total {
+    width: 50px;
+    padding-right: 8px;
+  }
+  
+  .mat-column-position, td.mat-column-position {
+    padding-left: 8px;
+  }
+  
+  .mat-table-sticky:first-child {
+    border-right: 1px solid #e0e0e0;
+  }
+  
+  .mat-table-sticky:last-child {
+    /* border-left: 1px solid #e0e0e0; */
+    text-align: right;
+  }
+  .mat-footer-row {
+    font-weight: bold;
+    background: #eee;
+  }
+  .mat-header-row {
+    min-height: 45px;
+}
+.mat-header-cell {
+  color: #255e8e;
+  font-size: 13px;
+  background: #f3f3f3;
+  font-weight: 600;
+}

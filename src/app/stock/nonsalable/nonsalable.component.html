@@ -1,0 +1,108 @@
+<div class="card">
+  <div class="card-body">
+    <h4><b>Non Saleable Items</b></h4>
+
+    <div class="row">
+
+        <div class="col-md-3" >
+            <mat-form-field> 
+                <input required matInput  placeholder="Product" [formControl]="searchProduct" [matAutocomplete]="productname" [(ngModel)]="selectedProduct"
+                #idProduct>
+                 <mat-autocomplete #productname="matAutocomplete">
+                <mat-option *ngFor="let item of lst_product" [value]="item.name" (onSelectionChange)="productChanged(item)">
+                  {{ item.name }}
+                </mat-option>
+              </mat-autocomplete>
+              </mat-form-field>   
+          </div>
+  
+          <div class="col-md-3">
+            <mat-form-field>
+                 <input required matInput  placeholder="Brand" [formControl]="searchBrand" [matAutocomplete]="brandname" [(ngModel)]="selectedBrand"
+                 #idBrand>
+                  <mat-autocomplete #brandname="matAutocomplete">
+                 <mat-option *ngFor="let item of lst_brand" [value]="item.name" (onSelectionChange)="brandChanged(item)">
+                   {{ item.name }}
+                 </mat-option>
+               </mat-autocomplete>
+              </mat-form-field>   
+          </div>
+          <div class="col-md-6">
+            <mat-form-field>
+              <input required matInput placeholder="Item" [formControl]="searchItem" [matAutocomplete]="itemname" [(ngModel)]="selectedItem" #itemId>
+              <mat-autocomplete #itemname="matAutocomplete">
+                <mat-option *ngFor="let item of lstItem" [value]="item.code_name" (onSelectionChange)="ItemChanged(item)">
+                  {{ item.code_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3" *ngIf="strGroupname== 'ADMIN'">
+            <mat-form-field>
+                <input matInput required placeholder="Branch" [formControl]="searchBranch" [matAutocomplete]="Branchname" [(ngModel)]="selectedBranch" #BranchId>
+                <mat-autocomplete #Branchname="matAutocomplete">
+                    <mat-option *ngFor="let item of lstBranch" [value]="item.name" (onSelectionChange)="BranchChanged(item)">
+                        {{ item.name }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+         </div>
+         
+          <div class="col-md-5">
+            <mat-form-field>
+              <input  matInput placeholder="Imei" [(ngModel)]="strImei" >
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2 mt-2">
+            <button type="submit" class="btn save_btn m-r-10" (click)="getListData()">Search</button>
+          </div>
+
+    </div>
+
+    <div class="row dragDrop" *ngIf="blnShowImeis">
+        <div class="example-container">
+            <h3>Saleable</h3>
+          
+            <div
+              cdkDropList
+              #saleableList="cdkDropList"
+              [cdkDropListData]="lstSaleable"
+              [cdkDropListConnectedTo]="[nonSaleableList]"
+              class="example-list1"
+              (cdkDropListDropped)="drop($event)">
+              <div [ngStyle]="{'background-color': item.blnSaleable ? '#dbf4d3' : '#f8dbdb'}" class="example-box1" *ngFor="let item of lstSaleable" cdkDrag>{{item.imei}}</div>
+            </div>
+          </div>
+          
+          <div class="example-container">
+            <h3>Non Saleable</h3>
+          
+            <div
+              cdkDropList
+              #nonSaleableList="cdkDropList"
+              [cdkDropListData]="lstNonSaleable"
+              [cdkDropListConnectedTo]="[saleableList]"
+              class="example-list2"
+              (cdkDropListDropped)="drop($event)">
+              <div [ngStyle]="{'background-color': item.blnSaleable ? '#dbf4d3' : '#f8dbdb'}" class="example-box2" *ngFor="let item of lstNonSaleable" cdkDrag>{{item.imei}}</div>
+            </div>
+          </div>
+    </div>
+    <div class="row" *ngIf="blnShowImeis" style=" margin-top: 22px;">
+    <div class="col-md-6 mt-2 " >
+      <mat-form-field>
+          <textarea required placeholder="Remarks" matInput [(ngModel)]="strRemarks"></textarea>
+      </mat-form-field>
+  </div>
+</div>
+    <div class="row" *ngIf="blnShowImeis">
+      <div class="col-md-3">
+        <button type="submit" class="btn save_btn  m-r-10" (click)="ok()">Ok</button>
+        <button type="submit" class="btn btn-secondary  m-r-10" (click)="clearFields()">Cancel</button>
+      </div>
+
+  </div>
+ 
+</div>

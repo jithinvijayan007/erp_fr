@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Stock Transfer List</h4>
+                <!-- <h6 class="card-subtitle">Smart data table library with sorting, filtering, pagination & add/edit/delete functions.</h6> -->
+                <div class="row">
+                  <div class="card">
+                      <form class="form-inline">
+        
+                          <div class="col-md-3 col-lg-3">
+                              <mat-form-field>
+                                <input (click)="picker1.open()" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="From" [(ngModel)]="datFrom">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+        
+                            <div class="col-md-3 col-lg-3">
+                              <mat-form-field>
+                                <input (click)="picker2.open()" id ="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To" [(ngModel)]="datTo">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2>
+                                </mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                              <mat-form-field>
+                                <input matInput placeholder="Branch" [formControl]="searchBranch" [matAutocomplete]="branchname" [(ngModel)]="selectedBranch" (ngModelChange)="branchNgModelChanged($event)" #branchId>
+                                  <mat-autocomplete #branchname="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstBranch" [value]="item.name" (onSelectionChange)="BranchChanged(item)">
+                                      {{ item.name }}
+                                    </mat-option>
+                                  </mat-autocomplete>
+                                </mat-form-field>
+                              </div>
+                                  
+        
+                            <!-- <div class="col-md-4">
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Mobile No" maxlength="10" [(ngModel)]="intPhone" name="no1" >
+                                </mat-form-field>
+                            </div> -->
+        
+                            <div class="col-md-3">
+                              <button type="submit" class="btn save_btn m-r-10" (click)="listData()">Search</button>
+        
+                            </div>
+                       
+                      </form>
+                  </div>
+              </div>   
+                <div  *ngIf="data.length > 0" class="table table-responsive smart-table mt-3">
+                    <!-- <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Advance search">
+                      </mat-form-field> -->
+
+                        <ng2-smart-table [settings]="settings" [source]="source" class="" (custom)="onCustomAction($event)"></ng2-smart-table>
+                        
+                    <!-- <mat-table [dataSource]="dataSource">
+
+                        <ng-container matColumnDef="stock_no">
+                            <mat-header-cell *matHeaderCellDef style="min-width: 152px;">Stock Transfer No. </mat-header-cell>
+                            <mat-cell *matCellDef="let element" style="min-width: 152px;"> {{element.vchr_stktransfer_num}} </mat-cell>
+                           
+                        </ng-container>
+                        <ng-container matColumnDef="transfer_date">
+                            <mat-header-cell *matHeaderCellDef style="min-width: 110px;"> Transfer Date </mat-header-cell>
+                            <mat-cell *matCellDef="let element" style="min-width: 110px;"> {{element.dat_transfer}} </mat-cell>
+                           
+                        </ng-container>
+    
+                        <ng-container matColumnDef="branch">
+                            <mat-header-cell *matHeaderCellDef style="min-width:152px;"> Branch </mat-header-cell>
+                            <mat-cell *matCellDef="let element" style="min-width:152px;"> {{element.fk_from__vchr_name}} </mat-cell>
+                            
+                        </ng-container>
+
+                        <ng-container matColumnDef="user">
+                          <mat-header-cell *matHeaderCellDef style="min-width:152px;"> User </mat-header-cell>
+                          <mat-cell *matCellDef="let element" style="min-width:152px;"> {{element.str_user}} </mat-cell>
+                          
+                        </ng-container>
+
+                        <ng-container matColumnDef="products">
+                          <mat-header-cell *matHeaderCellDef style="min-width:152px;"> Products </mat-header-cell>
+                          <mat-cell *matCellDef="let element" style="min-width:152px;"> {{element.list_products}} </mat-cell>  
+                        </ng-container>
+                    
+                        <ng-container matColumnDef="status">
+                            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+                            
+                        </ng-container>
+          
+                        <ng-container matColumnDef="action">
+                            <mat-header-cell class="matheadr_right" *matHeaderCellDef> Action </mat-header-cell>
+                            <mat-cell *matCellDef="let row;let i= index;"class="matheadr_right">
+                              <button  *ngIf="blnView" title="View" (click)="onCustomAction(i)" class="view_btn mr-2">
+                                <i class="ti-eye text-info m-r-10"></i>
+                              </button>
+                              <button *ngIf="row.status!='BILLED'" title="Print" (click)="print(i)" class="edit_btn">
+                                <i class="ti-printer text-info m-r-10"></i>
+                              </button>
+    
+                            </mat-cell>
+                          </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table> -->
+                    
+                </div>
+                <div class="nodata" *ngIf="data.length == 0">No data</div>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

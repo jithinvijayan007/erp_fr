@@ -1,0 +1,424 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="mb-3"><b>Invoice Customer Change</b></h4>
+              <div class="row">
+                
+               
+                
+                  <div class="col-md-3">
+                     
+                      <!-- <label >Invoice Number</label> -->
+                   
+                      <mat-form-field>
+                          <!-- <span matPrefix>INV -&nbsp; {{strBranchCode | uppercase}} -&nbsp;&nbsp;</span> -->
+                          <input  matInput [(ngModel)]="strInvoiceNo" placeholder="Invoice Number">
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-2 mt-2">
+                      <button class="btn save_btn" type="submit" (click)="getInvoice()">Search</button>
+                  </div>
+              </div>
+            </div>
+        </div>
+   </div>
+      
+</div> 
+
+
+
+
+              <!-- invoice details  start-->
+            <div *ngIf = "blnGetData">
+                <div class="row">
+                    <div class="col-lg-12">  
+                    <div class="card">
+                    <div class="card-body">
+                <h3 class="card-title form-head1">Invoice Details &nbsp;
+                        <span>
+                                <img title="Customer Edit" src="assets/images/useredit.png" class="mr-3 cursor" (click)="opencustomeredit(customeredit)">
+                              </span>
+                </h3>
+              <div class="form p-t-10 row">
+                <div class="col-md-2">
+                     <div class="form-group mt-1">
+                        <h6>Date</h6>
+                        <p class="">{{dctMaster['dat_invoice']| date: 'dd/MM/yyyy'}}</p>
+                     </div>
+                </div>
+                <div class="col-md-2">
+                      <div class="form-group mt-1">
+                          <h6>Name</h6>
+                          <p class="">{{dctMaster['fk_customer__vchr_name']| titlecase}}</p>
+                      </div>
+                  </div>
+                <div class="col-md-2">
+                    <div class="form-group mt-1">
+                        <h6>Contact No.</h6>
+                        <p class="">{{dctMaster['fk_customer__int_mobile']}}</p>
+                    </div>
+                </div>
+             
+              
+                <div class="col-md-2">
+                  <div class="form-group mt-1">
+                      <h6>Branch</h6>
+                      <p class="">{{dctMaster['fk_branch__vchr_name'] | titlecase}}</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <h6>Mail ID</h6>
+                            <p class="">{{dctMaster['fk_customer__vchr_email'] | lowercase}}</p>
+                        </div>
+                    </div>
+                <div class="col-md-2">
+                  <div class="form-group mt-1">
+                      <h6>Staff</h6>
+                      <p class="">{{dctMaster['staff_name'] | titlecase}}</p>
+                  </div>
+                </div>
+                <div class="col-md-9" *ngIf="dctMaster['vchr_remarks']">
+                    <div class="form-group mt-1">
+                        <h6>Remark</h6>
+                        <p class="">{{dctMaster['vchr_remarks']}}</p>
+                    </div>
+                </div>
+            </div>
+            
+                 
+     
+
+  
+
+
+            <div class="col-lg-12">
+                <div class="card" *ngFor="let item of dctDetails">
+                    <div class="card-body" >
+                        <h4 *ngIf="item.intSaleStatus==0" style="background: #f7e9e9;  padding: 10px;" class="card form-head">{{item['strProductName']| titlecase}} <small style="color: #d22a0e;display: contents;">(Return item)</small></h4>
+                        <h4 *ngIf="item.intSaleStatus==1 ||item.intSaleStatus==4" style="background: #e9f7f3;padding: 10px;" class="card form-head">{{item['strProductName']| titlecase}}  &nbsp;</h4>
+                        <h4 *ngIf="item.intSaleStatus==2" style="background: #fffbe2;padding: 10px;" class="card form-head">{{item['strProductName']| titlecase}}  <small style="color: #666666;display: contents;">(Exchange item)</small></h4>
+                        <h4 *ngIf="item.intSaleStatus==3" style="background: #e9f7f3;padding: 10px;" class="card form-head">{{item['strProductName']| titlecase}}  <small style="color: #666666;display: contents;">(Service)</small></h4>
+                         
+                        
+                        <div class="form p-t-10 row">
+                                <div class="col-md-2">
+                                     <div class="form-group mt-1">
+                                        <h6>Brand</h6>
+                                        <p class="">{{item['strBrandName']| titlecase}}</p>
+                                     </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group mt-1">
+                                        <h6>Item Code</h6>
+                                        <p class="">{{item['strItemCode']}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group mt-1">
+                                        <h6>Item</h6>
+                                        <p class="">{{item['strItemName']| titlecase}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group mt-1">
+                                        <h6> Qty</h6>
+                                        <p class="">{{item['intQuantity']}}</p>
+                                    </div>
+                                </div>
+                        
+                                <div class="col-md-1" *ngIf="item['dblDiscount']">
+                                    <div class="form-group mt-1">
+                                        <h6> Discount</h6>
+                                        <p *ngIf="item.intSaleStatus==0 || item.intSaleStatus==2 "  class="">{{((item['dblDiscount'])*-1).toFixed(2)}}</p>
+                                        <p *ngIf="item.intSaleStatus==1 || item.intSaleStatus==3 || item.intSaleStatus==4"  class="">{{(item['dblDiscount']).toFixed(2)}}</p>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-3" *ngIf="item['dblBuyBack']">
+                                  <div class="form-group mt-1">
+                                      <h6>Buy back amt</h6>
+                                      <p *ngIf="item.intSaleStatus==0 || item.intSaleStatus==2 " class="">{{((item['dblBuyBack'])*-1).toFixed(2)}}</p>
+                                      <p *ngIf="item.intSaleStatus==1 || item.intSaleStatus==3 || item.intSaleStatus==4" class="">{{(item['dblBuyBack']).toFixed(2)}}</p>
+                                      
+                                  </div>
+                                </div>
+                                <div class="col-md-1" *ngIf="item['jsonTax']['dblCGST']">
+                                        <div class="form-group mt-1">
+                                            <h6>CGST</h6>
+                                            <p class="">{{(item['jsonTax']['dblCGST']).toFixed(2)}}</p>
+                                        </div>
+                                </div>
+                                <div class="col-md-1" *ngIf="item['jsonTax']['dblIGST']">
+                                        <div class="form-group mt-1">
+                                            <h6>IGST</h6>
+                                            <p class="">{{(item['jsonTax']['dblIGST']).toFixed(2)}}</p>
+                                        </div>
+                                </div>
+                                <div class="col-md-1" *ngIf="item['jsonTax']['dblSGST']">
+                                    <div class="form-group mt-1">
+                                      <h6>SGST</h6>
+                                       <p class="">{{(item['jsonTax']['dblSGST']).toFixed(2)}}</p>
+                                    </div>
+                                </div> 
+                               
+                             <div class="col-md-1">
+                                  <div class="form-group mt-1">
+                                      <h6> Rate </h6>
+                                      <p  *ngIf="item.intSaleStatus==0 || item.intSaleStatus==2 " class="">{{((item['dblRate'])*-1).toFixed(2)}}</p>
+                                      <p  *ngIf="item.intSaleStatus==1 || item.intSaleStatus==3 || item.intSaleStatus==4" class="">{{(item['dblRate']).toFixed(2)}}</p>
+                                      
+                                </div>
+                             </div>
+                             <div class="col-md-1" *ngIf="item.intSaleStatus==0" >
+                                <div class="form-group mt-1">
+                                  <h6>Status</h6>
+                                   <p  *ngIf="item['blnDamage']" class="">Damaged</p>
+                                   <p  *ngIf="!item['blnDamage']" class="">Working</p>
+                                   
+                                </div>
+                            </div>    
+                                <div class="col-md-2">
+                                  <div class="form-group mt-1">
+                                      <h6> Total Amt</h6>
+                                      <p  *ngIf="item.intSaleStatus==0 || item.intSaleStatus==2 " class="">{{((item['dblAmount'])*-1).toFixed(2)}}</p>
+                                      <p  *ngIf="item.intSaleStatus==1 || item.intSaleStatus==3 || item.intSaleStatus==4" class="">{{(item['dblAmount']).toFixed(2)}}</p>
+                                
+                                    </div>
+                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group mt-1">
+                                    <h6> Imei </h6>
+                                    <p *ngIf="item['strImei']" class="">{{item['strImei']}} </p>
+                                    <p *ngIf="!item['strImei']" class="">--- </p>
+                                    
+                              </div>
+                           </div> 
+                             
+                               <div class="col-md-9" *ngIf="item['strRemarks']">
+                                    <div class="form-group mt-1">
+                                      <h6>Remarks</h6>
+                                       <p class="">{{item['strRemarks']}}</p>
+                                    </div>
+                                </div>
+                             <div class="col-md-12 row" *ngIf="item['strImage']">
+                                <div class="card-avatar text-center mt-3 col-md-3">
+                                    <h6 class="float-left">Attachments</h6><br>
+                                    <img class="img" src="{{hostname}}{{item['strImage']}}" style="width: 100%; float: left;" alt="Image is temporarily unavailable"/>
+                                  </div>
+                            </div>  
+                            <div  class="row"  *ngIf="item.intSaleStatus==2">
+                                    <div class="col-md-12">
+                                            <h6 style="background-color: #f2f4f5;padding: 5px;">Product Images: </h6>
+                                            <div class="row">
+                                                <div class="col-md-2" *ngFor="let image of item.dctImage.product">
+                                                        <div class="imagebox">
+                                                                <img class="image" src="{{url}}{{image}}" style="width:100%;height: 180px;"  alt="Image is temporarily unavailable"/>
+                                                                  <div class="middle">
+                                                                    <div class="text" (click)="openzoomimage(zoomimage,image)"><i class="fa fa-search-plus fa-2x"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-md-12 mt-3">
+                                          <h6 style="background-color: #f2f4f5;padding: 5px;">Exchange Form:</h6>
+                                          <div class="row">
+                                                    <div class="col-md-2" *ngFor="let image of item.dctImage.exchangeform">
+                                                            <div class="imagebox">
+                                                                    <img class="image" src="{{url}}{{image}}" style="width: 100%;height: 180px;" alt="Image is temporarily unavailable"/>
+                                                                      <div class="middle">
+                                                                        <div class="text" (click)="openzoomimage(zoomimage,image)"><i class="fa fa-search-plus fa-2x"></i></div>
+                                                                    </div>
+                                                                </div>
+                                                       
+                                                    </div>
+                                          </div>
+                                       
+                                    </div>
+                                    <div class="col-md-12 mt-3">
+                                       <h6 style="background-color: #f2f4f5;padding: 5px;">Id Proof:</h6>
+                                       <div class="row">
+                                          <div class="col-md-2" *ngFor="let image of item.dctImage.idproof">
+                                                <div class="imagebox">
+                                                        <img class="image" src="{{url}}{{image}}" style="width:100%;height: 180px;"   alt="Image is temporarily unavailable"/>
+                                                        <div class="middle">
+                                                            <div class="text" (click)="openzoomimage(zoomimage,image)"><i class="fa fa-search-plus fa-2x"></i></div>
+                                                        </div>
+                                                    </div>
+                                          </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          <!-- Payment Details -->
+          <div class="col-lg-12" *ngIf="lstPayment.length>0">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="mb-4" style="background: #e7f2fb; padding: 9px 10px;  color: #2c465b;">Payment Details &nbsp;</h4>
+                    <div class="form-group mt-1 row">
+                        <div class="col-md-2" *ngFor="let item of lstPayment">
+                            <h6>{{item.payment_type}}</h6>
+                            <label >Amount</label>
+                            <p class="">{{item.dbl_receved_amt}}</p>
+                            <label *ngIf="item.vchr_reff_number">Reference Number</label>
+                            <p class="" *ngIf="item.vchr_reff_number">{{item.vchr_reff_number}}</p>
+                            <label *ngIf="item.vchr_card_number">Card Number</label>
+                            <p class="" *ngIf="item.vchr_card_number">{{item.vchr_card_number}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+
+   <!-- Payment Details -->
+
+   <div class="col-lg-12" *ngIf="blnFinance">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="mb-4" style="background: #e7f2fb; padding: 9px 10px;  color: #2c465b;">Finance Details &nbsp;</h4>
+            <div class="form-group mt-1 row">
+               
+                        <div class="col-md-4">
+                              <div class="form-group mt-1">
+                                    <h6> Finanace </h6>
+                                    <p *ngIf="dct_finance.vchr_name" class="">{{dct_finance.vchr_name}} </p>
+                              </div>
+                        </div> 
+                        <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                      <h6> Finance Amt. </h6>
+                                      <p *ngIf="dct_finance.dbl_finance_amt" class="">{{dct_finance.dbl_finance_amt}} </p>
+                                </div>
+                        </div> 
+                        <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                      <h6> Scheme</h6>
+                                      <p *ngIf="dct_finance.vchr_finance_schema" class="">{{dct_finance.vchr_finance_schema}} </p>
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                      <h6> Delivery Order No.</h6>
+                                      <p *ngIf="dct_finance.vchr_reff_number" class="">{{dct_finance.vchr_reff_number}} </p>
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                      <h6> Down Payment</h6>
+                                      <p *ngIf="dct_finance.dbl_receved_amt" class="">{{dct_finance.dbl_receved_amt}} </p>
+                                </div>
+                        </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+ <!-- Zoom view Popup -->
+ <ng-template #zoomimage let-modal>
+    <div class="modal-content">       
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-12">
+              <img class="img" src="{{url}}{{imageUrl}}" style="width:100%;" />
+            </div>
+          </div>
+      </div>
+    </div>    
+  </ng-template>
+  <!-- Zoom view popup end here -->
+     </div>
+    </div>
+   </div>
+ </div>
+</div>
+    <!-- invoice details  end-->
+
+        
+
+
+<!-- Customer edit Popup -->
+<ng-template #customeredit let-modal>
+        <div class="modal-body" id="deliverypopup">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 mt-2">
+                        <h3 class="col-md-12">Customer Edit</h3>
+                        <div class="text-center mt-2" style="display: none">
+                            <mat-checkbox name="same"></mat-checkbox>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Name" [(ngModel)]="strName" (keyup)="changeNameToUppercase()">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput readonly placeholder="Contact No." value={{intContactNo}}>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput [(ngModel)]="strEmail" placeholder="Email" value="">
+                                </mat-form-field>
+                            </div>
+                            <!-- <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input matInput [(ngModel)]="strCity" placeholder="City" value="">
+                  </mat-form-field>
+                </div> -->
+                            <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="City " [formControl]="searchCity" [matAutocomplete]="cityname" [(ngModel)]="selectedCity" #cityId (ngModelChange)="cityNgModelChanged($event)">
+                                    <mat-autocomplete #cityname="matAutocomplete">
+                                        <mat-option *ngFor="let item of lstCity" [value]="item.vchr_name" (onSelectionChange)="cityChanged(item)">
+                                            {{ item.vchr_pin_code+' - '+item.vchr_name }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                            <!--
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input matInput  [(ngModel)]="strState" placeholder="State" value="">
+                  </mat-form-field>
+                </div> -->
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <input matInput placeholder="State " [formControl]="searchState" [matAutocomplete]="statename" [(ngModel)]="selectedState" #stateId (ngModelChange)="stateNgModelChanged($event)">
+                                    <mat-autocomplete #statename="matAutocomplete">
+                                        <mat-option *ngFor="let item of lstState" [value]="item.vchr_name" (onSelectionChange)="stateChanged(item)">
+                                            {{ item.vchr_code+' - '+item.vchr_name }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput [(ngModel)]="strGSTNo" placeholder="GST No." OnlyAlphaNum="true" value="" type="text" maxlength="15" minlength="15" (keyup)="changeToUppercase()">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-12">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput [(ngModel)]="strAddress" placeholder="Address" value="">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4 text-center">
+                        <button class="btn btn_redeem" type="submit" (click)="saveCustEdit()">Save</button>
+                        <button class="btn btn_cancel" type="submit" (click)="cancelCustEdit()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <!-- Customer edit popup end here -->

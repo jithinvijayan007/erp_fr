@@ -1,0 +1,140 @@
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="card-title">Credit Sales Report<span style="float:right;cursor: pointer;" >
+          </span></h4>
+          <!-- <div class="row"> -->
+            
+              <div class="row">
+            
+                <div class="col-md-3">
+                  <mat-form-field>
+                      <input name="fromDate" (click)="picker.open()" matInput [matDatepicker]="picker" placeholder="From" [(ngModel)]="datFrom">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <input name="toDate" (click)="picker1.open()" matInput [matDatepicker]="picker1" placeholder="To" [(ngModel)]="datTo">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <ngx-select-dropdown [config]="branchConfig" [options]="branchOptions" 
+                    [(ngModel)]="lstBranch" [multiple]="true"></ngx-select-dropdown>                     
+                </div>
+                                                          
+                  <div class="col-md-3" style="margin-top: 12px;">
+                      <button   type="submit" class="btn save_btn mr-2" (click)="getData()">Search</button>
+                     <button   type="submit" *ngIf="blnDownload"  class="btn save_btn" (click)="exportData()">Export</button>
+                  </div> 
+                 
+              
+              </div>   
+              
+              <div class="row">
+
+                <mat-form-field>
+                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Advance search">
+                </mat-form-field>
+
+                
+              </div>
+
+
+
+      </div>
+  </div>
+</div>
+</div>
+
+
+<div class="card" [ngClass]="{'show':blnShowData,'hide':!blnShowData}">
+        <div class="card-body">
+                      
+          <div class="example-container mat-elevation-z8 mt-3">
+             
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+              <ng-container matColumnDef="invoiceNo" >
+                <mat-header-cell   *matHeaderCellDef > Invoice No</mat-header-cell>
+                <mat-cell *matCellDef="let row"   >{{row.fk_invoice__vchr_invoice_num}} </mat-cell>
+                <mat-footer-cell  *matFooterCellDef [style.display]="none"  >
+                </mat-footer-cell>     
+              </ng-container>
+
+              <ng-container matColumnDef="branch">
+                <mat-header-cell   *matHeaderCellDef> Branch </mat-header-cell>
+                <mat-cell *matCellDef="let row"  >{{row.fk_invoice__fk_branch__vchr_name}} </mat-cell>
+                <mat-footer-cell *matFooterCellDef [style.display]="none"  >
+                </mat-footer-cell>
+              </ng-container>
+             
+              <ng-container matColumnDef="date">
+                <mat-header-cell   *matHeaderCellDef> Date </mat-header-cell>
+                <mat-cell *matCellDef="let row"  style="text-align:right;">{{row.dated}}</mat-cell>
+                <mat-footer-cell *matFooterCellDef>
+                </mat-footer-cell>
+              </ng-container>
+            
+              <ng-container matColumnDef="customerNa">
+                <mat-header-cell   *matHeaderCellDef> Customer Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"   style="text-align:left;">{{row.fk_invoice__fk_customer__vchr_name}} </mat-cell>
+                <mat-footer-cell  *matFooterCellDef  >
+                </mat-footer-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="customerMob">
+                <mat-header-cell   *matHeaderCellDef> Customer Mobile</mat-header-cell>
+                <mat-cell *matCellDef="let row"   style="text-align:right;">{{row.fk_invoice__fk_customer__int_mobile}} </mat-cell>
+                <mat-footer-cell  *matFooterCellDef  >
+                </mat-footer-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="billAmt">
+                <mat-header-cell   *matHeaderCellDef> Bill Amount</mat-header-cell>
+                <mat-cell *matCellDef="let row"   style="text-align:right;">{{row.dbl_bill_amt}} </mat-cell>
+                <mat-footer-cell  *matFooterCellDef  >
+                </mat-footer-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="creditedAmt">
+                <mat-header-cell   *matHeaderCellDef> Credited Amount</mat-header-cell>
+                <mat-cell *matCellDef="let row"   style="text-align:right;">{{row.dbl_credit_amt}} </mat-cell>
+                <mat-footer-cell  *matFooterCellDef  >
+                </mat-footer-cell>
+              </ng-container>
+
+              <!-- <ng-container matColumnDef="approvedPerson">
+                <mat-header-cell   *matHeaderCellDef> Approved Person</mat-header-cell>
+                <mat-cell *matCellDef="let row"   style="text-align:right;">{{row.dbl_credit}} </mat-cell>
+                <mat-footer-cell  *matFooterCellDef  >
+                </mat-footer-cell>
+              </ng-container> -->
+
+              <mat-header-row *matHeaderRowDef="lstDisplayedColumns;sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: lstDisplayedColumns; let i = index;">
+              </mat-row>
+              <!-- <mat-footer-row *matFooterRowDef="lstDisplayedColumns; sticky: true"></mat-footer-row> -->
+            </mat-table>
+            <mat-paginator #paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+
+            <!-- <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5,10, 25, 100]"></mat-paginator> -->
+          </div>
+         
+        </div>
+        </div>
+        <div class="card nodata" *ngIf="!blnShowData">
+          <h5>NO DATA FOUND</h5>
+        </div>
+
+        <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

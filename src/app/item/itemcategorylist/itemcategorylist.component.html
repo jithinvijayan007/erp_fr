@@ -1,0 +1,21 @@
+
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+               <h4 class="card-title">Item Category List</h4>
+              <!-- <h6 class="card-subtitle">Smart data table library with sorting, filtering, pagination & add/edit/delete functions.</h6> -->
+             
+                
+                <div  *ngIf="dctData['data'].length>0" class="table table-responsive smart-table">
+                    <ng2-smart-table [settings]="settings" [source]="source" class="" (deleteConfirm)="onDeleteConfirm($event)" (custom)="onEdit($event)" ></ng2-smart-table>
+                </div>
+                
+                <div class="card nodata" *ngIf="dctData['data'].length==0">
+                    <h5>No Data</h5>
+                </div>
+
+          </div>
+      </div>
+  </div>
+</div>

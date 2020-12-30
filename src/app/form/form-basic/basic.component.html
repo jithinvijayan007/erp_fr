@@ -1,0 +1,114 @@
+<!-- Row -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Add User</h4>
+        <h5 class="card-subtitle">made wibootstrap elements</h5>
+        <form class="form p-t-10 row">
+          <div class="col-md-4">
+            <mat-form-field>
+              <input matInput placeholder="First Name" value="" name="fname">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <input matInput placeholder="Last Name" value="" name="lname">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <input matInput placeholder="Email" value="" name="email">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <input matInput type="number" placeholder="Contact No." value="" name="no">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <input matInput type="password" placeholder="Password" value="" name="password">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <input matInput type="password" placeholder="Confirm password" value="" name="cpassword">
+            </mat-form-field>
+          </div>
+          <div class="col-md-12">
+            <!-- <label class="pr-10">Default file upload : </label>
+            <input type="file"> -->
+            <label for="file-input">File upload</label>
+            <input type="file" name="file-input" id="file-input">
+          </div>
+          <div class="col-md-4">
+            <div class="form-group mt-1">
+                <label class="pr-10">Grade : </label>
+                <mat-radio-group name="planType">
+                  <mat-radio-button  value="A" >A</mat-radio-button>                        
+                    <mat-radio-button  value="B" >B</mat-radio-button>
+                    <mat-radio-button  value="C">C</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+          <div class="form-group col-md-12">
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input type="checkbox" class="custom-control-input" id="checkbox12" value="check">
+              <label class="custom-control-label" for="checkbox12">Remember Me</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-info m-r-10">Submit</button>
+          <button type="submit" class="btn btn-secondary">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Row 1-->
+
+<!-- Table row -->
+<div class="example-container mat-elevation-z8">
+  <mat-table [dataSource]="dataSource">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name" sticky>
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef> Total </mat-footer-cell>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="weight">
+      <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="symbol">
+      <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>      
+    </ng-container>
+
+    <!-- Star Column -->
+    <ng-container matColumnDef="total" stickyEnd>
+      <mat-header-cell *matHeaderCellDef class="text-right">Total</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="text-right"> {{element.total}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef>3500</mat-footer-cell>      
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></mat-footer-row>
+  </mat-table>
+</div>
+<!-- Table row end here -->

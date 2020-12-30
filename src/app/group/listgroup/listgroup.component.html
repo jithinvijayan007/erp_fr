@@ -1,0 +1,157 @@
+<h4>
+  <span>
+    <i class="fa fa-users" aria-hidden="true"></i>
+  </span>&nbsp; All Groups
+  <span class="float-right" *ngIf="blnAdd">
+    <button mat-raised-button [routerLink]="['/group/addgroup']">
+       Add group
+    </button>
+  </span>
+</h4> 
+
+<div [ngClass]="{'show-Table-Data':lstGroupList[0],'hide-Table-Data':!lstGroupList[0]}">  
+  <div class="example-header" *ngIf="lstGroupList[0]">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Advance search">
+    </mat-form-field>
+  </div>
+  <mat-table #table [dataSource]="dataSource" matSort [ngClass]="{'show-Table-Data':lstGroupList[0],'hide-Table-Data':!lstGroupList[0]}">
+
+  
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header='name'> Name </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.name|titlecase}}
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="addPermission">
+      <mat-header-cell *matHeaderCellDef mat-sort-header="addPermission">Add permissions </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color">
+        <span *ngIf="row.sub_add.length > 2">
+          {{row.sub_add[0]}} , {{row.sub_add[1]}}...
+        </span>
+        <span *ngIf="row.sub_add.length == 1">
+          {{row.sub_add[0]}}
+        </span>
+        <span *ngIf="row.sub_add.length == 2">
+          {{row.sub_add[0]}} , {{row.sub_add[1]}}
+        </span>
+      </mat-cell>
+    </ng-container>
+
+
+    <!-- <ng-container matColumnDef="addPermission">
+      <mat-header-cell *matHeaderCellDef mat-sort-header="addPermission">Add permissions </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color">
+        <span *ngFor="let addPermission of row.sub_add;let tempId=index;">
+          {{addPermission}}
+
+
+        </span>
+      </mat-cell>
+    </ng-container> -->
+    <ng-container matColumnDef="viewPermission">
+      <mat-header-cell *matHeaderCellDef mat-sort-header="viewPermission">View permissions </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color">
+        <span *ngIf="row.sub_view.length > 2">
+            {{row.sub_view[0]}} , {{row.sub_view[1]}}...
+          </span>
+          <span *ngIf="row.sub_view.length == 1">
+            {{row.sub_view[0]}}
+          </span>
+          <span *ngIf="row.sub_view.length == 2">
+            {{row.sub_view[0]}} , {{row.sub_view[1]}}
+          </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="editPermission">
+      <mat-header-cell *matHeaderCellDef mat-sort-header="editPermission">Edit permissions </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color">
+        <span *ngIf="row.sub_edit.length > 2">
+            {{row.sub_edit[0]}} , {{row.sub_edit[1]}}...
+          </span>
+          <span *ngIf="row.sub_edit.length == 1">
+            {{row.sub_edit[0]}}
+          </span>
+          <span *ngIf="row.sub_edit.length == 2">
+            {{row.sub_edit[0]}} , {{row.sub_edit[1]}}
+          </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="deletePermission">
+      <mat-header-cell *matHeaderCellDef mat-sort-header="deletePermission">Delete permissions </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color">
+        <span *ngIf="row.sub_delete.length > 2">
+            {{row.sub_delete[0]}} , {{row.sub_delete[1]}}...
+          </span>
+          <span *ngIf="row.sub_delete.length == 1">
+            {{row.sub_delete[0]}}
+          </span>
+          <span *ngIf="row.sub_delete.length == 2">
+            {{row.sub_delete[0]}} , {{row.sub_delete[1]}}
+          </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="downloadPermission">
+      <mat-header-cell *matHeaderCellDef mat-sort-header="downloadPermission" style="min-width:164px;">Download permissions </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color" style="min-width:164px;">
+        <span *ngIf="row.sub_download.length > 2">
+            {{row.sub_download[0]}} , {{row.sub_download[1]}}...
+          </span>
+          <span *ngIf="row.sub_delete.length == 1">
+            {{row.sub_download[0]}}
+          </span>
+          <span *ngIf="row.sub_delete.length == 2">
+            {{row.sub_download[0]}} , {{row.sub_download[1]}}
+          </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="company">
+      <mat-header-cell *matHeaderCellDef mat-sort-header='company'> Company </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.company|titlecase}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef style="max-width:100px;">
+        Actions
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color" style="max-width:100px;">
+        <button *ngIf="blnView" title="View" class="view_btn" (click)=viewGroup(row.id) >
+          <i class="fa fa-eye" aria-hidden="true"></i>
+        </button>
+        <!-- <button title="Edit" class="edit_btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button> -->
+        <button *ngIf="blnEdit" title="Edit" class="edit_btn" (click)=editGroup(row.id) >
+          <i class="ti-pencil text-info m-r-10" aria-hidden="true"></i>
+        </button>
+        <button *ngIf="blnDelete" title="Delete" class="delete_btn" (click)=deleteGroup(row.id) >
+          <i class="ti-trash text-danger" aria-hidden="true"></i>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Color Column -->
+    <!-- <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color">
+              {{row.enquiry_status|titlecase}}
+          </mat-cell>
+      </ng-container> -->
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <!-- <mat-paginator #paginator [length]="exampleDatabase.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+    <mat-paginator #paginator [length]="lstGroupList.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+  </div>
+  <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,126 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Company
+          <span class="edit_btn float-right" *ngIf="!bln_edit" (click)="EditFunc()">
+            <i class="mdi mdi-tooltip-edit"></i> Edit</span>
+        </h3>
+        <form class="form p-t-10 row" *ngIf="bln_edit">
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput placeholder="Company Name*" [formControl]="registerForm.controls['company']" [(ngModel)]="strName" name="company"
+                #comapnyId>
+              <mat-error *ngIf="registerForm.controls['company'].hasError('required') && registerForm.controls['company'].touched ">
+                You must enter a Company Name.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput placeholder="GSTIN No*" [(ngModel)]="strGST" name="gst" #gstId>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput type="number" [formControl]="registerForm.controls['contact']" placeholder="Contact No*" maxlength="10" [(ngModel)]="intContact"
+                name="no" #contactId>
+              <mat-error *ngIf="registerForm.controls['contact'].hasError('required') && registerForm.controls['contact'].touched ">
+                You must enter a number.
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls['contact'].hasError('minlength') && registerForm.controls['contact'].touched">
+                Must be a valid number
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput placeholder="Email*" [formControl]="registerForm.controls['email']" [(ngModel)]="strEmail" name="email" #emailId>
+              <mat-error *ngIf="registerForm.controls['email'].hasError('required') && registerForm.controls['email'].touched ">
+                You must enter a email.
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls['email'].errors?.email && registerForm.controls['email'].touched && strEmail">
+                Please enter valid email address
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-12">
+            <mat-form-field>
+              <input matInput type="text-area" placeholder="Address*" [(ngModel)]="strAddress" name="address" #addressId>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <label>Logo upload*</label>
+            <input #file1 type="file" id="file-input" accept='image/*' (change)="previewLogo($event)" max-file-size="100kb">
+          </div>
+          <div class="col-md-3">
+            <label>Print Logo*</label>
+            <span style="color:red;" *ngIf="message">{{message}}</span>
+            <input #file2 type="file" class="form-control" accept='image/*' (change)="previewPrint(file2.files,$event)" max-file-size="100kb"
+            />
+          </div>
+          <div class="col-md-5" *ngIf="imgURL">
+            <label style="color: #8fbc8f;" class="mt-4">Preview : &nbsp;&nbsp;</label>
+            <span>
+              <img [src]="imgURL" style="width:50%">
+            </span>
+          </div>
+          <div class="col-md-5" *ngIf="int_status==2 && !imgURL">
+            <label style="color: #8fbc8f;" class="mt-4">Preview1:&nbsp;&nbsp;</label>
+            <br>
+            <span>
+              <img src="{{hostaddress}}{{vchr_print_logo}}" style="width:50%">
+            </span>
+          </div>
+          <div class="col-md-12 row">
+            <button *ngIf="int_status==0" type="submit" class="btn save_btn m-r-10 m-t-20" (click)="AddCompany()">Save</button>
+            <button *ngIf="int_status==2" type="submit" class="btn save_btn m-r-10 m-t-20" (click)="AddCompany()">Update</button>
+            <button *ngIf="int_status==0" class="btn btn-secondary m-t-20" (click)="ClearData()">Cancel</button>
+            <button *ngIf="int_status==2" class="btn btn-secondary m-t-20" (click)="CancelEdit()">Cancel</button>
+          </div>
+        </form>
+        <form class="form p-t-10 row" *ngIf="!bln_edit">
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput placeholder="Company Name*" [formControl]="registerForm.controls['company']" [(ngModel)]="strName" name="company"
+                #comapnyId readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput placeholder="GSTIN No*" [(ngModel)]="strGST" name="gst" #gstId readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput type="number" [formControl]="registerForm.controls['contact']" placeholder="Contact No*" maxlength="10" [(ngModel)]="intContact"
+                name="no" #contactId readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput placeholder="Email*" [formControl]="registerForm.controls['email']" [(ngModel)]="strEmail" name="email" #emailId
+                readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-md-12">
+            <mat-form-field>
+              <input matInput type="text-area" placeholder="Address*" [(ngModel)]="strAddress" name="address" #addressId readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2" *ngIf="vchr_logo">
+            <label>Logo :</label>
+            <br>
+            <img style="width: 100%;" src="{{hostaddress}}{{vchr_logo}}">
+          </div>
+          <div class="col-md-2" *ngIf="vchr_print_logo">
+            <label>Print Logo :</label>
+            <br>
+            <img style="width: 100%;" src="{{hostaddress}}{{vchr_print_logo}}">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,298 @@
+<div class="card">
+  <div class="card-body">
+    <div class="col-md-12 col-lg-12">
+      <h3 class="form-head">Edit Supplier</h3>
+      <div class="row">
+        <div class="col-md-3">
+          <mat-form-field>
+            <input #idCode required [(ngModel)]="strSupplierCode" name="code" matInput placeholder="Code">
+            <mat-error *ngIf="form.controls['code'].hasError('required') && form.controls['code'].touched ">
+              you must enter a supplier code.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input #idName matInput placeholder="Name" required type="text" [(ngModel)]="strSupplierName" trim="blur" [formControl]="form.controls['name']"
+              name="name" value="">
+            <mat-error *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched">
+              you must include a supplier name.
+            </mat-error>
+            <mat-error *ngIf="form.controls['name'].hasError('minlength') && form.controls['name'].touched">
+              must be at least 3 characters long.
+            </mat-error>
+            <mat-error *ngIf="form.controls['name'].hasError('maxlength') && form.controls['name'].touched">
+              cannot exceed 20 characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input matInput required [matDatepicker]="picker" placeholder="Date From" [(ngModel)]="strSuppilerFrom" name="strSuppilerFrom"
+              [formControl]="form.controls['supplierFrom']" #idFrom>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="form.controls['supplierFrom'].hasError('required') && form.controls['supplierFrom'].touched ">
+              you must enter Date from
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group mt-4">
+            <mat-radio-group name="planType" [(ngModel)]="bln_active" (click)="blnChange()">
+              <mat-radio-button value="0">Active</mat-radio-button>
+              <mat-radio-button value="2">Deactive</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input #idCreditDays required matInput placeholder="Credit Days" type="number" [(ngModel)]="intCreditDays " trim="blur" [formControl]="form.controls['creditDays']"
+              name="intCreditDays" value="">
+            <!-- <mat-error *ngIf="form.controls['creditDays'].hasError('required') && form.controls['creditDays'].touched">
+              you must include credit days
+          </mat-error> -->
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input #idCreditLimit required matInput placeholder="Credit Limit" type="number" [(ngModel)]="intCreditLimit " trim="blur" [formControl]="form.controls['creditLimit']"
+              name="intCreditLimit" value="">
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input #idPOExpDays required matInput placeholder="PO Expiry Days" type="number" [(ngModel)]="intPoExpiryDays " trim="blur" [formControl]="form.controls['poExpiryDays']"
+              name="intPoExpiryDays" value="">
+            <!-- <mat-error *ngIf="form.controls['poExpiryDays'].hasError('required') && form.controls['poExpiryDays'].touched">
+                you must include credit days
+            </mat-error> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row mt-3" *ngFor="let item of dictAddress1['lstaddress'];let i=index">
+        <div class="col-xl-12">
+          <div class="row" style="color: #2d475d !important;background: #ecf7ff;">
+            <div class="col-xl-8 col-md-8">
+              <h5 style="margin-top: 10px;">Address #{{i+1}}
+                <span style="font-size:14px;padding-left:20px">
+                  <!-- <div class="col-md-6"> -->
+                    <mat-checkbox [(ngModel)] = "item['bln_primary']" name="address">Set as main address</mat-checkbox>
+                  <!-- </div> -->
+                </span>
+              </h5>
+            </div>
+            <div *ngIf="i==0" class="col-xl-4 col-md-4">
+              <button id="add_button" title="Add Address" (click)="addAddress()" class="addbtnround float-right mt-3">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field>
+                <input #idEmail required [(ngModel)]="item['strEmail']" name="strEmail1" matInput placeholder="Email">
+                <!-- <mat-error *ngIf="form.controls['email1'].hasError('required') && form.controls['email1'].touched ">
+                  add email
+              </mat-error> -->
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field>
+                <input #idphone1 type="number" required [(ngModel)]="item['intPhone']" name="strConatctNo1" matInput placeholder="Phone No">
+                <!-- <mat-error *ngIf="form.controls['phonenumber1'].hasError('required') && form.controls['phonenumber1'].touched ">
+                    add phone number
+                </mat-error> -->
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field>
+                <input #idPincode1 required [(ngModel)]="item['strPinCode']" name="strPinCOde1" type="number" matInput placeholder="Pin Code">
+                <!-- <mat-error *ngIf="form.controls['pincode1'].hasError('required') && form.controls['pincode1'].touched ">
+                      add pin code
+                  </mat-error> -->
+              </mat-form-field>
+            </div>
+            <div class="col-md-1  text-right" *ngIf="dictAddress1['lstaddress'].length>1" style="margin-top: 25px !important;text-align: center;">
+              <i class="close_btn_round mdi mdi-close-circle-outline" (click)="closeTab(i)"></i>
+            </div>
+            <div class="col-md-8">
+              <mat-form-field>
+                <input #idAddress required [(ngModel)]="item['strAddress']" name="address1" matInput placeholder="Address">
+                <!-- <mat-error *ngIf="form.controls['address1'].hasError('required') && form.controls['address1'].touched ">
+                            add adress
+                        </mat-error> -->
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field>
+                <mat-select required placeholder="State" matInput [(ngModel)]="item['strStates']" name="states">
+                  <mat-option *ngFor="let state of lstStates" [value]="state.vchr_name" (click)="stateChanged(state,item)">
+                    {{ state.vchr_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-md-1 button__holder">
+              <button id="add_button" title="Add" (click)="addAddress()" mat-mini-fab
+                color="primary" class="float-right" style="top: 10px !important;">
+                <i class="ti-plus"></i>
+              </button>
+           </div>     -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field>
+            <input #idTin required [(ngModel)]="intTinNumber" name="intTinNumber" [formControl]="form.controls['tinNumber']" matInput
+              placeholder="TIN No">
+            <mat-error *ngIf="form.controls['tinNumber'].hasError('required') && form.controls['tinNumber'].touched ">
+              enter TIN No
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input #idCst required [(ngModel)]="intCstNumber" name="intCstNumber" [formControl]="form.controls['CstNumber']" matInput
+              placeholder="CST No">
+            <mat-error *ngIf="form.controls['CstNumber'].hasError('required') && form.controls['CstNumber'].touched ">
+              enter CST No
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input #idGst required [(ngModel)]="intGstNumber" name="intGstNumber" [formControl]="form.controls['GstNumber']" matInput
+              placeholder="GSTIN">
+            <mat-error *ngIf="form.controls['GstNumber'].hasError('required') && form.controls['GstNumber'].touched ">
+              enter GSTIN
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input #idGstStatus required [(ngModel)]="strGstStatus" name="strGstStatus" [formControl]="form.controls['GstStatus']" matInput
+              placeholder="GSTIN Status">
+            <mat-error *ngIf="form.controls['GstStatus'].hasError('required') && form.controls['GstStatus'].touched ">
+              Add GST Status
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field class="mat-icon-left">
+            <mat-select matInput required placeholder="Supplier Category" [(ngModel)]="strSupplierCategory" name="strSupplierCategory">
+              <mat-option *ngFor="let item of lst_category" [value]="item.id" (click)="supplierCategoryChanged(item)">
+                {{ item.categoryname }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="mat-icon-left">
+            <mat-select matInput required placeholder="Supplier Tax Class" [(ngModel)]="strSupplierTaxClass" name="strSupplierTaxClass">
+              <mat-option *ngFor="let item of lst_supplierclass" [value]="item.id" (click)="supplierTaxClassChanged(item)">
+                {{ item.taxclassname }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input #idAccGrp required [(ngModel)]="strAccGroup" name="strAccGroup" [formControl]="form.controls['accGrp']" matInput placeholder="Account Group">
+            <mat-error *ngIf="form.controls['accGrp'].hasError('required') && form.controls['accGrp'].touched ">
+              Add Account Group
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input #idBankAcc required [(ngModel)]="strBankAccount" name="strBankAccount" [formControl]="form.controls['bankaccount']"
+              matInput placeholder="Bank Account">
+            <mat-error *ngIf="form.controls['bankaccount'].hasError('required') && form.controls['bankaccount'].touched ">
+              Add Bank Account
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <input #idPanNo required [(ngModel)]="strPanNumber" name="strPanNumber" [formControl]="form.controls['panNumber']" matInput
+              placeholder="PAN No">
+            <mat-error *ngIf="form.controls['panNumber'].hasError('required') && form.controls['panNumber'].touched ">
+              Add PAN Number
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input #idPanStatus required [(ngModel)]="strPanStatus" name="strPanStatus" [formControl]="form.controls['panStatus']" matInput
+              placeholder="PAN Status">
+            <mat-error *ngIf="form.controls['panStatus'].hasError('required') && form.controls['panStatus'].touched ">
+              Add PAN Status
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row mt-3" *ngFor="let item of dictContact['lstcontact'];let i=index">
+        <div class="col-xl-12">
+          <div class="row" style="color: #2d475d !important;background: #ecf7ff;">
+            <div class="col-xl-8 col-md-8">
+              <h5 style="margin-top: 10px;">Contact Person #{{i+1}}</h5>
+            </div>
+            <div *ngIf="i==0" class="col-xl-4 col-md-4">
+              <button id="add_button" title="Add Person" (click)="addContact()" class="addbtnround float-right mt-3">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field>
+                <input #idName1 required [(ngModel)]="item['strName']" name="strName1" matInput placeholder="Name">
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field>
+                <input #idDesig1 required [(ngModel)]="item['strDesignation']" name="strDesignation1" matInput placeholder="Designation">
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field>
+                <input #idDepartment1 required [(ngModel)]="item['strDepartment']" name="strDepartment1" matInput placeholder="Department">
+              </mat-form-field>
+            </div>
+            <div class="col-md-1 text-right" *ngIf="dictContact['lstcontact'].length>1" style="margin-top: 25px !important;text-align: center;">
+              <i class="close_btn_round mdi mdi-close-circle-outline" (click)="closeContactTab(i)"></i>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field>
+                <input #idOffice required [(ngModel)]="item['strOffice']" name="strOffice1" matInput placeholder="Office">
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field>
+                <input #idMobile1 required [(ngModel)]="item['intMobile1']" name="intMobile1" matInput placeholder="Mobile No1" type="number">
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field>
+                <input #idMobile2 required [(ngModel)]="item['intMobile2']" name="intMobile2" matInput placeholder="Mobile No2" type="number">
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-md-1 button__holder">
+                <button id="add_button" title="Add" (click)="addContact()" mat-mini-fab
+                  color="primary" class="float-right" style="top: 10px !important;">
+                  <i class="ti-plus"></i>
+                </button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn save_btn m-r-10" (click)="editSupplier()" style="margin-right: 10px;">Save</button>
+        <button class="btn btn-secondary" [routerLink]="['/supplier/listsupplier']">Cancel</button>
+        <!-- <button mat-raised-button color="warn" (click)="clearSupplierFields()" class="dark_blue">New</button> -->
+      </div>
+    </div>
+  </div>
+

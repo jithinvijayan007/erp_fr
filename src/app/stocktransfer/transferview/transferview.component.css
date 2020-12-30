@@ -1,0 +1,19 @@
+.mat-checkbox-layout {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: inherit;
+    align-items: baseline;
+    vertical-align: middle;
+    display: inline-flex;
+    white-space: nowrap;
+    padding-left: 45px;
+}
+.view_btn{
+    background: none;
+    border: none;
+    color: #6495ed;
+    cursor: pointer;
+    padding-left: 0;
+}

@@ -1,0 +1,155 @@
+<div class="card">
+    <div class="card-body">
+        <h3><span><i class="fa fa-users" aria-hidden="true"></i></span>&nbsp; View Receipt
+          <span class="float-right">
+              
+              <button class="btn backbtn" *ngIf="!receipt" [routerLink]="['/receipt/listreceipt']"><i class="fa fa-angle-left icon"></i><span style="margin-left: 15px;">Back </span></button>
+              <button class="btn backbtn" *ngIf="receipt && previousUrl != 'customer/historys'" [routerLink]="['/invoice/invoiceview']"><i class="fa fa-angle-left icon"></i><span style="margin-left: 15px;">Back </span></button>
+              <button class="btn backbtn" *ngIf="previousUrl == 'customer/historys'" [routerLink]="['/customer/history']"><i class="fa fa-angle-left icon"></i><span style="margin-left: 15px;">Back </span></button>
+            </span>
+        </h3>
+        <div class="row" *ngIf="dataLoaded">
+            <div class="col-md-12">
+                <div class="row mt-2">
+                    <div class="col-md-3">
+                        <div class="form-group mt-1">
+                            <label>Customer Name</label>
+                            <p class="">{{strCustomerName}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group mt-1">
+                            <label>Customer No</label>
+                            <p class="">{{intNumber}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group mt-1">
+                            <label>Receipt Number</label>
+                            <p class="">{{strReceiptNumber}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group mt-1">
+                            <label>FOP</label>
+                            <p class="">{{strFop}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mt-1">
+                            <label>Receipt Type</label>
+                            <p class="">{{strReceiptType}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4" *ngIf = "intReceiptType == 2">
+                        <div class="form-group mt-1">
+                            <label>Item</label>
+                            <p class="">{{strItem}}</p>
+                        </div>
+                    </div>
+                   
+                    <div class="col-md-4" *ngIf = "strPaytmReferenceNum">
+                        <div class="form-group mt-1">
+                            <!-- <label *ngIf ="strFop == 'Paytm' || strFop == 'Paytm Mall' || 'DEBIT CARD' || 'CREDIT CARD' ">Reference Number</label> -->
+                            <label *ngIf ="strFop == 'Paytm' || strFop == 'Paytm Mall' || strFop == 'DEBIT CARD' || strFop =='CREDIT CARD' ">Reference Number</label>
+                            <label *ngIf ="strFop == 'RTGS' || strFop == 'NEFT' ">Transaction Number</label>
+                            <label *ngIf ="strFop == 'CHEQUE' "> Cheque Number</label>
+                            <p class="">{{strPaytmReferenceNum}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4" *ngIf = "strCardNumber">
+                        <div class="form-group mt-1">
+                            <label>Card Number</label>
+                            <p class="">{{strCardNumber}}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="form-group mt-1">
+                            <label>Amount</label>
+                            <p class="">{{intAmount}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group mt-1">
+                            <label>Date Issue</label>
+                            <p class="">{{datIssue}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-2" *ngIf = "dateApprove">
+                        <div class="form-group mt-1">
+                            <label>Approved Date</label>
+                            <p class="">{{dateApprove | date: 'dd-MM-yyyy'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4" *ngIf = "strBankName">
+                        <div class="form-group mt-1">
+                            <label>Bank Name</label>
+                            <p class="">{{strBankName}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <label>Remarks</label>
+                            <p class="">{{strRemarks}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>      
+        </div>
+    </div>
+</div>
+
+ <div class="card" *ngIf="(blnHo) && (intPaymentStatus==1)">
+    <div class="card-body">
+        <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                    <h4>&nbsp; Approve Pending Receipt
+                    
+                        </h4>
+            </div>
+               
+            <div class="row mt-2"> 
+          <!-- <div class="row"> -->
+            <!-- <div class="col-md-4">
+                <mat-form-field>
+                  <input required matInput placeholder="Bank" [(ngModel)]="strBank" value="" name="strBank" #bankId>
+                </mat-form-field>
+              </div> -->
+              <div class="col-md-4">
+                <mat-form-field>
+                    <input matInput placeholder="Bank*" [formControl]="searchBank" [matAutocomplete]="bankname" [(ngModel)]="selectedBank" #bankId>
+                    <mat-autocomplete #bankname="matAutocomplete">
+                        <mat-option *ngFor="let item of lstBank" [value]="item.name" (onSelectionChange)="bankChanged(item)">
+                            {{ item.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+             </div>
+              <div class="col-md-4">
+                  <mat-form-field>
+                    <input required matInput placeholder="Transaction ID" [(ngModel)]="strTransactionId" value="" name="strTransactionId" #transactionId>
+                  </mat-form-field>
+                </div>
+               
+                <div class="col-md-4">
+                        <mat-form-field>
+                            <input readonly required matInput [matDatepicker]="picker" placeholder="Date" [(ngModel)]="datTransaction" name="datTransaction"  #DateId>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                </div>
+                <div class="row">
+                   <button type="submit" class="btn btn-info m-r-10 mt-2" (click)="ApproveReceipt()">Approve</button>
+                   <button type="submit" class="btn btn-secondary mt-2" [routerLink]="['/receipt/listreceipt']">Cancel</button>
+               </div> 
+        </div>
+        </div>
+        </div>
+        </div>
+ </div>
+        <div class="card nodata" *ngIf="!dataLoaded">
+            <h5>No Data</h5>
+        </div>
+          

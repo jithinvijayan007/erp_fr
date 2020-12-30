@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Add Item Group</h4>
+        <form class="form p-t-10 row">
+          <div class="col-md-4">
+            <mat-form-field>
+              <input matInput [(ngModel)]="strGroup" placeholder="Group Name" value="" name="groupname">
+            </mat-form-field>
+          </div>
+          <button type="submit" class="btn save_btn m-r-10" (click)="addGroup()">Save</button>
+          <button type="submit" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

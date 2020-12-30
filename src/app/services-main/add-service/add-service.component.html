@@ -1,0 +1,168 @@
+<div class="card">
+  <div class="card-body">
+  
+      <h4 class="heading">
+          <span>
+              <i class="mdi mdi-rename-box" aria-hidden="true"></i>
+          </span>&nbsp; Add Services
+      </h4>
+
+      <div class="form p-t-10 row">
+          <div class="col-md-12">
+              <div class="row">
+                  <div class="col-md-12">
+                      <p class="formhead">Customer Details</p>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="form-group mt-1">
+                          <mat-form-field>
+                          <input matInput required (keyup)="focusOutcustomerno()" OnlyInteger="true" type="text" maxlength="12"  minlength="10"  placeholder="Customer No."  [(ngModel)]="intContactNo" >
+                          </mat-form-field>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="form-group mt-1">
+                          <mat-form-field>
+                          <input matInput  required [readonly]="blnName==true" type="text" placeholder="Customer Name" [(ngModel)]="strName" >
+                          </mat-form-field>
+                      </div>
+                  </div>
+                  <div class="col-md-4" >
+                      <div class="form-group mt-1">
+                          <mat-form-field>
+                          <input matInput type="text" [readonly]="blnEmail==true" placeholder="Mail ID" [(ngModel)]="strEmail" >
+                          </mat-form-field>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="form-group mt-1">
+                          <mat-form-field>
+                              <input matInput required [readonly]="blnPinCode==true" placeholder="Location" [formControl]="searchLocation" [matAutocomplete]="locationCode" [(ngModel)]="strLocation">
+                              <mat-autocomplete #locationCode="matAutocomplete">
+                                  <mat-option *ngFor="let item of lstLocation" [value]="item.vchr_name" (onSelectionChange)="locationChanged(item)">
+                                      {{ item.vchr_name }}
+                                  </mat-option>
+                              </mat-autocomplete>
+                          </mat-form-field>
+                      </div>
+                  </div>
+                  <div class="col-md-8">
+                      <div class="form-group mt-1">
+                          <mat-form-field>
+                              <input matInput type="text" required [readonly]="blnAddress==true" placeholder="Address" [(ngModel)]="strAddress">
+                          </mat-form-field>
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <p class="formhead">Service Details</p>
+                  </div>
+                  <div class="col-md-4">
+                      <mat-form-field>
+                          <input matInput required placeholder="Product" [formControl]="searchProduct" [matAutocomplete]="productname" [(ngModel)]="strSelectedProduct" (ngModelChange) = "ProductNgModelChange()" #idProduct>
+                          <mat-autocomplete #productname="matAutocomplete">
+                              <mat-option *ngFor="let item of lst_product" [value]="item.name"  (onSelectionChange)="productChanged(item)">
+                                  {{ item.name }}
+                              </mat-option>
+                          </mat-autocomplete>
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-4">
+                      <mat-form-field>
+                          <input matInput required placeholder="Item" [formControl]="searchItem" [matAutocomplete]="Itemname" [(ngModel)]="strSelectedItem" #idItem>
+                          <mat-autocomplete #Itemname="matAutocomplete">
+                              <mat-option *ngFor="let item of lst_item" [value]="item.name" (onSelectionChange)="itemChanged(item)">
+                                  {{ item.name }}
+                              </mat-option>
+                          </mat-autocomplete>
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-4">
+                      <mat-form-field>
+                          <mat-select [(ngModel)]="strEnqStatus">
+                              <mat-option *ngFor="let status of lstEnqStatus" [value]="status">
+                                  {{ status | titlecase }}
+                              </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </div>
+
+                  <div class="col-md-4">
+                    <mat-form-field>
+                        <mat-select placeholder="Service Type" [(ngModel)]="strServiceStatus">
+                            <mat-option *ngFor="let status of lstServiceStatus" [value]="status.pk_bint_id">
+                                {{ status.vchr_name | titlecase }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                  <div class="col-md-4 mt-1" *ngIf="strEnqStatus == 'JOB'">
+                      <mat-form-field>
+                          <input matInput required placeholder="Assigned To" [formControl]="searchAssignUser" [matAutocomplete]="assignusername" [(ngModel)]="strSelectedAssignuser" #idAssignuser>
+                          <mat-autocomplete #assignusername="matAutocomplete">
+                              <mat-option *ngFor="let item of lst_assignuser" [value]="item.name" (onSelectionChange)="assignUserChanged(item)">
+                                  {{ item.name | titlecase }}
+                              </mat-option>
+                          </mat-autocomplete>
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-4 mt-1" *ngIf="strEnqStatus == 'JOB'">
+                      <mat-form-field>
+                          <input (click)="picker1.open()" id="pickupId" #pickupDate required readonly matInput [matDatepicker]="picker1" name="pickupDate" placeholder="Pickup Date" [(ngModel)]="datPickup">
+                          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                          <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-4" style="padding-top: 2px;" *ngIf="strEnqStatus == 'JOB'">
+                      <mat-form-field>
+                          <input matInput required placeholder="Pickup time" [ngxTimepicker]="default" [(ngModel)]="strPickupTime" readonly>
+                      </mat-form-field>
+                      <ngx-material-timepicker #default></ngx-material-timepicker>
+                  </div>
+
+                  <div class="col-md-4" style="padding-top: 10px;">
+                      <ngx-select-dropdown [config]="complaintConfig" [options]="lstProductAllComplaints" 
+                          [(ngModel)]="lstComplaint" [multiple]="true"></ngx-select-dropdown>
+                  </div>
+                  <!-- **** Estimated amount entering option **** -->
+                  <div class="col-md-8">
+                    <div class="form-group mt-1">
+                        <mat-form-field>
+                            <input matInput type="number" required placeholder="Estimated amount" [(ngModel)]="dblEstimated">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- ******** -->
+                  <div class="col-md-8">
+                      <div class="form-group mt-1">
+                          <mat-form-field>
+                              <input matInput type="text" required placeholder="Landmark" [(ngModel)]="strLandmark">
+                          </mat-form-field>
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <div class="form-group mt-1">
+                          <mat-form-field>
+                              <input matInput type="text" placeholder="Enter Remarks" [(ngModel)]="vchrRemarks">
+                          </mat-form-field>
+                      </div>
+                  </div>
+          
+              </div> 
+          
+          </div>
+      
+          <div class="row mt-3">
+              <div class="col-md-12">
+                  <button class="btn save_btn mr-2" color="accent" (click)="saveService()">Save</button>
+                  <button class="btn btn-secondary" (click)="clearData()">Cancel</button>
+              </div>
+             
+          </div>
+      </div>
+ 
+  </div>
+
+</div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#f80000" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

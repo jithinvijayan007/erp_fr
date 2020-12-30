@@ -1,0 +1,320 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Purchase Report</h4>
+            <div class="row">
+              
+                    <div class="col-md-2 col-lg-2">
+                              <mat-form-field>
+                                <input (click)="picker1.open()" id ="fromId" #startDate required readonly matInput [matDatepicker]="picker1" name="dateFrom" placeholder="From" [(ngModel)]="datFrom">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                              </mat-form-field>
+                    </div>
+
+                    <div class="col-md-2 col-lg-2">
+                              <mat-form-field>
+                                <input (click)="picker2.open()" id ="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To" [(ngModel)]="datTo">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2>
+                                </mat-datepicker>
+                              </mat-form-field>
+                    </div>
+                            
+                    <!-- <div class="col-md-2">
+                              <mat-form-field>
+                                <input matInput placeholder="Customer" [formControl]="searchCustomer" [matAutocomplete]="customer" [(ngModel)]="strSelectedCustomer"  (ngModelChange)="customerNgModelChanged($event)">
+                                   <mat-autocomplete #customer="matAutocomplete">
+                                      <mat-option *ngFor="let item of lstCustomer" [value]="item.name" (onSelectionChange)="customerChanged(item)">{{ item.name }} </mat-option>
+                                   </mat-autocomplete>
+                              </mat-form-field>
+                    </div> -->
+                    <div class="col-md-2">
+                      <mat-form-field>
+                        <input matInput placeholder="Vendor" [formControl]="searchSupplier" [matAutocomplete]="supplier" [(ngModel)]="strSelectedSupplier"  (ngModelChange)="supplierNgModelChanged($event)">
+                           <mat-autocomplete #supplier="matAutocomplete">
+                              <mat-option *ngFor="let item of lstSupplier" [value]="item.name" (onSelectionChange)="supplierChanged(item)">{{ item.name }} </mat-option>
+                           </mat-autocomplete>
+                      </mat-form-field>
+                   </div>
+                    <div class="col-md-2">
+                              <mat-form-field>
+                                <input matInput placeholder="Staff" [formControl]="searchStaff" [matAutocomplete]="staffName" [(ngModel)]="strSelectedStaff"  (ngModelChange)="staffNgModelChanged($event)">
+                                   <mat-autocomplete #staffName="matAutocomplete">
+                                      <mat-option *ngFor="let item of lstStaff" [value]="item.strUserName" (onSelectionChange)="staffChanged(item)">{{ item.strUserName }} </mat-option>
+                                   </mat-autocomplete>
+                              </mat-form-field>
+                    </div>
+                    <div class="col-md-3" style="margin-top: 13px;" *ngIf="blnBranch">
+                            <ngx-select-dropdown [config]="branchConfig" [options]="branchOptions" 
+                            [(ngModel)]="lstBranch" [multiple]="true"></ngx-select-dropdown>
+                    </div>
+
+                    <div class="col-md-3" style="margin-top: 13px;">
+                        <ngx-select-dropdown [config]="productConfig" [options]="productOptions" 
+                        [(ngModel)]="lstProduct" [multiple]="true"></ngx-select-dropdown>
+                    </div>
+              
+                    <div class="col-md-3" style="margin-top: 13px;">
+                            <ngx-select-dropdown [config]="brandConfig" [options]="brandOptions" 
+                            [(ngModel)]="lstBrand" [multiple]="true"></ngx-select-dropdown>
+                    </div>
+
+                    <div class="col-md-3" style="margin-top: 13px;">
+                            <ngx-select-dropdown [config]="itemCategoryConfig" [options]="itemCategoryOptions" 
+                            [(ngModel)]="lstItemCategory" [multiple]="true"></ngx-select-dropdown>
+                    </div>
+                    
+                    <div class="col-md-3" style="margin-top: 13px;">
+                        <ngx-select-dropdown [config]="itemGroupConfig" [options]="itemGroupOptions" 
+                        [(ngModel)]="lstItemGroup" [multiple]="true"></ngx-select-dropdown>
+                    </div>
+                    <div class="col-md-6" >
+                            <mat-form-field>
+                              <input matInput  placeholder="Item" [formControl]="searchItem" [matAutocomplete]="Itemname" [(ngModel)]="strSelectedItem" #idItem (ngModelChange)="itemNgModelChanged($event)">
+                                <mat-autocomplete #Itemname="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstItem" [value]="item.code_name" (onSelectionChange)="itemChanged(item)">
+                                        {{ item.code_name }}
+                                    </mat-option>                                      
+                                </mat-autocomplete>
+                            </mat-form-field>
+                    </div>
+                    <!-- <div class="text-center mt-3">
+                      <mat-checkbox name="same" [(ngModel)]="blnSmartChoice">Exclude Smartchoice</mat-checkbox>
+                    </div>
+                    <div style="margin-left: 20px;" class="text-center mt-3" >
+                      <mat-checkbox name="same" [(ngModel)]="blnService">Exclude Myg Care</mat-checkbox>
+                    </div> -->
+                
+
+                    <div class="col-md-4  mt-2">
+                        <button  *ngIf="!blnFilterOn" type="submit" class="btn save_btn mr-2" (click)="normalSearch()">Search</button>
+                        <button  *ngIf="!blnFilterOn && blnDownload" type="submit"  class="btn save_btn" (click)="exportData()">Export</button>
+                      </div>
+
+                
+               
+            </div>
+<div class="row">
+  <div class="col-md-12" *ngIf="!blnFilterOn">
+    &nbsp;<span>More Filter</span>
+    <span class="cursor" (click)="filterClick()">
+     <i class="fa fa-chevron-down" title="Click here" style="margin-left: 5px;color: #58c2ec;"></i>
+    </span>
+  </div>
+<div class="col-md-12"  *ngIf="blnFilterOn">
+    &nbsp;<span>More Filter</span>
+    <span class="cursor" (click)="filterClickOff()" >
+        <i class="fa fa-chevron-up" title="Click here" style="margin-left: 5px;color: #58c2ec;"></i>
+    </span>
+</div>
+</div>
+
+<!-- latest -->
+<div class="row mt-3" *ngIf="blnFilterOn">
+   <div class="col-md-12">
+        <mat-form-field class="example-chip-list">
+              <mat-chip-list #chipList aria-label="More Filters">
+                <mat-chip
+                  *ngFor="let filter of moreFilters"
+                  [selectable]="selectable"
+                  [removable]="removable"
+                  (removed)="remove(filter)">
+                  {{filter}}
+                  <mat-icon matChipRemove *ngIf="removable" style="margin-top: -2px;"><i class="fa fa-times-circle"></i></mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Coloumns"
+                  #filterInput
+                  [formControl]="searchMoreFilter"
+                  [matAutocomplete]="auto"
+                  [matChipInputFor]="chipList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addOnBlur"
+                  
+                  >
+              </mat-chip-list>
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let filter of lstShowFilterOptions" [value]="filter" >
+                  {{filter}}
+                </mat-option>
+              </mat-autocomplete>
+         </mat-form-field>
+ </div>
+
+
+<div class="col-md-4">
+  <button  *ngIf="blnFilterOn" type="submit" class="btn save_btn mr-2" (click)="moreFilterClicked()">Search</button>
+  <button  *ngIf="blnFilterOn && blnDownload"  type="submit" class="btn save_btn" (click)="exportData()">Export</button>
+</div>
+
+</div>
+
+              <!-- <h6 class="card-subtitle">Smart data table library with sorting, filtering, pagination & add/edit/delete functions.</h6> -->
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-form-field *ngIf="blnShowData" >
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+<div class="card" *ngIf="blnShowData" >
+<div class="card-body">
+              
+  <div *ngIf="blnShowData" class="example-container mat-elevation-z8 mt-3">
+     
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="date">
+        <mat-header-cell class="minwidth10" [style.display]="strDateShow" *matHeaderCellDef> Date </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.display]="strDateShow" class="minwidth10">{{row.dat_purchase}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef [style.display]="strDateShow" class="minwidth10">
+            <div *ngIf="strDateShowTot==''" ><b>Total</b></div>
+          </mat-footer-cell>
+     
+      </ng-container>
+      <ng-container matColumnDef="invoiceNo" >
+        <mat-header-cell [style.display]="strInvoiceShow" class="minwidth10" *matHeaderCellDef> Purchase No</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.display]="strInvoiceShow" class="minwidth10">{{row.vchr_purchase_num}} </mat-cell>
+        <mat-footer-cell  *matFooterCellDef [style.display]="strInvoiceShow" class="minwidth10">
+            <div *ngIf="strInvoiceShowTot==''" ><b>Total</b></div>
+            <div *ngIf="strInvoiceShowTot=='none'" ></div>
+        </mat-footer-cell>
+     
+      </ng-container>
+     
+      <ng-container matColumnDef="branch">
+        <mat-header-cell class="minwidth10" [style.display]="strBranchShow" *matHeaderCellDef> Branch </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.display]="strBranchShow" class="minwidth10">{{row.vchr_branch_name}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef [style.display]="strBranchShow" class="minwidth10">
+          <div *ngIf="strBranchShowTot==''" ><b>Total</b></div>
+          <div *ngIf="strBranchShowTot=='none'" ></div>
+        </mat-footer-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="customer">
+        <mat-header-cell class="minwidth13" [style.display]="strCustomerShow" *matHeaderCellDef> Vendor</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.display]="strCustomerShow" class="minwidth13">{{row.vchr_supplier_name}} </mat-cell>
+        <mat-footer-cell  *matFooterCellDef [style.display]="strCustomerShow" class="minwidth13">
+          <div *ngIf="strCustomerShowTot==''" ><b>Total</b></div>
+          <div *ngIf="strCustomerShowTot=='none'" ></div>
+        </mat-footer-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="staff">
+        <mat-header-cell class="minwidth10" [style.display]="strStaffShow" *matHeaderCellDef> Staff </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.display]="strStaffShow" class="minwidth10">{{row.vchr_staff_name}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef [style.display]="strStaffShow" class="minwidth10">
+            <div *ngIf="strStaffShowTot==''" ><b>Total</b></div>
+            <div *ngIf="strStaffShowTot=='none'" ></div>
+        </mat-footer-cell>
+     
+      </ng-container>
+     
+      <ng-container matColumnDef="product">
+        <mat-header-cell class="minwidth13" [style.display]="strProductShow" *matHeaderCellDef> Product </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.display]="strProductShow" class="minwidth13">{{row.vchr_product_name}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef  [style.display]="strProductShow" class="minwidth13">
+            <div *ngIf="strProductShowTot==''" ><b>Total</b></div>
+              <div *ngIf="strProductShowTot=='none'" ></div>
+        </mat-footer-cell>
+     
+      </ng-container> 
+      
+      <ng-container matColumnDef="brand">
+        <mat-header-cell class="minwidth10" [style.display]="strBrandShow" *matHeaderCellDef> Brand </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.display]="strBrandShow" class="minwidth10">{{row.vchr_brand_name}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef [style.display]="strBrandShow" class="minwidth10">
+            <div *ngIf="strBrandShowTot==''" ><b>Total</b></div>
+              <div *ngIf="strBrandShowTot=='none'" ></div>
+        </mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="item_code">
+        <mat-header-cell class="minwidth10" [style.display]="strItemCodeShow" *matHeaderCellDef> Item Code</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.display]="strItemCodeShow" class="minwidth10">{{row.vchr_item_code}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef [style.display]="strItemCodeShow" class="minwidth10">
+            <div *ngIf="strItemCodeShowTot==''" ><b>Total</b></div>
+              <div *ngIf="strItemCodeShowTot=='none'" ></div>
+        </mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="item">
+        <mat-header-cell class="minwidth43" [style.display]="strItemShow" *matHeaderCellDef> Item </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.display]="strItemShow" class="minwidth43">{{row.vchr_item_name}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef [style.display]="strItemShow" class="minwidth43">
+            <div *ngIf="strItemShowTot==''" ><b>Total</b></div>
+              <div *ngIf="strItemShowTot=='none'" ></div>
+        </mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="imei">
+        <mat-header-cell class="minwidth15" [style.display]="strImeiShow" *matHeaderCellDef> Imei/Batch</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.display]="strImeiShow" class="minwidth15">{{row.imei_batch_number}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef [style.display]="strImeiShow" class="minwidth15">
+            <div *ngIf="strImeiShowTot==''" ><b>Total</b></div>
+              <div *ngIf="strImeiShowTot=='none'" ></div>
+        </mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="tax">
+        <mat-header-cell class="minwidth15" [style.display]="strTaxShow" style="display: flex;justify-content: flex-end;" *matHeaderCellDef> Tax Value</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.display]="strTaxShow" style="display: flex;justify-content: flex-end;" class="minwidth15">{{row.tax_value | number : '1.2-2'}} </mat-cell>
+        <!-- <mat-footer-cell *matFooterCellDef [style.display]="strTaxShow" class="minwidth15">
+            <div *ngIf="strTaxShowTot==''" ><b>Total</b></div>
+              <div *ngIf="strTaxShowTot=='none'" ></div>
+        </mat-footer-cell> -->
+        <mat-footer-cell [style.display]="strTaxShow" *matFooterCellDef style="display: flex;justify-content: flex-end;" class="minwidth15"> <b>{{intTotalTax | number : '1.2-2'}} </b> </mat-footer-cell>
+        
+      </ng-container>
+
+      <ng-container matColumnDef="taxable">
+        <mat-header-cell class="minwidth15" [style.display]="strTaxableShow" style="display: flex;justify-content: flex-end;" *matHeaderCellDef> Taxable Value</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.display]="strTaxableShow" style="display: flex;justify-content: flex-end;" class="minwidth15">{{row.dbl_taxable_value}} </mat-cell>
+        <mat-footer-cell [style.display]="strTaxableShow" *matFooterCellDef style="display: flex;justify-content: flex-end;" class="minwidth15"> <b>{{intTotalTaxable  | number : '1.2-2'}} </b> </mat-footer-cell>
+      
+        <!-- <mat-footer-cell *matFooterCellDef [style.display]="strTaxableShow" class="minwidth15">
+            <div *ngIf="strTaxableShowTot==''" ><b>Total</b></div>
+              <div *ngIf="strTaxableShowTot=='none'" ></div>
+        </mat-footer-cell> -->
+      </ng-container>
+      <ng-container matColumnDef="qty">
+        <mat-header-cell class="minwidth10" *matHeaderCellDef  style="display: flex;justify-content: flex-end;"> Quantity </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="minwidth10" style="display: flex;justify-content: flex-end;">{{row.quantity}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef style="display: flex;justify-content: flex-end;" class="minwidth10"> <b>{{intTotalQty }} </b> </mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <mat-header-cell class="minwidth13" *matHeaderCellDef style="direction: rtl"> Amount </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="minwidth13" style="display: flex;justify-content: flex-end;">{{row.dbl_total_amount | number : '1.2-2'}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef style="display: flex;justify-content: flex-end;" class="minwidth13">   <b>{{intTotalAmt | number : '1.2-2' }} </b></mat-footer-cell>
+      </ng-container>
+    
+    
+      <mat-header-row *matHeaderRowDef="lstDisplayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: lstDisplayedColumns; let i = index;">
+      </mat-row>
+      <mat-footer-row *matFooterRowDef="lstDisplayedColumns; sticky: true"></mat-footer-row>
+    </mat-table>
+      <!-- <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5,10, 25, 100]"></mat-paginator> -->
+      <!-- <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator> -->
+  </div>
+ 
+</div>
+</div>
+
+<div class="card nodata" *ngIf="!blnShowData">
+  <h5>NO DATA FOUND</h5>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+

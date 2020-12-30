@@ -1,0 +1,304 @@
+<div class="card">
+    <!-- <div class="row mt-4">
+        <button type="submit" class="btn btn-secondary" style="align-content: right" (click)="goBack()">Back</button>
+    </div> -->
+    <div class="card-body">
+        <div class="row" style="background-color: #f2f4f5;padding-top: 8px;">
+            <h4>
+                <b><i aria-hidden="true"></i>&nbsp; Internal Stock Transfer -</b> <small>&nbsp;{{dctMasterData['vchr_stktransfer_num']}}</small></h4>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3" *ngIf="transferType == 'to'">
+                <label>Branch </label>
+                <p> {{dctMasterData['fk_from__vchr_name']}}</p>
+            </div>
+            <div class="col-md-3" *ngIf="transferType == 'from'">
+                <label>Branch </label>
+                <p> {{dctMasterData['fk_to__vchr_name']}}</p>
+            </div>
+            <div class="col-md-3">
+                <label>Transfer Date</label>
+                <p>{{dctMasterData['dat_transfer']}}</p>
+            </div>
+            <div class="col-md-6">
+                <label>Remarks</label>
+                <p>{{dctMasterData['vchr_remarks']}}</p>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div style="background-color: #f2f4f5;">
+                    <h4 class="card-title" style="margin-bottom: 0px;padding: 8px 0px 8px 5px;font-size: 16px;">
+                        <b>Item List</b>
+                    </h4>
+                </div>
+                <div class="example-container mat-elevation-z8 mt-4">
+                    <mat-table [dataSource]="dataSource">
+                        <ng-container matColumnDef="slno" sticky>
+                            <mat-header-cell *matHeaderCellDef style="max-width:100px;"> No. </mat-header-cell>
+                            <mat-cell *matCellDef="let element" style="max-width:100px;"> {{element.slno}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="fk_item__vchr_name">
+                            <mat-header-cell *matHeaderCellDef> Item </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.fk_item__vchr_name}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="int_qty">
+                            <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.int_qty}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="flt_price">
+                            <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.flt_price}} </mat-cell>
+                        </ng-container>
+
+                        <!-- <span *ngIf="dctMasterData['status']=='ACKNOWLEDGED' || dctMasterData['status']== 'BILLED' "> -->
+                            <span>
+                            
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell class="matheadr_right" *matHeaderCellDef> Action </mat-header-cell>
+                                <mat-cell *matCellDef="let row;let i= index;"class="matheadr_right">
+                                  <button  (click)="viewData(content,i)" class="view_btn">
+                                        <i class="ti-eye text-info"></i>
+                                  </button>
+                                </mat-cell>
+                              </ng-container>
+                        </span>
+                        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: false"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3" *ngIf="transferType == 'to' && dctMasterData['status'] == 'TRANSFERRED' && dctMasterData['bln_visible']">
+            <div class="row" style="background-color: #f2f4f5;">
+                <h4 class="card-title" style="margin-bottom: 0px;padding: 8px 0px 8px 5px;font-size: 16px;">
+                    <b>Transportation Details</b>
+                </h4>
+            </div>
+            <div class="row mt-3">
+                <div class="row" *ngIf="dctTransferData['int_medium'] == 1">
+                    <div class="col-md-4">
+                        <label>Courier number</label>
+                        <p>{{dctTransferData['bnt_number']}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Courier name</label>
+                        <p>{{dctTransferData['fk_courier__vchr_name']}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Courier contact no</label>
+                        <p style="width: 400px;">{{dctTransferData['bnt_contact_number']}}</p>
+                    </div>
+                </div>
+                <div class="row " *ngIf="dctTransferData['int_medium'] == 2">
+                    <div class="col-md-4">
+                        <label>Bus no</label>
+                        <p>{{dctTransferData['bnt_number']}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Contact name</label>
+                        <p>{{dctTransferData['vchr_name_responsible']}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Contact no</label>
+                        <p>{{dctTransferData['bnt_contact_number']}}</p>
+                    </div>
+                </div>
+                <div class="row" *ngIf="dctTransferData['int_medium'] == 3">
+                    <div class="col-md-4">
+                        <label>Contact name</label>
+                        <p>{{dctTransferData['vchr_name_responsible']}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Contact no</label>
+                        <p>{{dctTransferData['bnt_contact_number']}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>No of Packets</label>
+                    <p>{{dctTransferData['int_packet_no']}}</p>
+                </div>
+                <!-- <div class="col-md-4" *ngIf="dctTransferData['dbl_expense']">
+                    <label>Transportation Cost</label>
+                    <p>{{dctTransferData['dbl_expense']}}</p>
+                </div> -->
+            </div>
+            <div class="row mt-4">
+                <button type="submit" class="btn save_btn m-r-10" (click)="rejectData()" style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);" [disabled] = "blnPartialAcknowledgeDisable">Partial Acknowledge</button>
+                <button type="submit" class="btn save_btn m-r-10" (click)="ackData()" style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);" [disabled]="blnAcknowledgeDisable">Acknowledge</button>
+            </div>
+        </div>
+        <div class="mt-4" *ngIf="transferType == 'from' && dctMasterData['status'] == 'BILLED' && dctMasterData['bln_visible']">
+            <div class="row" style="background-color: #f2f4f5;">
+                <h4 class="card-title" style="margin-bottom: 0px;padding: 8px 0px 8px 5px;font-size: 16px;">
+                    <b>Transportation Details</b>
+                </h4>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <!-- <label for="">Medium</label> -->
+                    <mat-radio-group name="strMedium" [(ngModel)]="strMedium">
+                        <mat-radio-button value="1">Courier</mat-radio-button>
+                        <mat-radio-button value="2">Bus</mat-radio-button>
+                        <mat-radio-button value="3">Direct</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <div class="row" *ngIf="strMedium == 1">
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input placeholder="Courier No " matInput [(ngModel)]="strMediumNo">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3" >
+                            <!-- <mat-form-field>
+                                <input placeholder="Courier Name *" matInput [(ngModel)]="strMediumName">
+                            </mat-form-field> -->
+                            <mat-form-field >
+                                <mat-select [(ngModel)]="intCourierName" name="intCourierName" placeholder="Courier Name *" (ngModelChange)=corierNameChange()>
+                                    <mat-option *ngFor="let item of lstCourierName;" [value]="item.pk_bint_id" >{{item.vchr_name | titlecase}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3" *ngIf="intCourierName">
+                            <mat-form-field>
+                                <mat-select [(ngModel)]="strVehicleNo" name="strVehicleNo" placeholder="Vehicle No*">
+                                    <mat-option *ngFor="let item of lstVehicleNo;" [value]="item">{{item | titlecase}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="col-md-3" *ngIf="blnDirectTransfer">
+                            <mat-form-field>
+                                <input placeholder="Vehicle No*" matInput [(ngModel)]="strVehicleNo">
+                            </mat-form-field>
+                        </div> -->
+
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input type="number" placeholder="Contact no. *" matInput [(ngModel)]="strMediumPhNo">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input type="number" placeholder="No of Packets *" matInput [(ngModel)]="intPackets">
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="col-md-3">
+                            <mat-form-field>
+                                <input type="number" placeholder="Transportation Cost " matInput [(ngModel)]="transpCost">
+                            </mat-form-field>
+                        </div> -->
+                    </div>
+                    <div class="row " *ngIf="strMedium == 2">
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input placeholder="Bus No *" matInput [(ngModel)]="strMediumNo">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input placeholder="Contact Name *" matInput [(ngModel)]="strMediumName">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input type="number" placeholder="Contact no. *" matInput [(ngModel)]="strMediumPhNo">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input type="number" placeholder="No of Packets *" matInput [(ngModel)]="intPackets">
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="col-md-3">
+                            <mat-form-field>
+                                <input type="number" placeholder="Transportation Cost " matInput [(ngModel)]="transpCost">
+                            </mat-form-field>
+                        </div> -->
+                    </div>
+                    <div class="row" *ngIf="strMedium == 3">
+                        <!-- <div class="col-md-4">
+              <mat-form-field>
+                <input placeholder="Courier No *" matInput [(ngModel)]="strRemarks">
+            </mat-form-field>
+            </div> -->
+                        <div class="col-md-4">
+                            <mat-form-field>
+                                <input placeholder="Contact Name *" matInput [(ngModel)]="strMediumName">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field>
+                                <input type="number" placeholder="Contact no. *" matInput [(ngModel)]="strMediumPhNo">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field>
+                                <input type="number" placeholder="No of Packets *" matInput [(ngModel)]="intPackets">
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="col-md-3 mt-4">
+                            <mat-checkbox class="example-margin" name="adminGroup" [(ngModel)]="blnEway">
+                             Need E-way &nbsp;&nbsp;
+                            </mat-checkbox>
+                        </div> -->
+                        <div class="col-md-4">
+                            <mat-form-field>
+                                <input type="text" placeholder="Vehicle No" matInput [(ngModel)]="strVehicleNo">
+                            </mat-form-field>
+                        </div>
+
+                        <!-- <div class="col-md-3" *ngIf="blnEway">
+                            <mat-form-field>
+                                <mat-select [(ngModel)]="strVehicleNo" name="strVehicleNo" placeholder="Vehicle No*">
+                                    <mat-option *ngFor="let item of lstVehicleNo;" [value]="item">{{item | titlecase}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div> -->
+                        <!-- <div class="col-md-3">
+                            <mat-form-field>
+                                <input type="number" placeholder="Transportation Cost " matInput [(ngModel)]="transpCost">
+                            </mat-form-field>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <!-- <button type="submit" class="btn save_btn m-r-10"  (click)="approveData()" style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);">Approve</button> -->
+                <button type="submit" class="btn save_btn m-r-10" (click)="saveData()" style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);" [disabled] = "blnSaveDisable">Save</button>
+                <button type="submit" class="btn btn-secondary" (click)="goBack()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #content let-modal>
+    <div class="modal-body" id="imeipopup">
+        <div class="text-center mt-2" style="display: none">
+            <mat-checkbox name="same"></mat-checkbox>
+        </div>
+        <table class="table">
+            <thead class="text-white">
+                <!-- <tr> -->
+                <th>Sl.No</th>
+                <th>Imei/Batch No.</th>
+                <th></th>
+                <!-- </tr> -->
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of lstImei; let i = index" [title]="item.status" [style.color]="item.status === 'available' ? '#00b300': (item.status === 'missing' ? '#FF8C00' : (item.status === 'damaged' ? '#ff3300' : ''))">
+
+                    <td><b>{{i+1}}</b></td>
+
+                    <td>
+                        <!-- <span [style.background]="item.status === 'available' ? '#00a800': (item.status === 'missing' ? '#FF8C00' : (item.status === 'damaged' ? '#f10d11' : ''))"> -->
+                        <b>{{item.imei}}</b>
+                    </td><td>
+                        <mat-checkbox class="mat-checkbox-layout" *ngIf="item.status == 'missing' && blnTranfered == 'true' " (change)="imeiAvailable(item,$event)">Available</mat-checkbox>
+                        <!-- </span> -->
+                    </td>
+                </tr>
+                <button type="submit" class="btn save_btn m-r-10" (click)="imeiSave()" style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);" *ngIf="blnImeiSave">Save</button>
+            </tbody>
+        </table>
+    </div>
+</ng-template>

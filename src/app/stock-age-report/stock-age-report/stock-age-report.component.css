@@ -1,0 +1,9 @@
+.avimeiscroll{
+ 
+    max-height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .mat-header-row {
+   z-index: 40 !important;
+}

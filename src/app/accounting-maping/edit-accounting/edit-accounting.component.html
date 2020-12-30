@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+          <h3 class="card-title"> Edit Account Maping 
+            <span class="float-right">
+              <button class="backbtn" [routerLink]="['/accounting/listaccouting/']">
+                <i class="fa fa-angle-left"></i> Back</button>
+            </span>
+          </h3> 
+          
+          <form class="form p-t-10 row" >
+              <div class="col-md-3">
+                <mat-form-field>
+                  <input matInput placeholder="Module Name*" [formControl]="accountForm.controls['module']" [(ngModel)]="strModuleName" name="moduleName"
+                    #moduleId>
+                  <mat-error *ngIf="accountForm.controls['module'].hasError('required') && accountForm.controls['module'].touched ">
+                    You must enter a Module Name.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                  <mat-form-field>
+                      <input matInput required placeholder="Category" [formControl]="searchCategory" [matAutocomplete]="Categoryname" [(ngModel)]="selectedCategory" #CategoryId>
+                      <mat-autocomplete #Categoryname="matAutocomplete">
+                          <mat-option *ngFor="let item of lstCategory" [value]="item.name" (onSelectionChange)="CategoryChanged(item)">
+                              {{ item.name}}
+                          </mat-option>
+                      </mat-autocomplete>
+                  </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                  <mat-form-field>
+                      <input matInput required placeholder="Branch" [formControl]="searchBranch" [matAutocomplete]="Branchname" [(ngModel)]="selectedBranch" #BranchId>
+                      <mat-autocomplete #Branchname="matAutocomplete">
+                          <mat-option *ngFor="let item of lstBranch" [value]="item.name" (onSelectionChange)="BranchChanged(item)">
+                              {{ item.name }}
+                          </mat-option>
+                      </mat-autocomplete>
+                  </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                  <mat-form-field>
+                      <input matInput required placeholder="Chart of accounts" [formControl]="searchChartofAccount" [matAutocomplete]="Chartname" [(ngModel)]="selectedChartOfAcc" #ChartId>
+                      <mat-autocomplete #Chartname="matAutocomplete">
+                          <mat-option *ngFor="let item of lstChart" [value]="item.name" (onSelectionChange)="ChartChanged(item)">
+                              {{ item.name }}
+                          </mat-option>
+                      </mat-autocomplete>
+                  </mat-form-field>
+              </div>
+
+          </form>
+          <div class="row">
+              <div class="col-md-3">
+                  <!-- <div class="col-md-12 row"> -->
+                  <button type="submit" class="btn save_btn  mt-2" (click)="AddAccount()">Edit</button>
+                  <!-- <button type="submit" class="btn btn-info  mt-2"  (click)="AddPayment()">Update</button> -->
+                  <button type="submit" class="btn btn-secondary  ml-2 mt-2" (click)="clearFields()">Cancel</button>
+              </div>
+          </div>    
+      </div>
+    </div>
+  </div>
+</div>         

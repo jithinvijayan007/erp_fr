@@ -1,0 +1,20 @@
+
+.back{
+    color: #fff;
+    font-size: 15px;
+    padding: 7px 10px;    
+    cursor: pointer;
+    border: none;
+    background: linear-gradient(-180deg, #BCC5CE 0%, #929EAD 98%), radial-gradient(at top left, rgba(255,255,255,0.30) 0%, rgba(0,0,0,0.30) 100%);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+.edit_btn{
+    background: linear-gradient(to right, #43cea2, #29879f);
+    color: #fff;
+    font-size: 15px;
+    padding: 7px 10px;    
+    cursor: pointer;
+    border: none;
+    margin-right: 6px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }

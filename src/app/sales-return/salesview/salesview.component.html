@@ -1,0 +1,238 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="form-head1">
+                  <span>Invoice Details - <b>{{dctMaster['vchr_invoice_num']}}</b></span>
+              </h4>
+                  <div class="form p-t-10 row">
+                      <div class="col-md-4">
+                           <div class="form-group mt-1">
+                              <h6>Date of Invoiced</h6>
+                              <p class="">{{dctMaster['dat_invoice']| date: 'dd/MM/yyyy'}}</p>
+                           </div>
+                      </div>
+                      <div class="col-md-4">
+                            <div class="form-group mt-1">
+                                <h6>Name</h6>
+                                <p class="">{{dctMaster['fk_customer__vchr_name']| titlecase}}</p>
+                            </div>
+                        </div>
+                      <div class="col-md-4">
+                          <div class="form-group mt-1">
+                              <h6>Contact No.</h6>
+                              <p class="">{{dctMaster['fk_customer__int_mobile']}}</p>
+                          </div>
+                      </div>
+                   
+                      <div class="col-md-4">
+                          <div class="form-group mt-1">
+                              <h6>Mail ID</h6>
+                              <p class="">{{dctMaster['fk_customer__vchr_email']}}</p>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <h6>Branch</h6>
+                            <p class="">{{dctMaster['fk_branch__vchr_name'] | titlecase}}</p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group mt-1">
+                            <h6>Staff</h6>
+                            <p class="">{{dctMaster['staff_name'] | titlecase}}</p>
+                        </div>
+                      </div>
+                      <div class="col-md-6" *ngIf ="dctMaster['vchr_remarks']">
+                          <div class="form-group mt-1">
+                              <h6>Remark</h6>
+                              <p class="">{{dctMaster['vchr_remarks']}}</p>
+                          </div>
+                      </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+
+              <div class="card" *ngFor="let item of dctDetails">
+                  <div class="card-body" >
+                      <h4 class="card form-head" style="background: #e9f7f3;padding: 10px;">
+                        <span>{{item['fk_item__fk_product__vchr_name']| titlecase}}  &nbsp;</span>
+                         
+                      </h4>
+                      <h4 *ngIf="item.int_sales_status==2" style="background: #fffbe2;padding: 10px;" class="card form-head">{{item['fk_item__fk_product__vchr_name']| titlecase}}  <small style="color: #666666;display: contents;">(Exchange item)</small></h4>
+
+                          <div class="form  row">
+                              <div class="col-md-4">
+                                   <div class="form-group mt-1">
+                                      <h6>Brand</h6>
+                                      <p class="">{{item['fk_item__fk_brand__vchr_name']| titlecase}}</p>
+                                   </div>
+                              </div>
+                              <div class="col-md-4">
+                                    <div class="form-group mt-1">
+                                        <h6>Item</h6>
+                                        <p class="">{{item['fk_item__vchr_name']| titlecase}}</p>
+                                    </div>
+                                </div>
+                              <div class="col-md-4">
+                                  <div class="form-group mt-1">
+                                      <h6> Quantity</h6>
+                                      <p class="">{{item['int_qty']}}</p>
+                                  </div>
+                              </div>
+                              <div class="col-md-4">
+                                  <div class="form-group mt-1">
+                                      <h6> Imei </h6>
+                                      <p class="">{{item['json_imei']}}</p>
+                                </div>
+                             </div>
+                           <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <h6> Rate </h6>
+                                    <p class="">{{item['dbl_amount'].toFixed(2)}}</p>
+                              </div>
+                           </div>
+                              <div class="col-md-4" *ngIf="item['dbl_discount']">
+                                  <div class="form-group mt-1">
+                                      <h6> Discount</h6>
+                                      <p class="">{{item['dbl_discount'].toFixed(2)}}</p>
+                                  </div>
+                              </div>
+                              <div class="col-md-4" *ngIf="item['dbl_buyback']">
+                                <div class="form-group mt-1">
+                                    <h6>Buy back amt</h6>
+                                    <p class="">{{item['dbl_buyback'].toFixed(2)}}</p>
+                                </div>
+                              </div>
+                              <div class="col-md-4" *ngIf="item['json_tax']['dblCGST']">
+                                      <div class="form-group mt-1">
+                                          <h6>CGST</h6>
+                                          <p class="">{{item['json_tax']['dblCGST'].toFixed(2)}}</p>
+                                      </div>
+                              </div>
+                              <div class="col-md-4" *ngIf="item['json_tax']['dblIGST']">
+                                      <div class="form-group mt-1">
+                                          <h6>IGST</h6>
+                                          <p class="">{{item['json_tax']['dblIGST'].toFixed(2)}}</p>
+                                      </div>
+                              </div>
+                              <div class="col-md-4" *ngIf="item['json_tax']['dblSGST']">
+                                  <div class="form-group mt-1">
+                                    <h6>SGST</h6>
+                                     <p class="">{{item['json_tax']['dblSGST'].toFixed(2)}}</p>
+                                  </div>
+                              </div>      
+                              <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <h6> Total Amount</h6>
+                                    <p class="">{{item['dbl_selling_price'].toFixed(2)}}</p>
+                              </div>
+                           </div>
+                            
+                       </div>
+                    </div>
+                  </div>
+               <!--sales returned products start-->
+               <div class="card" *ngFor="let item of dictReturnDetails">
+                <div class="card-body" >
+                    <h4 class="form-head" style="background: #f7e9e9;  padding: 10px;">
+                        <span>{{item['fk_item__fk_product__vchr_name']| titlecase}}  &nbsp;</span>
+                        <!-- <span>{{item['fk_returned__vchr_invoice_num']}}</span>  -->
+                        <small style="color: #d22a0e;display: contents;"><span *ngIf = "item['bln_damaged']" style="color: #ff6c6c;">(Damaged)</span></small>
+                    </h4>
+                        <div class="form p-t-10 row">
+                                <div class="col-md-3">
+                                        <div class="form-group mt-1">
+                                           <h6>Invoice Number</h6>
+                                           <p class="">{{item['fk_returned__vchr_invoice_num']}}</p>
+                                        </div>
+                                   </div>
+                            <div class="col-md-3">
+                                 <div class="form-group mt-1">
+                                    <h6>Brand</h6>
+                                    <p class="">{{item['fk_item__fk_brand__vchr_name']| titlecase}}</p>
+                                 </div>
+                            </div>
+                            <div class="col-md-4">
+                                  <div class="form-group mt-1">
+                                      <h6>Item</h6>
+                                      <p class="">{{item['fk_item__vchr_name']| titlecase}}</p>
+                                  </div>
+                              </div>
+                            <div class="col-md-2">
+                                <div class="form-group mt-1">
+                                    <h6> Quantity</h6>
+                                    <p class="">{{item['int_qty']}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group mt-1">
+                                    <h6> Imei </h6>
+                                    <p class="">{{item['jsn_imei']}}</p>
+                              </div>
+                           </div>
+                         <div class="col-md-3">
+                              <div class="form-group mt-1">
+                                  <h6> Rate </h6>
+                                  <p class="">{{((item['dbl_amount'])*-1).toFixed(2)}}</p>
+                            </div>
+                         </div>
+                            <div class="col-md-4" *ngIf="item['dbl_discount']">
+                                <div class="form-group mt-1">
+                                    <h6> Discount</h6>
+                                    <p class="">{{item['dbl_discount'].toFixed(2)}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3" *ngIf="item['dbl_buyback']">
+                              <div class="form-group mt-1">
+                                  <h6>Buy back amt</h6>
+                                  <p class="">{{item['dbl_buyback'].toFixed(2)}}</p>
+                              </div>
+                            </div>
+                            <div class="col-md-2" *ngIf="item['json_tax']['dblCGST']">
+                                <h6>CGST</h6>
+                                <p>{{item['json_tax']['dblCGST'].toFixed(2)}}</p>
+                            </div>    
+                            <div class="col-md-3" *ngIf="item['json_tax']['dblSGST']">
+                                <div class="form-group mt-1">
+                                        <h6>SGST</h6>
+                                        <p class="">{{item['json_tax']['dblSGST'].toFixed(2)}}</p>
+                                </div>
+                            </div> 
+                                
+                           
+                                
+                            <div class="col-md-3">
+                              <div class="form-group mt-1">
+                                  <h6> Total Amount</h6>
+                                  <p class="">{{((item['dbl_selling_price'])*-1).toFixed(2)}}</p>
+                            </div>
+                            </div>
+                            <div class="col-md-6">
+                                    <div class="form-group mt-1">
+                                        <h6> Remarks</h6>
+                                        <p class="">{{item['vchr_remark']}}</p>
+                                  </div>
+                         </div>
+                            <div class="row">
+                                    <div class="col-md-3" *ngIf="item['vchr_image']">
+                                        <p><b>Attatchment :-</b></p>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                    <div class="card-avatar text-center">
+                                                            <img class="img" src="{{hostname}}{{item['vchr_image']}}" alt="Image is temporrarly unavailable" style="max-width: 100%;width: 100%;" />
+                                                     </div>
+                                            </div>
+                                        </div>
+                                            
+                                   </div>
+                            </div>
+                       </div> 
+                  </div>
+            </div>
+              <!-- sales return end  -->
+      </div>
+</div>

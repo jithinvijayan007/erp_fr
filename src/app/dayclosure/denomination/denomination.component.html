@@ -1,0 +1,169 @@
+<div class="card col-md-12 col-lg-12">
+  <div class="card-body">
+    <h4 class="card-title mt-3">Day Closure</h4>
+
+    <!-- <div class="col-md-12"> -->
+    
+    <!-- <button id="add_button" ng-disabled="showClosed" title="Add" (click)="addRow()" mat-mini-fab color="primary" class="float-right" style="top: 10px !important;">
+          <mat-icon style="font-size: 20px;">add</mat-icon>
+        </button>     -->
+       
+    <div class="example-container mat-elevation-z8 mt-3">
+        <button id="add_button"  [disabled]="showClosed" title="Add" (click)="addRow()" class="addbtnround float-right" style="z-index: 49 !important;top: 51px !important;right: 27px;">
+            <i class="fa fa-plus"></i>
+          </button>
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="denomination">
+          <mat-header-cell *matHeaderCellDef> Denomination </mat-header-cell>
+          <mat-cell *matCellDef="let row;let i= index;">
+            <mat-form-field style="width:60%;">
+              <mat-select placeholder="Select" [disabled]="showClosed" [(ngModel)]="row.intDayclosureId">
+                <mat-option *ngFor="let denomination of lstNotes" [value]="denomination.master_id" (click)="denominationChanged(denomination.note,i)">{{denomination.note}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="noNotes">
+          <mat-header-cell *matHeaderCellDef class="matheadr_right"> No. of notes </mat-header-cell>
+          <mat-cell *matCellDef="let row;let i= index;" class="matheadr_right">
+            <input class="text-right" style="width:60%;border: none; border-bottom: 1px solid #dad6d6;" [readonly]="showClosed" type="number" id="countId" [(ngModel)]="row.count" (keyup)="calcTotal(i,$event)">
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="total">
+          <mat-header-cell class="matheadr_right" *matHeaderCellDef> Total </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="matheadr_right">{{row.total}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef style="direction: rtl;">
+              <p style="margin:0;">Grand Total :&nbsp;<span style="font-size: 18px;color: #2f67be;font-weight: 600;">{{intGrandTotal}}</span></p>
+              </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell class="matheadr_right" *matHeaderCellDef> Action </mat-header-cell>
+          <mat-cell *matCellDef="let row;let i= index;"class="matheadr_right">
+            <button class="trashbtn" (click)="deleteData(i)" [disabled]="showClosed">
+              <i class="ti-trash"></i>
+            </button>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+        <!-- <ng-container matColumnDef="paidReward">
+      <mat-header-cell class="text-right" *matHeaderCellDef mat-sort-header='reward_paid'> Paid Reward </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="text-right">{{row.reward_paid}} </mat-cell>
+    </ng-container> -->
+        <mat-header-row *matHeaderRowDef="lstDisplayedColumns;sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: lstDisplayedColumns; let i = index;">
+        </mat-row>
+        <mat-footer-row *matFooterRowDef="lstDisplayedColumns;sticky: true" style="background: #ecf7ff;min-height: 40px;"></mat-footer-row>
+      </mat-table>
+      <!-- <mat-paginator #matPag1 [length]="intSummaryLength"
+     [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+
+     <div class="row">
+      <div class="col-md-12 mt-3">
+        <mat-form-field>
+            <input type="text" [readonly]="showClosed" required  matInput name="remark" id=remarkId placeholder="Remarks" [(ngModel)]="strRemarks">
+
+        </mat-form-field>
+      </div>
+      <!-- <div class="col-md-6">
+        <label style="width: 100%;font-weight: 400;">Grand Total</label>
+        <input type="number" [(ngModel)]="intGrandTotal" disabled name="grandTotal" value="" class="input1">
+
+    </div> -->
+    </div>
+
+    <div class="row mt-2" >
+      
+
+    </div>
+
+      <div class="row">
+        <div class="col-md-12">
+        <button (click)="saveDayClosure()" [disabled]="showClosed" class="btn save_btn mr-2" style="float:left;">
+          SAVE
+        </button>
+        <!-- [ngStyle]='{display:showRequest}' -->
+        <!-- <button (click)="requestHO()" [ngStyle]='{display:showRequest}' class="btn save_btn" style="float:left;background: none;border: 1px solid #3d72be;color: #3d72be;"> -->
+
+          <!-- Request
+        </button> -->
+        <button class="btn cancel_btn" [disabled]="showClosed" (click)="clearFields()" style="float:left;background: none;border: none;min-width: 67px;color: #3d72be;padding:0;">Cancel</button>
+
+        <!-- <button class="btn save_btn mr-2" (click)="showSpinner()">show spinner</button> -->
+
+      </div>
+    </div>
+    </div>
+   
+ 
+    <!-- <a data-toggle="tooltip" title="Mail"><i class="fa fa-envelope" data-toggle="modal" -->
+    <!-- data-target="#myModal-two" aria-hidden="true" (click)="openMail()"></i></a> -->
+    <!-- <div class="total_sec table-responsive">
+  <table style="width: 100%;">
+      <tr>
+          <td style=" width: 97.7px;"><b>Grand Total</b></td>
+          <td  *ngIf="keysLength==5" style=" width: 97.7px;">&nbsp;</td>
+          <td style=" width: 97.7px;"class="text-right"><b></b></td>                            
+          <td style=" width: 97.7px;"class="text-right"><b> </b></td>                            
+          <td style=" width: 97.7px;"class="text-right"><b>100</b> </td>    
+      </tr>
+  </table>
+</div> -->
+    <!-- </div> -->
+
+  
+
+  </div>
+</div>
+<!-- Modal -->
+<!-- <div class="modal fade" id="myModal-two" role="dialog" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-dialog modal-sm" [style.display]="showModal ? 'block' : 'none'"> -->
+<!-- Modal content-->
+<!-- <div class="modal-content">
+        <div class="modal-header"> -->
+<!-- <button type="button" class="close" (click)="closeMail()" data-dismiss="modal">&times;</button> -->
+<!-- <h4 class="modal-title text-center" id="modal-blue">Account closing</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label>Date</label>
+                        <label>{{datClosed}}</label>
+                               <div class="col-md-12">
+                                <div class="form-group mt-1">
+                                  <label>Date</label>
+                                  <p class="">{{datClosed}}</p>
+                                </div>
+                              </div>
+                              <div class="col-md-12">
+                                <div class="form-group mt-1">
+                                  <label>Total collection</label>
+                                  <p class="">{{collection}}</p>
+                                </div>
+                              </div>      
+                          <br>
+                        <label>Total collection</label>
+                        <label>{{collection}}</label>
+                            <br>
+                            <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <button type="button" class="mat-button mat-raised-button mat-primary pull-left"
+                                                    data-dismiss="modal">Cancel</button>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <button type="button" (click)='saveDetails()'
+                                                    class="mat-raised-button mat-accent pull-right" data-dismiss="modal">Verify</button>
+                                    </div>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div> -->
+<div class="overlay" *ngIf="showSpinner">
+
+<mat-progress-spinner  style="margin:0 auto;" class="spinner"
+[color]="color"
+[mode]="mode"
+[value]="value"
+ [strokeWidth]="strokeWidth">
+</mat-progress-spinner>
+</div>

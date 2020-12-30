@@ -1,0 +1,292 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Add Payment</h3>
+                <form class="form p-t-10 row">
+
+                    <div  *ngIf ="strGroup != 'ADMIN'" class="col-md-3">
+                        <mat-form-field>
+                            <input matInput required readonly [matDatepicker]="picker" placeholder="Date Issue" [(ngModel)]="datIssue" name="issueDate" #issueDate>
+                        </mat-form-field>
+                    </div>
+                    
+                    <div *ngIf ="strGroup == 'ADMIN'" class="col-md-3">
+                        <mat-form-field>
+                            <input matInput required readonly [matDatepicker]="picker" placeholder="Date Issue" [(ngModel)]="datIssue" name="issueDate" #issueDate>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-select required [(ngModel)]="fopSelected" name="fopSelected" placeholder="FOP" (click)=fopchange(fopSelected)>
+                                <mat-option [value]=1>CASH</mat-option>
+                                <mat-option [value]=2 [hidden] = "(strGroup == 'BRANCH MANAGER') || (strGroup == 'ASSISTANT BRANCH MANAGER') || (strGroup == 'ASM2') || (strGroup == 'ASM3') || (strGroup == 'ASM4')">BANK</mat-option>
+                                <!-- <mat-option  [value]=2>DEBIT CARD</mat-option> -->
+                                <!-- <mat-option  [value]=3>CREDIT CARD</mat-option>
+                          <mat-option  [value]=4>CHECK</mat-option>
+                          <mat-option  [value]=5>RTGS</mat-option>
+                          <mat-option  [value]=6>NEFT</mat-option> -->
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-select required [(ngModel)]="intPayeeType" name="intPayeeType" (ngModelChange)="payeeTypeChanged()" placeholder="Payee Type">
+                                <mat-option [value]=1>ADVANCE REFUND</mat-option>
+                                <mat-option [value]=2>STAFF INCENTIVES </mat-option>
+                                <mat-option [value]=3>EXPENSES</mat-option>
+                                <mat-option [value]=4>CONTRA</mat-option>
+                                <mat-option [value]=5>CUSTOMER</mat-option>
+                                <mat-option [value]=6>VENDOR</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                 
+                    <div class="col-md-3" *ngIf="strGroup=='ADMIN'">
+                        <mat-form-field>
+                            <input matInput required placeholder="Branch" [formControl]="searchBranch" [matAutocomplete]="Branchname" [(ngModel)]="selectedBranch" #BranchId>
+                            <mat-autocomplete #Branchname="matAutocomplete">
+                                <mat-option *ngFor="let item of lstBranch" [value]="item.name" (onSelectionChange)="BranchChanged(item)">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3" *ngIf="strGroup!='ADMIN'">
+                        <mat-form-field>
+                            <input matInput readonly placeholder="Branch" [(ngModel)]="selectedBranch" name='branch' >
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-md-3" *ngIf="intPayeeType=='3'">
+                        <mat-form-field>
+                            <input matInput required placeholder="Expense Name" [formControl]="searchExpenseName" [matAutocomplete]="expensename" [(ngModel)]="selectedExpenseName" #expenseId>
+                            <mat-autocomplete #expensename="matAutocomplete">
+                                <mat-option *ngFor="let item of lstExpenseName" [value]="item.vchr_category" (onSelectionChange)="expenseNameChanged(item)">
+                                    {{ item.vchr_category }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3" *ngIf="intPayeeType == 1">
+                        <mat-form-field>
+                            <input matInput required placeholder="Customer" [formControl]="searchCustomer" [matAutocomplete]="Customername" [(ngModel)]="selectedCustomer" #idCustomer>
+                            <mat-autocomplete #Customername="matAutocomplete">
+                                <mat-option *ngFor="let item of lstCustomer" [value]="item.name" (onSelectionChange)="CustomerChanged(item)">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <!-- <mat-error *ngIf="form.controls['Customer'].hasError('required') && form.controls['Customer'].touched ">
+                          you must select a item category.
+                      </mat-error> -->
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3" *ngIf="intPayeeType == 5">
+                        <mat-form-field>
+                            <input matInput required placeholder="Customer" [formControl]="searchCustomer" [matAutocomplete]="Customername" [(ngModel)]="selectedCustomer" #idCustomer>
+                            <mat-autocomplete #Customername="matAutocomplete">
+                                <mat-option *ngFor="let item of lstCustomer" [value]="item.name" (onSelectionChange)="CustomerChanged(item)">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <!-- <mat-error *ngIf="form.controls['Customer'].hasError('required') && form.controls['Customer'].touched ">
+                          you must select a item category.
+                      </mat-error> -->
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3" *ngIf="intPayeeType == 6">
+                        <mat-form-field>
+                            <input matInput required placeholder="Vendor" [formControl]="searchVentor" [matAutocomplete]="Ventorname" [(ngModel)]="selectedVentor" #idVentor>
+                            <mat-autocomplete #Ventorname="matAutocomplete">
+                                <mat-option *ngFor="let item of lstVentor" [value]="item.name" (onSelectionChange)="VentorChanged(item)">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                           
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3" *ngIf="intPayeeType ==2 ">
+                        <mat-form-field>
+                            <input matInput required placeholder="Staff" [formControl]="searchStaff" [matAutocomplete]="Staffname" [(ngModel)]="selectedStaff" #idStaff>
+                            <mat-autocomplete #Staffname="matAutocomplete">
+                                <mat-option *ngFor="let item of lstStaff" [value]="item.name" (onSelectionChange)="StaffChanged(item)">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <!-- <mat-error *ngIf="form.controls['Staff'].hasError('required') && form.controls['Staff'].touched ">
+                          you must select a item category.
+                      </mat-error> -->
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3" *ngIf="intPayeeType == '3'">
+                        <mat-form-field>
+                            <input matInput required placeholder="Payee" [formControl]="searchExpenses" [matAutocomplete]="Expensesname" [(ngModel)]="selectedExpenses" #idExpenses>
+                            <mat-autocomplete #Expensesname="matAutocomplete">
+                                <mat-option *ngFor="let item of lstExpenses" [value]="item.name" (onSelectionChange)="ExpensesChanged(item)">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <!-- <mat-error *ngIf="form.controls['Expenses'].hasError('required') && form.controls['Staff'].touched ">
+                          you must select a item category.
+                      </mat-error> -->
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3" *ngIf="intPayeeType ==4">
+                        <mat-form-field>
+                            <mat-select required [(ngModel)]="intBank" name="bank" placeholder="Bank Name">
+                                <mat-option *ngFor="let bank of lstBank" [value]="bank.pk_bint_id" [disabled]="intPayeeType == 4">{{bank.vchr_name}}</mat-option>
+
+                            </mat-select>
+                           
+                        </mat-form-field>
+                        <div class="hvrbox cursor" *ngIf="intPayeeType ==4" style="position: absolute;right: 8px;width: 25px;padding: 0px 10px;">
+                            <span><i class="fas fa-info"></i> </span>
+                            <div class="hvrbox-layer_top">
+                                <div class="hvrbox-text">SIB A/C - 0347083000000047</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                  
+
+                    <!-- <button mat-raised-button
+                  matTooltip="Info about the action"
+                  aria-label="Button that displays a tooltip when focused or hovered over">
+              Action
+                </button> -->
+
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input #Amnt type="number" [readonly] = "intPayeeType == 1" [disabled]="blnShowDenominations" required [(ngModel)]="intAmount" name="intAmount" matInput placeholder="Amount" #amountId>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput required placeholder="Remarks" [(ngModel)]="strRemarks" value="" name="Remarks" #idName>
+                        </mat-form-field>
+                    </div>
+                </form>
+                  <!-- receipt list start -->
+                <div style="position:relative" *ngIf = "intPayeeType == 1 && blnReceipt">
+                    <div class="example-container mat-elevation-z8 mt-3" >
+                               <mat-table [dataSource]="dataSource1" >
+                                 <ng-container matColumnDef="receiptName">
+                                   <mat-header-cell *matHeaderCellDef> Receipt Number </mat-header-cell>
+                                   <mat-cell *matCellDef="let row;let i= index;">{{row.vchr_receipt_num}}
+                                     <!-- <mat-form-field style="width:90%;">
+                                       <mat-select placeholder="Select" [disabled]="showClosed" [(ngModel)]="row.intContraId">
+                                         <mat-option *ngFor="let denomination of lstNotes" [value]="denomination.pk_bint_id" (click)="denominationChanged(denomination.vchr_name,i)">{{denomination.vchr_name}}</mat-option>
+                                       </mat-select>
+                                     </mat-form-field> -->
+                                   </mat-cell>
+                                 </ng-container>
+                                 <ng-container matColumnDef="receiptAmount">
+                                   <mat-header-cell *matHeaderCellDef class="matheadr_right"> Receipt Amount </mat-header-cell>
+                                   <mat-cell *matCellDef="let row;let i= index;" class="matheadr_right">{{row.dbl_amount}}
+                                     <!-- <input class="text-right" style="border: none; border-bottom: 1px solid #dad6d6;" [readonly]="showClosed" type="number" id="countId" [(ngModel)]="row.count" (ngModelChange)="calcTotal(i,$event)"> -->
+                                   </mat-cell>
+                                 </ng-container>
+                                 <ng-container matColumnDef="amount">
+                                   <mat-header-cell class="matheadr_right" *matHeaderCellDef>Payment  </mat-header-cell>
+                                   <mat-cell *matCellDef="let row" class="matheadr_right">
+                                      <input class="text-right" style="border: none; border-bottom: 1px solid #dad6d6;" type="number" id="amountId" [(ngModel)]="row.amount_entered" (ngModelChange)="amountChanged(i,row)">
+                                   </mat-cell>
+                                 </ng-container>
+                                 <!-- <ng-container matColumnDef="action">
+                                   <mat-header-cell class="matheadr_right" *matHeaderCellDef> Action </mat-header-cell>
+                                   <mat-cell *matCellDef="let row;let i= index;"class="matheadr_right">
+                                     <button class="trashbtn" (click)="deleteData(i)" [disabled]="showClosed">
+                                       <i class="ti-trash"></i>
+                                     </button>
+                                   </mat-cell>
+                                 </ng-container> -->
+                                 <!-- <ng-container matColumnDef="paidReward">
+                               <mat-header-cell class="text-right" *matHeaderCellDef mat-sort-header='reward_paid'> Paid Reward </mat-header-cell>
+                               <mat-cell *matCellDef="let row" class="text-right">{{row.reward_paid}} </mat-cell>
+                             </ng-container> -->
+                                 <mat-header-row *matHeaderRowDef="lstDisplayedColumns1"></mat-header-row>
+                                 <mat-row *matRowDef="let row; columns: lstDisplayedColumns1; let i = index;">
+                                 </mat-row>
+                               </mat-table>
+                               <!-- <mat-paginator #matPag1 [length]="intSummaryLength"
+                              [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+                    </div>
+                             <!-- <button id="add_button"  [disabled]="showClosed" title="Add" (click)="addRow()" class="addbtnround float-right">
+                               <i class="fa fa-plus"></i>
+                             </button> -->
+                </div>
+                           <!-- receipt list end -->       
+                   
+                     <div style="position:relative" [ngClass]="{show:blnShowDenominations,hide:!blnShowDenominations}">
+                        <div class="example-container mat-elevation-z8 mt-3" >
+                                   <mat-table [dataSource]="dataSource" >
+                                     <ng-container matColumnDef="denomination">
+                                       <mat-header-cell *matHeaderCellDef> Denomination </mat-header-cell>
+                                       <mat-cell *matCellDef="let row;let i= index;">
+                                         <mat-form-field style="width:90%;">
+                                           <mat-select placeholder="Select" [disabled]="showClosed" [(ngModel)]="row.intContraId">
+                                             <mat-option *ngFor="let denomination of lstNotes" [value]="denomination.pk_bint_id" (click)="denominationChanged(denomination.vchr_name,i)">{{denomination.vchr_name}}</mat-option>
+                                           </mat-select>
+                                         </mat-form-field>
+                                       </mat-cell>
+                                     </ng-container>
+                                     <ng-container matColumnDef="noNotes">
+                                       <mat-header-cell *matHeaderCellDef class="matheadr_right"> No. of notes </mat-header-cell>
+                                       <mat-cell *matCellDef="let row;let i= index;" class="matheadr_right">
+                                         <input class="text-right" style="border: none; border-bottom: 1px solid #dad6d6;" [readonly]="showClosed" type="number" id="countId" [(ngModel)]="row.count" (ngModelChange)="calcTotal(i,$event)">
+                                       </mat-cell>
+                                     </ng-container>
+                                     <ng-container matColumnDef="total">
+                                       <mat-header-cell class="matheadr_right" *matHeaderCellDef> Total </mat-header-cell>
+                                       <mat-cell *matCellDef="let row" class="matheadr_right">{{row.total}} </mat-cell>
+                                     </ng-container>
+                                     <ng-container matColumnDef="action">
+                                       <mat-header-cell class="matheadr_right" *matHeaderCellDef> Action </mat-header-cell>
+                                       <mat-cell *matCellDef="let row;let i= index;"class="matheadr_right">
+                                         <button class="trashbtn" (click)="deleteData(i)" [disabled]="showClosed">
+                                           <i class="ti-trash"></i>
+                                         </button>
+                                       </mat-cell>
+                                     </ng-container>
+                                     <!-- <ng-container matColumnDef="paidReward">
+                                   <mat-header-cell class="text-right" *matHeaderCellDef mat-sort-header='reward_paid'> Paid Reward </mat-header-cell>
+                                   <mat-cell *matCellDef="let row" class="text-right">{{row.reward_paid}} </mat-cell>
+                                 </ng-container> -->
+                                     <mat-header-row *matHeaderRowDef="lstDisplayedColumns"></mat-header-row>
+                                     <mat-row *matRowDef="let row; columns: lstDisplayedColumns; let i = index;">
+                                     </mat-row>
+                                   </mat-table>
+                                   <!-- <mat-paginator #matPag1 [length]="intSummaryLength"
+                                  [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+                                 </div>
+                                 <button id="add_button"  [disabled]="showClosed" title="Add" (click)="addRow()" class="addbtnround float-right">
+                                   <i class="fa fa-plus"></i>
+                                 </button>
+                               </div>
+              
+
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <!-- <div class="col-md-12 row"> -->
+                        <button type="submit" class="btn save_btn  mt-2"  [disabled]="saveDisable" (click)="AddPayment()">Save</button>
+                        <!-- <button type="submit" class="btn btn-info  mt-2"  (click)="AddPayment()">Update</button> -->
+                        <button type="submit" class="btn btn-secondary  ml-2 mt-2" (click)="clearFields()">Cancel</button>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+</div>

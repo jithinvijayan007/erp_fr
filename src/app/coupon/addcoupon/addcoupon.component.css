@@ -1,0 +1,24 @@
+.table td{
+    color: gray;
+}
+.table thead{
+    background: white !important;
+}
+.table th{
+    font-weight: 600;
+}
+
+.trash_styl {
+    color: red;
+    cursor: pointer;
+    padding-left: 5px;
+}
+
+ul {
+    -webkit-padding-start: 20px;
+    padding-top: 5px;
+}
+
+li {
+    list-style: circle;
+}

@@ -1,0 +1,231 @@
+// Special nav
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-duration: 700ms;
+  z-index: 101;
+}
+
+.overlay.on_overlay {
+  visibility: visible;
+  opacity: 1;
+}
+
+.button {
+  color: #fff;
+  border: none;
+  text-align: center;
+  font-size: 2.2em;
+  height: 2.5em;
+  width: 2.5em;
+  text-decoration: none;
+  position: fixed;
+  left: 60%;
+  margin-left: -1.75em;
+  bottom: -1.5em;
+  border-radius: 50%;
+  z-index: 103;
+  transition-duration: 400ms;
+  background: linear-gradient(87deg, #580707a3 0, #354156 100%) !important;
+
+}
+
+.button_open,
+.button:hover,
+.button:focus {
+  outline: none;
+  transition-duration: 400ms;
+  transform: scale(1.1, 1.1) translate3d(0, 0, 0);
+  background: linear-gradient(87deg, #980101a3 0, #841800 100%) !important;
+}
+
+.button label {
+  display: block;
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  font-size: 21px;
+  color: #fff !important;
+  position: relative;
+  top: -15px;
+  transition-duration: 400ms;
+}
+
+.button_open label {
+  display: block;
+  transform: rotate(45deg);
+  transition-duration: 400ms;
+}
+
+.wrapper {
+  width: 30em;
+  height: 30em;
+  position: fixed;
+  z-index: 102;
+  bottom: -20em;
+  left: 263px;
+  margin: auto;
+  right: 0;
+  border-radius: 50%;
+  transform: scale(0.1);
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-duration: 900ms;
+}
+
+.opened_nav {
+  pointer-events: auto;
+  transform: scale(1);
+  bottom: -15em;
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-duration: 600ms;
+}
+
+.wrapper div {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top:36px;
+  // padding: 25px 0px 0px 0px;
+  display: block;
+  text-align: center;
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  overflow: hidden;
+  text-align: center;
+  z-index: 9999;
+  // background: #456784;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(87deg, #580707a3 0, #354156 100%) !important;
+
+}
+
+.wrapper div a {
+text-decoration: none;  
+color: #FFF;
+}
+
+.wrapper div i {
+  text-align: center;
+  display: block;
+  font-size: 1.8em;
+  line-height: 24px;
+  width: auto;
+  text-decoration: none;
+  transition-duration: 400ms;
+}
+
+.wrapper .active * {
+  background: #fff;
+  color: #E91E63;
+}
+
+.wrapper div:not(.active):hover {
+  transition-duration: 700ms;
+  background: #fff;
+  color:white;
+}
+
+.wrapper div:not(.active):hover i {
+  -ms-transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-duration: 900ms;
+    color: #0eaabb;
+}
+
+.wrapper div:first-child {
+  transform: translate3d(1.8em, 6em, 0);
+}
+
+.wrapper div:nth-child(2) {
+  transform: translate3d(6.3em, 1.62em, 0);
+}
+
+.wrapper div:nth-child(3) {
+transform: translate3d(0, 0, 0);
+margin: auto;
+}
+
+.wrapper div:nth-child(4) {
+ transform: translate3d(18.7em, 1.62em, 0);
+}
+
+.wrapper div:nth-child(5) {
+  transform:translate3d(23.19em, 6em, 0);
+}
+  // Toggle switch
+:host /deep/ .mat-slide-toggle-bar {
+    height: 2px !important;
+    width: 14px !important;
+    background-color: rgb(255, 247, 247) !important;
+    top: -3px !important;
+  }
+:host /deep/ .mat-slide-toggle-thumb {
+    height: 10px !important;
+    width: 10px !important;
+  }
+:host /deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: #FF6700;
+   }
+:host /deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #FF6700 ;
+   }
+:host /deep/ .mat-slide-toggle-ripple {
+  height: 0px !important;
+  width: 0px !important;
+  }
+:host /deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb-container {
+  left: -3px !important;
+  }
+:host /deep/  .mat-slide-toggle-thumb-container {
+  left: -9px !important;
+  top:-4px !important;
+  }
+  // Toggle switch ends
+
+  .buttonInside{
+    position:relative;
+    margin-bottom:10px;
+    width: 100%;
+    
+  }
+  
+  .input{
+    height:25px;
+    width:157%;
+    padding: 16px;
+    outline:none;
+    border-radius: 17px;
+    border: 1px solid #e0e0e0;
+  }
+  .button1{
+    position: absolute;
+    right: 11px;
+    top: 1px;
+    border: none;
+    height: 32px;
+    width: 32px;
+    color: black;
+    border-radius: 100%;
+    outline: none;
+    text-align: center;
+    font-weight: bold;
+    padding: 2px;
+    background-color: #eaeaea;
+  }
+  .button1:hover{
+    cursor:pointer;
+  }
+  

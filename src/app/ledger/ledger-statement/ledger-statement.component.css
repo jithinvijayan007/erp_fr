@@ -1,0 +1,13 @@
+/* .total {
+    background: #678ecf;
+} */
+:host /deep/ tr.total {
+    color: #678ecf;
+    font-weight: 600;
+    }
+:host /deep/ tr.other {
+    background: transparent;
+    }
+.align {
+float: right;
+}

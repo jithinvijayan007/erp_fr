@@ -1,0 +1,191 @@
+
+<div class="card">
+  <div class="card-body">
+     <div class="col-md-12 col-lg-12">
+        <h3 class="form-head">Edit Coupon</h3>
+        <div class="row">
+        <div class="col-md-4">
+            <mat-form-field>
+                <input #idCode required [(ngModel)]="strCouponCode" name="code" matInput placeholder="Coupon code" [formControl]="form.controls['code']">
+                <mat-error *ngIf="form.controls['code'].hasError('required') && form.controls['code'].touched ">
+                    you must enter a coupon code.
+                </mat-error>
+            </mat-form-field>
+        </div>
+    
+        <div class="col-md-4">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Expiry date" [(ngModel)]="datExpiryDate" name="datExpiryDate" [formControl]="form.controls['expirydate']" #idExpiryDate>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="form.controls['expirydate'].hasError('required') && form.controls['expirydate'].touched ">
+                    you must enter expiry date
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field>
+                <mat-select #idPackage matInput required [(ngModel)]="strPackage" name="strPackage" matInput placeholder="Type" [formControl]="form.controls['package']"  (ngModelChange)="changePackage(strPackage)" >
+                  <mat-option [value]="0">ALL</mat-option>
+                  <mat-option [value]="1">PRODUCT</mat-option>
+                  <mat-option [value]="2">BRAND</mat-option>
+                  <mat-option [value]="3">ITEM CATEGORY</mat-option>
+                  <mat-option [value]="4">ITEM GROUP</mat-option>
+                  <mat-option [value]="5">ITEM</mat-option >
+                  
+                </mat-select>  
+                <mat-error *ngIf="form.controls['package'].hasError('required') && form.controls['package'].touched ">
+                    you must select a type.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4"  *ngIf = "blnProduct">
+          <mat-form-field> 
+              <input matInput required placeholder="Product" [formControl]="searchProduct" [matAutocomplete]="productname" [(ngModel)]="selectedProduct"
+              #idProduct>
+               <mat-autocomplete #productname="matAutocomplete">
+              <mat-option *ngFor="let item of lst_product" [value]="item.name" (onSelectionChange)="productChanged(item)">
+                {{ item.name }}
+              </mat-option>
+            </mat-autocomplete>
+
+            <!-- <mat-error *ngIf="form.controls['product'].hasError('required') && form.controls['product'].touched ">
+              you must select a product.
+          </mat-error> -->
+
+
+            </mat-form-field>   
+        </div>
+        <div class="col-md-4"  *ngIf = "blnBrand">
+          <mat-form-field>
+              <!-- <mat-select #idBrand  required placeholder="Brand" [(ngModel)]="strBrand" name="strBrand" [formControl]="form.controls['brand']">
+                  <mat-option *ngFor="let item of lst_brand" [value]="item.id" (onSelectionChange)="brandChanged(item)">
+                         
+                 {{ item.vchr_brand_name }}
+
+                 </mat-option>
+               </mat-select> -->
+              
+               <input matInput required placeholder="Brand" [formControl]="searchBrand" [matAutocomplete]="brandname" [(ngModel)]="selectedBrand"
+               #idBrand>
+                <mat-autocomplete #brandname="matAutocomplete">
+               <mat-option *ngFor="let item of lst_brand" [value]="item.name" (onSelectionChange)="brandChanged(item)">
+                 {{ item.name }}
+               </mat-option>
+             </mat-autocomplete>
+
+
+              <!-- <mat-error *ngIf="form.controls['brand'].hasError('required') && form.controls['brand'].touched ">
+                  you must select a brand.
+              </mat-error> -->
+            </mat-form-field>   
+        </div>
+        <div class="col-md-4"  *ngIf = "blnItemCategory">
+          <mat-form-field>
+             
+               
+               <input matInput required placeholder="Item Category" [formControl]="searchItemCategory" [matAutocomplete]="ItemCategoryname" [(ngModel)]="selectedItemCategory"
+               #idItemCategory>
+                <mat-autocomplete #ItemCategoryname="matAutocomplete">
+               <mat-option *ngFor="let item of lst_item_category" [value]="item.name" (onSelectionChange)="itemcategoryChanged(item)">
+                 {{ item.name }}
+               </mat-option>
+             </mat-autocomplete>
+
+
+              <mat-error *ngIf="form.controls['itemcategory'].hasError('required') && form.controls['itemcategory'].touched ">
+                  you must select a item category.
+              </mat-error>
+            </mat-form-field>   
+        </div>
+      
+        <div class="col-md-4"  *ngIf = "blnItemGroup">
+          <mat-form-field>
+              <!-- <mat-select #idItemGroup  required placeholder="Item Group" [(ngModel)]="strItemGroup" name="strItemGroup" [formControl]="form.controls['itemgroup']">
+                  <mat-option *ngFor="let item of lst_item_goup" [value]="item.id" (onSelectionChange)="itemgroupChanged(item)">
+                         
+                 {{ item.vchr_item_group }}
+
+                 </mat-option>
+               </mat-select> -->
+
+               <input matInput required placeholder="Item Group" [formControl]="searchItemGroup" [matAutocomplete]="ItemGroupname" [(ngModel)]="selectedItemGroup"
+               #idItemGroup>
+                <mat-autocomplete #ItemGroupname="matAutocomplete">
+               <mat-option *ngFor="let item of lst_item_group" [value]="item.name" (onSelectionChange)="itemgroupChanged(item)">
+                 {{ item.name }}
+               </mat-option>
+             </mat-autocomplete>
+
+              <mat-error *ngIf="form.controls['itemgroup'].hasError('required') && form.controls['itemgroup'].touched ">
+                  you must select a item group.
+              </mat-error>
+            </mat-form-field>   
+        </div>
+
+        <div class="col-md-4"  *ngIf = "blnItem">
+          <mat-form-field>
+              <!-- <mat-select #idItem  required placeholder="Item" [(ngModel)]="strItem" name="strItem" [formControl]="form.controls['item']">
+                  <mat-option *ngFor="let item of lst_item" [value]="item.id" (onSelectionChange)="itemChanged(item)">
+                         
+                 {{ item.vchr_item }}
+
+                 </mat-option>
+               </mat-select> -->
+
+               <input matInput required placeholder="Item" [formControl]="searchItem" [matAutocomplete]="Itemname" [(ngModel)]="selectedItem"
+               #idItem>
+                <mat-autocomplete #Itemname="matAutocomplete">
+               <mat-option *ngFor="let item of lst_item" [value]="item.code_name" (onSelectionChange)="itemChanged(item)">
+                 {{ item.code_name }}
+               </mat-option>
+             </mat-autocomplete>
+
+
+              <mat-error *ngIf="form.controls['item'].hasError('required') && form.controls['item'].touched ">
+                  you must select a item group.
+              </mat-error>
+            </mat-form-field>   
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+              <input #idMinPurAmnt required [(ngModel)]="intMaxDiscAmnt" name="intMaxDiscAmnt" matInput placeholder="Maximum Discount Amount" type= "number" [formControl]="form.controls['maxdisamnt']">
+              <mat-error *ngIf="form.controls['maxdisamnt'].hasError('required') && form.controls['maxdisamnt'].touched ">
+                  you must enter Maximum Discount Amount.
+              </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+              <input #idDisminAmnt required [(ngModel)]="intMinPurchaseAmnt" name="intMinPurchaseAmnt" matInput placeholder="Minimum Purchase Amount" type= "number" [formControl]="form.controls['minpurchaseamnt']">
+              <mat-error *ngIf="form.controls['minpurchaseamnt'].hasError('required') && form.controls['minpurchaseamnt'].touched ">
+                  you must enter Minimum Purchase Amount.
+              </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+              <input #idDisPer required [(ngModel)]="intDiscPer" name="intDiscPer" matInput placeholder="Discount %" type= "number" [formControl]="form.controls['disper']">
+              <mat-error *ngIf="form.controls['disper'].hasError('required') && form.controls['disper'].touched ">
+                  you must enter Discount Percentage.
+              </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+              <input #idUsageCount required [(ngModel)]="intUsageCount" name="intUsageCount" matInput placeholder="Usage Count" type= "number" [formControl]="form.controls['usagecount']">
+              <mat-error *ngIf="form.controls['usagecount'].hasError('required') && form.controls['usagecount'].touched ">
+                  you must enter Usage Count.
+              </mat-error>
+          </mat-form-field>
+        </div>
+        </div>
+        <div class="row">
+          <button class="btn save_btn m-r-10" color="accent" (click)="saveCoupon()" style="margin-right: 10px;">Save</button>
+          <button class="btn btn-secondary"  [routerLink]="['/coupon/listcoupon']">Cancel</button>
+        </div>
+
+     </div> 
+  </div>
+</div>        

@@ -1,0 +1,141 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-2">
+                  <p>Group name</p>
+                </div>
+                <div class="col-md-10">
+                    <p><b> : {{ groupName}}</b></p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-2">
+                      <p>Company Name</p>
+                    </div>
+                    <div class="col-md-10">
+                        <p><b> : {{ companyName}}</b></p>
+                      </div>
+                  </div>
+              </div>
+         </div>
+      </div>
+      <div class="col-md-2" style="text-align: right;">
+          <button class="btn backbtn"  [routerLink]="['/group/listgroup']"><i class="fa fa-angle-left icon"></i><span style="margin-left: 15px;">Back </span></button>
+      </div>
+    </div>
+  </div>
+</div>
+        <!-- <div class="col-md-12">
+      <div class="col-sm-4 col-md-3 col-lg-2 col-form-label"><b>Department:</b></div>
+      <div class="col-sm-8 col-md-9 col-lg-10 mt-1">{{strDepartment | titlecase}}</div>
+    </div> -->
+<div class="card">
+  <div class="card-body">
+    <!-- <table class="table">
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th>Add</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let key of lstKeys">
+                <strong>{{dctPerms[key].name | uppercase}}</strong>
+                <div *ngFor="let item of dctPerms[key]['data']">
+                       
+                        <span><strong>{{item.name | uppercase}}</strong></span>
+                        <tr *ngFor="let data of item['items']">
+                                <td>{{data.vchr_menu_category_name | uppercase}}</td>
+                                
+                                <td>
+                                        <i class="fa fa-check" *ngIf="data.bln_add_perm && !data.add_disabled"></i>
+                                        <i class="fa fa-minus" *ngIf="!data.bln_add_perm && !data.add_disabled"></i>
+                                        <i class="fa fa-close" *ngIf="data.add_disabled"></i>
+                                      </td>
+                                      <td>
+                                        <i class="fa fa-check" *ngIf="data.bln_edit_perm && !data.edit_disabled"></i>
+                                        <i class="fa fa-minus" *ngIf="!data.bln_edit_perm && !data.edit_disabled"></i>
+                                        <i class="fa fa-close" *ngIf="data.edit_disabled"></i>
+                                      </td>
+                                      <td>
+                                        <i class="fa fa-check" *ngIf="data.bln_view_perm && !data.view_disabled"></i>
+                                        <i class="fa fa-minus" *ngIf="!data.bln_view_perm && !data.view_disabled"></i>
+                                        <i class="fa fa-close" *ngIf="data.view_disabled"></i>
+                                      </td>
+                                      <td>
+                                        <i class="fa fa-check" *ngIf="data.bln_delete_perm && !data.delete_disabled"></i>
+                                        <i class="fa fa-minus" *ngIf="!data.bln_delete_perm && !data.delete_disabled"></i>
+                                        <i class="fa fa-close" *ngIf="data.delete_disabled"></i>
+                                      </td>
+                        </tr>
+                 </div>
+          </tbody>
+    </table> -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul>
+                <li style="padding: 5px 10px;background: #ecf7ff;font-weight:600;margin: 0px;">Module</li>
+                <li style="padding: 5px 10px;background: #ecf7ff;font-weight:600;margin: 0px;">Add</li>
+                <li style="padding: 5px 10px;background: #ecf7ff;font-weight:600;margin: 0px;">Edit</li>
+                <li style="padding: 5px 10px;background: #ecf7ff;font-weight:600;margin: 0px;">Delete</li>
+                <li style="padding: 5px 10px;background: #ecf7ff;font-weight:600;margin: 0px;">View</li>
+                <li style="padding: 5px 10px;background: #ecf7ff;font-weight:600;margin: 0px;">Download</li>
+            </ul>
+
+
+            <ul *ngFor="let key of lstKeys">
+                  <li style="padding: 5px 10px;font-weight:600;" class="cursor" scope="row">{{dctPerms[key].name | uppercase}}</li>
+                 <ul *ngFor="let item of dctPerms[key]['data']">
+                        <li scope="row"  style="cursor:pointer;padding: 0px 25px; font-size: 13px;font-weight:600;color:#2c9598"> {{item.name | uppercase}}</li>
+                        <ul *ngFor="let data of item['items']">
+                            <li style="padding-left: 50px;font-size: 14px; background: #eeeeee66;" scope="row">{{data.vchr_menu_category_name | uppercase}}</li>
+                            <!-- <li style="padding-left: 15px; background: #eeeeee66;"><i class="fa fa-check"></i></li> -->
+                            <li style="padding-left: 15px; background: #eeeeee66;">
+                              <i class="fa fa-check" *ngIf="data.bln_add_perm && !data.add_disabled" style="font-size: 13px;"></i>
+                              <i class="fa fa-minus" *ngIf="!data.bln_add_perm && !data.add_disabled" style="font-size: 13px;"></i>
+                              <i class="fa fa-close" *ngIf="data.add_disabled" style="font-size: 13px;"></i>
+                            </li>
+                            <!-- <li style="padding-left: 15px; background: #eeeeee66;"><i class="fa fa-check"></i> </li> -->
+                            <li style="padding-left: 15px; background: #eeeeee66;">
+                              <i class="fa fa-check" *ngIf="data.bln_edit_perm && !data.edit_disabled" style="font-size: 13px;"></i>
+                              <i class="fa fa-minus" *ngIf="!data.bln_edit_perm && !data.edit_disabled" style="font-size: 13px;"></i>
+                              <i class="fa fa-close" *ngIf="data.edit_disabled" style="font-size: 13px;"></i>
+                            </li>
+                            <!-- <li style="padding-left: 15px; background: #eeeeee66;"><i class="fa fa-check"></i></li> -->
+
+
+                            <li style="padding-left: 15px; background: #eeeeee66;">
+                              <i class="fa fa-check" *ngIf="data.bln_delete_perm && !data.delete_disabled" style="font-size: 13px;"></i>
+                              <i class="fa fa-minus" *ngIf="!data.bln_delete_perm && !data.delete_disabled" style="font-size: 13px;"></i>
+                              <i class="fa fa-close" *ngIf="data.delete_disabled" style="font-size: 13px;"></i>
+                          </li>
+                            
+                            <!-- <li style="padding-left: 15px; background: #eeeeee66;"><i class="fa fa-check"></i></li> -->
+                            <li style="padding-left: 15px; background: #eeeeee66;">
+                              <i class="fa fa-check" *ngIf="data.bln_view_perm && !data.view_disabled" style="font-size: 13px;"></i>
+                              <i class="fa fa-minus" *ngIf="!data.bln_view_perm && !data.view_disabled" style="font-size: 13px;"></i>
+                              <i class="fa fa-close" *ngIf="data.view_disabled" style="font-size: 13px;"></i>
+                          </li>
+                          <!-- <li style="padding-left: 15px; background: #eeeeee66;"><i class="fa fa-check"></i></li> -->
+                          <li style="padding-left: 15px; background: #eeeeee66;">
+                            <i class="fa fa-check" *ngIf="data.bln_download_perm && !data.download_disabled" style="font-size: 13px;"></i>
+                            <i class="fa fa-minus" *ngIf="!data.bln_download_perm && !data.download_disabled" style="font-size: 13px;"></i>
+                            <i class="fa fa-close" *ngIf="data.download_disabled" style="font-size: 13px;"></i>
+                        </li>
+                          
+                      </ul>
+                 </ul>
+            </ul>
+       </div>
+    </div>
+  </div>
+</div>

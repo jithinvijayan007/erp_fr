@@ -1,0 +1,134 @@
+
+<div class="card">
+  <div class="card-body">
+     <h4><b>Purchase Request</b></h4>
+      <div class="row">
+         
+        <div class="col-md-2 col-lg-2">
+          <mat-form-field>
+            <input (click)="picker1.open()" id="fromId" required #startDate  readonly matInput [matDatepicker]="picker1" name="dateFrom"
+              placeholder="From" [(ngModel)]="datFrom">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1>
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2 col-lg-2">
+          <mat-form-field>
+            <input (click)="picker2.open()" id="toId" #endDate required readonly matInput [matDatepicker]="picker2" name="dateTo" placeholder="To"
+              [(ngModel)]="datTo">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2>
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+
+
+        <div class="col-md-3" >
+          <mat-form-field> 
+              <input matInput  placeholder="Product" [formControl]="searchProduct" [matAutocomplete]="productname" [(ngModel)]="selectedProduct"
+              #idProduct>
+              <mat-autocomplete #productname="matAutocomplete">
+              <mat-option *ngFor="let item of lst_product" [value]="item.name" (onSelectionChange)="productChanged(item)">
+                {{ item.name }}
+              </mat-option>
+            </mat-autocomplete>
+            </mat-form-field>   
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field>
+              <input matInput  placeholder="Brand" [formControl]="searchBrand" [matAutocomplete]="brandname" [(ngModel)]="selectedBrand"
+              #idBrand>
+                <mat-autocomplete #brandname="matAutocomplete">
+              <mat-option *ngFor="let item of lst_brand" [value]="item.name" (onSelectionChange)="brandChanged(item)">
+                {{ item.name }}
+              </mat-option>
+            </mat-autocomplete>
+            </mat-form-field>   
+        </div>
+
+        <div class="mt-2">
+            <button  class="btn save_btn" (click)="getData()" color="accent" mat-button>OK</button>
+        </div>
+
+      </div>
+
+      <div *ngIf="lstDetails.length>0" class="acktable table-responsive col-md-12 mt-3">
+          <!-- <p class="tablehint">Check IMEI :</p> -->
+          <table class="table">
+            <thead class="text-white">
+              <tr>
+                <th>Item</th>
+                <th>Requested </th>
+                <th>Available</th>
+                <th>Needed</th>
+                <th class="text-right" style="min-width: 140px;">
+                  <!-- <input type="checkbox" [(ngModel)]="dct_current_item['dmg_all']" (ngModelChange)=SetSelectAll(2)>&nbsp;Damaged -->
+                Reduce Stock &nbsp;<span>
+                  <mat-checkbox [(ngModel)]="blnAll" (ngModelChange)=SetSelectAll()></mat-checkbox></span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of lstDetails; let i = index">
+                <td>{{item.item_code}} - {{item.item_name}}</td>
+                <td class="text-left">{{item.item_requested_qty}}</td>
+                <td class="text-left">{{item.item_stock_qty}}</td>
+                <td *ngIf="item.bln_check" class="text-left">
+                  <input type="number" [(ngModel)]="item.item_needed_qty">
+                </td>
+                <td *ngIf="!item.bln_check" class="text-left">
+                  <input type="number" [(ngModel)]="item.item_requested_qty">
+                </td>
+                <td  *ngIf="item.item_needed_qty==0" class="text-right">
+                  <!-- <input type="checkbox" [(ngModel)]="dct_imei[int_item_id][item]['avl']" (ngModelChange)=setImei(item,1)> -->
+                  <mat-checkbox disabled [(ngModel)]="item.bln_true" (ngModelChange)=setAll(item,i)></mat-checkbox>
+                </td>
+                <td *ngIf="item.item_needed_qty!=0" class="text-right">
+                  <!-- <input type="checkbox" [(ngModel)]="dct_imei[int_item_id][item]['avl']" (ngModelChange)=setImei(item,1)> -->
+                  <mat-checkbox  [(ngModel)]="item.bln_true" (ngModelChange)=setAll(item,i)></mat-checkbox>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row">
+              <div class="col-md-2 col-lg-2">
+                  <mat-form-field>
+                    <input (click)="picker3.open()" id="ExpId" #startDate  readonly matInput [matDatepicker]="picker3" name="dateExp"
+                      placeholder="Expected Date" [(ngModel)]="datExp">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3>
+                    </mat-datepicker>
+                  </mat-form-field>
+                </div>
+        
+            <div class="col-md-3 col-lg-3">
+                <mat-form-field>
+                  <input required placeholder="Vendor " matInput [(ngModel)]="strSupplier" name="supplier" [formControl]="searchSupplier" [matAutocomplete]="supplier"
+                    #idSupplier required>
+                  <mat-autocomplete #supplier="matAutocomplete">
+                    <mat-option *ngFor="let supplier of lstSuppliers" [value]="supplier.vchr_name" (onSelectionChange)="supplierChanged(supplier)">
+                      {{ supplier.vchr_name }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+            </div>
+  
+            <div class="mt-2">
+                <button  class="btn save_btn" (click)="saveData()" color="accent" mat-button>Save</button>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card nodata" *ngIf="lstDetails.length<=0">
+            <h5>No Data Found</h5>
+        </div>
+
+
+
+
+    </div>
+  </div>

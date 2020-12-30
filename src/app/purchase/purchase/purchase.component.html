@@ -1,0 +1,480 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <h4>
+        <span>
+          <i aria-hidden="true"></i>
+        </span>&nbsp; Goods Received Note (GRN)
+      </h4>
+    </div>
+    <!-- <div class="row">
+        <div class="col-xl-2 col-md-3">
+            <mat-form-field>
+                <mat-select placeholder="Purchase order No." id="orderNum" name="orderNum" [(ngModel)]="strOrderNo" (selectionChange)="getOrderDetails()">
+                  <mat-option  *ngFor="let num of lstNum" [value]="num.pk_bint_id">{{num.vchr_po_num | titlecase}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="col-md-3 col-lg-2">
+            <mat-form-field>
+                <input (click)="picker1.open()" id="purDatId" #purDateId required matInput [matDatepicker]="picker1" placeholder="Purchase Date" [(ngModel)]="purDate" (dateChange)="calcLastDat()">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1>
+                </mat-datepicker>
+            </mat-form-field>
+        </div> -->
+    <div>
+      <div class="row mt-3">
+        <!-- <div class="col-xl-2 col-md-2">
+          <mat-form-field>
+            <input placeholder="Purchase order No." matInput id="orderNum" [(ngModel)]="strOrderNo" name="orderNum" (focusout)="getOrderDetails()"
+              [formControl]="searchPurOrder">
+          </mat-form-field>
+        </div> -->
+
+        <div class="col-md-2 col-lg-2">
+          <mat-form-field>
+            <input (click)="picker1.open()" id="purDatId" #purDateId required matInput [matDatepicker]="picker1" placeholder="Purchase Date"
+              [(ngModel)]="purDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1>
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3 col-lg-3" >
+          <mat-form-field>
+              <input matInput placeholder="To Branch*" [formControl]="searchBranch" [matAutocomplete]="branchname" [(ngModel)]="selectedBranch" #branchId>
+              <mat-autocomplete #branchname="matAutocomplete">
+                  <mat-option *ngFor="let item of lstBranches" [value]="item.branchname" (onSelectionChange)="BranchChanged(item)">
+                      {{ item.branchname }}
+                  </mat-option>
+              </mat-autocomplete>
+          </mat-form-field>
+      </div>
+        <div class="col-md-3 col-lg-3">
+          <mat-form-field>
+            <input [readonly]="readAllow" placeholder="Supplier" matInput [(ngModel)]="strSupplier" name="supplier" [formControl]="searchSupplier" [matAutocomplete]="supplier"
+              #idSupplier required>
+            <mat-autocomplete #supplier="matAutocomplete">
+              <mat-option *ngFor="let supplier of lstSuppliers" [value]="supplier.name" (onSelectionChange)="supplierChanged(supplier)">
+                {{ supplier.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-2 col-md-2">
+          <mat-form-field>
+              <input placeholder="WareHouse / HO" disabled matInput  [(ngModel)]="strCurrentBranch" name="branchname" >
+            
+            <!-- <mat-select placeholder="WareHouse" [(ngModel)]="strBranch" required>
+              <mat-option *ngFor="let branch of lstBranch" [value]="branch.pk_bint_id" (click)="setTaxes(branch.fk_states_id)">{{branch.vchr_name | titlecase}} ({{branch.branch_type}}) </mat-option>
+            </mat-select> -->
+          </mat-form-field>
+        </div>
+        <div class="col-xl-2 col-md-2 mt-3">
+          <mat-radio-group [(ngModel)]="paymentType" id="radPay" name="radPayNa" #radBtn (change)="disableShow()">
+            <mat-radio-button [value]="1">Cash</mat-radio-button>
+            <mat-radio-button [value]="2">Credit</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="col-xl-2 col-md-2">
+          <mat-form-field>
+            <input placeholder="Bill No." type="text" matInput id="billNum" [(ngModel)]="strBillNo" name="billNum" required>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2 col-lg-2">
+          <mat-form-field>
+            <input (click)="picker2.open()" id="billDatId" #billDateId required matInput [matDatepicker]="picker2" placeholder="Bill Date"
+              [(ngModel)]="billDate" (dateChange)="calcLastDat()">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2>
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-3 col-md-3">
+          <mat-form-field>
+            <input placeholder="Bill Amount." type="number" matInput id="billAmount" [(ngModel)]="intBillAmount" name="billAmount" required>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <label class="mb-0" style="font-size: 12px;width: 100%">Bill Image</label>
+          <input #file1 type="file" id="billImage" placeholder="Bill Image" (change)="onChange($event)" (cuechange)="onChange($event)" class="input-file" id="InputFile"
+            name="InputFile" #eventImg accept="image/jpeg" max-file-size="100kb">
+        </div>
+       
+        <div class="col-xl-7 col-md-7">
+          <mat-form-field>
+            <input placeholder="Remarks" matInput [(ngModel)]="strRemarks">
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- <div class="col-xl-2 col-md-3">
+            <mat-form-field>
+                <mat-select placeholder="Branch" [(ngModel)]="strBranch" aria-disabled="readonly">
+                  <mat-option  *ngFor="let branch of lstBranch" [value]="branch.pk_bint_id">{{branch.vchr_name | titlecase}} ({{branch.branch_type}}) </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div> -->
+
+      <!-- <div class="col-xl-2 col-md-3">
+            <mat-radio-group [(ngModel)]="paymentType" name="radPayNa" #radBtn (change)="disableShow()">
+                <mat-radio-button [value]="1" aria-checked="true">Cash</mat-radio-button>
+                <mat-radio-button [value]="2">Credit</mat-radio-button>
+              </mat-radio-group> 
+        </div> -->
+      <!-- <div class="col-xl-2 col-md-3">
+            <mat-form-field>
+                    <textarea placeholder="Remarks" matInput [(ngModel)]="strRemarks"></textarea>
+            </mat-form-field>
+        </div>   -->
+    </div>
+    <div class="row mt-3">
+      <div id="table" style="position: relative;">
+        <button id="add_button" title="Add" (click)="addItem()" class="addbtnround float-right" [disabled]="blnAddBtn">
+          <i class="fa fa-plus"></i>
+        </button>
+        <!-- <div class="table-scroll"> -->
+        <section class="">
+          <div class="container1">
+            <table class="table table-bordered" id="table1" style="margin-bottom:0px;">
+              <thead>
+                <tr>
+                  <th style="width: 238px;">
+                    <div>Item name</div>
+                  </th>
+                  <th style="width: 56px;">
+                    <div>Qty</div>
+                  </th>
+                  <!-- <th style="width: 56px;">
+                    <div>Free</div>
+                  </th> -->
+                  <th style="width: 90px;">
+                    <div>Rate</div>
+                  </th>
+                  <th style="width: 73px;">
+                    <div>Disc % </div>
+                  </th>
+                  <!-- <th>
+                    <div>Disc/Unit</div>
+                  </th> -->
+                  <th style="width: 73px;">
+                    <div>Disc Amt</div>
+                  </th>
+                  <th *ngIf="!blnIgst" style="width: 64px;">
+                    <div>CGST % </div>
+                  </th>
+                  <th *ngIf="!blnIgst" style="width: 64px;">
+                    <div>SGST % </div>
+                  </th>
+                  <th *ngIf="blnIgst" style="width: 64px;">
+                    <div>IGST % </div>
+                  </th>
+                  <th style="width: 111px;">
+                    <div>Total Amt</div>
+                  </th>
+                  <th style="width:92px;">
+                    <div>Action</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of lstItem; let i = index">
+                  <td class="text-left">
+                    <mat-form-field>
+                      <input matInput [(ngModel)]="lstItem[i]['item_name']" name="'item'+i" placeholder="Enter item name" [matAutocomplete]="itemNa" (keyup)="itemSearched($event,lstItem[i]['item_name'])">
+                      <mat-autocomplete #itemNa="matAutocomplete">
+                        <mat-option *ngFor="let item of lstItems" [value]="item.name" (onSelectionChange)="itemChanged(item,i,$event)">
+                          {{ item.name }}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                    <!-- <input matInput type="text" placeholder="Item name" [(ngModel)]="lstItem[i]['itemNa']"> -->
+                  </td>
+                  <td>
+                    <input id="txtQty" [disabled]="lstItem[i]['imei_status']" matInput type="number" [(ngModel)]="lstItem[i]['int_qty']">
+                  </td>
+                  <!-- <td>
+                    <input id="txtFree" matInput type="number" placeholder="Free" [(ngModel)]="lstItem[i]['free']" (keyup)="validateFree(i)" (focusout)="setZero(i)">
+                  </td> -->
+                  <td>
+                    <input id="txtRate" matInput type="number" placeholder="Rate" [(ngModel)]="lstItem[i]['rate']" (keyup)="calcTotalUsingRate(i,$event)" (focusout)="setZero(i)">
+                  </td>
+                  <td>
+                    <input id="txtDisPer" matInput type="number" placeholder="Disc %" [(ngModel)]="lstItem[i]['disPer']" (keyup)="calcTotalUsingDisper(i)" (focusout)="setZero(i)">
+                  </td>
+                  <!-- <td>
+                    <input id="txtDisUnit" matInput type="number" placeholder="Disc/Unit" [(ngModel)]="lstItem[i]['disPerUnit']" (keyup)="calcTotalUsingDisPerUnit(i)" (focusout)="setZero(i)">
+                  </td> -->
+                  <td>
+                    <input id="txtDisAmt" matInput type="number" placeholder="Disc Amt" [(ngModel)]="lstItem[i]['disAmt']" (keyup)="calcTotalUsingDisAmt(i)" (focusout)="setZero(i)">
+                  </td>
+                  <td *ngIf="!blnIgst">
+                    <input id="txtCgst" matInput type="number" placeholder="CGST %" [(ngModel)]="lstItem[i]['cgst']" readonly>
+                  </td>
+                  <td *ngIf="!blnIgst">
+                    <input id="txtSgst" matInput type="number" placeholder="SGST %" [(ngModel)]="lstItem[i]['sgst']" readonly>
+                  </td>
+                  <td *ngIf="blnIgst">
+                    <input id="txtIgst" matInput type="number" placeholder="IGST %" [(ngModel)]="lstItem[i]['igst']" readonly>
+                  </td>
+                  <td>
+                    <input id="txtTot" matInput type="number" readonly placeholder="Total Amt" [(ngModel)]="lstItem[i]['totAmt']">
+                  </td>
+                  <td style="padding:0;padding-left:10px;">
+                    <button id="idImei" class="imeigreen" name="naImei" (click)="openimeipopup(imeipopup,i)">IMEI</button>
+                    <!-- <a data-toggle="tooltip" title="IMEI"> <i class="fa fa-download" data-toggle="modal"
+                              data-target="#myModal" aria-hidden="true" (click)="addImei(i)"></i></a> -->
+                    <button class="trashbtn" (click)="deleteData(i)">
+                      <i class="ti-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="row" *ngIf="lstItem[0]['totAmt']>0">
+      <div class="col-md-3"></div>
+      <div class="col-md-9 mt-3" style="text-align:right;">
+        <div class="row">
+          <div class="col-xl-6 col-md-6">
+            <div class="row mt-2">
+              <div *ngIf="showPayBefore">
+                <label style="text-align: left;">Pay Before (In days) :
+                  <span style="padding-left: 10px;">
+                    <input type="number" [(ngModel)]="payBefore" style="border:none;width: 10%;color: gray;" readonly> Last Date :
+                    <input type="text" [(ngModel)]="lastDate" placeholder="Last Date" style="border:none; padding-left: 4px;color: gray;width: 23%;">
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <!-- <label style="color:black"><b>Item gross Amt : </b><span style="padding-left: 10px;"><input type="text" [(ngModel)]="grossAmt" readonly style="border:none;color: gray;"></span></label> -->
+              <label style="color:black">
+                <b>Item gross Amt : </b>
+                <span style="padding-left: 10px;">{{this.grossAmt.toFixed(2)}}</span>
+              </label>
+            </div>
+          </div>
+          <div class="col-xl-6 col-md-6">
+            <div class="pull-right po">
+              <div class="row" style="border-bottom: 1px dotted #d2d6d8;">
+                <div class="col-md-8">
+                  <label style="color:black">
+                    <b>Quantity :</b>
+                  </label>
+                </div>
+                <div class="col-md-4" style="text-align:right;">
+                  <input type="text" [(ngModel)]="grossQty" readonly>
+                </div>
+              </div>
+              <div class="row mt-2" style="border-bottom: 1px dotted #d2d6d8;">
+                <div class="col-md-8">
+                  <label>Total :</label>
+                </div>
+                <div class="col-md-4" style="text-align:right;padding-left: 0">
+                  <!-- <input type="text" [(ngModel)]="grossAmt" readonly> -->
+                  {{this.grossAmt.toFixed(2)}}
+                </div>
+              </div>
+              <div class="row mt-2" style="border-bottom: 1px dotted #d2d6d8;">
+                <div class="col-md-8">
+                  <label>Round off :</label>
+                </div>
+                <div class="col-md-4" style="text-align:right;padding-left: 0">
+                  <input type="text" [(ngModel)]="roundOff" (ngModelChange)="calcNet()">
+                </div>
+              </div>
+              <!-- <label>Round off</label><input type="text" [(ngModel)]="roundOff" (ngModelChange)="calcNet()"> -->
+              <div class="row mt-2" style="border-bottom: 1px dotted #d2d6d8;">
+                <div class="col-md-8">
+                  <label>Additions :</label>
+                </div>
+                <div class="col-md-4" style="text-align:right;padding-left: 0">
+                  <input type="text" [(ngModel)]="additions" (ngModelChange)="calcNet()">
+                </div>
+              </div>
+              <div class="row mt-2" style="border-bottom: 1px dotted #d2d6d8;">
+                <div class="col-md-8">
+                  <label>Deductions :</label>
+                </div>
+                <div class="col-md-4" style="text-align:right;padding-left: 0">
+                  <input type="text" [(ngModel)]="deductions" (ngModelChange)="calcNet()">
+                </div>
+              </div>
+              <div class="row bgclr">
+                <div class="col-md-8">
+                  <label style="color:black;margin-top: 7px;">
+                    <b>Net Value :</b>
+                  </label>
+                </div>
+                <div class="col-md-4" style="text-align:right;padding-left: 0;margin-top: 7px;">
+                  <!-- <input type="text" [(ngModel)]="netAmt" readonly class="bgclr" style="margin-top: 7px;"> -->
+                  {{this.netAmt.toFixed(2)}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <button class="mt-3 btn save_btn m-r-10" (click)="savePurchase()">
+        Save
+      </button>
+      <button class="mt-3 btn btn-secondary" (click)="clearFields()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+<!-- IMEI Popup -->
+<ng-template #imeipopup let-modal>
+  <div class="modal-header" style="background-color: #6ad4b4;">
+      <div class="col-md-12" style="text-align: center;">
+          <h4 class="modal-title" *ngIf="blnItemHasImei ">
+              <span style="color: white;text-align: center; margin-top: 5px; margin-bottom: 5px;">Enter IMEI Number</span>
+          </h4>
+          <h4 class="modal-title" *ngIf="!blnItemHasImei ">
+              <span style="color: white;text-align: center; margin-top: 5px; margin-bottom: 5px;">Enter Batch Number</span>
+          </h4>
+      </div>
+  </div>
+  <div class="modal-body" id="imeipopup">
+      <div class="text-center mt-2" style="display: none">
+          <mat-checkbox name="same"></mat-checkbox>
+      </div>
+    <div *ngIf="blnItemHasImei ">
+      <span *ngIf="lstImeiShow.length!=0">Quantity: <label for="Quantity">{{lstImeiShow.length}}</label></span>
+      <div class="avimeiscroll">
+      <table id="imeiTable" class="table" *ngIf="lstImeiShow.length!=0">
+          <thead class="imeihead">
+              <th>No</th>
+              <th>Imei</th>
+              <th></th>
+          </thead>
+         <tbody>
+              <tr *ngFor="let item of lstImeiShow; let i = index">
+                  <td>{{i+1}}</td>
+                  <label for="">{{item}}</label>
+                  <!-- <td><input readonly type="text" class="form-control" [(ngModel)]=item ></td> -->
+                  <td><button  class="trashbtn" (click)="removeImei(item)">
+                        <i class="ti-close"></i>
+                      </button></td>
+              </tr>
+              
+          </tbody>
+      </table>
+    </div>
+      <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="text" class="form-control" [(ngModel)]=strImei placeholder="Imei" (keyup.enter)="imeiSearched()"  (keypress)="keyPressAlphaNumeric($event)">
+            </div>
+        </div>     
+    </div>
+  </div>
+  <div class="col-md-12"  *ngIf="!blnItemHasImei">
+      <div class="row">
+        <div class="col-md-4">
+            <label style="margin-top: 16px;">Batch No</label>
+        </div>
+        <div class="col-md-8">
+           <input type="text" class="form-control" id="txtBatch" placeholder="Batch No" [(ngModel)]="lstItem[indexOfImei]['vchr_batch_no']"  style="border: none;
+            border-bottom: 1px solid #efebeb;">
+        </div>
+        <div class="col-md-8">{{batchNoShow}}
+       </div>
+      </div>
+  </div>
+  <!-- <div *ngIf="blnItemHasImei">
+        <p class="card nodata">No Imei</p>
+  </div> -->
+
+</div>
+  <div class="modal-footer">
+      <div class="row">
+          <div class="col-md-12" style="text-align:center;">
+            
+              <button type="button" class="btn btn-default m-r-10" (click)="saveImei()" style="background-color: #6ad4b4;">Save</button>
+              <button type="button" class="btn close1" (click)="closeImei(lst_imei)">Close</button>
+          </div>
+      </div>
+  </div>
+</ng-template>
+<!-- IMEi popup end here -->
+
+<!-- imei popup start here -->
+<!-- <ng-template #content1 let-modal>
+  <div class="modal-header" style="background-color: #6ad4b4;">
+    <div class="col-md-12" style="text-align: center;">
+      <h4 class="modal-title">
+        <span style="color: white;text-align: center; margin-top: 5px; margin-bottom: 5px;">Add IMEI/Damaged count</span>
+      </h4>
+    </div>
+  </div>
+  <div class="modal-body scroll" id="imeiPopup">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+              <label style="margin-top: 16px;">Batch No</label>
+          </div>
+          <div class="col-md-8">
+             <input type="text" class="form-control" id="txtBatch" placeholder="Batch No" [(ngModel)]="strBatchNo" (focusout)="checkBatchNum()" style="border: none;
+              border-bottom: 1px solid #efebeb;">
+          </div>
+        </div>
+         </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4"> <label style="margin-top: 16px;">Damaged Items </label></div>
+          <div class="col-md-8">
+           <input type="number" style="border: none;border-bottom: 1px solid #efebeb;"  class="form-control" id="txtDamage" placeholder="Damaged Items" [(ngModel)]="intDamage">
+
+          </div>
+        </div>
+         
+        </div>
+    </div>
+   
+    
+
+    <table class="table table-bordered table-responsive-md text-center mt-3" *ngIf="imeiStat">
+      <thead>
+        <tr class="bgclr">
+          <th class="text-center">Sl:No</th>
+         
+          <th class="text-center">IMEI No</th>
+
+          <th class="text-center">Damaged</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of lstImei; let i = index;">
+          <td class="padding">{{i + 1}}</td>
+          <td class="padding">
+            <input type="text" name="item_i" id="Id_i" [(ngModel)]="item.imei" style="padding-left: 6px;">
+          </td>
+       
+          <td class="padding">
+            <input type="checkbox" [(ngModel)]="item.damagedItem" tabindex=1+/>
+          </td>
+         
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-md-12" style="text-align:center;">
+        <button type="button" class="btn btn-default m-r-10" (click)="saveImei()" style="background-color: #6ad4b4;">Save</button>
+        <button type="button" class="btn cancel_btn" (click)="hideModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template> -->
+<!-- imei popup end here -->
+

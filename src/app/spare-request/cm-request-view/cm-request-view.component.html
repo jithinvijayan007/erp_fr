@@ -1,0 +1,291 @@
+<!-- VIEW FOR PROCUREMENT TEAM -->
+<div class="card">
+  <div class="card-body">
+          <div class = "row disable-select">
+              <div class="col-md-12 col-lg-12">
+                  <h4 class="heading">
+                      <span>
+                        <i class="mdi mdi-book-multiple" aria-hidden="true"></i>
+                      </span>&nbsp;  Spare Request Details  <span style="color: #2c4f5e;"></span>
+                  </h4>
+              </div>
+          </div>
+          <div class="row"  style="padding-top: 15px;">
+              <div class="col-md-7">
+                  <fieldset style="width:100% !important" class="fieldset">
+                    <legend class="legend">Job Details</legend>
+                      <div class="row">
+                        <div class="col-md-4">
+                            <div class="mt-1">
+                                <label>Job ID</label>
+                                <p *ngIf="dctData['vchr_job_num']">{{ dctData['vchr_job_num'] | titlecase }}</p>
+                                <p *ngIf="!dctData['vchr_job_num']">{{ '----' }}</p>
+                            </div>
+                        </div>
+                          <div class="col-md-4">
+                              <div class=" mt-1">
+                                  <label>Date Created</label>
+                                  <p *ngIf="dctData['job_started']">{{ dctData['job_started'] | date:'dd-MM-yyyy' }}</p>
+                                  <p *ngIf="!dctData['job_started']">{{ '----' }}</p>
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                              <div class=" mt-1">
+                                  <label>Servicer Name</label>
+                                  <p *ngIf="dctData['servicer_name']">{{ dctData['servicer_name'] }}</p>
+                                  <p *ngIf="!dctData['servicer_name']">{{ '----' }}</p>
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class=" mt-1">
+                                <label>Product Name</label>
+                                <p *ngIf="dctData['product_name']">{{ dctData['product_name'] }}</p>
+                                <p *ngIf="!dctData['product_name']">{{ '----' }}</p>
+                            </div>
+                        </div>
+                          <div class="col-md-4">
+                              <div class=" mt-1">
+                                  <label>Item Code</label>
+                                  <p *ngIf="dctData['item_code']">{{ dctData['item_code'] }}</p>
+                                  <p *ngIf="!dctData['item_code']">{{ '----' }}</p>
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                              <div class=" mt-1">
+                                  <label>Item Name</label>
+                                  <p *ngIf="dctData['item_name']">{{ dctData['item_name'] | titlecase }}</p>
+                                  <p *ngIf="!dctData['item_name']">{{ '----' }}</p>
+                              </div>
+                          </div>
+                          <!-- <div class="col-md-12">
+                              <div class=" mt-1">
+                                  <label>Spare Item Details</label>
+                                  <table style="width: 100%;">
+                                      <thead>
+                                          <tr>
+                                              <th style="background: #f1f3f7;">Item name</th>
+                                              <th class="center" style="background: #f1f3f7;"> Amount </th>
+                                              <th class="center" style="background: #f1f3f7;"> Remarks </th>
+                                              <th class="center" style="background: #f1f3f7;"> Status </th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr *ngFor="let item of this.dctData['lst_item_details']">
+                                              <td>
+                                                  <p>{{ item.vchr_item_name }}</p>
+                                              </td>
+                                              <td class="center">
+                                                  <p>{{ item.dbl_amount }}</p>
+                                              </td>
+                                              <td class="center">
+                                                  <p>{{ item.vchr_remarks }}</p>
+                                              </td>
+                                              <td style="display: flex;justify-content: center;">
+                                                  <div class="rotate20" *ngIf="item.int_status == 1" style="color: green;width: 30%;border: 2px solid green;font-size: 10px;transform: rotate(-5deg)">
+                                                      <i class="mdi mdi-check"></i>Approved
+                                                  </div>
+                                                  <div class="rotate20" *ngIf="item.int_status == 0" style="color: #ff5454;width: 30%;border: 2px solid #ff5454;font-size: 10px;transform: rotate(-5deg)">
+                                                      <i class="mdi mdi-close"></i>Not Approved
+                                                  </div>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                      
+                                  </table>
+                              </div>
+                          </div> -->
+                      </div>
+                  </fieldset>
+              </div>
+              <div class="col-md-5">
+                <fieldset style="width:100% !important" class="fieldset">
+                  <legend class="legend">Customer Details</legend>
+                  <div class="row" style="padding-top: 4px;">
+                    <div class="col-md-4">
+                      <p>Name :</p>
+                    </div>
+                    <div class="col-md-8">
+                      <p>{{ dctData['customer_name'] | titlecase }}</p>
+                    </div>
+                  </div>
+                  <div class="row" style="padding-top: 4px;">
+                    <div class="col-md-4">
+                      <p>Phone :</p>
+                    </div>
+                    <div class="col-md-8">
+                      <p>{{ dctData['customer_mob'] }}</p>
+                    </div>
+                  </div>
+                  <div class="row" style="padding-top: 4px;">
+                    <div class="col-md-4">
+                      <p>Address</p>
+                    </div>
+                    <div class="col-md-8">
+                      <p>{{ dctData['customer_address'] }}</p>
+                    </div>
+                  </div>
+                  <div class="row" style="padding-top: 4px;">
+                    <div class="col-md-4">
+                      <p>Email :</p>
+                    </div>
+                    <div class="col-md-8">
+                      <p>{{ dctData['customer_email'] }}</p>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+          </div>
+          <div class="row" style="padding-top: 15px;">
+              <div class="col-md-12">
+                  <fieldset style="width:100% !important" class="fieldset">
+             
+                      <legend class="legend">Spare Details</legend>
+                          <!-- <table class="table table-bordered">
+                              <thead style="background-color: #eaeef3;">
+                                  <tr>
+                                      <th class="subhead">Item name</th>
+                                      <th class="text-right subhead"> Amount </th>
+                                      <th class="text-right subhead"> Remarks </th>
+                                      <th class="text-right subhead"> Action </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td class="text-left">
+                                        <div class="col-md-12">
+                                          <input class="base-input" matInput [(ngModel)]="strItemName" type="text"  name="item" placeholder="Enter item name" value="0">
+                                        </div>
+                                      </td>
+                                      
+                                      <td style="vertical-align:middle;text-align:right">
+                                        <input  class="base-input" matInput [(ngModel)]="dblAmount" type="number" style="width: 78px;text-align: right;justify-content: right;" name="item" placeholder="" value="0">
+                                      </td>
+                                      <td style="vertical-align:middle;text-align:right">
+                                       <div class="col-md-12">
+                                          <input class="base-input" matInput [(ngModel)]="strRemarks" type="text" name="item" placeholder="Enter Remarks"> 
+                                      </div>
+                                    </td>
+                                      <td style="vertical-align:middle;text-align: right">
+                                          <button id="view" title="View" class="add" (click)="addSpareItems()">
+                                              <i class=" ti-plus" aria-hidden="true"></i>Add
+                                          </button>
+                                      </td>
+                                  </tr>
+                                  <tr *ngFor="let item of lstSpare;let index=index">
+                                      <td class="text-left">{{item.strItemName}}</td>
+                                      <td style="text-align:right">{{item.intAmount}}</td>
+                                      <td style="text-align:right">{{item.strRemarks}}</td>
+                                      <td style="vertical-align:middle;text-align: right">
+                                          <button class="delete" (click)="deleteSparePart(index,item)">
+                                              <i class="ti-trash" aria-hidden="true"></i> Delete
+                                          </button>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                           
+                          </table> -->
+                          <table style="width: 100%;">
+                            <thead>
+                              <th> Date Req. </th>
+                              <th> Item Name </th>
+                              <th> Item Colour </th>
+                              <th> Req. Quantity </th>
+                              <th> Avail. Quantity </th>
+                              <th> Status </th>
+                              <th style="width: 10%;"></th>
+                            </thead>
+                          
+                            <tbody>
+                          
+                          <ng-container *ngFor="let data of dctData['lst_item']">
+                            <tr (click)="data.expanded = !data.expanded;intRadioSelected = null;">
+                              <td> {{ data.dat_request | date :'dd-MM-yyyy' }} </td>
+                              <td> {{ data.item_name }} </td>
+                              <td> {{ data.vchr_colour }} </td>
+                              <td> {{ data.requested_qty }} </td>
+                              <td> {{ data.availabe_qty }} </td>
+                              <td>
+                                <span *ngIf="data.available_status">Available</span>
+                                <span *ngIf="!data.available_status">Not Available</span>
+                              </td>
+                              <td><button [disabled] = "data.bln_status ||  lstAllocatedStatus.includes(data.request_id)" *ngIf="data.available_status && !data.int_status == 1" title="Assign" class="assign-btn" (click)="openModal(imeiModal,data.request_id)"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                <button [disabled] = "true" *ngIf="data.available_status && data.int_status == 1" title="acknowledged" class="assign-btn-changed" ><i class="fa fa-check" aria-hidden="true"></i></button>
+                              </td>
+                            </tr>
+                            
+                            <tr *ngIf="!data.available_status && data.expanded && data['lst_spare']?.length>0">
+                              <td colspan="5" style="padding-left: 70px;">
+                                <ng-container>
+                                  <table style="width: 100%;" class="innerTable">
+                                    <thead>
+                                      <th> Action </th>
+                                      <th> Item Name </th>
+                                      <th> Remarks </th>
+                                      <th> Amount </th>
+                                    </thead>
+                                  
+                                    <tbody>
+                                      <tr *ngFor="let petSpares of data['lst_spare']">
+                                        <td><input type="radio" id='regular' (click)="radioClicked($event,petSpares.pk_bint_id)" [checked]="petSpares.int_status == 1" [disabled] = "data.bln_selected || intPurchaseStatus == data.request_id" value="petSpares.pk_bint_id" name="optradio"></td>
+                                        <td style="padding-left: 25px"> {{ petSpares.vchr_item }} </td>
+                                        <td> {{ petSpares.vchr_remarks }} </td>
+                                        <td> {{ petSpares.dbl_amount }} </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <div class="col-md-12" *ngIf="!data.bln_selected || intPurchaseStatus == data.request_id">
+                                    <button class="btn save_btn mr-2" style="margin: 15px;float: right;" color="accent" (click)="purchaseSpare(data.request_id)">Purchase</button>
+                                </div>
+                                </ng-container>
+                              </td>
+                            </tr>
+                          </ng-container>
+                            </tbody>
+                          </table>
+                  </fieldset>
+              </div>
+              <!-- <div class="col-md-12">
+                  <button class="btn save_btn mr-2" style="margin: 15px;" color="accent" (click)="saveSpare()">Save</button>
+              </div> -->
+          </div>
+  </div>
+</div>
+
+
+<ng-template #imeiModal let-modal>
+  <!-- <div class="card">
+    <div class="card-body">
+      <h3>Sample</h3>
+    </div>
+  </div> -->
+  <mat-card>
+    <mat-card-title class="card-title">
+      Confirm Assign
+    </mat-card-title>
+    <mat-card-content>
+      <div class="row centerDiv">
+        <div class="col-md-12" style="max-width: 80%;">
+          <div class="form-group mt-1">
+              <mat-form-field>
+                  <input matInput type="text" placeholder="Enter Unique No." [(ngModel)]="strUniqNo">
+              </mat-form-field>
+             
+              <!-- <mat-form-field>
+                <input matInput required placeholder="Unique No.." [formControl]="searchImei" [(ngModel)]="strNgMOdelImei" [matAutocomplete]="imeiname" #idUnique>
+                <mat-autocomplete #imeiname="matAutocomplete">
+                    <mat-option *ngFor="let item of lstImei" [value]="item"  (onSelectionChange)="ImeiChanged(item)">
+                        {{ item }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field> -->
+
+          </div>
+        </div>
+        <div class="col-md-12 centerDiv">
+          <button class="btn save_btn mr-2" style="margin: 15px;" color="accent" (click)="assignItem()">Assign</button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
+    

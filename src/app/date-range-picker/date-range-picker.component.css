@@ -1,0 +1,15 @@
+.date-range-div{
+    width: 85%;
+    background: #000002;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.date-range-input{
+    border: none;
+    background: #000002;
+    color: aliceblue;
+    padding-left: 15px;
+    margin-bottom: 5px;
+    width: inherit;
+}

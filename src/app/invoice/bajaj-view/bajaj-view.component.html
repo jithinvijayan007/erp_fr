@@ -1,0 +1,279 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">
+          <b>Online Sales View
+            <small>
+              <b>{{'- ' + dctMaster['vchr_enquiry_num']}}</b>
+            </small>
+          </b>
+        </h4>
+
+        <div class="form p-t-10 row">
+          <div class="col-md-4" *ngIf="dctMaster['dat_created_at']">
+            <div class="form-group mt-1">
+              <h6>Date</h6>
+              <p class="">{{dctMaster['dat_created_at']| date: 'dd/MM/yyyy'}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="dctMaster['vchr_cust_name']">
+            <div class="form-group mt-1">
+              <h6>Customer Name</h6>
+              <p class="">{{dctMaster['vchr_cust_name']| titlecase}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="dctMaster['int_cust_mob']">
+            <div class="form-group mt-1">
+              <h6>Contact No.</h6>
+              <p class="">{{dctMaster['int_cust_mob']}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-4" *ngIf="dctMaster['vchr_cust_email']">
+            <div class="form-group mt-1">
+              <h6>Mail ID</h6>
+              <p class="">{{dctMaster['vchr_cust_email']}}</p>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="dctMaster['vchr_bname']">
+            <div class="form-group mt-1">
+              <h6>Branch</h6>
+              <p class="">{{dctMaster['vchr_bname'] | titlecase}}</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- ============================================================================================= -->
+  <div class="col-lg-12">
+    <div class="card" *ngFor="let key of enqKeys">
+      <span class="card-body" *ngFor="let item of dctEnquiryDetails[key];let tempId=index">
+        <h4 class="card-title heading" style="font-weight: 600;color: cadetblue;font-size:16px">
+          <span> {{key | titlecase}} {{tempId+1}} &nbsp;</span>
+  
+          <span *ngIf="salesStatus==6">
+            <span (click)="changeFollowUp(tempId,key,0,item)" *ngIf="(!(intFollowUpFlag == tempId && strFollowUpService == key)) && item['vchr_job_status'] == 'CHECKED'">
+              <i class="fa fa-chevron-right" title="Follow-up" aria-hidden="true"></i>
+            </span>
+            <span (click)="changeFollowUp(-1,'',1,item)" *ngIf="(intFollowUpFlag == tempId && strFollowUpService == key) && item['vchr_job_status'] == 'CHECKED'">
+              <i class="fa fa-chevron-down" title="Follow-up" aria-hidden="true"></i>
+            </span>
+          </span>
+  
+          <span *ngIf=" item['vchr_job_status'] == 'GDP NORMAL NEW'">
+            <span (click)="changeGDP(tempId,key,0,item)" *ngIf="(!(intGDPFlag == tempId && strGDPService == key)) && item['vchr_job_status'] == 'GDP NORMAL NEW'">
+              <i class="fa fa-chevron-right" title="Follow-up" aria-hidden="true"></i>
+            </span>
+            <span (click)="changeGDP(-1,'',1,item)" *ngIf="(intGDPFlag == tempId && strGDPService == key) && item['vchr_job_status'] == 'GDP NORMAL NEW'">
+              <i class="fa fa-chevron-down" title="Follow-up" aria-hidden="true"></i>
+            </span>
+          </span>
+       
+        </h4>
+  
+        <div class="form  row mt-3">
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Item Code</h6>
+              <p *ngIf="item.vchr_item_code">{{item['vchr_item_code'] }}</p>
+              <p *ngIf="!item.vchr_item_code">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group mt-1">
+              <h6>Item</h6>
+              <p *ngIf="item.vchr_item_name">{{item['vchr_item_name'] | titlecase}}</p>
+              <p *ngIf="!item.vchr_item_name">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Status</h6>
+              <p *ngIf="item.vchr_enquiry_status">{{item['vchr_enquiry_status']}}</p>
+              <p *ngIf="!item.vchr_enquiry_status">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Quantity</h6>
+              <p *ngIf="item.int_quantity">{{item['int_quantity']}}</p>
+              <p *ngIf="!item.int_quantity">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Discount</h6>
+              <p *ngIf="item.dbl_discount">{{item['dbl_discount']}}</p>
+              <p *ngIf="!item.dbl_discount">{{'0'}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Buyback</h6>
+              <p *ngIf="item.dbl_buyback">{{item['dbl_buyback']}}</p>
+              <p *ngIf="!item.dbl_buyback">{{'0'}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <h6>Amount</h6>
+              <p *ngIf="item.dbl_amount">{{item['dbl_amount']}}</p>
+              <p *ngIf="!item.dbl_amount">{{'0'}}</p>
+            </div>
+          </div>
+  
+        </div>
+  
+  
+        <div class="form row">
+          <div class="col-md-12">
+            <div class="form-group mt-1">
+              <h6>Remarks</h6>
+              <p *ngIf="item['str_remarks']">{{item['str_remarks'] | titlecase}}</p>
+              <p *ngIf="!item['str_remarks']">{{'----'}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form col-md-12 mt-3" *ngIf="!item['bln_IMEI_add']">
+          <div class="row">
+            <div class="col-md-3" *ngFor="let index of item['lst_imei'][item['item_enquiry_id']];let imeiIndex=index ">
+              <mat-form-field class="example-full-width">
+                <input matInput OnlyAlphaNum="true" placeholder="IMEI No.*" [(ngModel)]="index.imei" (keypress)="OnKeyPress(index.imei,$event)" (focusout) = "imeiValidationFuncion(item,index.imei,item['item_enquiry_id'],imeiIndex)">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="form col-md-12 mt-3" *ngIf="item['bln_IMEI_add']">
+          <div class="row">
+            <div class="col-md-3"  *ngFor="let index of item['lst_imei'][item['item_enquiry_id']];let i= index">
+              <mat-form-field class="example-full-width">
+                <input matInput OnlyAlphaNum="true" placeholder="IMEI - {{i+1}}" [(ngModel)]="index.imei"  readonly>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+  
+      </span>
+  
+    </div>
+  </div>
+
+<!-- ============================================================================================= -->
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title heading" style="font-weight: 600;color: cadetblue;font-size:16px">
+         Finance Details
+      </h4>
+
+      <div class="form p-t-10 row">
+
+        <div class="col-md-4" *ngIf="dctMaster['vchr_bank_name']">
+          <div class="form-group mt-1">
+            <h6>Bank</h6>
+            <p class="">{{dctMaster['vchr_bank_name']}}</p>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="dctMaster['bint_account_number']">
+          <div class="form-group mt-1">
+            <h6>A/C No</h6>
+            <p class="">{{dctMaster['bint_account_number']}}</p>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="dctMaster['vchr_cheque_number']">
+          <div class="form-group mt-1">
+            <h6>Cheque No</h6>
+            <p class="">{{dctMaster['vchr_cheque_number']}}</p>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="dctMaster['vchr_initial_payment_type']">
+          <div class="form-group mt-1">
+            <h6>Initial Payment Type</h6>
+            <p class="">{{dctMaster['vchr_initial_payment_type']}}</p>
+          </div>
+        </div>
+
+
+
+        <div class="col-md-4" *ngIf="dctMaster['vchr_finance_schema']">
+          <div class="form-group mt-1">
+            <h6>Scheme</h6>
+            <p class="">{{dctMaster['vchr_finance_schema']}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-4" *ngIf="dctMaster['dbl_down_payment']">
+          <div class="form-group mt-1">
+            <h6>Down Payment</h6>
+            <p class="">{{dctMaster['dbl_down_payment']}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-4" *ngIf="dctMaster['dbl_margin_money']">
+          <div class="form-group mt-1">
+            <h6>Margin Money</h6>
+            <p class="">{{dctMaster['dbl_margin_money']}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-4" *ngIf="dctMaster['dbl_dbd_amount']">
+          <div class="form-group mt-1">
+            <h6>DBD Amount</h6>
+            <p class="">{{dctMaster['dbl_dbd_amount']}}</p>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="dctMaster['dbl_service_charge']">
+          <div class="form-group mt-1">
+            <h6>Service Charge</h6>
+            <p class="">{{dctMaster['dbl_service_charge']}}</p>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="dctMaster['dbl_net_loan_amount']">
+          <div class="form-group mt-1">
+            <h6>Net Loan Amount</h6>
+            <p class="">{{dctMaster['dbl_net_loan_amount']}}</p>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="dctMaster['dbl_processing_fee']">
+          <div class="form-group mt-1">
+            <h6>Processing Fee</h6>
+            <p class="">{{dctMaster['dbl_processing_fee']}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form p-t-10 row" *ngIf="!dctMaster['bln_IMEI_add']">
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput placeholder="Assign Staff*" [formControl]="searchStaff" [matAutocomplete]="staffname" [(ngModel)]="selectedStaff"
+                #staffId>
+              <mat-autocomplete #staffname="matAutocomplete">
+                <mat-option *ngFor="let item of lstStaff" [value]="item.name" (onSelectionChange)="StaffChanged(item)">
+                 {{item.username}} - {{ item.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <button  type="submit" class="btn save_btn m-r-10 m-t-10" [disabled]="saveDisable" (click)="saveData()">Save</button>
+          </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- ================================================================================================== -->
+
+</div>
