@@ -13,7 +13,7 @@ export class ServerService {
     url_company: string;
     public token : string;
 
-    hostAddress = 'http://192.168.0.11:8000/';
+    hostAddress = 'http://192.168.0.116:9000/';
     
     protocol = window.location.protocol;
     hostname = window.location.hostname;
