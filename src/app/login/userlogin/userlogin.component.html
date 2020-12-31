@@ -2,11 +2,11 @@
     <video autoplay muted loop oncanplay="this.play()" onloadedmetadata="this.muted = true" class="video">
         <source src="assets/video/home_video.mp4" type="video/mp4">
       </video>
-    <div class="auth-box" style="background: #0e0000;">
+    <div class="auth-box" style="background: linear-gradient(87deg, #19969c8c, #00000085) !important;box-shadow: 1px 0px 20px rgb(19 77 82);">
         <div id="loginform" [ngClass]="{'d-none': recoverform}">
             <div class="logo">
-                <span class="db"><img src="assets/images/logo.png" alt="elogo" style="width: 257px"/></span>
-                <h5 class="font-medium m-b-20" style="color: #ff1207;margin-top: 20px;">Login To Your Account </h5>
+                <span class="db"><img src="assets/images/fav1.png" alt="elogo" style="width: 200px"/></span>
+                <h5 class="font-medium m-b-20" style="color: #71c4c7;margin-top: 20px; margin-top: 0px;margin-bottom: 0px;">Login To Your Account </h5>
             </div>
             <!-- Form -->
             <div class="row">
@@ -36,7 +36,7 @@
                             <div class="col-md-12">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1">Remember me</label>
+                                    <label class="custom-control-label" for="customCheck1" style="color: #71c4c7;">Remember me</label>
                                     <a (click)="showRecoverForm()" href="javascript:void(0)" id="to-recover" class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
                                 </div>
                             </div>
@@ -84,4 +84,4 @@
     </div>
 </div>
 
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#f80000" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#db3050" type = "timer" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
