@@ -32,7 +32,8 @@ export class SidebarComponent implements OnInit {
     }
   }
   addActiveClass(element: any) {
-
+      localStorage.setItem('SubMenu', element);
+    
     // navigation toggle customization (remove())
     this.fullObject.isNav = 1
 
