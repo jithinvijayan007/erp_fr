@@ -55,6 +55,7 @@ export const Approutes: Routes = [
       { path: 'usertrack', loadChildren: './user-track/user-track.module#UserTrackModule' },
       { path: 'service-main', loadChildren: './services-main/services-main.module#ServicesMainModule' },
       { path: 'spare-request', loadChildren: './spare-request/spare-request.module#SpareRequestModule' },
+      { path: 'job-position', loadChildren: './jobposition/jobposition.module#JobpositionModule' },
       { path: 'hierarchy', loadChildren: './hierarchy/hierarchy.module#HierarchyModule' },
     ]
   },

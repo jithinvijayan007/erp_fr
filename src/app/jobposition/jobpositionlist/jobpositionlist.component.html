@@ -1,0 +1,114 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="formhead"><i class="fa fa-list"></i> &nbsp;Designation List</h4>
+            </div>
+        </div>
+
+        <div class="col-md-12" [ngStyle]="{'display' : dataSource.data.length > 0 ? 'block' : 'none'}">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+        </div>
+        <div class="col-md-12" [ngStyle]="{'display' : dataSource.filteredData.length > 0 ? 'block' : 'none'}">
+            <mat-table [dataSource]="dataSource" matSort>
+                <!-- Department Column -->
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header='fk_department__vchr_name'> Department </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <span *ngIf="row['fk_department__vchr_name']">{{row.fk_department__vchr_name}}</span>
+                        <span *ngIf="!row['fk_department__vchr_name']">---</span>
+                     </mat-cell>
+                </ng-container>
+                <!-- Designation Column -->
+                <ng-container matColumnDef="desig">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header='vchr_name'> Designation </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <span *ngIf="row.vchr_name">{{row.vchr_name }}</span>                    
+                        <span *ngIf="!row.vchr_name">---</span>
+                    </mat-cell>
+                </ng-container>
+                <!-- Status Column -->
+                <ng-container matColumnDef="area">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header='vchr_reject_remark'> Area </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <span *ngIf="row['int_area_type']==0">State</span>
+                        <span *ngIf="row['int_area_type']==1">Territory</span>
+                        <span *ngIf="row['int_area_type']==2">Zone</span>
+                        <span *ngIf="row['int_area_type']==null">---</span>
+                    </mat-cell>
+                </ng-container>
+                <!-- Action Column -->
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header='action'> Action </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button *ngIf="blnEdit" title="Edit" (click)=editJob(row) class="edit mr-2">
+                            <i class="ti-pencil  icon" aria-hidden="true"></i>
+                        </button>
+                        <button *ngIf="blnDelete" title="Delete" (click)="deleteJob(row)" class="delete">
+                            <i class="ti-trash icon"></i>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[10,25,100]"></mat-paginator>
+    </div>
+</div>
+<div *ngIf="dataSource.data.length==0" style="text-align: center">
+
+    <img src="assets/images/nodata-found.png">
+
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>
+                <!-- <div *ngIf="lstJobPositionData.length!=0">
+                        <div class="row mt-3">
+                            <div class="scroll" id="style-5">
+                                <table class="table" style="margin-left: 10px;margin-right: 10px;">
+                                        <thead>
+                                            <tr>
+                                                <th>Department</th>
+                                                <th>Designation</th>
+                                                <th>Area</th>
+                                                <th *ngIf="blnEdit || blnDelete">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let item of lstJobPositionData">
+                                            <tr >
+                                                <td *ngIf="item['fk_department__vchr_name']">{{item['fk_department__vchr_name'] }}</td>
+                                                <td *ngIf="!item['fk_department__vchr_name']">---</td>
+
+                                                <td *ngIf="item['vchr_name']">{{ item['vchr_name'] }}</td>
+                                                <td *ngIf="!item['vchr_name']">---</td>
+                                                <td *ngIf="item['int_area_type']==0">State</td>
+                                                <td *ngIf="item['int_area_type']==1">Territory</td>
+                                                <td *ngIf="item['int_area_type']==2">Zone</td>
+                                                <td *ngIf="item['int_area_type']==null">---</td>
+
+
+                                                <td>
+                                                    <button *ngIf="blnEdit" title="Edit" (click)=editJob(item) class="edit mr-2">
+                                                        <i class="ti-pencil  icon" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button *ngIf="blnDelete" title="Delete" (click)="deleteJob(item)" class="delete">
+                                                        <i class="ti-trash icon"></i>
+                                                    </button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>
+                    
+                    </div>
+        </div>
+    </div>
+    
+    
+    <div *ngIf="lstJobPositionData.length==0" style="text-align: center">
+          
+                    <img src="assets/images/nodata-found.png">
+                
+    </div> -->
