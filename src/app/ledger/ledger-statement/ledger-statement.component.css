@@ -1,11 +1,11 @@
 /* .total {
     background: #678ecf;
 } */
-:host /deep/ tr.total {
+:host ::ng-deep tr.total {
     color: #678ecf;
     font-weight: 600;
     }
-:host /deep/ tr.other {
+:host ::ng-deep tr.other {
     background: transparent;
     }
 .align {
