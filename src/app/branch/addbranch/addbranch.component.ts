@@ -113,7 +113,7 @@ export class AddbranchComponent implements OnInit {
 
       
       });
-
+      //--------------------branch category list dropdown ----------------//
       this.serviceObject
       .getData('branch/branch_category_list/')
       .subscribe(
@@ -122,15 +122,29 @@ export class AddbranchComponent implements OnInit {
 
         }
       );
-      //states
+      //--------------------branch category list dropdown ends ----------------//
+
+      //--------------------states list dropdown ----------------//
       this.serviceObject
-      .getData('states/states_typehead/')
+      .getData('states/states_typeahead/')
       .subscribe(
         (response) => {
           this.lstStates = response['list_states'];
 
         }
       );
+      //--------------------states list dropdown ends----------------//
+      //--------------------hierarchy list dropdown ----------------//
+      this.serviceObject
+      .getData('hierarchy/hierarchy?hierarchy_name='+this.branchName)
+      // .subscribe(
+      //   (response) => {
+      //     this.lstStates = response['list_states'];
+
+      //   }
+      // );
+      //--------------------hierarchy list dropdown ends----------------//
+
 
     }
 

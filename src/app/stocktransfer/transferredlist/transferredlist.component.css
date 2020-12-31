@@ -1,4 +1,4 @@
 .hide-action td.ng2-smart-actions a{
     display: none;
 }
-:host /deep/ tr.hide-action i.ti-truck{display:none;visibility: hidden;}
+:host ::ng-deep tr.hide-action i.ti-truck{display:none;visibility: hidden;}

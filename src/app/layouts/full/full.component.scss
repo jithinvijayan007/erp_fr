@@ -166,30 +166,30 @@ margin: auto;
   transform:translate3d(23.19em, 6em, 0);
 }
   // Toggle switch
-:host /deep/ .mat-slide-toggle-bar {
+:host ::ng-deep .mat-slide-toggle-bar {
     height: 2px !important;
     width: 14px !important;
     background-color: rgb(255, 247, 247) !important;
     top: -3px !important;
   }
-:host /deep/ .mat-slide-toggle-thumb {
+:host ::ng-deep .mat-slide-toggle-thumb {
     height: 10px !important;
     width: 10px !important;
   }
-:host /deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+:host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
     background-color: #FF6700;
    }
-:host /deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+:host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
     background-color: #FF6700 ;
    }
-:host /deep/ .mat-slide-toggle-ripple {
+:host ::ng-deep .mat-slide-toggle-ripple {
   height: 0px !important;
   width: 0px !important;
   }
-:host /deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb-container {
+:host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb-container {
   left: -3px !important;
   }
-:host /deep/  .mat-slide-toggle-thumb-container {
+:host ::ng-deep  .mat-slide-toggle-thumb-container {
   left: -9px !important;
   top:-4px !important;
   }

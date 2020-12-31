@@ -134,7 +134,7 @@ dctData = {}
   currentCustomer='';
   blnMoreFilterClicked = false;
   dctCol={}
-  lstPermission=JSON.parse(localStorage.group_permissions)
+  // lstPermission=JSON.parse(localStorage.group_permissions)
   blnAdd = false;
   blnEdit = false;
   blnDelete = false;
@@ -228,21 +228,21 @@ dctData = {}
     this.datFrom = new Date()
     this.datTo = new Date();
     // this.getData()
-    this.lstPermission.forEach(item=> {
+    // this.lstPermission.forEach(item=> {
 
-      if(item["DOWNLOAD"]==true){
-        console.log("Names",item["NAME"]);
+    //   if(item["DOWNLOAD"]==true){
+    //     console.log("Names",item["NAME"]);
         
-      }
+    //   }
 
-      if (item["NAME"] == "Daily Sales Report") {
-        this.blnAdd = item["ADD"];
-        this.blnEdit= item["EDIT"];
-        this.blnDelete = item["DELETE"];
-        this.blnView = item["VIEW"]
-        this.blnDownload = item["DOWNLOAD"]
-      }
-    });
+    //   if (item["NAME"] == "Daily Sales Report") {
+    //     this.blnAdd = item["ADD"];
+    //     this.blnEdit= item["EDIT"];
+    //     this.blnDelete = item["DELETE"];
+    //     this.blnView = item["VIEW"]
+    //     this.blnDownload = item["DOWNLOAD"]
+    //   }
+    // });
 
     // console.log("#####this.blnDownload",this.blnDownload);
     
