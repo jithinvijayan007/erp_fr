@@ -1,0 +1,144 @@
+<div class="card">
+    <div class="card-body">
+        <h4 class="formhead"> <i class="mdi mdi-briefcase"></i>&nbsp;Add Designation</h4>
+
+        <div class="row mt-3">
+            <div class="col-md-3 mt-1">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Department Name</mat-label>
+                    <mat-select disableOptionCentering [(ngModel)]="intDepartmentId" [disableOptionCentering]="true">
+                        <mat-option *ngFor="let department of lstDepartment" [value]="department.pk_bint_id">
+                            {{department.vchr_code+'-'+department.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field>
+                    <input matInput placeholder="Designation" [(ngModel)]="strDesignationName" value="" name="name">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <div class="row form-group">
+                    <label style="width: 100%;">Apply To</label>&nbsp;
+                    <div class="pretty p-icon p-round p-jelly">
+                        <input type="radio" value="0" name="icon" [(ngModel)]="strApplyTo" (ngModelChange)="applyToChanged()" />
+                        <div class="state p-warning">
+                            <i class="icon mdi mdi-check"></i>
+                            <label>State</label>
+                        </div>
+                    </div>
+                    <div class="pretty p-icon p-round p-jelly">
+                        <input type="radio" value="2" name="icon" [(ngModel)]="strApplyTo" (ngModelChange)="applyToChanged()" />
+                        <div class="state p-warning">
+                            <i class="icon mdi mdi-check"></i>
+                            <label>Zone</label>
+                        </div>
+                    </div>
+                    <div class="pretty p-icon p-round p-jelly">
+                        <input type="radio" value="1" name="icon" [(ngModel)]="strApplyTo" (ngModelChange)="applyToChanged()" />
+                        <div class="state p-warning">
+                            <i class="icon mdi mdi-check"></i>
+                            <label>Territory</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="example-full-width" *ngIf="strApplyTo=='0'">
+                    <mat-label>Select States</mat-label>
+                    <mat-select disableOptionCentering [(ngModel)]="lstSelectedStates" multiple [disableOptionCentering]="true">
+                        <mat-option *ngFor="let state of lstStatesData" [value]="state.pk_bint_id">
+                            {{ state.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" *ngIf="strApplyTo=='2'">
+                    <mat-label>Select Zones</mat-label>
+                    <mat-select disableOptionCentering [(ngModel)]="lstSelectedZones" multiple [disableOptionCentering]="true">
+                        <mat-option *ngFor="let zone of lstZonesData" [value]="zone.pk_bint_id">
+                            {{ zone.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" *ngIf="strApplyTo=='1'">
+                    <mat-label>Select Territories</mat-label>
+                    <mat-select disableOptionCentering [(ngModel)]="lstSelectedTerritories" multiple [disableOptionCentering]="true">
+                        <mat-option *ngFor="let territory of lstTerritoryData" [value]="territory.pk_bint_id">
+                            {{ territory.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- <div class="row"> -->
+            <div class="col-md-3">
+                <mat-form-field>
+                    <input matInput placeholder="Experience in Year.Months" type="number" [(ngModel)]="fltExp" value="" name="Experince">
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field>
+                    <input type="number" matInput placeholder="Age Limit From" [(ngModel)]="intAgeFrom" value="" name="ageFrom">
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field>
+                    <input type="number" matInput placeholder="Age Limit To" [(ngModel)]="intAgeTo" value="" name="ageTo">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Qualification</mat-label>
+                    <mat-select disableOptionCentering id="qualifications" multiple [(ngModel)]="lstQualifications" [disableOptionCentering]="true" style="margin-top: 5px;">
+                        <mat-option *ngFor="let course of lstCourse" value="{{course}}">{{ course}}</mat-option>
+                        <!-- <mat-option value="SSLC">SSLC</mat-option>
+                        <mat-option value="HSE">HSE (PLUS TWO)</mat-option>
+                        <mat-option value="Bachelor of Science">Bachelor of Science</mat-option>
+                        <mat-option value="Bachelor of Technologies">Bachelor of Technologies</mat-option>
+                        <mat-option value="Bachelor of Arts">Bachelor of Arts</mat-option>
+                        <mat-option value="Bachelor of Commerce">Bachelor of Commerce</mat-option>
+                        <mat-option value="Master of Science">Master of Science</mat-option>
+                        <mat-option value="Master of Technologies">Master of Technologies</mat-option>
+                        <mat-option value="Master of Arts">Master of Arts</mat-option>
+                        <mat-option value="Master of Commerce">Master of Commerce</mat-option> -->
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field>
+                    <input type="number" matInput placeholder="Notice Period in Days" [(ngModel)]="intNoticePeriod">
+                </mat-form-field>
+            </div>
+            <!-- <div class="col-md-12">
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Job Description" required [(ngModel)]="strDesc" value="" name="jobdescription">
+                </mat-form-field>
+            </div> -->
+            <!-- </div> -->
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label style="font-weight:400;margin-bottom:0px;">Job Description</label>
+            </div>
+        </div>
+        <div *ngFor="let desc of lstDesc; let i=index" class="row">
+            <div class="col-md-4" >
+                <mat-form-field>
+                    <input type="text" matInput  required [(ngModel)]="lstDesc" name="jobdescription" (blur)="pushToDesc(i,desc)">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 mt-4">
+                <button (click)="addDesc()" style="background:none;border:none;color:#37b137;font-size: 17px;"><i class="mdi mdi-plus"></i></button>
+                <button (click)="deleteDesc(i)" style="background:none;border:none;color:red;font-size: 17px;"><i class="mdi mdi-minus"></i></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn save_btn mt-1 mr-3" (click)="savePosition()">Save</button>
+                <button type="submit" class="btn cancel_btn mt-1" (click)="clearFields()">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

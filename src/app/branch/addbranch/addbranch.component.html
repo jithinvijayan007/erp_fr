@@ -11,7 +11,7 @@
                             <mat-radio-button value="3">Warehouse</mat-radio-button>
                         </mat-radio-group>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <mat-form-field>
                             <input matInput placeholder="Branch Code*" [formControl]="registerForm.controls['branchCode']" [(ngModel)]="strCode" value="" name="code" #branchCode>
                             <mat-error *ngIf="registerForm.controls['branchCode'].hasError('required') && registerForm.controls['branchCode'].touched ">
@@ -19,7 +19,7 @@
                             </mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <mat-form-field>
                             <input matInput placeholder="Branch Name*" [formControl]="registerForm.controls['branch']" [(ngModel)]="strBranch" name="branch" #branchName>
                             <mat-error *ngIf="registerForm.controls['branch'].hasError('required') && registerForm.controls['branch'].touched ">
@@ -27,7 +27,7 @@
                             </mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-4 mt-1">
+                    <div class="col-md-3 mt-1">
                         <mat-form-field>
                             <mat-select matInput placeholder="Branch Category*" [formControl]="registerForm.controls['branchCategory']" [(ngModel)]="strBranchCategory" name="branchCategory" #branchCategory>
                                 <mat-option *ngFor="let category of lstCategory" [value]="category.vchr_category" (onSelectionChange)="BranchCategoryChanged(category)">
@@ -36,6 +36,18 @@
                             </mat-select>
                             <mat-error *ngIf="registerForm.controls['branchCategory'].hasError('required') && registerForm.controls['branchCategory'].touched ">
                                 You must select a branch category.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3 mt-1">
+                        <mat-form-field>
+                            <mat-select matInput placeholder="Hierarchy*" [formControl]="registerForm.controls['branchCategory']" [(ngModel)]="strBranchCategory" name="hierarchy" #branchCategory>
+                                <mat-option *ngFor="let category of lstCategory" [value]="category.vchr_category" (onSelectionChange)="BranchCategoryChanged(category)">
+                                    {{ category.vchr_category }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="registerForm.controls['branchCategory'].hasError('required') && registerForm.controls['branchCategory'].touched ">
+                                You must select a hierarchy.
                             </mat-error>
                         </mat-form-field>
                     </div>
