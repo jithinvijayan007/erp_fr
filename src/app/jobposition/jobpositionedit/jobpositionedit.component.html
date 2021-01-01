@@ -18,57 +18,8 @@
                     <input matInput placeholder="Designation" [(ngModel)]="strDesignationName" value="" name="name">
                 </mat-form-field>
             </div>
-            <div class="col-md-3">
-                <label style="width:100%;">Apply To</label>
-                <div class="pretty p-icon p-round p-jelly mr-4">
-                    <input type="radio" value="0" name="icon" [(ngModel)]="strApplyTo" (ngModelChange)="applyToChanged()" />
-                    <div class="state p-warning">
-                        <i class="icon mdi mdi-check"></i>
-                        <label>State</label>
-                    </div>
-                </div>
-                <div class="pretty p-icon p-round p-jelly mr-4">
-                    <input type="radio" value="2" name="icon" [(ngModel)]="strApplyTo" (ngModelChange)="applyToChanged()" />
-                    <div class="state p-warning">
-                        <i class="icon mdi mdi-check"></i>
-                        <label>Zone</label>
-                    </div>
-                </div>
-                <div class="pretty p-icon p-round p-jelly">
-                    <input type="radio" value="1" name="icon" [(ngModel)]="strApplyTo" (ngModelChange)="applyToChanged()" />
-                    <div class="state p-warning">
-                        <i class="icon mdi mdi-check"></i>
-                        <label>Territory</label>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-md-3">
-                <mat-form-field *ngIf="strApplyTo=='0'">
-                    <mat-label>Select States</mat-label>
-                    <mat-select [(ngModel)]="lstSelectedStates" multiple>
-                        <mat-option *ngFor="let state of lstStatesData" [value]="state.pk_bint_id">
-                            {{ state.vchr_name | uppercase}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field *ngIf="strApplyTo=='2'">
-                    <mat-label>Select Zones</mat-label>
-                    <mat-select [(ngModel)]="lstSelectedZones" multiple>
-                        <mat-option *ngFor="let zone of lstZonesData" [value]="zone.pk_bint_id">
-                            {{ zone.vchr_name | uppercase}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field *ngIf="strApplyTo=='1'">
-                    <mat-label>Select Territories</mat-label>
-                    <mat-select [(ngModel)]="lstSelectedTerritories" multiple>
-                        <mat-option *ngFor="let territory of lstTerritoryData" [value]="territory.pk_bint_id">
-                            {{ territory.vchr_name | uppercase}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+            
+            
             <!-- <div class="row"> -->
             <div class="col-md-3">
                 <mat-form-field>
@@ -122,7 +73,7 @@
         <div *ngFor="let desc of lstDesc; let i=index" class="row">
             <div class="col-md-4" >
                 <mat-form-field>
-                    <input type="text" matInput  required [(ngModel)]="desc" name="jobdescription" (blur)="pushToDesc(i,desc)">
+                    <input type="text" matInput #myInput required [ngModel]="desc" id="jobdescription" name="jobdescription" (blur)="pushToDesc(i,myInput.value)">
                 </mat-form-field>
             </div>
             <div class="col-md-4 mt-4">

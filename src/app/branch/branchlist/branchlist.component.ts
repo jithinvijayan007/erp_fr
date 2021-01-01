@@ -26,7 +26,7 @@ export class BranchlistComponent implements OnInit {
   blnShowData=false;
   lstActiveData=[];
   lstDeactiveData=[]
-  lstPermission=JSON.parse(localStorage.group_permissions)
+  // lstPermission=JSON.parse(localStorage.group_permissions)
   lstCustom=[]
   dctDelete={}
   constructor(
@@ -69,14 +69,14 @@ export class BranchlistComponent implements OnInit {
       this.getData();
       let dct_perms= {'ADD':false,'VIEW':false,'EDIT':false,'DELETE':false}
 
-    this.lstPermission.forEach(item=> {
-      if (item["NAME"] == "Branch List") {
-        dct_perms.ADD = item["ADD"];
-        dct_perms.EDIT= item["EDIT"];
-        dct_perms.DELETE = item["DELETE"];
-        dct_perms.VIEW = item["VIEW"]
-      }
-    });
+    // this.lstPermission.forEach(item=> {
+    //   if (item["NAME"] == "Branch List") {
+    //     dct_perms.ADD = item["ADD"];
+    //     dct_perms.EDIT= item["EDIT"];
+    //     dct_perms.DELETE = item["DELETE"];
+    //     dct_perms.VIEW = item["VIEW"]
+    //   }
+    // });
     if(dct_perms.EDIT==true ){
       this.lstCustom=  [{ name: 'ourCustomAction', title: '<i class="ti-pencil text-info m-r-10"></i>' }]
          

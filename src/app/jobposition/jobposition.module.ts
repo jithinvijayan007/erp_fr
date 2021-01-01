@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { JobpositionRoutingModule } from './jobposition-routing.module';
 import { JobpositionComponent } from './jobposition/jobposition.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { JobpositionlistComponent } from './jobpositionlist/jobpositionlist.component';
-// import { JobpositioneditComponent } from './jobpositionedit/jobpositionedit.component';
+import { JobpositionlistComponent } from './jobpositionlist/jobpositionlist.component';
+import { JobpositioneditComponent } from './jobpositionedit/jobpositionedit.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -17,8 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
-  // declarations: [ JobpositionlistComponent, JobpositioneditComponent],
-  declarations: [JobpositionComponent],
+  declarations: [JobpositionComponent,JobpositionlistComponent,JobpositioneditComponent],
   imports: [
     CommonModule,
     JobpositionRoutingModule,

@@ -67,6 +67,7 @@ export class JobpositioneditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
     this.intJobPositionId=localStorage.getItem('intJobId')
             //--------------------department list dropdown ----------------//
             this.serverService.getData('department/list_departments/').subscribe(
@@ -80,36 +81,7 @@ export class JobpositioneditComponent implements OnInit {
               });
             //--------------------department list dropdown ends ----------------//
     
-            //--------------------state list dropdown ----------------//
-              this.serverService.getData('location/list_states/').subscribe(
-                  (response) => {
-                      if (response.status == 1) {
-                          this.lstStatesData=response['lst_state'];
-                      }
-                    },
-                      (error) => {  
-                      });
-            //--------------------state list dropdown ends ----------------//
-            //--------------------zone list dropdown ----------------//
-            this.serverService.getData('zone/list_zone/').subscribe(
-              (response) => {
-                  if (response.status == 1) {
-                      this.lstZonesData=response['lst_zone'];
-                  }
-                },
-                  (error) => {  
-                  });
-            //--------------------zone list dropdown ends ----------------//
-            //--------------------territory list dropdown ----------------//
-            this.serverService.getData('territory/list_territory/').subscribe(
-              (response) => {
-                  if (response.status == 1) {
-                      this.lstTerritoryData=response['lst_territory'];
-                  }
-                },
-                  (error) => {  
-                  });
-            //--------------------territory list dropdown ends ----------------//
+            
             this.getJobPositionData();
   }
   getJobPositionData(){
@@ -162,23 +134,7 @@ export class JobpositioneditComponent implements OnInit {
       Swal.fire('Error!',"Fill the Designation Name field","error");
       return false;
     }
-    else if(!this.strApplyTo){
-      Swal.fire('Error!',"Select Apply To","error");
-      return false;
-    }
-    else if(this.strApplyTo=='0' && this.lstSelectedStates.length==0){
-      Swal.fire('Error!',"Select State","error");
-      return false;
-    }
-    else if(this.strApplyTo=='2' && this.lstSelectedZones.length==0){
-      Swal.fire('Error!',"Select Zone","error");
-      return false;
-    }
-    else if(this.strApplyTo=='1' && this.lstSelectedTerritories.length==0
-    ){
-      Swal.fire('Error!',"Select Territory","error");
-      return false;
-    }
+   
     
     dctTempData['intDepartmentId']=this.intDepartmentId;
     dctTempData['strDesignationName']=this.strDesignationName;
@@ -220,7 +176,7 @@ export class JobpositioneditComponent implements OnInit {
         this.spinner.hide();
         if (response.status === 1) {
           Swal.fire('Designation added successfully');
-          this.router.navigate(["/jobposition/jobpositionlist"]);
+          this.router.navigate(["/job-position/jobpositionlist"]);
 
         } else if (response.status === 0) {
           if(response.hasOwnProperty('reason')){
@@ -239,7 +195,7 @@ export class JobpositioneditComponent implements OnInit {
     });
   }
   goBacktoList(){
-    this.router.navigate(["/jobposition/jobpositionlist"]);
+    this.router.navigate(["/job-position/jobpositionlist"]);
   }
   applyToChanged(){
     // console.log("applyToChanged",this.strApplyTo);

@@ -41,14 +41,14 @@
                     </div>
                     <div class="col-md-3 mt-1">
                         <mat-form-field>
-                            <mat-select matInput placeholder="Hierarchy*" [formControl]="registerForm.controls['branchCategory']" [(ngModel)]="strBranchCategory" name="hierarchy" #branchCategory>
-                                <mat-option *ngFor="let category of lstCategory" [value]="category.vchr_category" (onSelectionChange)="BranchCategoryChanged(category)">
-                                    {{ category.vchr_category }}
+                            <mat-select matInput placeholder="Hierarchy*"  name="hierarchy" #hierarchyCategory>
+                                <mat-option *ngFor="let hierarchy of lstHierarchy" [value]="hierarchy.pk_bint_id" (onSelectionChange)="HierarchyChanged(hierarchy)">
+                                    {{ hierarchy.vchr_name }}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="registerForm.controls['branchCategory'].hasError('required') && registerForm.controls['branchCategory'].touched ">
+                            <!-- <mat-error *ngIf="registerForm.controls['hierarchyCategory'].hasError('required') && registerForm.controls['hierarchyCategory'].touched ">
                                 You must select a hierarchy.
-                            </mat-error>
+                            </mat-error> -->
                         </mat-form-field>
                     </div>
                     

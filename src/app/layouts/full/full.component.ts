@@ -99,7 +99,6 @@ export class FullComponent implements OnInit {
       this.time = new Date();
    }, 1000);
 
-   console.log(this.strGroupname,"kkkkkk");
    
     this.blnInvoice = 0
     this.isNav = 0
