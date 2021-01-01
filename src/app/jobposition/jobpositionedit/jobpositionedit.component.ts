@@ -190,7 +190,6 @@ export class JobpositioneditComponent implements OnInit {
       },
     (error) => {
       this.spinner.hide();
-      // console.log('response');
 
     });
   }
@@ -198,7 +197,6 @@ export class JobpositioneditComponent implements OnInit {
     this.router.navigate(["/job-position/jobpositionlist"]);
   }
   applyToChanged(){
-    // console.log("applyToChanged",this.strApplyTo);
     this.lstSelectedStates=[];
     this.lstSelectedTerritories=[];
     this.lstSelectedZones=[];
