@@ -17,7 +17,7 @@
             
               <mat-select *ngIf = "lst_hierarchy" matInput  name="hierarchyName" #DropDownSelect>
                                 <!-- <mat-option *ngIf="let data of lst_hierarchy" > -->
-                                  <mat-option *ngFor="let item of lst_hierarchy" [value]="item.pk_bint_id" (click)="onChangeGroup(item)">{{item.vchr_name}}</mat-option>
+                                  <mat-option *ngFor="let item of lst_hierarchy" [value]="item.pk_bint_id" (click)="onChangeGroup(item)">{{item.str_name}}</mat-option>
                                 <!-- </mat-option> -->
                             </mat-select> 
             </div>
