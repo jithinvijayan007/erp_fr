@@ -1,0 +1,64 @@
+<div class="card">
+    <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                        <h4 *ngIf="departmentAction!='edit'" class="formhead"><i class="mdi mdi-domain"></i>&nbsp; Add Department</h4>
+                        <h4 *ngIf="departmentAction=='edit'" class="formhead"><i class="mdi mdi-domain"></i>&nbsp; Edit Department</h4>
+
+                </div>
+            </div>
+            <div class="row mt-3" id="input_anchor" *ngIf="blnAdd || blnEdit">
+                   
+                            <div class="col-md-3">
+
+                                <mat-form-field>
+                                    <input matInput placeholder="Department" required [(ngModel)]="strDepartment" value="" name="name">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                
+                                <mat-form-field>
+                                <input matInput placeholder="Code" required [(ngModel)]="strDepartmentCode" value="" name="code">
+                                </mat-form-field>
+                            </div>
+
+                       <div class="col-md-3 mt-2">
+                            <button *ngIf="departmentAction!='edit'" type="submit" class="btn save_btn  mt-2 mr-3" (click)="saveDepartment()">Save</button>
+                            <button *ngIf="departmentAction=='edit'" type="submit" class="btn save_btn  mt-2 mr-3" (click)="saveDepartmentChanges()">Edit</button>
+                            <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+                        </div>
+                    
+                </div>
+          
+                <div *ngIf="lstDepartmentData.length!=0">
+                    <div class="row mt-3">
+                        <div class="scroll" id="style-5">
+                            <table class="table" style="margin-left: 10px;margin-right: 10px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Department Name</th>
+                                            <th>Department Code</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let item of lstDepartmentData">
+                                        <tr >
+                                            <td >{{item['vchr_name'] }}</td>
+                                            <td>{{ item['vchr_code'] }}</td>
+                                            <td>
+                                                <button *ngIf="blnEdit" title="Edit" (click)=editDepartment(item) class="edit mr-2">
+                                                    <i class="ti-pencil  icon" aria-hidden="true"></i>
+                                                </button>
+                                                <button *ngIf="blnDelete" title="Delete" (click)="deleteDepartment(item)" class="delete">
+                                                    <i class="ti-trash icon"></i>
+                                                </button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                
+                </div>
+    </div>
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

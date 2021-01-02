@@ -70,15 +70,15 @@ export class JobpositionComponent implements OnInit {
 
 
         //_______________________setting up permissions___________________________
-        this.lstPermission = JSON.parse(localStorage.getItem("permission"));    
-        this.lstPermission.forEach((item, index, array) => {
-          if (item["NAME"] == "Designation ") {
-            this.blnAdd = item["ADD"];
-            this.blnView = item["VIEW"];
-            this.blnEdit = item["EDIT"];
-            this.blnDelete = item["DELETE"];
-          }
-        });
+        // this.lstPermission = JSON.parse(localStorage.getItem("permission"));    
+        // this.lstPermission.forEach((item, index, array) => {
+        //   if (item["NAME"] == "Designation ") {
+        //     this.blnAdd = item["ADD"];
+        //     this.blnView = item["VIEW"];
+        //     this.blnEdit = item["EDIT"];
+        //     this.blnDelete = item["DELETE"];
+        //   }
+        // });
         //_______________________setting up permissions___________________________
         //--------------------department list dropdown ----------------//
         this.serverService.getData('department/list_departments/').subscribe(

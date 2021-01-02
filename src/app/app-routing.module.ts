@@ -57,6 +57,8 @@ export const Approutes: Routes = [
       { path: 'spare-request', loadChildren: './spare-request/spare-request.module#SpareRequestModule' },
       { path: 'job-position', loadChildren: './jobposition/jobposition.module#JobpositionModule' },
       { path: 'hierarchy', loadChildren: './hierarchy/hierarchy.module#HierarchyModule' },
+      { path: 'department', loadChildren: './department/department.module#DepartmentModule' },
+
     ]
   },
 
