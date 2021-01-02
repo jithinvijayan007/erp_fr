@@ -1,0 +1,40 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 471px;
+    min-width: 300px;
+    width: 100%;
+  }
+  
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+  mat-cell{
+    padding: 10px 15px 10px 15px;
+  }
+  .minwidth{
+    min-width: 413px;
+    
+  }
+  .maxwidth{
+    max-width: 240px;
+    
+  }
+  .maxwidth2{
+    max-width: 240px;
+    }
+  .mat-header-row, .mat-row {
+    display: flex;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    align-items: center;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+.select{
+    width: 26% !important;
+}
+input.mat-chip-input{
+  margin-left: 5px !important;
+}

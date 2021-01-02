@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddComponent } from './add/add.component';
-
+import { HierarchyComponent } from './hierarchy/hierarchy.component'
 
 const routes: Routes = [
   {
@@ -11,6 +11,9 @@ const routes: Routes = [
   {
     path: 'add-location',
     component: AddComponent
+  }, {
+    path: 'hierarachy',
+    component: HierarchyComponent
   }
 ];
 
