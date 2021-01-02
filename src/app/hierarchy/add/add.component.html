@@ -15,10 +15,10 @@
             </mat-form-field>
             
             
-              <mat-select *ngIf = "lst_hierarchy" matInput  name="hierarchyName" #DropDownSelect>
-                                <!-- <mat-option *ngIf="let data of lst_hierarchy" > -->
+              <mat-select *ngIf = "lst_hierarchy != 0" matInput  name="hierarchyName" #DropDownSelect>
+                                
                                   <mat-option *ngFor="let item of lst_hierarchy" [value]="item.pk_bint_id" (click)="onChangeGroup(item)">{{item.str_name}}</mat-option>
-                                <!-- </mat-option> -->
+                               
                             </mat-select> 
             </div>
             <div class="col-md-2 mt-2" style="text-align: right;">

@@ -24,7 +24,7 @@ export class AddComponent implements OnInit {
       if (res.status == 1) {
         
         this.lst_hierarchy = res['data']
-
+        
       }
       
     }, err => {
