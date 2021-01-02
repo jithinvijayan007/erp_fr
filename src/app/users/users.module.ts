@@ -29,6 +29,8 @@ import { EdituserComponent } from './edituser/edituser.component';
 import { UsergroupaddComponent } from './usergroupadd/usergroupadd.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { AddemployeeComponent } from './addemployee/addemployee.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 
@@ -55,8 +57,9 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
     MatTableModule,
     MatSortModule,
     Ng2SmartTableModule,
-    SelectDropDownModule,
-
+    SelectDropDownModule,   
+    MatChipsModule,
+  
   ],
   declarations: [
     AdduserComponent,
@@ -65,6 +68,7 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
     ChangepasswordComponent,
     EdituserComponent,
     UsergroupaddComponent,
+    AddemployeeComponent
   ]
 })
 export class UsersModule {}

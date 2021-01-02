@@ -6,6 +6,8 @@ import { ViewuserComponent } from './viewuser/viewuser.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { EdituserComponent } from './edituser/edituser.component';
 import { UsergroupaddComponent } from './usergroupadd/usergroupadd.component';
+// import { Addemployee1Component } from './addemployee1/addemployee1.component'
+import { AddemployeeComponent } from './addemployee/addemployee.component';
 
 export const UsersRoutes: Routes = [
   {
@@ -13,7 +15,7 @@ export const UsersRoutes: Routes = [
     children: [
       {
         path: 'adduser',
-        component: AdduserComponent,
+        component: AddemployeeComponent,
         data: {
           title: 'user Add',
           urls: [
