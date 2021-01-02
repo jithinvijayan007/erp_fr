@@ -1,0 +1,171 @@
+h4{
+    font-weight: 500;
+    color: #16507f;
+    font-size: 16px;
+    background-color: #f0f2f3;
+    padding: 10px;
+}
+.input1{
+    border-radius: 3px;
+    border: 1px solid #d8d8d8;
+    padding-left: 5px;
+    width: 100%;
+}
+table{
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+table th {
+    font-family: Montserrat-Medium;
+    color: #fff;
+    line-height: 0.4;
+    font-size: 16px;
+    background-color: #6384b3;
+}
+
+
+td {
+	position: relative;
+    transition: all 300ms;
+    font-size: 14px;
+    line-height: 1;
+   }
+
+td:first-child {
+	box-shadow: inset 1px 0 0 #fff;
+     }	
+
+td:last-child {
+	border-right: 1px solid #e8e8e8;
+	box-shadow: inset -1px 0 0 #fff;
+}	
+
+tr {
+	background: url(https://jackrugile.com/images/misc/noise-diagonal.png);	
+   }
+
+tr:last-of-type td {
+
+	box-shadow: inset 0 -1px 0 #fff; 
+}
+
+tr:last-of-type td:first-child {
+
+	box-shadow: inset 1px -1px 0 #fff;
+}	
+
+tr:last-of-type td:last-child {
+
+  box-shadow: inset -1px -1px 0 #fff;
+
+}	
+
+tbody:hover td {
+
+	   color: transparent;
+       text-shadow: 0 0 3px #aaa;
+}
+
+tbody:hover tr:hover td {
+
+	              color: #444;
+	              text-shadow: 0 1px 0 #fff;
+                  background:#f2f9fe;
+
+  
+                }
+ fieldset {
+                    border: 1px solid #c9d0d6 !important;
+                    margin: 0;
+                    position: relative;
+                    border-radius: 4px;
+                    padding:15px;
+                    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+                    height: 196px;
+             }	
+ legend{
+                        font-size: 14px;
+                        margin-bottom: 0px;
+                        width: 50%;
+                        border-radius: 4px;
+                        padding: 3px 3px 3px 9px;
+                        color: #4680b4 !important;
+                        background-color: white !important;
+        }
+.fieldset1 {
+    border: none !important;
+    margin: 0px 10px 0px 10px;
+    position: relative;
+    border-radius: 4px;
+    padding:15px;
+    background: white;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    height: auto !important;
+    
+
+}	
+.legend1{
+        font-size: 14px;
+        margin-bottom: 0px;
+        border-radius: 4px;
+        padding: 3px 3px 3px 9px;
+        color: white !important;
+        width: 153px;
+        background: linear-gradient(60deg,#ff8567,#f09819) !important;
+        box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,188,212,.4) !important;
+    }
+#salary p{
+    color: black;
+}
+#salary label{
+    font-weight: 400;
+}
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #f29623 !important;
+}
+.uploadinput{
+    width: 90%;
+    border: none;
+    border-bottom: 1px solid #dcd9d9;
+    font-size: 13px;
+  }
+.uploadbtn{
+      background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      color: white;
+      box-shadow: 0 3px 10px rgba(249, 10, 72, 0.4);
+      cursor: pointer;
+  }
+ .experiencebox{
+    background: #fffbf4;
+    margin-bottom: 15px;
+    padding: 10px;
+    position: relative;
+    border: 1px solid #eaeaea;
+    border-radius: 6px;
+ }
+ .closebtn{
+    position: absolute;
+    right: 16px;
+    bottom: -11px;
+    background: white;
+    border: none;
+    color: red;
+    border-radius: 50%;
+    box-shadow: 0 3px 10px rgba(249, 10, 72, 0.4);
+    font-size: 16px;
+ }
+ .headeraddbtn{
+     background: none;
+     border: none;
+     color: green;
+     font-size: 15px;
+     cursor: pointer;
+ }
+ .subheading{
+    font-size: 14px;
+    color: #314f7f;
+    background:none;padding-left: 0;padding-right: 0;
+ }

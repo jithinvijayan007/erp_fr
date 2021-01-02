@@ -1,0 +1,1265 @@
+
+        <h4 style="background:none;"><span><i class="fa fa-user-plus"></i></span> &nbsp;Add Employee</h4>
+           <div class="row mt-4">
+                <fieldset style="width:100% !important" class="fieldset1">
+                         
+                        <legend class="legend1">Personal Details</legend>
+                        <div class="row">  
+                        <div class="col-md-3 mt-1">
+                                <mat-form-field>
+                                    <mat-label>Salutation</mat-label>
+                                      <mat-select [(ngModel)]="strSalutation" required [formControl]="form.controls['salutationName']" [disableOptionCentering]="true">
+                                         <mat-option *ngFor="let salutation of lstSalutationData" [value]="salutation">
+                                                {{ salutation }}
+                                         </mat-option>
+                                      </mat-select>
+                                      <mat-error *ngIf="form.controls['salutationName'].hasError('required')">
+                                            Salutation required
+                                      </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input pattern="[a-zA-Z\s]*$" [formControl]="form.controls['firstName']" required matInput placeholder="First Name" [(ngModel)]="strFirstName" name="firstName" class="matinput1">
+                                        <mat-error *ngIf="form.controls['firstName'].hasError('required')">
+                                            First name required
+                                        </mat-error>
+                                        <mat-error *ngIf="form.controls['firstName'].errors?.pattern">
+                                            alphabets and spaces only allowed
+                                        </mat-error>
+                                    </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input pattern="[a-zA-Z\s]*$" [formControl]="form.controls['middleName']" matInput placeholder="Middle Name" [(ngModel)]="strMiddleName" name="middleName" class="matinput1">
+                                        <mat-error *ngIf="form.controls['middleName'].errors?.pattern">
+                                            alphabets and spaces only allowed
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input pattern="[a-zA-Z\s]*$" [formControl]="form.controls['lastName']" required matInput placeholder="Last Name" [(ngModel)]="strLastName" class="matinput1" name="lastName" value="">
+                                        <mat-error *ngIf="form.controls['lastName'].hasError('required')">
+                                            Last name required
+                                        </mat-error>
+                                        <mat-error *ngIf="form.controls['lastName'].errors?.pattern">
+                                            alphabets and spaces only allowed
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="password" placeholder="Password" [formControl]="form.controls['password1']" required [(ngModel)]="strPassword1" class="matinput1" name="password1" value="">
+                                        </mat-form-field>
+                                        <mat-error *ngIf="form.controls['password1'].hasError('required')">
+                                            Password required
+                                        </mat-error>
+                                        <mat-error *ngIf="form.controls['password1'].hasError('minlength')">
+                                            minimum 8 characters required
+                                        </mat-error>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="password" placeholder="Confirm Password" [formControl]="form.controls['confirmPassword1']" required [(ngModel)]="strConfirmPassword1" class="matinput1" name="confirmPassword1" value="">
+                                            <mat-error *ngIf="form.controls['confirmPassword1'].hasError('required')">
+                                                Confirm password required
+                                            </mat-error>
+                                            <mat-error *ngIf="form.controls['confirmPassword1'].errors?.equalTo">
+                                                Passwords do not match.
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <input (click)="picker.open()" [formControl]="form.controls['dob']" matInput required readonly [matDatepicker]="picker" placeholder="Date of Birth" [(ngModel)]="datOBirth" #dobvalue>
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker [startAt]="datBirthStart" startView="multi-year" #picker></mat-datepicker>
+                                                <mat-error *ngIf="form.controls['dob'].hasError('required')">
+                                                    DOB required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                            
+                                        <div class="col-md-3 mt-1">
+                                            <mat-form-field>
+                                                <mat-select [formControl]="form.controls['empGender']" required [(ngModel)]="strGender" name="empGender" placeholder="Gender" [disableOptionCentering]="true">
+                                                    <mat-option value="Male"> Male </mat-option>
+                                                    <mat-option value="Female"> Female </mat-option>
+                                                    <mat-option value="Other"> Other </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="form.controls['empGender'].hasError('required')">
+                                                    Gender required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 mt-1">
+                                                <mat-form-field>
+                                                    <mat-select required [formControl]="form.controls['religion']" [(ngModel)]="strReligion" name="strReligion" placeholder="Religion/Caste" [disableOptionCentering]="true">
+                                                        <mat-option *ngFor="let religion of lstReligionData" value="{{religion.strName}}" (click) = "religionChanged(religion)">
+                                                                {{ religion.strName | uppercase}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                    <mat-error *ngIf="form.controls['religion'].hasError('required')">
+                                                            Religion required
+                                                    </mat-error>
+                                                    
+                                                </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 mt-1">
+                                                <mat-form-field>
+                                                    <mat-select [formControl]="form.controls['maritalStatus']" required [(ngModel)]="strMaritalStatus" name="strMartialStatus" placeholder="Marital Status" [disableOptionCentering]="true">
+                                                        <mat-option value="Single"> Single </mat-option>
+                                                        <mat-option value="Married"> Married </mat-option>
+                                                        <mat-option value="Divorced"> Divorced </mat-option>
+                                                        <mat-option value="Widowed"> Widowed </mat-option>
+                                                    </mat-select>
+                                                    <mat-error *ngIf="form.controls['maritalStatus'].hasError('required')">
+                                                        Marital status required
+                                                    </mat-error>
+                                                </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <input pattern="[-\d\(\)\+\ \/\_\{\}]{10,25}$" type="number" [formControl]="form.controls['phoneNumber']" required matInput placeholder="Contact Number" [(ngModel)]="intPhoneNumber" name="lastName" value="">
+                                                <mat-error *ngIf="form.controls['phoneNumber'].hasError('required')">
+                                                    Phone Number required
+                                                </mat-error>
+                                                <mat-error *ngIf="form.controls['phoneNumber'].errors?.pattern">
+                                                    Enter valid Phone number
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <input pattern="[-\d\(\)\+\ \/\_\{\}]{10,12}$" type="number" [formControl]="form.controls['officialNumber']"  matInput placeholder="Official Contact Number" [(ngModel)]="intOfficialNumber" name="officialNumber" value="">
+                                                <mat-error *ngIf="form.controls['officialNumber'].errors?.pattern">
+                                                    Enter valid Phone number
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                            
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [formControl]="form.controls['email']" required matInput placeholder="E-mail" [(ngModel)]="strEmail" name="email" value="">
+                                                <mat-error *ngIf="form.controls['email'].hasError('required')">
+                                                    Email required
+                                                </mat-error>
+                                                <mat-error *ngIf="form.controls['email'].errors?.pattern">
+                                                    Enter valid email
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput [formControl]="form.controls['aadharNo']" type="number" required placeholder="Aadhaar Card No" [(ngModel)]="intAadharNo" class="matinput1" name="aadharNo" value="">
+                                                <mat-error *ngIf="form.controls['aadharNo'].hasError('required')">
+                                                    Aadhaar card no. required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput [formControl]="form.controls['panNo']" required placeholder="PAN No." [(ngModel)]="intPanNo" class="matinput1" name="panNo" value="">
+                                                <mat-error *ngIf="form.controls['panNo'].hasError('required')">
+                                                    PAN no. required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput [formControl]="form.controls['fatherName']" required placeholder="Father's Name" [(ngModel)]="strFatherName" class="matinput1" name="fatherName" value="">
+                                                <mat-error *ngIf="form.controls['fatherName'].hasError('required')">
+                                                    Father's Name required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                      
+                            
+                            
+                            
+                                    <!-- address -->
+                                   
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <input [formControl]="form.controls['empAddress']" required matInput placeholder="Address" [(ngModel)]="strAddress" name="empAddress" value="">
+                                                <mat-error *ngIf="form.controls['empAddress'].hasError('required')">
+                                                    Address required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <input [formControl]="form.controls['empPostoffice']" required matInput placeholder="Post office" [(ngModel)]="strPostOffice" name="empPostoffice" value="">
+                                                <mat-error *ngIf="form.controls['empPostoffice'].hasError('required')">
+                                                    Post office required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <input [formControl]="form.controls['empLandMark']" required matInput placeholder="Landmark" [(ngModel)]="strLandMark" name="empLandMark" value="">
+                                                <mat-error *ngIf="form.controls['empLandMark'].hasError('required')">
+                                                    Land Mark required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <input [formControl]="form.controls['empPlace']" required matInput placeholder="Place" [(ngModel)]="strPlace" name="empPlace" value="">
+                                                <mat-error *ngIf="form.controls['empPlace'].hasError('required')">
+                                                    Place required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 mt-1">
+                                            <mat-form-field>
+                                                <mat-label>Select Country *</mat-label>
+                                                <mat-select [(ngModel)]="intCountryId" [formControl]="form.controls['empCountry']" (ngModelChange)="countryChanged(intCountryId)" [disableOptionCentering]="true">
+                                                    <mat-option *ngFor="let country of lstCountryData" [value]="country.pk_bint_id">
+                                                        {{ country.vchr_name | uppercase}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 mt-1">
+                                            <mat-form-field>
+                                                <mat-label>Select State *</mat-label>
+                                                <mat-select [(ngModel)]="intStateId" [formControl]="form.controls['empState']" (ngModelChange)="stateChanged(intStateId)" [disableOptionCentering]="true">
+                                                    <mat-option *ngFor="let state of lstStateData" [value]="state.pk_bint_id">
+                                                        {{ state.vchr_name | uppercase}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 mt-1">
+                                            <mat-form-field>
+                                                <mat-label>Select District *</mat-label>
+                                                <mat-select [(ngModel)]="intDistrictId" [formControl]="form.controls['empDistrict']" [disableOptionCentering]="true">
+                                                    <mat-option *ngFor="let district of lstDistrictData" [value]="district.pk_bint_id">
+                                                        {{ district.vchr_name | uppercase}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <input [formControl]="form.controls['empPincode']" required matInput type="number" placeholder="Pin Code" [(ngModel)]="intPinCode" name="empPincode" value="">
+                                                <mat-error *ngIf="form.controls['empPincode'].hasError('required')">
+                                                    Pin code required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 mt-2">
+                                            <mat-form-field class="example-full-width">
+                                                    <mat-select [formControl]="form.controls['bloodGroup']" required [(ngModel)]="strBloodGroup" name="strBloodGroup" placeholder="Blood Group" [disableOptionCentering]="true">
+                                                            <mat-option value="A +ve"> A +ve </mat-option>
+                                                            <mat-option value="A -ve"> A -ve </mat-option>
+                                                            <mat-option value="B +ve"> B +ve</mat-option>
+                                                            <mat-option value="B -ve"> B -ve </mat-option>
+                                                            <mat-option value="O +ve"> O +ve</mat-option>
+                                                            <mat-option value="O -ve"> O -ve</mat-option>
+                                                            <mat-option value="AB +ve"> AB +ve </mat-option>
+                                                            <mat-option value="AB -ve"> AB -ve </mat-option>
+                                                    </mat-select>
+                                                <mat-error *ngIf="form.controls['bloodGroup'].hasError('required')">
+                                                    Blood Group required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-4">
+                                                <label class="mb-0" style="font-size: 12px;">User Image *</label>
+                                                <input class="uploadinput" *ngIf="!ImageSrc" placeholder="Choose an image">
+                                                <input class="uploadinput" *ngIf="ImageSrc" value="{{ImageSrc.name}}">
+                                
+                                                <button class="uploadbtn" (click)='fileManager2(file1)'><i class="mdi mdi-file-image">
+                                                    <input #file1 type="file" hidden=true id="userImage" (change)="onChange($event)" (cuechange)="onChange($event)" id="InputFile"
+                                                    name="InputFile" #eventImg accept="image/jpeg" max-file-size="100kb">
+                                                </i></button>
+                                
+                                        </div>
+                            
+                                   
+                           </div>        
+                </fieldset>
+            </div>
+
+            <div class="row mt-4">
+            
+                <fieldset style="width:100% !important" class="fieldset1">
+                        <legend class="legend1">Emergency Details</legend>
+                     <div class="row">
+                        <div class="col-md-3">
+                                <mat-form-field class="example-full-width">
+                                    <input type="text" matInput [formControl]="form.controls['emerPerson']" required placeholder="Emergency Contact Person" [(ngModel)]="strEmPerson" class="matinput1" name="strEmPerson" value="">
+                                    <mat-error *ngIf="form.controls['emerPerson'].hasError('required')">
+                                        Emergency Contact Person required
+                                    </mat-error>
+                                </mat-form-field>
+                        </div>
+                        <div class="col-md-3 mt-1">
+                                <mat-form-field class="example-full-width">
+                                        <mat-select [formControl]="form.controls['emerRelation']" required [(ngModel)]="strEmerRelattion" name="strEmerRelattion" placeholder="Relation with employee" [disableOptionCentering]="true">
+                                                <mat-option value="Father"> Father </mat-option>
+                                                <mat-option value="Mother"> Mother </mat-option>
+                                                <mat-option value="Son"> Son </mat-option>
+                                                <mat-option value="Daughter"> Daughter </mat-option>
+                                                <mat-option value="Brother"> Brother </mat-option>
+                                                <mat-option value="Sister"> Sister </mat-option>
+                                                <mat-option value="Other"> Other </mat-option>
+                                        </mat-select>
+                                    <mat-error *ngIf="form.controls['emerRelation'].hasError('required')">
+                                        Relation with employee required
+                                    </mat-error>
+                                </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field class="example-full-width">
+                                <input type="number" matInput [formControl]="form.controls['emerPhNo']" required placeholder="Emergency Phone No." [(ngModel)]="intEmPhNo" class="matinput1" name="emerPhNo" value="">
+                                <mat-error *ngIf="form.controls['emerPhNo'].hasError('required')">
+                                    Emergency Phone No. required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-12">
+                            <mat-form-field class="example-full-width">
+                                <input type="text" matInput [formControl]="form.controls['illnessDetails']"  placeholder=" Please give details of any major operation or illnesses you have had in the last five years." [(ngModel)]="strIllnessDetails" class="matinput1" name="illnessDetails" value="">
+                            </mat-form-field>
+                        </div>
+                    </div>  
+
+
+                </fieldset>
+              </div>
+
+              <!-- Career History -->
+              <div class="row mt-4">
+                <fieldset style="width:100% !important" class="fieldset1">
+                        <legend class="legend1">Career History </legend>
+                        <!-- Experience Details -->
+                        <h4  class="subheading">Experience<span style="float: right;"> <button title="Add Experience" (click)="addExperience()" class="headeraddbtn"><i class="mdi mdi-plus"></i>&nbsp;Add</button></span></h4>
+                        <div *ngFor="let exjob of lstExpDetails; let j=index" class="experiencebox">
+                              
+                                <div class="row mt-2">
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="text" matInput placeholder=" Employer" [(ngModel)]="exjob['strEmployer']" class="matinput1" name="{{'exempr'+j}}" value="">
+                                        </mat-form-field>
+                                    </div>
+                                    <!-- <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="number" matInput placeholder="CTC (monthly)" [(ngModel)]="exjob['fltCtc']" class="matinput1" name="{{'exctc'+j}}" value="">
+                                        </mat-form-field>
+                                    </div>  -->
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="text" matInput placeholder="Designation" [(ngModel)]="exjob['strDesig']" class="matinput1" name="{{'exdesig'+j}}" value="">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="number" matInput placeholder="Experience Details" [(ngModel)]="exjob['vchrExpDetails']"  (ngModelChange)="expChanged()" class="matinput1" name="{{'exinyr'+j}}" value="">
+                                        </mat-form-field>
+                                    </div> 
+                                    <!-- <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="number" matInput placeholder="Relevant Experience" [(ngModel)]="exjob['vchrRelevantExp']" (ngModelChange)="relevantExpChanged()" class="matinput1" name="{{'exinyr'+j}}" value="">
+                                        </mat-form-field>
+                                    </div> -->
+                                    <!-- <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <input (click)="pickerexFrom.open()" matInput required readonly [matDatepicker]="pickerexFrom" placeholder="Date From" [(ngModel)]="exjob['datFrom']" (ngModelChange)="exDateFromChanged(exjob)" #pickerexFrom>
+                                            <mat-datepicker-toggle matSuffix [for]="pickerexFrom"></mat-datepicker-toggle>
+                                            <mat-datepicker startView="multi-year" #pickerexFrom></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <input (click)="pickerexTo.open()" matInput required readonly [matDatepicker]="pickerexTo" placeholder="Date To" [(ngModel)]="exjob['datTo']" (ngModelChange)="exDateToChanged(exjob)" #pickerexTo>
+                                            <mat-datepicker-toggle matSuffix [for]="pickerexTo"></mat-datepicker-toggle>
+                                            <mat-datepicker startView="multi-year" #pickerexTo></mat-datepicker>
+                                        </mat-form-field>
+                                    </div> -->
+                                    <button (click)="deleteExperience(j)" class="closebtn">
+                                        <i class="ti-trash"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+                            <!-- experience ends -->
+                            <!--Reference -->
+                            <div *ngFor="let ref of lstReference;let r=index">
+                                <label class="subheading">Reference {{r+1}}: </label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="text" matInput placeholder="Name" [(ngModel)]="ref['strRefName']" class="matinput1" name="{{'refname'+r}}" value="">
+                                        </mat-form-field>
+                                    </div>
+                                    
+                                    <!-- <input class="input1" type="text" [disabled]="strJobStatus!='1'" placeholder="Name" [(ngModel)]="ref['strRefName']" name="{{'name'+r}}" id="{{'name'+r}}" value=""> -->
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="text" matInput placeholder="Company Name" [(ngModel)]="ref['strCompName']" class="matinput1" name="{{'refcompname'+r}}" value="">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="text" matInput placeholder="Designation" [(ngModel)]="ref['strRefDesig']" class="matinput1" name="{{'refdesig'+r}}" value="">
+                                        </mat-form-field>
+                                    </div>  
+                                    <!-- <input class="input1" type="text" [disabled]="strJobStatus!='1'" placeholder="Designation" [(ngModel)]="ref['strRefDesig']"> -->
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="text" matInput placeholder="Contact" [(ngModel)]="ref['intRefPhone']" class="matinput1" name="{{'refPhone'+r}}" value="">
+                                        </mat-form-field>
+                                    </div>  
+                                    <!-- <input class="input1" type="text" [disabled]="strJobStatus!='1'" placeholder="Contact " [(ngModel)]="ref['intRefPhone']"> -->
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="text" matInput placeholder="Email" [(ngModel)]="ref['strRefEmail']" class="matinput1" name="{{'refEmail'+r}}" value="">
+                                        </mat-form-field>
+                                    </div>  
+                                    <!-- <input class="input1" type="text" [disabled]="strJobStatus!='1'" placeholder="Email" [(ngModel)]="ref['strRefEmail']"> -->
+                                </div>
+
+                            </div>
+                        <!--Reference -->
+                </fieldset>
+              </div> 
+            <!-- Career History ends-->
+
+            <!-- Family Details -->
+            <div class="row mt-4">
+                <fieldset style="width:100% !important" class="fieldset1">
+                    <legend class="legend1">Family Details </legend>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button (click)="addFamilyDetails()" class="headeraddbtn"><i class="mdi mdi-plus"></i>&nbsp;Add</button>
+                        </div>
+                    </div>
+                    <div  class=" mt-2 experiencebox" *ngFor="let fam of lstFamilyDetails; let f=index">
+                        <div class="row">
+                           
+                        <div class="col-md-4 mt-2">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="text" placeholder="Name" class="matinput1" matInput [(ngModel)]="fam['strRelativeName']" name="{{'famName'+f}" value="">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4 mt-2">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select required [(ngModel)]="fam['strRelation']" name="strEmerRelattion" placeholder="Relation with employee" [disableOptionCentering]="true">
+                                                <mat-option value="Father"> Father </mat-option>
+                                                <mat-option value="Mother"> Mother </mat-option>
+                                                <mat-option value="Son"> Son </mat-option>
+                                                <mat-option value="Daughter"> Daughter </mat-option>
+                                                <mat-option value="Brother"> Brother </mat-option>
+                                                <mat-option value="Sister"> Sister </mat-option>
+                                                <mat-option value="Spouse"> Spouse </mat-option>
+                                                <mat-option value="Other"> Other </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>       
+    
+                                    <div class="col-md-4 mt-2">
+                                            <mat-form-field class="example-full-width">
+                                                <input (click)="pickerfb.open()"  matInput required readonly [matDatepicker]="pickerfb" placeholder="Date of Birth" [(ngModel)]="fam['relativeDOB']" (ngModelChange)="relatvDOBChanged(fam)" #relativedob>
+                                                <mat-datepicker-toggle matSuffix [for]="pickerfb"></mat-datepicker-toggle>
+                                                <mat-datepicker startView="multi-year" #pickerfb></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-4 mt-2">
+                                            <mat-form-field class="example-full-width">
+                                                <input type="text" placeholder="Occupation" matInput class="matinput1" [(ngModel)]="fam['strOccupation']" name="{{'famjob'+f}}">
+                                            </mat-form-field>
+                                        </div> 
+                                        <div class="col-md-4 mt-2">
+                                            <label style="width:100%;font-weight: 400 !important;">Alive</label>
+                                            <div class="pretty p-icon p-round p-jelly mr-5">
+                                                <input type="radio" value="Yes" name="{{f}}" [(ngModel)]="fam['isAlive']" />
+                                                <div class="state p-warning">
+                                                    <i class="icon mdi mdi-check"></i>
+                                                    <label>Yes</label>
+                                                </div>
+                                            </div>
+                                            <div class="pretty p-icon p-round p-jelly">
+                                                <input type="radio" value="No" name="{{f}}" [(ngModel)]="fam['isAlive']" />
+                                                <div class="state p-warning">
+                                                    <i class="icon mdi mdi-check"></i>
+                                                    <label>No</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button (click)="deleteFamily(f)" class="closebtn"><i class="ti-trash"></i></button>
+                                      
+                        </div>
+                    </div>
+                </fieldset>
+            </div> 
+            <!-- Family Details ends-->
+
+
+            <!-- Educational Qualification Details -->
+            <div class="row mt-4">
+                <fieldset style="width:100% !important" class="fieldset1">
+                    <legend class="legend1">Education</legend>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button title="Add Qualification" (click)="addQualifications()" class="headeraddbtn"><i class="mdi mdi-plus"></i>&nbsp;Add</button>
+                        </div>
+                    </div>
+                   
+                    <div *ngFor="let course of lstEduDetails;let i=index" class="experiencebox">
+                      
+                        <div class="row mt-2">
+                                <div class="col-md-12">
+                                        <div class="pretty p-image p-plain">
+                                            <input type="checkbox" [(ngModel)]="course['blnHighest']" (ngModelChange)="highestQualifChanged($event)" />
+                                            <div class="state">
+                                                    <img class="image" src="assets/images/tick.png">
+                                                <label style="font-size: 14px;color: #314f7f;font-weight: 500;">Highest Qualification</label>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <mat-label>Select Qualification *</mat-label>
+                                    <mat-select [(ngModel)]="course['strQualif']" (ngModelChange)="qualificationChanged(i,course['strQualif'])" [disableOptionCentering]="true">
+                                        <mat-option *ngFor="let qualif of lstQualifData" [value]="qualif.value">
+                                            {{ qualif.name | uppercase}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <mat-label>Select Course *</mat-label>
+                                    <mat-select [(ngModel)]="course['strCourse']" (ngModelChange)="courseChanged(i,course['strCourse'])"  [disableOptionCentering]="true"
+                                    [disabled]="(course['strQualif']=='SSLC') || (course['strQualif']=='HSE')|| (course['strQualif']=='Diploma')">
+                                        <mat-option *ngFor="let qualif of lstCourse" [value]="qualif">
+                                            {{ qualif | uppercase}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <!-- <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                    <label style="margin-bottom:0px">Specialization </label>
+                                    <input type="text" matInput class="matinput1" [(ngModel)]="course['strSpecialization']">
+                                </mat-form-field>
+                            </div> -->
+                            <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                    <input placeholder="University/College" type="text" matInput class="matinput1" [(ngModel)]="course['strInstituion']">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 mt-2">
+                                <mat-form-field class="example-full-width">
+                                    <!-- <label style="margin-bottom:0px"> Place</label> -->
+                                    <input placeholder="Place" type="text" matInput class="matinput1" [(ngModel)]="course['strPlace']">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 mt-2">
+                                <mat-form-field>
+                                    <mat-label>Passing Year:</mat-label>
+                                    <mat-select [(ngModel)]="course['intYear']"  [disableOptionCentering]="true">
+                                        <mat-option *ngFor="let year of lstPassoutYear" [value]="year">
+                                            {{ year}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 mt-2">
+                                <mat-form-field class="example-full-width">
+                                    <!-- <label style="margin-bottom:0px"> Percentage </label> -->
+                                    <input type="number" placeholder="Percentage" matInput class="matinput1" [(ngModel)]="course['fltPercentage']">
+                                </mat-form-field>
+                            </div>
+                            <button (click)="deleteQualifications(i)" class="closebtn">
+                                <i class="ti-trash"></i>
+                            </button>
+                        </div>
+
+                    </div>                               
+                </fieldset>
+            </div> 
+            <!-- Educational Qualification ends-->
+
+
+
+
+
+
+
+              
+              <div class="row mt-4">
+                
+                <fieldset style="width:100% !important" class="fieldset1">
+                        <legend class="legend1">Professional Details</legend>
+                        <div class = "row">
+                            
+                                <div class="col-md-3 mt-1">
+                                        <mat-form-field>
+                                            <mat-label>Employee Category *</mat-label>
+                                            <mat-select [(ngModel)]="intCategoryId" (ngModelChange)="getSalarySplit()" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let category of lstCategory" (click)="categoryChanged(category)" [value]="category.pk_bint_id">
+                                                    {{ category.vchr_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <!-- employee code field -->
+                                    <!-- <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput [formControl]="form.controls['empCode']" required placeholder="Employee Code" [(ngModel)]="strEmpCode" class="matinput1" name="empCode" value=""> 
+                                        <mat-error *ngIf="form.controls['empCode'].hasError('required')">
+                                        Empolyee Code required
+                                        </mat-error>
+                                        <mat-error *ngIf="form.controls['empCode'].errors?.alreadytaken">
+                                        Employee code already taken
+                                        </mat-error>
+                                    </mat-form-field>
+                            </div> -->
+                        
+                        
+                                    <!-- <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput [formControl]="form.controls['userName']" required placeholder="User Name" [(ngModel)]="strUserName" class="matinput1" name="userName" value="">
+                                            <mat-error *ngIf="form.controls['userName'].hasError('required')">
+                                                User Name required
+                                            </mat-error>
+                                            <mat-error *ngIf="form.controls['userName'].errors?.alreadytaken">
+                                                Username already taken
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div> -->
+                                
+                                    <div class="col-md-3 mt-1" *ngIf="strLoginUser=='Super User'">
+                                        <mat-form-field>
+                                            <mat-label>Select Company *</mat-label>
+                                            <mat-select [(ngModel)]="intSelectedCompanyId" [formControl]="form.controls['companyName']" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let company of lstCompanyData" [value]="company.pk_bint_id">
+                                                    {{ company.vchr_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                        
+                                    <!-- <div class="row"> -->
+                                    <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                            <input [formControl]="searchBranch" required matInput placeholder="Branch Name" [(ngModel)]="strBranchName" name="branchName" class="matinput1" [matAutocomplete]="branch" (ngModelChange)="branchChange()" #idBranch>
+                                            <mat-autocomplete #branch="matAutocomplete">
+                                                <mat-option *ngFor="let item of lstBranches" [value]="item.name" (onSelectionChange)="branchChanged(item)">
+                                                    {{item.name }}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                            <!-- <mat-error *ngIf="form.controls['branchName'].hasError('required')">
+                                        Branch name required
+                                    </mat-error> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3 mt-1">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Department Name *</mat-label>
+                                            <mat-select [(ngModel)]="intDepartmentId" (ngModelChange)="departmentChanged()" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let department of lstDepartment" [value]="department.pk_bint_id">
+                                                    {{department.vchr_code+'-'+department.vchr_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="form.controls['departmentName'].hasError('required')">
+                                                Department name required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                        
+                                    <div class="col-md-3 mt-1">
+                                        <mat-form-field>
+                                            <mat-label>Employee Designation *</mat-label>
+                                            <mat-select [(ngModel)]="intSelectedDesignation" [formControl]="form.controls['designationName']" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let designation of lstDesignationData" [value]="designation.pk_bint_id">
+                                                    {{ designation.vchr_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                        
+                                    <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                            <input (click)="picker1.open()" [formControl]="form.controls['doj']" matInput required readonly [matDatepicker]="picker1" placeholder="Date of Join" [(ngModel)]="datOJoin" #dojoinvalue>
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                            <mat-error *ngIf="form.controls['doj'].hasError('required')">
+                                                Date of join required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                        
+                                    <div class="col-md-3 mt-1">
+                                        <mat-form-field>
+                                            <mat-label>Level of Grade</mat-label>
+                                            <mat-select [formControl]="form.controls['levelOfGrade']" required [(ngModel)]="strLevelOfGrade" name="levelOfGrade" placeholder="Level of Grade" [disableOptionCentering]="true">
+                                                <mat-option value="Direction"> Direction </mat-option>
+                                                <mat-option value="Execution"> Execution </mat-option>
+                                                <mat-option value="Integration"> Integration </mat-option>
+                                                <mat-option value="Managerial"> Managerial </mat-option>
+                                                <mat-option value="Supports"> Supports </mat-option>
+                                                <mat-option value="NA"> NA </mat-option>
+                        
+                                            </mat-select>
+                                            <mat-error *ngIf="form.controls['levelOfGrade'].hasError('required')">
+                                                Level of Grade required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                        
+                                    <div class="col-md-3 mt-1">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Grade *</mat-label>
+                                            <mat-select [(ngModel)]="strGrade" [formControl]="form.controls['grade']" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let grade of lstGrades" [value]="grade">
+                                                    {{ grade }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="form.controls['grade'].hasError('required')">
+                                                Grade required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                        
+                                    <div class="col-md-3 mt-1">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Salary Structure *</mat-label>
+                                            <mat-select [(ngModel)]="intSalaryStructure" [disabled]="!(selectedCategory.toUpperCase() == 'EMPLOYEE')" [formControl]="form.controls['salaryStructure']" (ngModelChange)="getSalarySplit()" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let salaryStructure of lstSalaryStructure" (click)="salaryStructureChanged(salaryStructure)" [value]="salaryStructure.pk_bint_id">
+                                                    {{ salaryStructure.vchr_name }}
+                                                </mat-option>
+                        
+                                            </mat-select>
+                                            <mat-error *ngIf="form.controls['salaryStructure'].hasError('required')">
+                                                Salary Structure required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="number" placeholder="Gross Pay" required [(ngModel)]="fltGrossPay" [disabled]="!(selectedCategory.toUpperCase() == 'EMPLOYEE')" (change)="getSalarySplit()" class="matinput1" name="grosspay" value="" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==7) return false;">
+                                        </mat-form-field>
+                                        <!-- <label style="width: 100%;font-weight: 400;">Gross Pay</label> -->
+                                        <!-- <input type="number" required [(ngModel)]="fltGrossPay" (change)="getSalarySplit()" name="grosspay" value="" class="input1" > -->
+                        
+                                    </div>
+                                    <div class="col-md-3 mt-1">                                      
+                                        <mat-form-field>
+                                            <mat-label>Select level</mat-label>
+                                            <mat-select [(ngModel)]="int_Level" (ngModelChange)="levelChanged()" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let loc of lstLevelData" value="{{loc.pk_bint_id}}">
+                                                    {{ loc.vchr_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>                
+                         </div>
+
+                                    <div class="col-md-3 mt-1">
+                                        <mat-form-field>
+                                            <mat-label>Select Physical Location</mat-label>
+                                            <mat-select [(ngModel)]="lstSelectedLocation" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let loc of lstLocationData" value="{{loc.pk_bint_id}}">
+                                                    {{ loc.vchr_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                        
+                        
+                        
+                        
+                                    <!-- <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                            <input [formControl]="searchGroup" required matInput placeholder="Group Name" [(ngModel)]="strGroupName" name="groupName" class="matinput1" [matAutocomplete]="groupName" (ngModelChange)="groupChange()">
+                                            <mat-autocomplete #groupName="matAutocomplete">
+                                                <mat-option *ngFor="let item of lstGroup" [value]="item.name" (onSelectionChange)="groupChanged(item)">
+                                                    {{item.name }}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                            <mat-error *ngIf="form.controls['groupName'].hasError('required')">
+                                                Group name required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div> -->
+                                    <!-- <div class="row"> -->
+                                    <div class="col-md-3">
+                                         <mat-form-field class="example-full-width">
+                                            <input matInput type="number" placeholder="ESI No" [(ngModel)]="intEsiNumber" class="matinput1" name="esiNumber" value="">
+                                        </mat-form-field>
+                                     </div>
+                                    <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="number" placeholder="UAN No" [(ngModel)]="intUANNumber" class="matinput1" name="uanNumber" value="">
+                                            </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="number" placeholder="WWF No" [(ngModel)]="intWWFNumber" class="matinput1" name="wwfNumber" value="">
+                                            </mat-form-field>
+                                    </div>
+                                    <!-- wps -->
+                                    <div class="col-md-3 mt-1">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Select WPS Group</mat-label>
+                                            <mat-select [(ngModel)]="intWPSGroupId" [formControl]="form.controls['WPSGroup']" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let wps of lstWPSGroupData"  [value]="wps.pk_bint_id">
+                                                    {{ wps.vchr_name }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    
+
+                                    <div class="col-md-3 mt-1">
+                                       
+                                                <mat-form-field>
+                                                    <mat-label>Select Functions</mat-label>
+                                                    <mat-select [(ngModel)]="lstFunction" multiple [disableOptionCentering]="true">
+                                                        <mat-option *ngFor="let loc of lstProductData" value="{{loc.pk_bint_id}}">
+                                                            {{ loc.vchr_name | uppercase}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            
+                                 </div>
+
+                                    <div class="col-md-3 mt-1">
+                                        <mat-form-field>
+                                            <mat-label>Select Subfunction</mat-label>
+                                            <mat-select [(ngModel)]="intSelectedBrandId" [formControl]="form.controls['brandName']" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let brand of lstBrandData" [value]="brand.pk_bint_id">
+                                                    {{ brand.vchr_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                
+
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label style="width:100%;font-weight: 400 !important;">Select Payment Mode</label>
+                                        <div class="pretty p-icon p-round p-jelly mr-5">
+                                            <input type="radio" value="0" name="paymentIcon" [(ngModel)]="intPaymentMode" (ngModelChange)="paymentModeClicked()" />
+                                            <div class="state p-warning">
+                                                <i class="icon mdi mdi-check"></i>
+                                                <label>Cash</label>
+                                            </div>
+                                        </div>
+                                        <div class="pretty p-icon p-round p-jelly">
+                                            <input type="radio" value="1" name="paymentIcon" [(ngModel)]="intPaymentMode" (ngModelChange)="paymentModeClicked()" />
+                                            <div class="state p-warning">
+                                                <i class="icon mdi mdi-check"></i>
+                                                <label>Bank</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput [disabled]="intPaymentMode==0" required placeholder="Bank Name" [(ngModel)]="strBankName" class="matinput1" name="bankName" value="">
+                                            <!-- <mat-error *ngIf="form.controls['bankName'].hasError('required')">
+                                                Bank Name required
+                                            </mat-error> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput [disabled]="intPaymentMode==0" type="number" required placeholder="Acc. No" [(ngModel)]="intAccountNum" class="matinput1" name="accNo" value="">
+                                            <!-- <mat-error *ngIf="form.controls['accNo'].hasError('required')">
+                                                Acc. No required
+                                            </mat-error> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput [disabled]="intPaymentMode==0" required placeholder="IFSC Code" [(ngModel)]="strIfscCode" class="matinput1" name="ifscCode" value="">
+                                            <!-- <mat-error *ngIf="form.controls['ifscCode'].hasError('required')">
+                                                IFSC Code required
+                                            </mat-error> -->
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                        
+                        
+                                <div class="row mt-2">
+                                    <div class="col-md-3">
+                                        <label style="width:100%;font-weight: 400 !important;">Select Week Off Type</label>
+                                        <div class="pretty p-icon p-round p-jelly mr-5">
+                                            <input type="radio" value="0" name="WeekOffType" [(ngModel)]="intWeekOffType" (ngModelChange)="changeWeekofftype()" />
+                                            <div class="state p-warning">
+                                                <i class="icon mdi mdi-check"></i>
+                                                <label>Fixed</label>
+                                            </div>
+                                        </div>
+                                        <div class="pretty p-icon p-round p-jelly">
+                                            <input type="radio" value="1" name="WeekOffType" [(ngModel)]="intWeekOffType" (ngModelChange)="changeWeekofftype()" />
+                                            <div class="state p-warning">
+                                                <i class="icon mdi mdi-check"></i>
+                                                <label>Variable</label>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="col-md-3" *ngIf="blnFixed">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Select Day</mat-label>
+                                            <mat-select [(ngModel)]="strDay" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let day of lstDays" [value]="day">
+                                                    {{ day | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                  
+                        
+                                   
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-4">
+                                        <label style="width:100%;font-weight: 400 !important;">Select Shift Type</label>
+                                        <div class="pretty p-icon p-round p-jelly mr-5">
+                                            <input type="radio" value="0" name="icon" [(ngModel)]="strShiftType" />
+                                            <div class="state p-warning">
+                                                <i class="icon mdi mdi-check"></i>
+                                                <label>Fixed</label>
+                                            </div>
+                                        </div>
+                                        <div class="pretty p-icon p-round p-jelly">
+                                            <input type="radio" value="1" name="icon" [(ngModel)]="strShiftType" />
+                                            <div class="state p-warning">
+                                                <i class="icon mdi mdi-check"></i>
+                                                <label>Variable</label>
+                                            </div>
+                                        </div>
+                                        <div class="pretty p-icon p-round p-jelly">
+                                            <input type="radio" value="2" name="icon" [(ngModel)]="strShiftType" />
+                                            <div class="state p-warning">
+                                                <i class="icon mdi mdi-check"></i>
+                                                <label>Exempted Shift</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="col-md-3 mt-1" *ngIf="strShiftType=='0'">
+                                        <mat-form-field>
+                                            <mat-label>Select Shift</mat-label>
+                                            <mat-select [(ngModel)]="strShift" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let shift of lstShiftData" (click)="fixedShiftChanged(shift)" [value]="shift.pk_bint_id">
+                                                    {{ shift.vchr_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3 mt-1" *ngIf="strShiftType=='1'">
+                                        <mat-form-field>
+                                            <mat-label>Select Shift</mat-label>
+                                            <mat-select [(ngModel)]="lstShift" multiple (ngModelChange)="variableShiftChanged($event)" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let shift of lstShiftData" [value]="shift.pk_bint_id">
+                                                    {{ shift.vchr_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                        
+                        
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+           
+
+            </fieldset>
+
+        </div>
+        <div class="row mt-4">
+            
+            <fieldset style="width:100% !important" class="fieldset1">
+                    <legend class="legend1">NOTES</legend>
+                 <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <input matInput  placeholder="Remarks" [(ngModel)]="strEmpRemarks" class="matinput1" name="empRemarks" value="">
+                        </mat-form-field>
+                    </div>
+                </div>  
+
+            </fieldset>
+          </div>
+           
+       
+
+
+        <!-- <div class="row mt-2">
+            <div class="col-md-3">
+                <label style="width: 100%;font-weight: 400;">Gross Pay</label>
+                <input type="number" required [(ngModel)]="fltGrossPay" (change)="getSalarySplit()" name="grosspay" value="" class="input1" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==7) return false;">
+
+            </div>
+
+        </div> -->
+        <div class="row mt-4" *ngIf="blnShowCTCBreakup && dctSalarySplit.hasOwnProperty('BP_DA') && selectedCategory.toUpperCase()=='EMPLOYEE'" id="salary">
+            <!-- <span>Salary Structure</span> -->
+            <fieldset style="width:100% !important" class="fieldset1">
+                <legend class="legend1">CTC Break up Details</legend>
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <!-- <mat-form-field class="example-full-width"> -->
+
+                        <label style="width: 10%;font-weight: 400;">Allowances : </label>
+
+                        <!-- <input class="switch-input" [formControl]="form.controls['allowances']" type="checkbox" [(ngModel)]="dctAllowance.bln_esi" (change)="changeOption()"/> -->
+                        <mat-checkbox name="PF" [checked]="false" [(ngModel)]="dctAllowance.bln_pf" (ngModelChange)="getSalarySplit()"><span class="mr-3">PF</span></mat-checkbox>
+                        <mat-checkbox name="ESI" [checked]="false" [(ngModel)]="dctAllowance.bln_esi" (ngModelChange)="getSalarySplit()"><span class="mr-3">ESI</span></mat-checkbox>
+                        <mat-checkbox name="GRATUITY" [checked]="false" [(ngModel)]="dctAllowance.bln_gratuity" (ngModelChange)="getSalarySplit()"><span class="mr-3">GRATUITY</span></mat-checkbox>
+                        <mat-checkbox name="WWF" [checked]="false" [(ngModel)]="dctAllowance.bln_wwf" (ngModelChange)="getSalarySplit()"><span>WWF</span></mat-checkbox>
+                        <mat-checkbox name="tds" [checked]="false" [(ngModel)]="dctAllowance.bln_tds" (ngModelChange)="getSalarySplit()"><span>TDS</span></mat-checkbox>
+                        <!-- </mat-form-field> -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset>
+                            <legend>Fixed Allowances</legend>
+                            <div style="border-bottom:1px dotted #b7b1b1">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label style="width:100%;margin-bottom: 2px">Basic Pay + DA</label>
+                                    </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p *ngIf="strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{dctSalarySplit['BP_DA']}}</p>
+                                        <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['BP_DA']" (ngModelChange)="changeAmount();CTCBreakupchanged()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="border-bottom:1px dotted #b7b1b1">
+                                <div class="row mt-2">
+
+                                    <div class="col-md-6">
+                                        <label style="width:100%;margin-bottom: 2px">HRA</label>
+                                    </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p *ngIf="strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{dctSalarySplit['HRA']}}</p>
+                                        <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['HRA']" (ngModelChange)="changeAmount();CTCBreakupchanged()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="border-bottom:1px dotted #b7b1b1">
+                                <div class="row mt-2">
+
+                                    <div class="col-md-6">
+                                        <label style="width:100%;margin-bottom: 2px">CCA </label>
+                                    </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p style="margin-bottom: 2px" *ngIf="strSalaryStructName!='Slab-0'">{{dctSalarySplit['CCA']}}</p>
+                                        <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['CCA']" (ngModelChange)="changeAmount();CTCBreakupchanged()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="border-bottom:1px dotted #b7b1b1">
+                                <div class="row mt-2">
+
+                                    <div class="col-md-6">
+                                        <label style="width:100%;margin-bottom: 2px">WA </label>
+                                    </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p style="margin-bottom: 2px" *ngIf="strSalaryStructName!='Slab-0'">{{dctSalarySplit['WA']}}</p>
+                                        <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['WA']" (ngModelChange)="changeAmount();CTCBreakupchanged()">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <label style="width:100%;margin-bottom: 2px">SA </label>
+                                </div>
+                                <div class="col-md-6" style="text-align:right">
+                                    <p style="margin-bottom: 2px" *ngIf="strSalaryStructName!='Slab-0'">{{dctSalarySplit['SA']}}</p>
+                                    <input readonly type="number" style="width: 100%;border: none;text-align: right;" *ngIf="strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['SA']" (ngModelChange)="CTCBreakupchanged()">
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset>
+                            <legend>Variable Allowances</legend>
+                            <div style="border-bottom:1px dotted #b7b1b1">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label style="width:100%;margin-bottom: 2px">PF</label>
+                                    </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{dctSalarySplit['Allowances']['PF']}}</p>
+                                        <p *ngIf="!dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{0.0}}</p>
+                                        <input readonly type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Allowances']['PF']" (ngModelChange)="CTCBreakupchanged()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="border-bottom:1px dotted #b7b1b1">
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label style="width:100%;margin-bottom: 2px">ESI</label>
+                                    </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{dctSalarySplit['Allowances']['ESI']}}</p>
+                                        <p *ngIf="!dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{0.0}}</p>
+                                        <input readonly type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Allowances']['ESI']" (ngModelChange)="CTCBreakupchanged()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="border-bottom:1px dotted #b7b1b1">
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label style="width:100%;margin-bottom: 2px">WWF</label>
+                                    </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{dctSalarySplit['Allowances']['WWF']}}</p>
+                                        <p *ngIf="!dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{0.0}}</p>
+                                        <input readonly type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Allowances']['WWF']" (ngModelChange)="CTCBreakupchanged()">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <label style="width:100%;margin-bottom: 2px">Gratuity </label>
+                                </div>
+                                <div class="col-md-6" style="text-align:right">
+                                    <p *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{dctSalarySplit['Allowances']['Gratuity']}}</p>
+                                    <p *ngIf="!dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{0.0}}</p>
+                                    <input readonly type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Allowances']['Gratuity']" (ngModelChange)="CTCBreakupchanged()">
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset>
+                            <legend>Variable Deductions</legend>
+                            <div style="border-bottom:1px dotted #b7b1b1">
+                                <div class="row">
+                                    <div class="col-md-6"> <label style="width:100%;margin-bottom: 2px">PF</label> </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p *ngIf="dctSalarySplit.hasOwnProperty('Deductions')  && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{dctSalarySplit['Deductions']['PF']}}</p>
+
+                                        <p *ngIf="!dctSalarySplit.hasOwnProperty('Deductions')  && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{0.0}}</p>
+                                        <input readonly type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Deductions']['PF']" (ngModelChange)="CTCBreakupchanged()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="border-bottom:1px dotted #b7b1b1">
+                                <div class="row mt-2">
+                                    <div class="col-md-6"> <label style="width:100%;margin-bottom: 2px">ESI</label> </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p *ngIf="dctSalarySplit.hasOwnProperty('Deductions') && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{dctSalarySplit['Deductions']['ESI']}}</p>
+
+                                        <p *ngIf="!dctSalarySplit.hasOwnProperty('Deductions') && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{0.0}}</p>
+                                        <input readonly type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Deductions']['ESI']" (ngModelChange)="CTCBreakupchanged()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="border-bottom:1px dotted #b7b1b1">
+                                <div class="row mt-2">
+                                    <div class="col-md-6"> <label style="width:100%;margin-bottom: 2px">WWF</label> </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p *ngIf="dctSalarySplit.hasOwnProperty('Deductions') && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{dctSalarySplit['Deductions']['WWF']}}</p>
+
+                                        <p *ngIf="!dctSalarySplit.hasOwnProperty('Deductions') && strSalaryStructName!='Slab-0'" style="margin-bottom: 2px">{{0.0}}</p>
+                                        <input readonly type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Deductions']['WWF']" (ngModelChange)="CTCBreakupchanged()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="border-bottom:1px dotted #b7b1b1">
+                                <div class="row mt-2">
+                                    <div class="col-md-6"> <label style="width:100%;margin-bottom: 2px">Charity</label> </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <input type="number" required [(ngModel)]="fltCharity" class="input1" (ngModelChange)="CTCBreakupchanged()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2" *ngIf="dctAllowance.bln_tds">
+                                <div class="col-md-6"> <label style="width:100%;margin-bottom: 2px">TDS</label> </div>
+                                <div class="col-md-6" style="text-align:right">
+                                    <input type="number" required [(ngModel)]="fltTds" class="input1" (ngModelChange)="CTCBreakupchanged()">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <span class="col-md-4" *ngIf="fltCTC !=0">Gross Pay :<span style="color: #293462;font-size: 20px;font-weight: 500;">&#8377; {{fltGrossPay}} /-</span></span>
+                    <span class="col-md-4" *ngIf="fltCTC !=0">Net pay :<span style="color: #293462;font-size: 20px;font-weight: 500;">&#8377; {{intNetSalary}} /-</span></span>
+                    <span class="col-md-4" *ngIf="fltCTC !=0">Cost to the Company :<span style="color: #293462;font-size: 20px;font-weight: 500; text-align: right">&#8377; {{intCostToCompany}} /-</span></span>
+
+                </div>
+            </fieldset>
+        </div>
+
+
+
+
+        <!-- 
+            <table class="table table-bordered">
+                <thead>
+                    <th colspan="2">Fixed Allowances</th>
+                    <th colspan="2">Variable Allowances</th>
+                    <th colspan="2">Variable Deductions</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Basic Pay + DA </td>
+                        <td>{{dctSalarySplit['BP_DA']}}</td>
+                        <td>PF </td>
+                        <td>{{dctSalarySplit['Allowances']['PF']}}</td>
+                        <td>PF </td>
+                        <td>{{dctSalarySplit['Deductions']['PF']}}</td>
+                    </tr>
+                    <tr>
+                        <td>HRA </td>
+                        <td>{{dctSalarySplit['HRA']}}</td>
+                        <td>ESI </td>
+                        <td>{{dctSalarySplit['Allowances']['ESI']}}</td>
+                        <td>ESI </td>
+                        <td>{{dctSalarySplit['Deductions']['ESI']}}</td>
+                    </tr>
+                    <tr>
+                        <td>CCA </td>
+                        <td>{{dctSalarySplit['CCA']}}</td>
+                        <td>WWF </td>
+                        <td>{{dctSalarySplit['Allowances']['WWF']}}</td>
+                        <td>WWF </td>
+                        <td>{{dctSalarySplit['Deductions']['WWF']}}</td>
+                    </tr>
+                    <tr>
+                        <td>WA </td>
+                        <td>{{dctSalarySplit['WA']}}</td>
+                        <td>Gratuity </td>
+                        <td>{{dctSalarySplit['Allowances']['Gratuity']}}</td>
+                       
+                    </tr>
+                    <tr>
+                        <td>SA </td>
+                        <td>{{dctSalarySplit['SA']}}</td>
+                       
+                    </tr>
+                </tbody>
+            </table> -->
+
+
+
+        <div class="row  mt-3">
+            <div class="col-md-12">
+                <button class="btn save_btn  mr-2" style="margin: 0;" (click)="saveData()">Save</button>
+                <button class="btn cancel_btn" style="margin: 0;" (click)="clearFields()">Cancel</button>
+            </div>
+        </div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>
