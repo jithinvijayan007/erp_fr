@@ -128,10 +128,11 @@ export class AddemployeeComponent implements OnInit {
   lstCompanyData=[];
   strLoginUser='';
   strCategoryCode='';
+  intYear;
 
   intWeekOffType;
   lstLocationData=[];
-  lstSelectedLocation=[];
+  lstSelectedLocation;
   intEsiNumber=null;
   intUANNumber=null;
   intWWFNumber=null;
@@ -784,7 +785,7 @@ console.log(this.lstFunction);
       Swal.fire('Error!', 'Select Salary structure', 'error');
       return false;
     }
-    else if(this.lstSelectedLocation.length==0){
+    else if(this.lstSelectedLocation == null){
       Swal.fire('Error!', 'Select Physical Location', 'error');
       return false;
     }
@@ -931,6 +932,10 @@ console.log(this.lstFunction);
     }
     else if(this.intPaymentMode=='1' && !this.strIfscCode){
       Swal.fire('Error!', 'Enter IFSC Code', 'error');
+      return false;
+    }
+    else if(this.intYear == null){
+      Swal.fire('Error!', 'Enter Passing year', 'error');
       return false;
     }
 
@@ -1110,7 +1115,7 @@ console.log(this.lstFunction);
     frmPublishedData.append('imgSrc',this.ImageSrc);
     frmPublishedData.append('strPhysicalLoc',this.strPhysicalLocation);
     frmPublishedData.append('intWeekOffType',this.intWeekOffType);
-    frmPublishedData.append('lstLoc',JSON.stringify(this.lstSelectedLocation));
+    frmPublishedData.append('lstLoc',this.lstSelectedLocation);
     frmPublishedData.append('strFatherName',this.strFatherName);
     frmPublishedData.append('intEmPhNo',this.intEmPhNo);
     frmPublishedData.append('lstReference',JSON.stringify(this.lstReference));
@@ -1136,7 +1141,7 @@ console.log(this.lstFunction);
       frmPublishedData.append('intBrandId',this.intSelectedBrandId);
     }
     if(lstSelectedFunction!=undefined && lstSelectedFunction !=null){
-      frmPublishedData.append('intProductId',this.intSelectedProductId);
+      frmPublishedData.append('intProductId',lstSelectedFunction);
     }
     if(this.intPaymentMode=='1'){
       frmPublishedData.append('strBankName',this.strBankName);
@@ -1163,7 +1168,7 @@ console.log(this.lstFunction);
     
 
     // this.spinner.show();
-    this.serverService.postData('user/add_user/', frmPublishedData).subscribe(
+    this.serverService.postData('user/adduser/', frmPublishedData).subscribe(
       (response) => {
         // this.spinner.hide();
         if (response.status == 1) {
@@ -1348,7 +1353,7 @@ console.log(this.lstFunction);
     this.strEmerRelattion = '';
     this.strBloodGroup = '';
     
-    this.lstSelectedLocation=[];
+    this.lstSelectedLocation;
     this.intWPSGroupId=null;
     this.intOfficialNumber=null;
     this.strEmpRemarks='';
