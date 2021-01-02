@@ -102,9 +102,10 @@ export class JobpositionlistComponent implements OnInit {
   }
   editJob(item){
     let intJobId
+    
     intJobId = item.pk_bint_id;
     localStorage.setItem("intJobId", intJobId);
-    this.router.navigate(["/jobposition/jobpositionedit"]);
+    this.router.navigate(["/job-position/jobpositionedit"]);
   }
   applyFilter(filterValue: string){
     filterValue = filterValue.trim() // remove whitespace

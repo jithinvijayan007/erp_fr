@@ -32,6 +32,7 @@ export class JobpositionComponent implements OnInit {
   strDesc;
   lstDesc: string[]=[""];
   intNoticePeriod;
+  descg;
 
   lstCourse=[
     "SSLC",
@@ -91,44 +92,10 @@ export class JobpositionComponent implements OnInit {
           });
         //--------------------department list dropdown ends ----------------//
 
-        //--------------------state list dropdown ----------------//
-          this.serverService.getData('states/states_typeahead/').subscribe(
-              (response) => {
-                  if (response.status == 1) {              
-                    this.lstStatesData=response['list_states'];
-                  }
-                },
-                  (error) => {  
-                  });
-        //--------------------state list dropdown ends ----------------//
-        //--------------------zone list dropdown ----------------//
-        this.serverService.getData('zone/list_zone/').subscribe(
-          (response) => {
-              if (response.status == 1) {
-                  this.lstZonesData=response['lst_zone'];
-              }
-            },
-              (error) => {  
-              });
-        //--------------------zone list dropdown ends ----------------//
-        //--------------------territory list dropdown ----------------//
-        this.serverService.getData('territory/list_territory/').subscribe(
-          (response) => {
-              if (response.status == 1) {
-                  this.lstTerritoryData=response['lst_territory'];
-              }
-            },
-              (error) => {  
-              });
-        //--------------------territory list dropdown ends ----------------//
+      
   }
 
-  applyToChanged(){
-    this.lstSelectedStates=[];
-    this.lstSelectedTerritories=[];
-    this.lstSelectedZones=[];
-    
-  }
+
   savePosition(){
     
     let dctTempData={}
@@ -140,23 +107,7 @@ export class JobpositionComponent implements OnInit {
       Swal.fire('Error!',"Fill the Designation Name field","error");
       return false;
     }
-    else if(!this.strApplyTo){
-      Swal.fire('Error!',"Select Apply To","error");
-      return false;
-    }
-    else if(this.strApplyTo=='0' && this.lstSelectedStates.length==0){
-      Swal.fire('Error!',"Select State","error");
-      return false;
-    }
-    else if(this.strApplyTo=='2' && this.lstSelectedZones.length==0){
-      Swal.fire('Error!',"Select Zone","error");
-      return false;
-    }
-    else if(this.strApplyTo=='1' && this.lstSelectedTerritories.length==0
-    ){
-      Swal.fire('Error!',"Select Territory","error");
-      return false;
-    }
+    
     else if(this.lstDesc.length==0){
       Swal.fire('Error!',"Enter Job Description","error");
       return false;
@@ -198,7 +149,7 @@ export class JobpositionComponent implements OnInit {
         if (response.status === 1) {
           Swal.fire('Job Position added successfully');
           if(this.blnView){
-            this.router.navigate(["/jobposition/jobpositionlist"]);
+            this.router.navigate(["/job-position/jobpositionlist"]);
           }
           else{
             this.clearFields();
@@ -227,7 +178,7 @@ export class JobpositionComponent implements OnInit {
     this.lstSelectedStates=[];
     this.lstSelectedZones=[];
     this.lstSelectedTerritories=[];
-    this.lstDesc=[""]
+    this.lstDesc=[''];
   }
   addDesc() {
     this.lstDesc.push("");
@@ -245,5 +196,7 @@ export class JobpositionComponent implements OnInit {
   }
   pushToDesc(index,desc){
     this.lstDesc[index]=desc;
+
+    
   }
 }

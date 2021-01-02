@@ -31,6 +31,7 @@ export class AddbranchComponent implements OnInit {
   intMygCareNo;
   strState : '';
   strBranchCategory: '';
+  strHierarchy: '';
   strBranchCloseDate: '';
   intStockLimit;
   intStaticIp;
@@ -42,9 +43,11 @@ export class AddbranchComponent implements OnInit {
   strIngtedBy;
   lstBranches;
   IntCategoryId;
+  intHierarchyId;
   strCategory = '';
   lstCategory=[];
-  lstStates=[];;
+  lstStates=[];
+  lstHierarchy=[];
   intStateId;
   intStockRqstQty;
   intStockRqstAmt;
@@ -76,6 +79,7 @@ export class AddbranchComponent implements OnInit {
   @ViewChild('idPriceTemplate', { static: true }) idPriceTemplate:any;
   @ViewChild('stockRqstQuantity', { static: true }) stockRqstQuantity:any;
   @ViewChild('stockRqstAmount', { static: true }) stockRqstAmount:any;
+  @ViewChild('hierarchyCategory', { static: true }) hierarchyCategory: any;
 
   constructor(
     private serviceObject: ServerService,
@@ -95,6 +99,7 @@ export class AddbranchComponent implements OnInit {
       mygcareno: [''],
       branchState: ['',Validators.required],
       branchCategory: ['', Validators.required],
+      // hierarchyCategory: ['', Validators.required],
       branchStockLimit: ['',Validators.required],
       BranchCloseDate: ['',Validators.required],
       branchStaticIp: ['', Validators.required],
@@ -136,13 +141,13 @@ export class AddbranchComponent implements OnInit {
       //--------------------states list dropdown ends----------------//
       //--------------------hierarchy list dropdown ----------------//
       this.serviceObject
-      .getData('hierarchy/hierarchy?hierarchy_name='+this.branchName)
-      // .subscribe(
-      //   (response) => {
-      //     this.lstStates = response['list_states'];
+      .getData('hierarchy/hierarchy?hierarchy_name=BRANCH')
+      .subscribe(
+        (response) => {
+          this.lstHierarchy = response['data'];
 
-      //   }
-      // );
+        }
+      );
       //--------------------hierarchy list dropdown ends----------------//
 
 
@@ -152,9 +157,15 @@ export class AddbranchComponent implements OnInit {
     this.IntCategoryId = category.id;
     this.strCategory = category.name;
   }
+  HierarchyChanged(hierarchy) {
+    
+    this.intHierarchyId = hierarchy.pk_bint_id;
+    this.strCategory = hierarchy.name;
+  }
 
   AddBranch(){
     
+    // this.intHierarchyId;
     
     if(!this.strCode){
       this.branchCode.nativeElement.focus();
@@ -169,6 +180,11 @@ export class AddbranchComponent implements OnInit {
     else if (!this.strBranchCategory){
       // this.branchCategory.nativeElement.focus();
       this.toastr.error('Branch Category Required', 'Error!');
+      return false;
+    }
+    else if (!this.intHierarchyId){
+      // this.branchCategory.nativeElement.focus();
+      this.toastr.error('Hierarchy Required', 'Error!');
       return false;
     }
     else if(this.intPriceTemplate == null){
@@ -286,10 +302,11 @@ export class AddbranchComponent implements OnInit {
       dctData['strAddress']= this.strAddress
       dctData['intContact']= this.intContact
       dctData['intPincode']= this.intPincode
-      console.log(this.intPincode)
       dctData['intMygCareNo']= this.intMygCareNo
       dctData['strEmail']= this.strEmail;
       dctData['intCategory'] = this.IntCategoryId;
+      dctData['intHierarchy'] = this.intHierarchyId;
+
       dctData['stateId']=this.intStateId
       // dctData['strCloseDate'] =this.strBranchCloseDate;
       dctData['strStockLimit']= this.intStockLimit;
@@ -303,6 +320,7 @@ export class AddbranchComponent implements OnInit {
       dctData['intPriceTemplate']=this.intPriceTemplate;
       dctData['intStockRqstQty']=this.intStockRqstQty;
       dctData['intStockRqstAmt']=this.intStockRqstAmt;
+      dctData['intHierarchy']=this.intHierarchyId;
 
       this.serviceObject.postData('branch/branchapi/', dctData).subscribe(
         (response) => {
