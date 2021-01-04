@@ -476,20 +476,20 @@
                                         </div> 
                                         <div class="col-md-4 mt-2">
                                             <label style="width:100%;font-weight: 400 !important;">Alive</label>
-                                            <div class="pretty p-icon p-round p-jelly mr-5">
+                                            <span class="pretty p-icon p-round p-jelly mr-5">
                                                 <input type="radio" value="Yes" name="{{f}}" [(ngModel)]="fam['isAlive']" />
-                                                <div class="state p-warning">
-                                                    <i class="icon mdi mdi-check"></i>
+                                                <span class="state p-warning">
+                                                    <!-- <i class="icon mdi mdi-check"></i> -->
                                                     <label>Yes</label>
-                                                </div>
-                                            </div>
-                                            <div class="pretty p-icon p-round p-jelly">
+                                                </span>
+                                            </span>
+                                            <span class="pretty p-icon p-round p-jelly">
                                                 <input type="radio" value="No" name="{{f}}" [(ngModel)]="fam['isAlive']" />
-                                                <div class="state p-warning">
-                                                    <i class="icon mdi mdi-check"></i>
+                                                <span class="state p-warning">
+                                                    <!-- <i class="icon mdi mdi-check"></i> -->
                                                     <label>No</label>
-                                                </div>
-                                            </div>
+                                                </span>
+                                            </span>
                                         </div>
                                         <button (click)="deleteFamily(f)" class="closebtn"><i class="ti-trash"></i></button>
                                       
@@ -860,22 +860,22 @@
                                 
 
                                 <div class="row mt-3">
-                                    <div class="col-md-3">
+                                    <div class="col-md-12">
                                         <label style="width:100%;font-weight: 400 !important;">Select Payment Mode</label>
-                                        <div class="pretty p-icon p-round p-jelly mr-5">
+                                        <span class="pretty p-icon p-round p-jelly mr-5">
                                             <input type="radio" value="0" name="paymentIcon" [(ngModel)]="intPaymentMode" (ngModelChange)="paymentModeClicked()" />
-                                            <div class="state p-warning">
-                                                <i class="icon mdi mdi-check"></i>
-                                                <label>Cash</label>
-                                            </div>
-                                        </div>
-                                        <div class="pretty p-icon p-round p-jelly">
+                                            <span class="state p-warning">
+                                                <!-- <i class="icon mdi mdi-check"></i> -->
+                                                <label style="margin-left: 10px;">Cash</label>
+                                            </span>
+                                        </span>
+                                        <span class="pretty p-icon p-round p-jelly">
                                             <input type="radio" value="1" name="paymentIcon" [(ngModel)]="intPaymentMode" (ngModelChange)="paymentModeClicked()" />
-                                            <div class="state p-warning">
-                                                <i class="icon mdi mdi-check"></i>
-                                                <label>Bank</label>
-                                            </div>
-                                        </div>
+                                            <span class="state p-warning">
+                                                <!-- <i class="icon mdi mdi-check"></i> -->
+                                                <label style="margin-left: 10px;">Bank</label>
+                                            </span>
+                                        </span>
                                     </div>
                                     <div class="col-md-3">
                                         <mat-form-field class="example-full-width">
@@ -904,23 +904,23 @@
                                 </div>
                         
                         
-                                <div class="row mt-2">
+                                <div class="row mt-3">
                                     <div class="col-md-3">
                                         <label style="width:100%;font-weight: 400 !important;">Select Week Off Type</label>
-                                        <div class="pretty p-icon p-round p-jelly mr-5">
+                                        <span class="pretty p-icon p-round p-jelly mr-5">
                                             <input type="radio" value="0" name="WeekOffType" [(ngModel)]="intWeekOffType" (ngModelChange)="changeWeekofftype()" />
-                                            <div class="state p-warning">
-                                                <i class="icon mdi mdi-check"></i>
-                                                <label>Fixed</label>
-                                            </div>
-                                        </div>
-                                        <div class="pretty p-icon p-round p-jelly">
+                                            <span class="state p-warning">
+                                                <!-- <i class="icon mdi mdi-check"></i> -->
+                                                <label style="margin-left: 10px;">Fixed</label>
+                                            </span>
+                                        </span>
+                                        <span class="pretty p-icon p-round p-jelly">
                                             <input type="radio" value="1" name="WeekOffType" [(ngModel)]="intWeekOffType" (ngModelChange)="changeWeekofftype()" />
-                                            <div class="state p-warning">
-                                                <i class="icon mdi mdi-check"></i>
-                                                <label>Variable</label>
-                                            </div>
-                                        </div>
+                                            <span class="state p-warning">
+                                                <!-- <i class="icon mdi mdi-check"></i> -->
+                                                <label style="margin-left: 10px;">Variable</label>
+                                            </span>
+                                        </span>
                                        
                                     </div>
                                     <div class="col-md-3" *ngIf="blnFixed">
@@ -938,30 +938,30 @@
                         
                                    
                                 </div>
-                                <div class="row mt-2">
+                                <div class="row mt-3">
                                     <div class="col-md-4">
                                         <label style="width:100%;font-weight: 400 !important;">Select Shift Type</label>
-                                        <div class="pretty p-icon p-round p-jelly mr-5">
+                                        <span class="pretty p-icon p-round p-jelly mr-5">
                                             <input type="radio" value="0" name="icon" [(ngModel)]="strShiftType" />
-                                            <div class="state p-warning">
-                                                <i class="icon mdi mdi-check"></i>
-                                                <label>Fixed</label>
-                                            </div>
-                                        </div>
-                                        <div class="pretty p-icon p-round p-jelly">
+                                            <span class="state p-warning">
+                                                <!-- <i class="icon mdi mdi-check"></i> -->
+                                                <label style="margin-left: 10px;">Fixed</label>
+                                            </span>
+                                        </span>
+                                        <span class="pretty p-icon p-round p-jelly mr-5">
                                             <input type="radio" value="1" name="icon" [(ngModel)]="strShiftType" />
-                                            <div class="state p-warning">
-                                                <i class="icon mdi mdi-check"></i>
-                                                <label>Variable</label>
-                                            </div>
-                                        </div>
-                                        <div class="pretty p-icon p-round p-jelly">
+                                            <span class="state p-warning">
+                                                <!-- <i class="icon mdi mdi-check"></i> -->
+                                                <label style="margin-left: 10px;">Variable</label>
+                                            </span>
+                                        </span>
+                                        <span class="pretty p-icon p-round p-jelly">
                                             <input type="radio" value="2" name="icon" [(ngModel)]="strShiftType" />
-                                            <div class="state p-warning">
-                                                <i class="icon mdi mdi-check"></i>
-                                                <label>Exempted Shift</label>
-                                            </div>
-                                        </div>
+                                            <span class="state p-warning">
+                                                <!-- <i class="icon mdi mdi-check"></i> -->
+                                                <label style="margin-left: 10px;">Exempted Shift</label>
+                                            </span>
+                                        </span>
                                     </div>
                         
                                     <div class="col-md-3 mt-1" *ngIf="strShiftType=='0'">

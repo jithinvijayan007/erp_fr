@@ -677,7 +677,7 @@ localStorage.removeItem('intNewEmpJobId');
       }
     });
   
-    this.serverService.getData('hierarchy/hierarchy?hierarchy_name='+level_type).subscribe(
+    this.serverService.getData('hierarchy/levels?hierarchy_name='+level_type).subscribe(
       (response) => {
           if (response.status == 1) {
             this.lstLocationData=response['data'];

@@ -1,94 +1,64 @@
-<div class="row">
-  <div class="col-xl-12">
-    <card>
-      <h4 class="form-head">Add Hierarchy</h4>
-      <mat-form-field class="select mt-4">
-        <mat-select placeholder="Department" [(ngModel)]="department" (ngModelChange)="departmentSelected(department)">
-          <mat-option *ngFor="let dep of lstDepartment" [value]=dep.pk_bint_id>{{dep.vchr_code | uppercase}}-{{dep.vchr_name | titlecase}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+<div class="card">
+    <div class="card-body">
+        <h4 class="formhead"> <i class="mdi mdi-briefcase"></i>&nbsp;Add Hierarchy</h4>
+    </div>
+    <div class="col-md-3 mt-1">
+        
+        <mat-form-field class="select mt-4">
+            <mat-select placeholder="Department" [(ngModel)]="department" (ngModelChange)="departmentSelected(department)">
+              <mat-option *ngFor="let dep of lstDepartment" [value]=dep.pk_bint_id>{{dep.vchr_code | uppercase}}-{{dep.vchr_name | titlecase}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
 
-      <div class="example-container mat-elevation-z8 mt-3">
-        <mat-table #table [dataSource]="dataSource">
+   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-          <!-- hierarchy Column -->
-          <ng-container matColumnDef="Hierarchy">
-            <mat-header-cell *matHeaderCellDef class="maxwidth" style="padding-left: 13px;"> Hierarchy </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="maxwidth"> {{element.Hierarchy}} </mat-cell>
-          </ng-container>
+    <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
 
+    <!-- Position Column -->
+    <ng-container matColumnDef="Level">
+        <th mat-header-cell *matHeaderCellDef> Level </th>
+        <td mat-cell *matCellDef="let element"> {{element.vchr_name}} </td>
+    </ng-container>
 
-          <!-- Group Column -->
-          <ng-container matColumnDef="Groups">
-            <mat-header-cell *matHeaderCellDef style="padding-left: 15px;">Groups </mat-header-cell>
-            <mat-cell *matCellDef="let element;let i = index;" class="minwidth">
-              <mat-chip-list #chipList>
-                <span *ngFor="let groups of element.Groups">
-                  <mat-chip color="accent" (remove)="removeGroup(i,groups)">
-                    <!-- {{ (groups.vchr_name.length>3 ? groups.vchr_name.substring(0,3) + "..": groups.vchr_name) | titlecase }}  -->
-                    {{ (groups.vchr_name) | titlecase }}
-                    <mat-icon matChipRemove>cancel</mat-icon>
-                  </mat-chip>
-                </span>
-                <input [matChipInputFor]="chipList" matInput placeholder="Group" [(ngModel)]="element.groupName" name="group" (ngModelChange)="searchGroup(i,element.groupName)"
-                  [matAutocomplete]="group" #idGroup>
-              </mat-chip-list>
+    <!-- Name Column -->
+    <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> <mat-form-field class="example-chip-list">
+    <mat-label>Level Groups</mat-label>
+    <mat-chip-list #chipList aria-label="Group selection">
+        <mat-chip *ngFor="let data of levelNames[element.vchr_name]" [selectable]="selectable"
+                [removable]="removable" (removed)="remove(data,element['vchr_name'])">
+        {{data}}
+        <span matChipRemove *ngIf="removable"  class="fa fa-times"></span> 
+        </mat-chip>
+        <input placeholder="New Group..."
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event,element['vchr_name'])">
+    </mat-chip-list>
+    </mat-form-field> </td>
+    </ng-container>
 
-              <mat-autocomplete #group="matAutocomplete">
-                <mat-option *ngFor="let item of element.selectedGroups" [value]="item.vchr_name" (onSelectionChange)="addGroup(i,item,$event)">
-                  {{item.vchr_name }}
-                </mat-option>
-              </mat-autocomplete>
-              <!-- <mat-select placeholder="Groups" multiple [(ngModel)]="element.selectedGroups" (change)="groupChanged(element,$event)">
-                    <mat-option *ngFor="let groups of element.Groups" [value]="groups.id">{{groups.name}}</mat-option> -->
-              <!-- </mat-select> -->
-            </mat-cell>
-          </ng-container>
+    
 
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 
-
-          <!-- Filters Column -->
-          <ng-container matColumnDef="Filters">
-            <mat-header-cell *matHeaderCellDef style="padding-left: 15px;" class="maxwidth2"> Filters</mat-header-cell>
-            <mat-cell *matCellDef="let element;let i = index;" class="maxwidth2">
-              <mat-select placeholder="Filter" [formControl]="toppings" (selectionChange)="filterChanged($event,i)">
-                <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping | titlecase}}</mat-option>
-              </mat-select>
-              <label *ngIf="blnUpdate" for="">{{element.selectedFilter | titlecase}}</label>
-              <span style="color: #e41010;font-size: 15px; cursor: pointer;" class="pull-right" *ngIf="blnUpdate" (click)="filterDeleted(i)">
-                <i class="fa fa-trash-o" aria-hidden="true"></i>
-              </span>
-            </mat-cell>
-          </ng-container>
-
-
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-      </div>
-
-      <div class="row mt-4">
+    <div class="row mt-4">
         <div class="col-xl-2 col-md-6">
           <div class="row">
             <div class="col-xl-6 col-md-6">
               <button *ngIf="!blnUpdate" class="mat-accent mat-raised-button" style="background: #5dade0;color:#fff;" (click)="levelSave()">
                 SAVE
               </button>
-              <button *ngIf="blnUpdate" class="mat-accent mat-raised-button" style="background: #5dade0;color:#fff;" (click)="levelSave()">
-                UPDATE
-              </button>
-            </div>
-            <div class="col-xl-6 col-md-6">
-              <button class="mat-accent mat-raised-button" style="background:#bbb;" (click)="levelCancel()">
-                Cancel
-              </button>
             </div>
           </div>
         </div>
-
-
-      </div>
-
-    </card>
-  </div>
+    </div>
+    
+    
 </div>
