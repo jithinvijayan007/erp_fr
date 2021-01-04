@@ -25,6 +25,7 @@ export class HierarchyComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   levelNames = {}
+
   // mat-MAT_PAGINATOR_DEFAULT_OPTIONS
  
   
@@ -47,6 +48,7 @@ export class HierarchyComponent implements OnInit {
     //--------------------department list dropdown ends ----------------//
   }
   departmentSelected(department){
+    this.intDepartmentId = department
     this.serverService.getData("hierarchy/levels/").subscribe(
       (response) => {
           if (response.status == 1) {
@@ -98,8 +100,11 @@ export class HierarchyComponent implements OnInit {
   }
   levelSave(){    
 
-    
-      this.serverService.postData("hierarchy/groups/",this.levelNames)
+    let dctData = {
+      data : this.levelNames, 
+      dept_id:this.intDepartmentId
+    }
+      this.serverService.postData("hierarchy/groups/",dctData)
       .subscribe(
         response => {
           if(response['status'] == 1){
