@@ -12,7 +12,7 @@ const routes: Routes = [
     path: 'add-location',
     component: AddComponent
   }, {
-    path: 'hierarachy',
+    path: 'hierarchy',
     component: HierarchyComponent
   }
 ];
