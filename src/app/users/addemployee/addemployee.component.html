@@ -563,7 +563,7 @@
                             </div>
                             <div class="col-md-4 mt-2">
                                 <mat-form-field>
-                                    <mat-label>Passing Year:</mat-label>
+                                    <mat-label>Passing Year *</mat-label>
                                     <mat-select [(ngModel)]="course['intYear']"  [disableOptionCentering]="true">
                                         <mat-option *ngFor="let year of lstPassoutYear" [value]="year">
                                             {{ year}}
@@ -767,7 +767,7 @@
                                             <mat-label>Select Physical Location</mat-label>
                                             <mat-select [(ngModel)]="lstSelectedLocation" [disableOptionCentering]="true">
                                                 <mat-option *ngFor="let loc of lstLocationData" value="{{loc.pk_bint_id}}">
-                                                    {{ loc.vchr_name | uppercase}}
+                                                    {{ loc.str_name | uppercase}}
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
