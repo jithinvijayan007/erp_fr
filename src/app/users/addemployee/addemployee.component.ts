@@ -132,6 +132,8 @@ export class AddemployeeComponent implements OnInit {
 
   intWeekOffType;
   lstLocationData=[];
+  lstGroupData=[];
+  lst
   lstSelectedLocation;
   intEsiNumber=null;
   intUANNumber=null;
@@ -310,6 +312,10 @@ export class AddemployeeComponent implements OnInit {
 
     blnShowCTCBreakup=false;
     dctRules={};
+
+    
+
+
   constructor(
     private formBuilder: FormBuilder,
     private serverService: ServerService,
@@ -679,6 +685,18 @@ localStorage.removeItem('intNewEmpJobId');
         },
         (error) => {   
       });
+      let dict_level = {
+        hierarchy_name:level_type,
+        dep_id:this.intDepartmentId
+      }
+      this.serverService.postData('hierarchy/groups/',dict_level).subscribe(
+        (response) => {
+            if (response.status == 1) {
+              this.lstGroupData=response['data'];
+            }  
+          },
+          (error) => {   
+        });
     
   }
   branchChanged(item){
@@ -934,10 +952,12 @@ console.log(this.lstFunction);
       Swal.fire('Error!', 'Enter IFSC Code', 'error');
       return false;
     }
-    else if(this.intYear == null){
-      Swal.fire('Error!', 'Enter Passing year', 'error');
-      return false;
-    }
+    // if(this.intYear == null){
+    //   Swal.fire('Error!', 'Enter Passing Year', 'error');
+    //   return false;
+    // }
+   
+    
 
 
 

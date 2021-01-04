@@ -444,7 +444,7 @@
                            
                         <div class="col-md-4 mt-2">
                                         <mat-form-field class="example-full-width">
-                                            <input type="text" placeholder="Name" class="matinput1" matInput [(ngModel)]="fam['strRelativeName']" name="{{'famName'+f}" value="">
+                                            <input required type="text" placeholder="Name" class="matinput1" matInput [(ngModel)]="fam['strRelativeName']" name="{{'famName'+f}" value="">
                                         </mat-form-field>
                                     </div>
                                     <div class="col-md-4 mt-2">
@@ -517,7 +517,8 @@
                                         <div class="pretty p-image p-plain">
                                             <input type="checkbox" [(ngModel)]="course['blnHighest']" (ngModelChange)="highestQualifChanged($event)" />
                                             <div class="state">
-                                                    <img class="image" src="assets/images/tick.png">
+                                                    <!-- <img class="image" src="assets/images/tick.png"> -->
+                                                    <i class="icon mdi mdi-check"></i>
                                                 <label style="font-size: 14px;color: #314f7f;font-weight: 500;">Highest Qualification</label>
                                                 
                                             </div>
@@ -762,12 +763,26 @@
                                         </mat-form-field>                
                          </div>
 
+
+
                                     <div class="col-md-3 mt-1">
                                         <mat-form-field>
                                             <mat-label>Select Physical Location</mat-label>
                                             <mat-select [(ngModel)]="lstSelectedLocation" [disableOptionCentering]="true">
                                                 <mat-option *ngFor="let loc of lstLocationData" value="{{loc.pk_bint_id}}">
                                                     {{ loc.str_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+
+                                    <div class="col-md-3 mt-1">
+                                        <mat-form-field>
+                                            <mat-label>Select Group</mat-label>
+                                            <mat-select [(ngModel)]="lstSelectedGroup" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let grp of lstGroupData" value="{{grp.pk_bint_id}}">
+                                                    {{ grp.str_name | uppercase}}
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
