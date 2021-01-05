@@ -810,7 +810,7 @@ blnChange(){
    
 typeaheadStates(){
 
-  this.serverService.getData('states/states_typehead/').subscribe(
+  this.serverService.getData('states/states_typeahead/').subscribe(
     (response) => {
       this.lstStates=response['list_states'];
     },
