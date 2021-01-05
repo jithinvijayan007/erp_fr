@@ -793,7 +793,7 @@
                                             <mat-label>Select level Group</mat-label>
                                             <mat-select [(ngModel)]="lstSelectedGroup" [disableOptionCentering]="true">
                                                 <mat-option *ngFor="let grp of lstGroupData" value="{{grp.pk_bint_id}}">
-                                                    {{ grp.str_name | uppercase}}
+                                                    {{ grp.vchr_name | uppercase}}
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
@@ -950,7 +950,7 @@
                                    
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-4">
+                                    <div class="col-md-5">
                                         <label style="width:100%;font-weight: 400 !important;">Select Shift Type</label>
                                         <span class="pretty p-icon p-round p-jelly mr-5">
                                             <input type="radio" value="0" name="icon" [(ngModel)]="strShiftType" />

@@ -102,7 +102,7 @@ export class AddemployeeComponent implements OnInit {
   lstVariableShift=[];
   lstShift=[];
   datBirthStart;
-
+  intSelectedGroup
   intPaymentMode=null;
   strBankName='';
   intAccountNum;
@@ -698,7 +698,7 @@ localStorage.removeItem('intNewEmpJobId');
         hierarchy_name:level_type,
         dep_id:this.intDepartmentId
       }
-      this.serverService.postData('hierarchy/groups/',dict_level).subscribe(
+      this.serverService.postData('hierarchy/get_groups/',dict_level).subscribe(
         (response) => {
             if (response.status == 1) {
               this.lstGroupData=response['data'];
@@ -1042,7 +1042,15 @@ console.log(this.lstFunction);
         Swal.fire("Error!","Sum of fixed allowances should be equal to gross pay");
         return false;
       }
+      if(this.intSelectedGroup== null){
+        let grossTot=this.dctSalarySplit['BP_DA']+this.dctSalarySplit['HRA']+this.dctSalarySplit['CCA']+this.dctSalarySplit['WA']+this.dctSalarySplit['SA'];
+        if(this.fltGrossPay!=grossTot){
+          Swal.fire("Error!","Sum of fixed allowances should be equal to gross pay");
+          return false;
+        }
+      
     }
+  }
     if(this.fltCharity){
       this.dctSalarySplit
       
@@ -1085,6 +1093,7 @@ console.log(this.lstFunction);
     dctTempData['strFatherName']=this.strFatherName;
     dctTempData['intEmPhNo'] = this.intEmPhNo;
     dctTempData['groupId'] = this.intGroupId;
+    dctTempData['hGroup']=this.intSelectedGroup;
 
     const frmPublishedData = new FormData;
 
@@ -1124,6 +1133,7 @@ console.log(this.lstFunction);
     frmPublishedData.append('strBloodGroup',this.strBloodGroup);
     frmPublishedData.append('strEmerPerson',this.strEmPerson);
     frmPublishedData.append('strEmerRelation',this.strEmerRelattion);
+    frmPublishedData.append('hGroup',this.intSelectedGroup);
   
 
     if(this.selectedCategory.toUpperCase()== 'EMPLOYEE'){
