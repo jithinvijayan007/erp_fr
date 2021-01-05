@@ -130,6 +130,7 @@ export class AddemployeeComponent implements OnInit {
   strCategoryCode='';
   intYear;
 
+  lstgroups 
   intWeekOffType;
   lstLocationData=[];
   lstGroupData=[];
@@ -159,6 +160,7 @@ export class AddemployeeComponent implements OnInit {
   intNewEmpJobId;
   blnNewEmp = false;
   int_Level;
+  intGroupId
   intWPSGroupId =null;
   lstWPSGroupData=[]
   lstReference=[
@@ -551,7 +553,14 @@ export class AddemployeeComponent implements OnInit {
             (error) => {   
           });
     //-------------------Physical Location dropdown ends-------------------------//
-
+    this.serverService.getData('user_groups/grouplist/').subscribe(
+      (response) => {
+        if (response.status == 1) {
+          this.lstgroups = response['data'];
+        }
+      },
+      (error) => {
+      });
     //-------------------Country dropdown-------------------------//
     this.serverService.getData('location/country_list/').subscribe(
       (response) => {
@@ -1082,7 +1091,8 @@ console.log(this.lstFunction);
     dctTempData['intPanNo']=this.intPanNo;
     dctTempData['intAadharNo']=this.intAadharNo;
     dctTempData['strFatherName']=this.strFatherName;
-    dctTempData['intEmPhNo']=this.intEmPhNo;
+    dctTempData['intEmPhNo'] = this.intEmPhNo;
+    dctTempData['groupId'] = this.intGroupId;
     dctTempData['hGroup']=this.intSelectedGroup;
 
     const frmPublishedData = new FormData;

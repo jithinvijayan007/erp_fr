@@ -752,6 +752,17 @@
                                         <!-- <input type="number" required [(ngModel)]="fltGrossPay" (change)="getSalarySplit()" name="grosspay" value="" class="input1" > -->
                         
                                     </div>
+                                      <div class="col-md-3 mt-1">                                      
+                                        <mat-form-field>
+                                            <mat-label>Select Group</mat-label>
+                                            <mat-select [(ngModel)]="intGroupId"  [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let loc of lstgroups" value="{{loc.pk_bint_id}}">
+                                                    {{ loc.vchr_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>                
+                         </div>
+
                                     <div class="col-md-3 mt-1">                                      
                                         <mat-form-field>
                                             <mat-label>Select level</mat-label>
@@ -779,8 +790,8 @@
 
                                     <div class="col-md-3 mt-1">
                                         <mat-form-field>
-                                            <mat-label>Select Group</mat-label>
-                                            <mat-select [(ngModel)]="intSelectedGroup" [disableOptionCentering]="true">
+                                            <mat-label>Select level Group</mat-label>
+                                            <mat-select [(ngModel)]="lstSelectedGroup" [disableOptionCentering]="true">
                                                 <mat-option *ngFor="let grp of lstGroupData" value="{{grp.pk_bint_id}}">
                                                     {{ grp.vchr_name | uppercase}}
                                                 </mat-option>
