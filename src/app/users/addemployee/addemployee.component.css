@@ -110,7 +110,7 @@ tbody:hover tr:hover td {
         padding: 3px 3px 3px 9px;
         color: white !important;
         width: 153px;
-        background: linear-gradient(87deg, #f5365c, #f56036) !important;
+        background: linear-gradient(45deg, #6a11cb , #2575fc)!important;
         box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,188,212,.4) !important;
     }
 #salary p{
@@ -129,13 +129,13 @@ tbody:hover tr:hover td {
     font-size: 13px;
   }
 .uploadbtn{
-      background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
+      background: linear-gradient(45deg, #00b09b, #96c93d)!important;
       border: none;
       border-radius: 50%;
       width: 30px;
       height: 30px;
       color: white;
-      box-shadow: 0 3px 10px rgba(249, 10, 72, 0.4);
+      box-shadow: 0 3px 10px rgba(10, 249, 137, 0.309);
       cursor: pointer;
   }
  .experiencebox{

@@ -6,7 +6,7 @@
   <li *ngFor="let item of lstMainTitles;let i = index" (click)="menuClicked(item)" class="nav-item search-box" id="menuId">
     <a class="nav-link waves-effect waves-dark  color">
         <div class="d-flex align-items-center">
-            <div class="ml-1 d-none d-sm-block" [style.color]  = "lstColor[i]">
+            <div class="ml-1 d-none d-sm-block" [style.color]  = "lstColor[i]" style="color: #aeb6ca;">
                 <span >&nbsp;{{item}} &nbsp;</span>
             </div>
         </div>

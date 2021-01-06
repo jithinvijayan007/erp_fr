@@ -145,8 +145,8 @@ export class NavigationComponent implements AfterViewInit, OnInit {
     // item='Transactions';
     // console.log("AFTER item",item);
     
-    this.lstColor = Array<string>(this.lstMainTitles.length).fill('white')
-    this.lstColor[this.lstMainTitles.indexOf(item)] ='#fe2419'
+    this.lstColor = Array<string>(this.lstMainTitles.length).fill(' #aeb6ca')
+    this.lstColor[this.lstMainTitles.indexOf(item)] ='white'
     this.data.changeSidebar(item)
     
   }

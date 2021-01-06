@@ -1,5 +1,5 @@
 <nav class="sidebar-nav">
-    <ul id="sidebarnav ">
+    <ul id="sidebarnav " style="background: none !important;">
         <!-- First level menu -->
         <li class="sidebar-item" [class.selected]="showMenu === sidebarnavItem.title" *ngFor="let sidebarnavItem of sidebarnavItems"
             [routerLinkActive]="sidebarnavItem.submenu.length != 0 ? '' : 'active'">

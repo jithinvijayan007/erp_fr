@@ -1,7 +1,7 @@
 // Custom Variables
 /*Theme Colors*/
 
-$themecolor: #fe2419;
+$themecolor: #2575fc;
 $themecolor-dark: #028ee1;
 $themecolor-alt: #26c6da;
 $theme-light:#fff;
@@ -9,11 +9,11 @@ $theme-dark:#212529;
 // $skin1:linear-gradient(to right, #26d0ce, #233242 );
 // $skin1:linear-gradient(to right, #48749b, #233242 );
 $skin1: linear-gradient(to bottom, #233242 0%, #233242 56%);
-$skin2:#fe2419;
+$skin2:#2575fc;
 $skin3:#00b0ff;
 // $skin4:linear-gradient(to right, #4b79a1, #283e51);
-$skin4: linear-gradient(to bottom, #233242 0%, #233242 56%);
-$skin5:#233242;
+$skin4:linear-gradient(87deg, #105984, #105984) !important;
+$skin5:linear-gradient(87deg, #105984, #105984) !important;
 $skin6:#fff;
 /*Topbar Colors*/
 
@@ -27,8 +27,8 @@ $topbar-navbrand-padding:0 10px 0 10px;
 
 $sidebar: $theme-light;
 $sidebar-alt:#e8eff0;
-$sidebar-text: #fff;
-$sidebar-icons: #fe2419;
+$sidebar-text: rgb(255, 255, 255);
+$sidebar-icons:#ffffff;
 $sidebar-text-dark: #212529;
 $sidebar-icons-dark: #4F5467;
 $sidebar-width-full:250px;
