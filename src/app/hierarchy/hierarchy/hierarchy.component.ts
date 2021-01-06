@@ -25,6 +25,9 @@ export class HierarchyComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   levelNames = {}
+  levelInserted = {}
+  levelREmoved = {}
+  lstGroupData = [];
 
   // mat-MAT_PAGINATOR_DEFAULT_OPTIONS
  
@@ -49,17 +52,25 @@ export class HierarchyComponent implements OnInit {
   }
   departmentSelected(department){
     this.intDepartmentId = department
-    this.serverService.getData("hierarchy/levels/").subscribe(
+    this.serverService.postData("hierarchy/get_groups/",{dept_id:department}).subscribe(
       (response) => {
           if (response.status == 1) {
-            this.lstLevelsData=response['data'];
+            this.lstLevelsData=response['level_data'];
+            this.lstGroupData = response['data'];
             // this.source = new LocalDataSource(this.data);
-            this.dataSource = new MatTableDataSource(
+            this.dataSource = new MatTableDataSource( 
               this.lstLevelsData
             );
             this.lstLevelsData.forEach(element => {
-              this.levelNames[element.vchr_name] = []
+              this.levelNames[element.vchr_name] = [];
+              if (this.lstGroupData[element.vchr_name]){
+
+                this.levelNames[element.vchr_name].push(... this.lstGroupData[element.vchr_name]);
+              }
+              this.levelREmoved[element.vchr_name] = [];
+              this.levelInserted[element.vchr_name] = [];
             })
+          console.log(this.levelNames);
           
           }  
       },
@@ -69,17 +80,25 @@ export class HierarchyComponent implements OnInit {
       });
     
     
+    
+    
 
   }
 
   add(event,vchr_name){
+    // console.log(this.levelNames);
+    // console.log(vchr_name);
+    
     const input = event.input;
     const value = event.value;
-
+    console.log(this.levelInserted);
     // Add our group
     if ((value || '').trim()) {
       
-      this.levelNames[vchr_name].push( value.trim() )
+      this.levelNames[vchr_name].push( value.trim() );
+      this.levelInserted[vchr_name].push( value.trim());
+      console.log(this.levelInserted);
+      
     }
 
     // Reset the input value
@@ -96,12 +115,16 @@ export class HierarchyComponent implements OnInit {
     
     if (index >= 0) {
       this.levelNames[vchr_name].splice(index, 1);
+      this.levelREmoved[vchr_name].push( data.trim())
     }
   }
   levelSave(){    
+console.log(this.levelInserted);
+console.log(this.levelREmoved);
 
     let dctData = {
-      data : this.levelNames, 
+      inserted : this.levelInserted, 
+      removed : this.levelREmoved, 
       dept_id:this.intDepartmentId
     }
       this.serverService.postData("hierarchy/groups/",dctData)
@@ -109,6 +132,9 @@ export class HierarchyComponent implements OnInit {
         response => {
           if(response['status'] == 1){
             Swal.fire('success','Created successfully', 'success')
+            // this.levelNames
+          //   this.levelREmoved = []
+          //   this.levelInserted = []
           }
         });
         err =>{
