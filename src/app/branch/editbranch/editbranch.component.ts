@@ -119,7 +119,7 @@ export class EditbranchComponent implements OnInit {
       );
       //states
       this.serviceObject
-      .getData('states/states_typehead/')
+      .getData('states/states_typeahead/')
       .subscribe(
         (response) => {
           this.lstStates = response['list_states'];

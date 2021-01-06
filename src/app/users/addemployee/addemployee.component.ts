@@ -102,7 +102,7 @@ export class AddemployeeComponent implements OnInit {
   lstVariableShift=[];
   lstShift=[];
   datBirthStart;
-
+  intSelectedGroup
   intPaymentMode=null;
   strBankName='';
   intAccountNum;
@@ -130,8 +130,11 @@ export class AddemployeeComponent implements OnInit {
   strCategoryCode='';
   intYear;
 
+  lstgroups 
   intWeekOffType;
   lstLocationData=[];
+  lstGroupData=[];
+  lst
   lstSelectedLocation;
   intEsiNumber=null;
   intUANNumber=null;
@@ -157,6 +160,7 @@ export class AddemployeeComponent implements OnInit {
   intNewEmpJobId;
   blnNewEmp = false;
   int_Level;
+  intGroupId
   intWPSGroupId =null;
   lstWPSGroupData=[]
   lstReference=[
@@ -310,6 +314,10 @@ export class AddemployeeComponent implements OnInit {
 
     blnShowCTCBreakup=false;
     dctRules={};
+
+    
+
+
   constructor(
     private formBuilder: FormBuilder,
     private serverService: ServerService,
@@ -545,7 +553,14 @@ export class AddemployeeComponent implements OnInit {
             (error) => {   
           });
     //-------------------Physical Location dropdown ends-------------------------//
-
+    this.serverService.getData('user_groups/grouplist/').subscribe(
+      (response) => {
+        if (response.status == 1) {
+          this.lstgroups = response['data'];
+        }
+      },
+      (error) => {
+      });
     //-------------------Country dropdown-------------------------//
     this.serverService.getData('location/country_list/').subscribe(
       (response) => {
@@ -679,6 +694,18 @@ localStorage.removeItem('intNewEmpJobId');
         },
         (error) => {   
       });
+      let dict_level = {
+        hierarchy_name:level_type,
+        dep_id:this.intDepartmentId
+      }
+      this.serverService.postData('hierarchy/get_groups/',dict_level).subscribe(
+        (response) => {
+            if (response.status == 1) {
+              this.lstGroupData=response['data'];
+            }  
+          },
+          (error) => {   
+        });
     
   }
   branchChanged(item){
@@ -934,10 +961,12 @@ console.log(this.lstFunction);
       Swal.fire('Error!', 'Enter IFSC Code', 'error');
       return false;
     }
-    else if(this.intYear == null){
-      Swal.fire('Error!', 'Enter Passing year', 'error');
-      return false;
-    }
+    // if(this.intYear == null){
+    //   Swal.fire('Error!', 'Enter Passing Year', 'error');
+    //   return false;
+    // }
+   
+    
 
 
 
@@ -1013,7 +1042,15 @@ console.log(this.lstFunction);
         Swal.fire("Error!","Sum of fixed allowances should be equal to gross pay");
         return false;
       }
+      if(this.intSelectedGroup== null){
+        let grossTot=this.dctSalarySplit['BP_DA']+this.dctSalarySplit['HRA']+this.dctSalarySplit['CCA']+this.dctSalarySplit['WA']+this.dctSalarySplit['SA'];
+        if(this.fltGrossPay!=grossTot){
+          Swal.fire("Error!","Sum of fixed allowances should be equal to gross pay");
+          return false;
+        }
+      
     }
+  }
     if(this.fltCharity){
       this.dctSalarySplit
       
@@ -1054,7 +1091,9 @@ console.log(this.lstFunction);
     dctTempData['intPanNo']=this.intPanNo;
     dctTempData['intAadharNo']=this.intAadharNo;
     dctTempData['strFatherName']=this.strFatherName;
-    dctTempData['intEmPhNo']=this.intEmPhNo;
+    dctTempData['intEmPhNo'] = this.intEmPhNo;
+    dctTempData['groupId'] = this.intGroupId;
+    dctTempData['hGroup']=this.intSelectedGroup;
 
     const frmPublishedData = new FormData;
 
@@ -1094,6 +1133,7 @@ console.log(this.lstFunction);
     frmPublishedData.append('strBloodGroup',this.strBloodGroup);
     frmPublishedData.append('strEmerPerson',this.strEmPerson);
     frmPublishedData.append('strEmerRelation',this.strEmerRelattion);
+    frmPublishedData.append('hGroup',this.intSelectedGroup);
   
 
     if(this.selectedCategory.toUpperCase()== 'EMPLOYEE'){

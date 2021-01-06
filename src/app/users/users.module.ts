@@ -30,7 +30,7 @@ import { UsergroupaddComponent } from './usergroupadd/usergroupadd.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { AddemployeeComponent } from './addemployee/addemployee.component';
-import { MatChipsModule } from '@angular/material/chips';
+// import { MatChipsModule } from '@angular/material/chips';
 
 
 
@@ -58,7 +58,6 @@ import { MatChipsModule } from '@angular/material/chips';
     MatSortModule,
     Ng2SmartTableModule,
     SelectDropDownModule,   
-    MatChipsModule,
   
   ],
   declarations: [
