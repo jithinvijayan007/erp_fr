@@ -3,25 +3,23 @@
       <div class="card">
         <div class="card-body">
             <h3 class="form-head">Add {{hierarchyName}}</h3>
-          <div class="row">
-            <div class="col-md-4">
-              <mat-form-field>
-              <input matInput placeholder="{{hierarchyName}} Name*"  [(ngModel)]="strName" name="hierarchyname" #HierarchyName>
-              
+          <div class="col-md-12">            
+              <mat-form-field class="col-md-4">
+              <input matInput placeholder="{{hierarchyName}} Name*"  [(ngModel)]="strName" name="hierarchyname" #HierarchyName>              
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="col-md-4">
               <input matInput placeholder="{{hierarchyName}} Code*"  [(ngModel)]="strCode" name="hierarchycode" #HierarchyCode>
               
             </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col-md-4"*ngIf = "lst_hierarchy != 0"  >
+              <mat-label>Select</mat-label>         
+              <mat-select *ngIf = "lst_hierarchy != 0" matInput  name="hierarchyName" #DropDownSelect >                                
+                                  <mat-option *ngFor="let item of lst_hierarchy" [value]="item.pk_bint_id" (click)="onChangeGroup(item)">{{item.str_name}}</mat-option>                     
+              </mat-select> 
+            </mat-form-field>
             
-            
-              <mat-select *ngIf = "lst_hierarchy != 0" matInput  name="hierarchyName" #DropDownSelect>
-                                
-                                  <mat-option *ngFor="let item of lst_hierarchy" [value]="item.pk_bint_id" (click)="onChangeGroup(item)">{{item.str_name}}</mat-option>
-                               
-                            </mat-select> 
-            </div>
-            <div class="col-md-2 mt-2" style="text-align: right;">
+            <div class="col-md-2 mt-2" >
                 <button class="btn save_btn" color="accent" (click)="Submit_data()" style="margin-right: 10px;">Add {{hierarchyName}}</button>
             </div>
           </div>
