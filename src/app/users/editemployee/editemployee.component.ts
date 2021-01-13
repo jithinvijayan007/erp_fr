@@ -1334,7 +1334,7 @@ export class EditemployeeComponent implements OnInit {
     
 
     this.spinner.show();
-    this.serverService.putData('user/add_user/', frmPublishedData).subscribe(
+    this.serverService.putData('user/adduser/', frmPublishedData).subscribe(
       (response) => {
         this.spinner.hide();
         if (response.status == 1) {
