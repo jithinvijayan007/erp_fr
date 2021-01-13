@@ -1,24 +1,24 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators,FormControl } from '@angular/forms'
-import { CustomValidators } from 'ng2-validation'
-import { ServerService } from '../../server.service';
+import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { ServerService } from '../../server.service'
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
 import * as moment from 'moment';
-import { Router } from '@angular/router';
-import { IfStmt } from '@angular/compiler';
-// import { NgxSpinnerService } from 'ngx-spinner';
-import { count } from 'rxjs/operators';
-// import { MatFormFieldModule } from '@angular/material/form-field';
-// import { MatInputModule } from '@angular/material/input';
-@Component({
-  selector: 'app-addemployee',
-  templateUrl: './addemployee.component.html',
-  styleUrls: ['./addemployee.component.css']
-})
-export class AddemployeeComponent implements OnInit {
+import { Router } from '@angular/router'
+import { NgxSpinnerService } from 'ngx-spinner';
 
+@Component({
+  selector: 'app-editemployee',
+  templateUrl: './editemployee.component.html',
+  styleUrls: ['./editemployee.component.css']
+})
+export class EditemployeeComponent implements OnInit {
+
+  lstEmployeeDetails=[];
+  intEmployeeId=null;
 
   public form: FormGroup;
+  public passwordForm: FormGroup;
 
   strFirstName='';
   strLastName='';
@@ -47,6 +47,7 @@ export class AddemployeeComponent implements OnInit {
   // address.............
   strEmpCode='';
   strUserName='';
+  // strCurrentPassword = new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)]));
   strPassword1 = new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)]));
   strConfirmPassword1 = new FormControl('', CustomValidators.equalTo(this.strPassword1));
   lstCategory=[];
@@ -79,6 +80,8 @@ export class AddemployeeComponent implements OnInit {
   strSalaryStructName='';
   intCostToCompany=null;
   intNetSalary=null;
+  fltCharity=0;
+  fltTds = 0;
   strDesignation='';
   searchBranch: FormControl = new FormControl();
   searchGroup: FormControl = new FormControl();
@@ -90,61 +93,55 @@ export class AddemployeeComponent implements OnInit {
     "bln_tds":true
   }
   fltGrossPay = 0;
-  fltCharity = 0;
   fltCTC = 0;
-  fltTds = 0;
   dctSalarySplit={};
+  blnPasswordBlock=false;
   strShiftType='0';
   strFixedShift;
   lstShiftData=[];
   selectedFixedShift='';
-  selectedFixedShiftId=null;
+  selectedFixedShiftId;
   lstVariableShift=[];
   lstShift=[];
   datBirthStart;
-  intSelectedGroup
-  intPaymentMode=null;
-  strBankName='';
+
+  intPaymentMode;
+  strBankName;
   intAccountNum;
-  strIfscCode='';
+  strIfscCode;
   intAadharNo;
   intPanNo;
-  ImageSrc = '';
-  ImageLocation = '';
+  ImageSrc;
+  ImageLocation;
   lstDesignationData;
   intSelectedDesignation;
   blnShowBankDetails=false;
-  strFatherName;
-  intEmPhNo;
-
+  blnShowImage=false;
   lstBrandData=[];
   lstProductData=[];
   intSelectedBrandId;
   intSelectedProductId;
   strPhysicalLocation='';
-  imgPath=''
+  strFatherName;
+  intEmPhNo;
 
   intSelectedCompanyId=null;
   lstCompanyData=[];
   strLoginUser='';
   strCategoryCode='';
-  intYear;
+  hostName;
 
-  lstgroups 
+  imgUrl;
   intWeekOffType;
   lstLocationData=[];
-  lstGroupData=[];
-  lst
-  lstSelectedLocation;
+  lstSelectedLoc=[];
   intEsiNumber=null;
   intUANNumber=null;
   intWWFNumber=null;
+  blnOnload=false
 
-  blnFixed = false;
-  strDay = '';
-  lstDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  functionConfig = {displayKey:"vchr_name",search:true , height: '200px',customComparator: ()=>{} ,placeholder:'Select Function',searchOnKey: 'vchr_name',clearOnSelection: true  }
-  lstFunction = []
+  blnCtcBreakup = false;
+
   lstSalutationData = ['Mr','Ms','Mrs'];
   strSalutation='';
 
@@ -155,12 +152,7 @@ export class AddemployeeComponent implements OnInit {
 
   strEmPerson = '';
   strEmerRelattion = '';
-  lstLevelData
-  intNewEmpId;
-  intNewEmpJobId;
-  blnNewEmp = false;
-  int_Level;
-  intGroupId
+
   intWPSGroupId =null;
   lstWPSGroupData=[]
   lstReference=[
@@ -180,6 +172,11 @@ export class AddemployeeComponent implements OnInit {
     }
   ];
   strIllnessDetails='';
+
+
+  blnFixed = false;
+  strDay = '';
+  lstDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
   intOfficialNumber=null;
   lstFamilyDetails=[{
@@ -311,34 +308,210 @@ export class AddemployeeComponent implements OnInit {
     totalExp='0';
     totalRelevantExp='0';
     strEmpRemarks="";
-
     blnShowCTCBreakup=false;
     dctRules={};
-
-    
-
-
   constructor(
-    private formBuilder: FormBuilder,
     private serverService: ServerService,
-    vcr: ViewContainerRef,
+    private formBuilder: FormBuilder,
     public router: Router,
-    // private spinner: NgxSpinnerService,
+    private spinner: NgxSpinnerService,
+
+
   ) { }
 
   ngOnInit() {
-
+    
+    
     this.datBirthStart = new Date(1990, 0, 1);
     this.strLoginUser=localStorage.getItem("Name");
-    // console.log("strLoginUser",this.strLoginUser);
+    this.hostName = this.serverService.hostAddress
+    this.hostName = this.hostName.slice(0, this.hostName.length - 1)
+    this.blnOnload=true;
+    this.intEmployeeId=localStorage.getItem('intEmployeeEditId');
+    console.log("Iddd",this.intEmployeeId);
 
     let strDepartment = localStorage.getItem('strDepartment');
     let Name =localStorage.getItem('Name')
     if (strDepartment == 'HR & ADMIN' ||  Name=='Super User'){
       this.blnShowCTCBreakup =true;
     }
-    
 
+        //--------------------category list dropdown-------------------//
+        this.serverService.getData('category/list_category/').subscribe(
+          (response) => {
+              if (response.status == 1) {
+                this.lstCategory=response['lst_articles'];
+              }  
+          },
+          (error) => {           
+          });
+        //--------------------category list dropdown ends-------------------//
+
+            //--------------------religion list dropdown-------------------//
+     this.serverService.getData('user/religion_list/').subscribe(
+      (response) => {
+          if (response.status == 1) {
+            this.lstReligionData=response['lst_religion'];
+          }  
+      },
+      (error) => {           
+      });
+    //--------------------religion list dropdown ends-------------------//
+    
+        //--------------------department list dropdown ----------------//
+        this.serverService.getData('department/list_departments/').subscribe(
+          (response) => {
+              if (response.status == 1) {
+                this.lstDepartment=response['lst_department'];
+              }  
+          },
+          (error) => {   
+            
+          });
+        //--------------------department list dropdown ends ----------------//
+    
+        //--------------------branch list typeahead -------------------//
+        this.searchBranch.valueChanges
+          // .debounceTime(400)
+          .subscribe((strData: string) => {
+            if (strData === undefined || strData === null) {
+              this.lstBranches = [];
+            } else {
+              if (strData.length >= 1) {
+                this.serverService
+                  .postData('branch/branch_typeahead/', { term: strData })
+                  .subscribe(
+                    (response) => {
+                      this.lstBranches = response['data'];
+    
+                    }
+                  );
+              }
+            }
+          }
+          ); 
+        //--------------------branch list typeahead ends -------------------//
+    
+        //--------------------group list typeahead-------------------//
+        this.searchGroup.valueChanges
+          // .debounceTime(400)
+          .subscribe((strData: string) => {
+            if (strData === undefined || strData === null) {
+              this.lstGroup = [];
+            } else {
+              if (strData.length >= 1) {
+                this.serverService
+                  .postData('groups/grouppadd/', { term: strData })
+                  .subscribe(
+                    (response) => {
+                      this.lstGroup = response['data'];
+    
+                    }
+                  );
+              }
+            }
+          }
+          ); 
+        //--------------------group typeahead ends-------------------//
+    
+        //-------------------salary structure dropdown --------------//
+        this.serverService.getData('salary_struct/list/').subscribe(
+          (response) => {
+              if (response.status == 1) {
+                this.lstSalaryStructure=response['lst_salary_struct'];
+              }  
+            },
+            (error) => {   
+          });
+        //-------------------salary structure dropdown -------------//
+
+            //-------------------shift dropdown-------------------------//
+    this.serverService.getData('shift_schedule/list_shift/').subscribe(
+      (response) => {
+          if (response.status == 1) {
+            this.lstShiftData=response['lst_shift_shedule'];
+          }  
+        },
+        (error) => {   
+      });
+    //-------------------shift dropdown ends-------------------------//
+
+    //-------------------designation dropdown-------------------------//
+        this.serverService.getData('job_position/add_job/').subscribe(
+          (response) => {
+              if (response.status == 1) {
+                this.lstDesignationData=response['lst_job_position'];
+              }  
+            },
+            (error) => {   
+          });
+    //-------------------designation dropdown ends-------------------------//
+
+    //-------------------Brand dropdown-------------------------//
+        this.serverService.getData('brands/add_brands/').subscribe(
+          (response) => {
+              if (response.status == 1) {
+                this.lstBrandData=response['data'];
+              }  
+            },
+            (error) => {   
+          });
+    //-------------------designation dropdown ends-------------------------//
+        //-------------------Product dropdown-------------------------//
+        this.serverService.getData('products/product_typeahead/').subscribe(
+          (response) => {
+              if (response.status == 1) {
+                this.lstProductData=response['data'];
+              }  
+            },
+            (error) => {   
+          });
+    //-------------------designation dropdown ends-------------------------//
+
+    //-------------------Company dropdown-------------------------//
+    this.serverService.getData('company/company_typeahead/').subscribe(
+      (response) => {
+          if (response.status == 1) {
+            this.lstCompanyData=response['data'];
+          }  
+        },
+        (error) => {   
+      });
+    //-------------------Company dropdown ends-------------------------//
+
+    //-------------------Physical Location dropdown-------------------------//
+        this.serverService.getData('location/list_loc/').subscribe(
+          (response) => {
+              if (response.status == 1) {
+                this.lstLocationData=response['lst_loc'];
+              }  
+            },
+            (error) => {   
+          });
+    //-------------------Physical Location dropdown ends-------------------------//
+
+    //-------------------Country dropdown-------------------------//
+    this.serverService.getData('location/country_list/').subscribe(
+      (response) => {
+          if (response.status == 1) {
+            this.lstCountryData=response['lst_country'];
+          }  
+        },
+        (error) => {   
+      });
+    //-------------------Country dropdown ends-------------------------//
+
+    //-------------------WPSGroup dropdown-------------------------//
+    this.serverService.getData('salary_process/wps_group/').subscribe(
+      (response) => {
+          if (response.status == 1) {
+            this.lstWPSGroupData=response['lstData'];
+          }  
+        },
+        (error) => {   
+      });
+    //-------------------WPSGroup dropdown ends-------------------------//
+    
     this.form = this.formBuilder.group({
       firstName: [null, Validators.compose([Validators.required])],
       middleName: [null],
@@ -347,6 +520,7 @@ export class AddemployeeComponent implements OnInit {
       userName : [null, Validators.compose([Validators.required])],
       password1:this.strPassword1,
       confirmPassword1: this.strConfirmPassword1,
+      // currentPassword:this.strCurrentPassword,
       branchName : [null, Validators.compose([Validators.required])],
       departmentName : [null, Validators.compose([Validators.required])],
       groupName : [null, Validators.compose([Validators.required])],
@@ -396,215 +570,18 @@ export class AddemployeeComponent implements OnInit {
       illnessDetails:[null],
       officialNumber:[null],
       empRemarks:[null],
-      
-
-
     });
-
-
-    //--------------------category list dropdown-------------------//
-    this.serverService.getData('category/list_category/').subscribe(
-      (response) => {
-          if (response.status == 1) {
-            this.lstCategory=response['lst_articles'];
-          }  
-      },
-      (error) => {           
-      });
-    //--------------------category list dropdown ends-------------------//
-
-     //--------------------religion list dropdown-------------------//
-     this.serverService.getData('user/religion_list/').subscribe(
-      (response) => {
-          if (response.status == 1) {
-            this.lstReligionData=response['data'];
-          }  
-      },
-      (error) => {           
-      });
-    //--------------------religion list dropdown ends-------------------//
-
-    //--------------------department list dropdown ----------------//
-    this.serverService.getData('department/list_departments/').subscribe(
-      (response) => {
-          if (response.status == 1) {
-            this.lstDepartment=response['lst_department'];
-          }  
-      },
-      (error) => {   
-        
-      });
-    //--------------------department list dropdown ends ----------------//
-
-    //--------------------branch list typeahead -------------------//
-    this.searchBranch.valueChanges
-      // .debounceTime(400)
-      .subscribe((strData: string) => {
-        if (strData === undefined || strData === null) {
-          this.lstBranches = [];
-        } else {
-          if (strData.length >= 1) {
-            this.serverService
-              .postData('branch/branch_typeahead/', { term: strData })
-              .subscribe(
-                (response) => {
-                  this.lstBranches = response['data'];
-
-                }
-              );
-          }
-        }
-      }
-      ); 
-    //--------------------branch list typeahead ends -------------------//
-
-    //--------------------group list typeahead-------------------//
-    this.searchGroup.valueChanges
-      // .debounceTime(400)
-      .subscribe((strData: string) => {
-        if (strData === undefined || strData === null) {
-          this.lstGroup = [];
-        } else {
-          if (strData.length >= 1) {
-            this.serverService
-              .postData('groups/groups_typeahead/', { term: strData })
-              .subscribe(
-                (response) => {
-                  this.lstGroup = response['data'];
-
-                }
-              );
-          }
-        }
-      }
-      ); 
-    //--------------------group typeahead ends-------------------//
-
-    //-------------------salary structure dropdown --------------//
-    this.serverService.getData('salary_struct/list/').subscribe(
-      (response) => {
-          if (response.status == 1) {
-            this.lstSalaryStructure=response['lst_salary_struct'];
-          }  
-        },
-        (error) => {   
-      });
-    //-------------------salary structure dropdown -------------//
-
-    //-------------------shift dropdown-------------------------//
-    this.serverService.getData('shift_schedule/list_shift/').subscribe(
-      (response) => {
-          if (response.status == 1) {
-            this.lstShiftData=response['lst_shift_shedule'];
-          }  
-        },
-        (error) => {   
-      });
-    //-------------------shift dropdown ends-------------------------//
-    //-------------------designation dropdown-------------------------//
-    this.serverService.getData('job_position/add_job/').subscribe(
-      (response) => {
-          if (response.status == 1) {
-            this.lstDesignationData=response['lst_job_position'];
-          }  
-        },
-        (error) => {   
-      });
-    //-------------------designation dropdown ends-------------------------//
-
-    //-------------------Brand dropdown-------------------------//
-        this.serverService.getData('brands/add_brands/').subscribe(
-          (response) => {
-              if (response.status == 1) {
-                this.lstBrandData=response['data'];
-              }  
-            },
-            (error) => {   
-          });
-    //-------------------designation dropdown ends-------------------------//
-        //-------------------Product dropdown-------------------------//
-        this.serverService.getData('products/add_product/').subscribe(
-          (response) => {
-              if (response.status == 1) {
-                this.lstProductData=response['data'];
-              }  
-            },
-            (error) => {   
-          });
-    //-------------------designation dropdown ends-------------------------//
-
-    //-------------------Company dropdown-------------------------//
-        this.serverService.getData('company/company_typeahead/').subscribe(
-          (response) => {
-              if (response.status == 1) {
-                this.lstCompanyData=response['data'];
-              }  
-            },
-            (error) => {   
-          });
-    //-------------------Company dropdown ends-------------------------//
-        //-------------------Levels dropdown-------------------------//
-        this.serverService.getData('hierarchy/levels/').subscribe(
-          (response) => {
-              if (response.status == 1) {
-                this.lstLevelData=response['data'];
-              }  
-            },
-            (error) => {   
-          });
-    //-------------------Physical Location dropdown ends-------------------------//
-    this.serverService.getData('user_groups/grouplist/').subscribe(
-      (response) => {
-        if (response.status == 1) {
-          this.lstgroups = response['data'];
-        }
-      },
-      (error) => {
-      });
-    //-------------------Country dropdown-------------------------//
-    this.serverService.getData('location/country_list/').subscribe(
-      (response) => {
-          if (response.status == 1) {
-            this.lstCountryData=response['lst_country'];
-          }  
-        },
-        (error) => {   
-      });
-    //-------------------Country dropdown ends-------------------------//
-    //-------------------WPSGroup dropdown-------------------------//
-    this.serverService.getData('salary_process/wps_group/').subscribe(
-      (response) => {
-          if (response.status == 1) {
-            this.lstWPSGroupData=response['lstData'];
-          }  
-        },
-        (error) => {   
-      });
-    //-------------------WPSGroup dropdown ends-------------------------//
-
     let toDate = new Date();
     let year=toDate.getFullYear();
     for (let yr = 0; yr < 30; yr++) {
       this.lstPassoutYear.push(year);
       year=year-1
     }
+    this.getEmployeeDetails()
+  }
 
-// ---- AddEmployee from applicant list
-
-this.intNewEmpId = localStorage.getItem('intNewEmpId');
-this.intNewEmpJobId = localStorage.getItem('intNewEmpJobId');
-localStorage.removeItem('intNewEmpId');
-localStorage.removeItem('intNewEmpJobId');
-    if (this.intNewEmpId && this.intNewEmpJobId){
-      this.getEnteredDetails();
-    }
-//  ---- AddEmployee from applicant list ends
-
-
- }
 
  countryChanged(intCountryId) {  // state dropdown list
-  
   // this.lstStateData=[];
   // this.lstDistrictData=[];
   // this.intStateId=null;
@@ -613,8 +590,6 @@ localStorage.removeItem('intNewEmpJobId');
     this.serverService.postData('location/state_list/',{'intCountryId':intCountryId}).subscribe(
       (response) => {
           if (response.status == 1) {
-            console.log(response);
-            
             this.lstStateData=response['lst_state'];
           }  
         },
@@ -627,7 +602,6 @@ localStorage.removeItem('intNewEmpJobId');
  stateChanged(intStateId) { // district dropdown
   // this.lstDistrictData=[];
   // this.intDistrictId=null;
-  
   if(this.intStateId) {
     this.serverService.postData('location/district_list/',{'intStateId':intStateId}).subscribe(
       (response) => {
@@ -639,25 +613,210 @@ localStorage.removeItem('intNewEmpJobId');
       });
   }
 
-
  }
 
- categoryChanged(item){
+  getEmployeeDetails(){
 
+    this.lstEmployeeDetails=[];
+    this.spinner.show();
+    this.serverService.getData('user/adduser/?id='+this.intEmployeeId).subscribe(
+      (response) => {
+        this.spinner.hide();
+          
+          if (response.status == 1) {
+          
+            
+            this.lstEmployeeDetails=response['lst_userdetailsview'];
+            console.log("responseee",this.lstEmployeeDetails);
+            
+            if(response['lstRefDetails'].length==2){
+              this.lstReference=response['lstRefDetails'];
+            }
+            else if(response['lstRefDetails'].length==1){
+              this.lstReference[0]=response['lstRefDetails'][0]
+            }
+            if(response['lstEduDetails'].length!=0){
+              this.lstEduDetails=response['lstEduDetails'];
+            }
+            if(response['lstExpDetails'].length!=0){
+              this.lstExpDetails=response['lstExpDetails'];
+            }
+            if(response['lstFamilyDetails']!=0){
+              this.lstFamilyDetails=response['lstFamilyDetails'];
+            }
+
+      
+            this.strFirstName=this.lstEmployeeDetails[0].first_name;
+            this.strLastName=this.lstEmployeeDetails[0].last_name;
+            this.intCategoryId=this.lstEmployeeDetails[0].fk_category_id;
+            this.strCategoryName=this.lstEmployeeDetails[0].fk_category__vchr_name;
+            this.selectedCategory=this.lstEmployeeDetails[0].fk_category__vchr_name;
+            this.selectedCategoryId=this.lstEmployeeDetails[0].fk_category_id;
+            this.strEmpCode=this.lstEmployeeDetails[0].vchr_employee_code;
+            this.strUserName=this.lstEmployeeDetails[0].username;
+            this.strBranchName=this.lstEmployeeDetails[0].fk_branch__vchr_name;
+            this.intBranchId=this.lstEmployeeDetails[0].fk_branch_id;
+            this.selectedBranchId=this.lstEmployeeDetails[0].fk_branch_id;
+            this.selectedBranch=this.lstEmployeeDetails[0].fk_branch__vchr_name;
+            this.strDepartmentName=this.lstEmployeeDetails[0].fk_department__vchr_name;
+            this.selectedDepartment=this.lstEmployeeDetails[0].fk_department__vchr_name;
+            this.intDepartmentId=this.lstEmployeeDetails[0].fk_department_id;
+            this.selectedDepartmentId=this.lstEmployeeDetails[0].fk_department_id;
+            this.strGroupName=this.lstEmployeeDetails[0].fk_group__vchr_name;
+            this.selectedGroup=this.lstEmployeeDetails[0].fk_group__vchr_name;
+            // this.intGroupId=this.lstEmployeeDetails[0].fk_group_id;
+            this.selectedGroupId=this.lstEmployeeDetails[0].fk_group_id;
+            this.datOBirth=this.lstEmployeeDetails[0].dat_dob;
+            this.strGender=this.lstEmployeeDetails[0].vchr_gender;
+            this.intPhoneNumber=this.lstEmployeeDetails[0].bint_phone;
+            this.strEmail=this.lstEmployeeDetails[0].vchr_email;
+
+            this.strAddress=this.lstEmployeeDetails[0].vchr_address;
+            this.strPostOffice=this.lstEmployeeDetails[0].vchr_po;
+            this.strLandMark=this.lstEmployeeDetails[0].vchr_land_mark;
+            this.strPlace=this.lstEmployeeDetails[0].vchr_place;
+            this.intDistrictId=this.lstEmployeeDetails[0].fk_dist_id;
+            this.intStateId=this.lstEmployeeDetails[0].fk_dist__fk_state_id
+            this.intCountryId=this.lstEmployeeDetails[0].fk_dist__fk_state__fk_country_id
+            this.intPinCode=this.lstEmployeeDetails[0].int_pincode;
+
+            this.strDesignation=this.lstEmployeeDetails[0].fk_desig__vchr_name;
+            this.intSelectedDesignation=this.lstEmployeeDetails[0].fk_desig_id
+            this.datOJoin=this.lstEmployeeDetails[0].dat_doj;
+            this.strLevelOfGrade=this.lstEmployeeDetails[0].vchr_grade;
+            this.strGrade=this.lstEmployeeDetails[0].vchr_level;
+            this.strSalutation = this.lstEmployeeDetails[0].vchr_salutation;
+            this.strReligion = this.lstEmployeeDetails[0].fk_religion__vchr_name;
+            this.intReligionId = this.lstEmployeeDetails[0].fk_religion_id;
+            this.strMaritalStatus = this.lstEmployeeDetails[0].vchr_marital_status;
+            this.strEmPerson = this.lstEmployeeDetails[0].vchr_emergency_person;
+            this.strEmerRelattion = this.lstEmployeeDetails[0].vchr_emergency_relation;
+            this.strBloodGroup = this.lstEmployeeDetails[0].vchr_blood_group;
+
+            if(this.selectedCategory.toUpperCase() == 'EMPLOYEE'){
+              this.intSalaryStructure=this.lstEmployeeDetails[0].fk_salary_struct_id;
+            }
+            if (this.lstEmployeeDetails[0].hasOwnProperty('dct_salary_details')){
+              if(this.lstEmployeeDetails[0].dct_salary_details['Deductions']){
+                this.fltCharity = this.lstEmployeeDetails[0].dct_salary_details['Deductions'].Charity;
+                this.fltTds = this.lstEmployeeDetails[0].dct_salary_details['Deductions'].TDS;
+              }
+            }
+            this.strSalaryStructName=this.lstEmployeeDetails[0].fk_salary_struct__vchr_name;
+            if(this.lstEmployeeDetails[0].hasOwnProperty('json_allowance') && this.lstEmployeeDetails[0].json_allowance!= null){
+              this.dctAllowance.bln_esi=this.lstEmployeeDetails[0].json_allowance.bln_esi;
+              this.dctAllowance.bln_pf=this.lstEmployeeDetails[0].json_allowance.bln_pf;
+              this.dctAllowance.bln_gratuity=this.lstEmployeeDetails[0].json_allowance.bln_gratuity;
+              this.dctAllowance.bln_wwf=this.lstEmployeeDetails[0].json_allowance.bln_wwf;
+              this.dctAllowance.bln_tds=this.lstEmployeeDetails[0].json_allowance.bln_tds;
+            }
+            
+
+            if(this.selectedCategory.toUpperCase() == 'EMPLOYEE'){
+              this.fltGrossPay=this.lstEmployeeDetails[0].dbl_gross;
+            }
+            this.strBankName=this.lstEmployeeDetails[0].vchr_bank_name;
+            this.intAccountNum=this.lstEmployeeDetails[0].vchr_acc_no;
+            this.strIfscCode=this.lstEmployeeDetails[0].vchr_ifsc;
+            this.intPanNo=this.lstEmployeeDetails[0].vchr_pan_no;
+            this.strFatherName=this.lstEmployeeDetails[0].vchr_father_name;
+            this.intEmPhNo=this.lstEmployeeDetails[0].bint_emergency_phno;
+            this.intAadharNo=this.lstEmployeeDetails[0].vchr_aadhar_no;
+            this.ImageLocation=this.lstEmployeeDetails[0].vchr_img;
+            this.ImageSrc=this.lstEmployeeDetails[0].vchr_img;
+            this.strPhysicalLocation=this.lstEmployeeDetails[0].vchr_physical_loc;
+            this.intSelectedProductId=this.lstEmployeeDetails[0].fk_product_id;
+            this.intSelectedBrandId=this.lstEmployeeDetails[0].fk_brand_id;
+            if(this.lstEmployeeDetails[0].int_weekoff_type != null){
+              this.intWeekOffType=this.lstEmployeeDetails[0].int_weekoff_type.toString();
+            }
+           
+            this.lstSelectedLoc=this.lstEmployeeDetails[0].json_physical_loc;
+            
+
+            if(this.intWeekOffType=='0'){
+              this.strDay = this.lstEmployeeDetails[0].vchr_weekoff_day
+              this.blnFixed = true;      
+            }
+
+            if(this.lstEmployeeDetails[0].vchr_esi_no !=null){
+              this.intEsiNumber=Number(this.lstEmployeeDetails[0].vchr_esi_no);
+            }
+            if(this.lstEmployeeDetails[0].vchr_uan_no!=null){
+              this.intUANNumber=Number(this.lstEmployeeDetails[0].vchr_uan_no);
+            }
+            if(this.lstEmployeeDetails[0].vchr_wwf_no!=null){
+              this.intWWFNumber=Number(this.lstEmployeeDetails[0].vchr_wwf_no);
+            }            
+            if(this.lstEmployeeDetails[0].int_payment==1 || this.lstEmployeeDetails[0].int_payment==0){
+              this.intPaymentMode=this.lstEmployeeDetails[0].int_payment.toString();
+            }
+            if(this.lstEmployeeDetails[0].int_shift_type){
+              this.strShiftType=this.lstEmployeeDetails[0].int_shift_type.toString();
+            }
+
+            if(this.lstEmployeeDetails[0].int_shift_type==0){
+              this.strFixedShift=this.lstEmployeeDetails[0]['lst_shift_shedule'][0].pk_bint_id;
+              this.selectedFixedShift=this.lstEmployeeDetails[0]['lst_shift_shedule'][0].vchr_shift_name;
+              this.selectedFixedShiftId=this.lstEmployeeDetails[0]['lst_shift_shedule'][0].pk_bint_id
+            }
+            else if(this.lstEmployeeDetails[0].int_shift_type==1){
+              for(let item of this.lstEmployeeDetails[0]['lst_shift_shedule']){
+                this.lstShift.push(item.pk_bint_id)
+              }
+              // this.lstShift=this.lstEmployeeDetails[0]['json_shift'].lstShift;
+              
+            }
+            if(this.lstEmployeeDetails[0].fk_company_id){
+              this.intSelectedCompanyId=this.lstEmployeeDetails[0].fk_company_id
+            }
+            if(this.lstEmployeeDetails[0].vchr_middle_name){
+              this.strMiddleName=this.lstEmployeeDetails[0].vchr_middle_name;
+
+            }
+            this.intWPSGroupId=this.lstEmployeeDetails[0].fk_wps_id;
+            this.strIllnessDetails=this.lstEmployeeDetails[0].vchr_disease;
+            if(this.selectedCategory.toUpperCase()=='EMPLOYEE'){
+              // this.getSalarySplit();
+              // this.dctSalarySplit=this.lstEmployeeDetails[0]['lst_salary_details'][0];
+              // console.log("dctSalarySplit",this.dctSalarySplit);
+              
+            }
+            this.intOfficialNumber=this.lstEmployeeDetails[0].int_official_num;
+            this.strEmpRemarks=this.lstEmployeeDetails[0].vchr_emp_remark;
+     
+            // this.countryChanged(this.intCountryId);
+            // this.stateChanged(this.intStateId);
+
+                   }  
+      },
+      (error) => {   
+        this.spinner.hide();
+        Swal.fire('Error!','Something went wrong!!', 'error');
+        
+      });
+      
+
+  }
+  branchChanged(item){
+    
+    this.selectedBranch=item.name;
+    this.selectedBranchId=item.id;
+
+  }
+  branchChange(){
+    if(this.selectedBranch!=this.strBranchName){
+      this.selectedBranch='';
+      this.selectedBranchId=null;
+    }
+  }
+  categoryChanged(item){
       this.selectedCategory=item.vchr_name;
       this.selectedCategoryId=item.pk_bint_id;
       this.strCategoryCode=item.vchr_code;
-
-
-    
+   
     
   }
-  fixedShiftChanged(item){
-    this.selectedFixedShift=item.vchr_name;
-    this.selectedFixedShiftId=item.pk_bint_id;
-  }
-
-
   variableShiftChanged(event)
   {
     this. lstVariableShift=[]
@@ -678,74 +837,89 @@ localStorage.removeItem('intNewEmpJobId');
      
   
   }
-  levelChanged(event){
-    console.log(this.lstLevelData,'this.lstLevelData')
-    let level_type = ""
-    this.lstLevelData.forEach(element => {
-      if(element.pk_bint_id == this.int_Level){
-        level_type = element.vchr_name
-      }
-    });
+  fixedShiftChanged(item){
+    this.selectedFixedShift=item.vchr_name;
+    this.selectedFixedShiftId=item.pk_bint_id;
+  }
+
+  groupChanged(item){
+    this.selectedGroup=item.name;
+    this.selectedGroupId=item.id;
+
+  }
+  groupChange(){
+    if(this.selectedGroup!=this.strGroupName){
+      this.selectedGroup='';
+      this.selectedGroupId=null;
+    }
+  }
+  departmentChanged(){
+    
+    
+  }
+  getSalarySplit(){
   
-    this.serverService.getData('hierarchy/levels?hierarchy_name='+level_type).subscribe(
-      (response) => {
-          if (response.status == 1) {
-            this.lstLocationData=response['data'];
-          }  
-        },
-        (error) => {   
-      });
+    if(this.blnOnload){
+      this.dctSalarySplit = {}
+  
+      if(this.lstEmployeeDetails[0].hasOwnProperty('dct_salary_details')){
+        this.dctSalarySplit=this.lstEmployeeDetails[0]['dct_salary_details'];
 
-
-      let dict_level = {
-        hierarchy_name:level_type,
-        dep_id:this.intDepartmentId
       }
-      this.serverService.postData('hierarchy/get_groups/',dict_level).subscribe(
-        (response) => {
-          if (response.status == 1) {
-            console.log(response['data'],'dgsdhgsfhdfh')
-              this.lstGroupData=response['data'][level_type];
-            }  
+      // console.log(this.dctSalarySplit,'salarysplit');
+      this.blnCtcBreakup = this.dctSalarySplit.hasOwnProperty('BP_DA'); //new change
+
+      this.CTCBreakupchanged();
+      this.blnOnload=false;
+    }
+    else{
+      let dctData = {};
+      dctData['intCategoryId'] = this.selectedCategoryId;
+      dctData['intSalaryStructId'] = this.intSalaryStructure;
+      dctData['dctAllowances'] = this.dctAllowance;
+      dctData['fltGrossPay'] = this.fltGrossPay;
+      dctData['intEmployeeId'] = this.intEmployeeId;
+      if (this.selectedCategory.toUpperCase() == 'EMPLOYEE' && 
+      this.intSalaryStructure && this.fltGrossPay !=0) {
+       
+        
+        this.serverService.postData('user/salarysplit/', dctData).subscribe(
+          (response) => {
+            if (response['status'] == 1){
+            this.dctSalarySplit = response['data'];
+            this.fltCTC = response['dbl_cost_to_company'];
+            this.dctRules = response['json_rules'];
+            // this.blnCtcBreakup = this.dctSalarySplit.hasOwnProperty('BP_DA');    //newchange
+            this.fltCharity = this.dctSalarySplit['Deductions']['Charity'];
+            this.CTCBreakupchanged();
+            }
+            else if(response['status'] == 0){
+              Swal.fire('Error!', response['msg'], 'error');
+  
+            }
           },
-          (error) => {   
-        });
+          (error) => {
+            Swal.fire('Error!', 'error', 'error');
     
-  }
-  branchChanged(item){
-    
-    this.selectedBranch=item.name;
-    this.selectedBranchId=item.id;
-
-  }
-  branchChange(){
-    if(this.selectedBranch!=this.strBranchName){
-      this.selectedBranch='';
-      this.selectedBranchId=null;
+          });
+      }
     }
+
+    
   }
+
   saveData(){
-    if (this.lstFunction){
-      var lstSelectedFunction
-      lstSelectedFunction = this.lstFunction.map(x => x.pk_bint_id)
-    }
-    console.log(this.lstFunction);
-
     let dctTempData={}
-    // console.log("aadharnumber",this.intAadharNo.length);
-    // console.log("intPanNo",this.intPanNo.length);
-    console.log("formcontorl",this.form);
-    console.log("official contactnumber",this.intOfficialNumber);
-    console.log("lstFamilyDetails0",this.lstFamilyDetails);
-    console.log("this.lstEduDetails",this.lstEduDetails);
-    console.log("lstExpDetails",this.lstExpDetails);
+    // console.log("intReligionId",this.intReligionId);
+    // console.log("strSalutation",this.strSalutation);
     
     
-      if(this.strSalutation == ''){
+
+     
+    if(this.strSalutation == '' || this.strSalutation=='null' || this.strSalutation==null){
       Swal.fire('Error!', 'Salutation required ', 'error');
       return false
     }
-      
 
     if ( this.strFirstName == null || this.strFirstName.trim() === '') {
       Swal.fire('Error!', 'Enter First Name', 'error');
@@ -767,16 +941,8 @@ localStorage.removeItem('intNewEmpJobId');
       Swal.fire('Error!', 'Select Employee Category', 'error');
       return false
     }
-    // else if ( this.strUserName == null || this.strUserName.trim() === '') {
-    //   Swal.fire('Error!', 'Enter User Name', 'error');
-    //   return false
-    // }
-    else if (!this.strPassword1) {
-      Swal.fire('Error!', 'Enter password', 'error');
-      return false
-    } 
-     else if (this.strPassword1 !== this.strConfirmPassword1) {
-      Swal.fire('Error!', 'Confirm password mismatch', 'error');
+    else if ( this.strUserName == null || this.strUserName.trim() === '') {
+      Swal.fire('Error!', 'Enter User Name', 'error');
       return false
     }
     if(this.strLoginUser=='Super User' && (this.intSelectedCompanyId==null || this.intSelectedCompanyId==undefined)){
@@ -788,42 +954,38 @@ localStorage.removeItem('intNewEmpJobId');
       return false
     }
     else if(this.strBranchName!= this.selectedBranch){
-      Swal.fire('Error!', 'Enter branch correctly', 'error');
+      Swal.fire('Error!', 'Enter Valid branch ', 'error');
       return false
     }
     else if(!this.intDepartmentId){
-      Swal.fire('Error!', 'Select Department', 'error');
+      Swal.fire('Error!', 'Select department', 'error');
       return false
     }
-    else if(!this.intSelectedDesignation){
+    if(!this.intSelectedDesignation){
+      
       Swal.fire('Error!', 'Select Employee Designation', 'error');
-      return false;
+      return false
     }
-    else if(!this.datOJoin){      
+    if(!this.datOJoin){      
       Swal.fire('Error!', 'Select Date of join', 'error');
       return false
     }
-
     else if(!this.strLevelOfGrade){
-      Swal.fire('Error!', 'Select Level of grade', 'error');
+      Swal.fire('Error!', 'Select level of grade', 'error');
       return false;
     }
     else if(!this.strGrade){
-      Swal.fire('Error!', 'Select Grade', 'error');
+      Swal.fire('Error!', 'Select grade', 'error');
       return false;
     }
-    else if((this.intSalaryStructure==undefined || this.intSalaryStructure==null || this.intSalaryStructure=='') && (this.selectedCategory.toUpperCase()=='EMPLOYEE')){
-      Swal.fire('Error!', 'Select Salary structure', 'error');
+    else if((this.intSalaryStructure==undefined || this.intSalaryStructure==null || this.intSalaryStructure=='') && (this.selectedCategory.toUpperCase()=='EMPLOYEE')) {
+      Swal.fire('Error!', 'Select salary structure', 'error');
       return false;
     }
-    else if(this.lstSelectedLocation == null){
+    else if(this.lstSelectedLoc.length==0){
       Swal.fire('Error!', 'Select Physical Location', 'error');
       return false;
     }
-
-
-
-
     // else if(!this.strGroupName){
     //   Swal.fire('Error!', 'Enter group', 'error');
     //   return false
@@ -832,8 +994,7 @@ localStorage.removeItem('intNewEmpJobId');
     //   Swal.fire('Error!', 'Enter valid group', 'error');
     //   return false
     // }
-    else if(!this.datOBirth
-      ){
+    else if(!this.datOBirth){
       Swal.fire('Error!', 'Select Date of Birth', 'error');
       return false
     }
@@ -841,9 +1002,13 @@ localStorage.removeItem('intNewEmpJobId');
       Swal.fire('Error!', 'Select gender', 'error');
       return false
     }
-    else if(this.strReligion == ''){
+    else if(this.strReligion == '' ){
       Swal.fire('Error!', 'Select religion', 'error');
-      return false
+      return false;
+    }
+    else if(this.intReligionId==null) {
+      Swal.fire('Error!', 'Select religion', 'error');
+      return false;
     }
     else if(this.strMaritalStatus == ''){
       Swal.fire('Error!', 'Select Marital Status', 'error');
@@ -868,19 +1033,13 @@ localStorage.removeItem('intNewEmpJobId');
         return false
       }
     }
-
     // if(this.strDesignation=='' || this.strDesignation== undefined || this.strDesignation==null){
     //   Swal.fire('Error!', 'Enter Designation', 'error');
     //   return false;
     // }
 
-
     if(!this.intAadharNo){
       Swal.fire('Error!', 'Enter Aadhaar Number', 'error');
-      return false;
-    }
-    else if(!this.strGrade){
-      Swal.fire('Error!', 'Select grade', 'error');
       return false;
     }
     else if(!this.intPanNo){
@@ -892,7 +1051,7 @@ localStorage.removeItem('intNewEmpJobId');
       return false;
     }
     else if(this.strEmPerson == ''){
-      Swal.fire('Error!', " Enter Emergency Contact Person", 'error');
+      Swal.fire('Error!', " Enter Emergency Conatct Person", 'error');
       return false;
     }
     else if(this.strEmerRelattion == ''){
@@ -913,7 +1072,7 @@ localStorage.removeItem('intNewEmpJobId');
     }
     else if(!this.strAddress){
       Swal.fire('Error!', 'Enter Address', 'error');
-      return false;
+      return false
     }
     else if(!this.strPostOffice) {
       Swal.fire("Error!","Enter Post Office","error");
@@ -944,15 +1103,22 @@ localStorage.removeItem('intNewEmpJobId');
       return false;
     }
 
-    else if(!this.intPaymentMode){
+    else if(!this.strShiftType){
+      Swal.fire('Error!', 'Select Shift Type', 'error');
+      return false;
+    }
+    else if(this.intPaymentMode==undefined || this.intPaymentMode==null || this.intPaymentMode==''){
       Swal.fire('Error!', 'Select Payment Mode', 'error');
       return false;
     }
-    else if(this.intPaymentMode=='1' && !this.strBankName){
+    if(this.intPaymentMode=='1' && !this.strBankName){
       Swal.fire('Error!', 'Enter Bank', 'error');
       return false;
     }
-
+    else if(this.intPaymentMode=='1' && !this.strIfscCode){
+      Swal.fire('Error!', 'Enter IFSC Code', 'error');
+      return false;
+    }
     else if(this.intPaymentMode=='1' && !this.intAccountNum){
       Swal.fire('Error!', 'Enter Account Number', 'error');
       return false;
@@ -961,18 +1127,6 @@ localStorage.removeItem('intNewEmpJobId');
       Swal.fire('Error!', 'Enter Valid Account Number', 'error');
       return false;
     }
-    else if(this.intPaymentMode=='1' && !this.strIfscCode){
-      Swal.fire('Error!', 'Enter IFSC Code', 'error');
-      return false;
-    }
-    // if(this.intYear == null){
-    //   Swal.fire('Error!', 'Enter Passing Year', 'error');
-    //   return false;
-    // }
-   
-    
-
-
 
     // else if(!this.intSelectedProductId){
     //   Swal.fire('Error!', 'Select Product', 'error');
@@ -998,9 +1152,22 @@ localStorage.removeItem('intNewEmpJobId');
         return false;
       }
     }
-
-
-
+    if(!this.intWeekOffType){
+      Swal.fire('Error!', 'Select Week Off Type', 'error');
+      return false;
+    }
+    if(this.blnFixed && !this.strDay){
+      Swal.fire('Error!', 'Select Week Off Day', 'error');
+      return false;
+    }
+    else if(!this.ImageLocation){
+      Swal.fire('Error!', 'Add User Image', 'error');
+      return false;
+    }
+     else if ((this.fltGrossPay === 0 || this.fltGrossPay === null || this.fltGrossPay === undefined) && (this.selectedCategory.toUpperCase()=='EMPLOYEE')){
+      Swal.fire('Error!', 'Enter Gross pay', 'error');
+      return false;
+    }
     let dctShiftData={}
     if(this.strShiftType=='0'){
       if(!this.selectedFixedShiftId){
@@ -1023,53 +1190,21 @@ localStorage.removeItem('intNewEmpJobId');
         dctShiftData['lstShift']=this.lstShift;
       }
     }
-     if(!this.intWeekOffType){
-      Swal.fire('Error!', 'Select Week Off Type', 'error');
-      return false;
-    }
-    if(this.blnFixed && !this.strDay){
-      Swal.fire('Error!', 'Select Week Off Day', 'error');
-      return false;
-    }
-
-    if(!this.ImageLocation){
-      Swal.fire('Error!', 'Add User Image', 'error');
-      return false;
-    }
-     else if ((this.fltGrossPay === 0 || this.fltGrossPay === null || this.fltGrossPay === undefined) && (this.selectedCategory.toUpperCase()=='EMPLOYEE')) {
-      Swal.fire('Error!', 'Enter Gross pay', 'error');
-      return false;
-    }
     if(this.selectedCategory.toUpperCase()== 'EMPLOYEE' && this.strSalaryStructName=='Slab-0'){
       let grossTot=this.dctSalarySplit['BP_DA']+this.dctSalarySplit['HRA']+this.dctSalarySplit['CCA']+this.dctSalarySplit['WA']+this.dctSalarySplit['SA'];
       if(this.fltGrossPay!=grossTot){
         Swal.fire("Error!","Sum of fixed allowances should be equal to gross pay");
         return false;
       }
-      if(this.intSelectedGroup== null){
-        let grossTot=this.dctSalarySplit['BP_DA']+this.dctSalarySplit['HRA']+this.dctSalarySplit['CCA']+this.dctSalarySplit['WA']+this.dctSalarySplit['SA'];
-        if(this.fltGrossPay!=grossTot){
-          Swal.fire("Error!","Sum of fixed allowances should be equal to gross pay");
-          return false;
-        }
-      
-    }
-  }
-    if(this.fltCharity){
-      this.dctSalarySplit
-      
     }
 
-    dctTempData['blnNewEmp'] = this.blnNewEmp;
-    dctTempData['intNewEmpId'] = this.intNewEmpId;
-    dctTempData['intNewEmpJobId'] = this.intNewEmpJobId;
+
     dctTempData['strFirstName']=this.strFirstName;
     dctTempData['strLastName']=this.strLastName;
     dctTempData['strMiddleName']=this.strMiddleName;
     dctTempData['intCategoryId']=this.selectedCategoryId;
     dctTempData['strCategoryName']=this.selectedCategory
-    // dctTempData['strUserName']=this.strUserName;
-    dctTempData['strPassword']=this.strPassword1;
+    dctTempData['strUserName']=this.strUserName;
     dctTempData['datDob']=moment(this.datOBirth).format('YYYY-MM-DD')
     dctTempData['datJoin']=moment(this.datOJoin).format('YYYY-MM-DD')
     dctTempData['strGender']=this.strGender;
@@ -1081,36 +1216,25 @@ localStorage.removeItem('intNewEmpJobId');
     dctTempData['strGrade']=this.strGrade;
     dctTempData['strEmail']=this.strEmail;
     dctTempData['intPhoneNumber']=this.intPhoneNumber;
-    dctTempData['intDesigId']=this.intSelectedDesignation;
+    dctTempData['strDesignation']=this.strDesignation;
     dctTempData['dctAllowances']=this.dctAllowance;
     dctTempData['dblGrossPay']=this.fltGrossPay;
-    dctTempData['dblCharity']=this.fltCharity;
-    dctTempData['dblTds']=this.fltTds;
+    dctTempData['intId']=this.intEmployeeId;
     dctTempData['intShiftType']=this.strShiftType;
     dctTempData['jsonShiftId']=dctShiftData;
-    dctTempData['intPaymentMode']=this.intPaymentMode;
-    dctTempData['strBankName']=this.strBankName;
-    dctTempData['intAccountNum']=this.intAccountNum;
-    dctTempData['strIfscCode']=this.strIfscCode;
-    dctTempData['intPanNo']=this.intPanNo;
-    dctTempData['intAadharNo']=this.intAadharNo;
-    dctTempData['strFatherName']=this.strFatherName;
-    dctTempData['intEmPhNo'] = this.intEmPhNo;
-    dctTempData['groupId'] = this.intGroupId;
-    dctTempData['hGroup']=this.intSelectedGroup;
+    dctTempData['intproduct']=this.intSelectedProductId;
+    dctTempData['inbrand']=this.intSelectedBrandId;
 
+
+    
     const frmPublishedData = new FormData;
-
-    frmPublishedData.append('blnNewEmp',this.blnNewEmp.toString());
-    frmPublishedData.append('intNewEmpId',this.intNewEmpId);
-    frmPublishedData.append('intNewEmpJobId',this.intNewEmpJobId);
+    frmPublishedData.append('intId',this.intEmployeeId);
     frmPublishedData.append('strFirstName',this.strFirstName);
     frmPublishedData.append('strLastName',this.strLastName);
     frmPublishedData.append('intCategoryId',this.selectedCategoryId);
-    frmPublishedData.append('strCategoryName',this.selectedCategory);
+    frmPublishedData.append('strCategoryName',this.selectedCategory)
     frmPublishedData.append('strCategoryCode',this.strCategoryCode);
-    // frmPublishedData.append('strUserName',this.strUserName);
-    frmPublishedData.append('strPassword',this.strPassword1.toString());
+    frmPublishedData.append('strUserName',this.strUserName);
     frmPublishedData.append('datDob',moment(this.datOBirth).format('YYYY-MM-DD'))
     frmPublishedData.append('datJoin',moment(this.datOJoin).format('YYYY-MM-DD'))
     frmPublishedData.append('strGender',this.strGender);
@@ -1120,6 +1244,7 @@ localStorage.removeItem('intNewEmpJobId');
     frmPublishedData.append('strLevelofGrade',this.strLevelOfGrade);
     frmPublishedData.append('strGrade',this.strGrade);
     frmPublishedData.append('strEmail',this.strEmail);
+
     frmPublishedData.append('strAddress',this.strAddress);
     frmPublishedData.append('strPo',this.strPostOffice);
     frmPublishedData.append('strLandMark',this.strLandMark);
@@ -1128,6 +1253,7 @@ localStorage.removeItem('intNewEmpJobId');
     frmPublishedData.append('intStateId',this.intStateId);
     frmPublishedData.append('intCountryId',this.intCountryId);
     frmPublishedData.append('intPincode',this.intPinCode)
+
     frmPublishedData.append('intPhoneNumber',this.intPhoneNumber);
     frmPublishedData.append('intDesigId',this.intSelectedDesignation);
     frmPublishedData.append('dctAllowances',JSON.stringify(this.dctAllowance));
@@ -1137,55 +1263,49 @@ localStorage.removeItem('intNewEmpJobId');
     frmPublishedData.append('strBloodGroup',this.strBloodGroup);
     frmPublishedData.append('strEmerPerson',this.strEmPerson);
     frmPublishedData.append('strEmerRelation',this.strEmerRelattion);
-    frmPublishedData.append('hGroup',this.intSelectedGroup);
-  
-
-    if(this.selectedCategory.toUpperCase()== 'EMPLOYEE'){
+    if(this.selectedCategory.toUpperCase()=='EMPLOYEE'){
       frmPublishedData.append('dblGrossPay',this.fltGrossPay.toString());
       frmPublishedData.append('intSalaryStructId',this.intSalaryStructure);
-      frmPublishedData.append('strSalaryStructName',this.strSalaryStructName)
+      frmPublishedData.append('strSalaryStructName',this.strSalaryStructName);
       if(this.strSalaryStructName=='Slab-0'){
         frmPublishedData.append('dctSalarySplit',JSON.stringify(this.dctSalarySplit))
       }
-
+      frmPublishedData.append('dblCharity',this.fltCharity.toString());
+      frmPublishedData.append('dblTds',this.fltTds.toString());
     }
-    frmPublishedData.append('dblCharity',this.fltCharity.toString());
-    frmPublishedData.append('dblTds',this.fltTds.toString());
     frmPublishedData.append('intShiftType',this.strShiftType);
     frmPublishedData.append('jsonShiftId',JSON.stringify(dctShiftData));
     frmPublishedData.append('intPaymentMode',this.intPaymentMode);
     frmPublishedData.append('intPanNo',this.intPanNo);
+    frmPublishedData.append('strFatherName',this.strFatherName);
+    frmPublishedData.append('intEmPhNo',this.intEmPhNo);
     frmPublishedData.append('intAadharNo',this.intAadharNo);
     frmPublishedData.append('imgSrc',this.ImageSrc);
     frmPublishedData.append('strPhysicalLoc',this.strPhysicalLocation);
     frmPublishedData.append('intWeekOffType',this.intWeekOffType);
-    frmPublishedData.append('lstLoc',this.lstSelectedLocation);
-    frmPublishedData.append('strFatherName',this.strFatherName);
-    frmPublishedData.append('intEmPhNo',this.intEmPhNo);
+    frmPublishedData.append('lstLoc',JSON.stringify(this.lstSelectedLoc));
+    if(this.intEsiNumber!=undefined && this.intEsiNumber !=null){
+      frmPublishedData.append('strEsiNo',this.intEsiNumber);
+    }
+    if(this.intUANNumber!=undefined && this.intUANNumber !=null){
+      frmPublishedData.append('strUanNo',this.intUANNumber);
+    }
+    if(this.intWWFNumber!=undefined && this.intWWFNumber !=null){
+      frmPublishedData.append('strWwfNo',this.intWWFNumber);
+    }
     frmPublishedData.append('lstReference',JSON.stringify(this.lstReference));
-
     if(this.intWPSGroupId){
       frmPublishedData.append('intWpsId',this.intWPSGroupId);
     }
     frmPublishedData.append('strIllnessDetails',this.strIllnessDetails)
-    
-    if(this.intEsiNumber!=undefined && this.intEsiNumber!=null){
-      frmPublishedData.append('strEsiNo',this.intEsiNumber);
-    }
-    if(this.intUANNumber!=undefined && this.intUANNumber!=null){
-      frmPublishedData.append('strUanNo',this.intUANNumber);
-    }
-    if(this.intWWFNumber!=undefined && this.intWWFNumber!=null){
-      frmPublishedData.append('strWwfNo',this.intWWFNumber);
-    }
-    if(this.strLoginUser=='Super User'){
-      frmPublishedData.append('intCompanyId',this.intSelectedCompanyId)
-    }
     if(this.intSelectedBrandId!=undefined && this.intSelectedBrandId !=null ) {
       frmPublishedData.append('intBrandId',this.intSelectedBrandId);
     }
-    if(lstSelectedFunction!=undefined && lstSelectedFunction !=null){
-      frmPublishedData.append('intProductId',lstSelectedFunction);
+    if(this.intSelectedProductId!=undefined && this.intSelectedProductId!=null){
+      frmPublishedData.append('intProductId',this.intSelectedProductId);
+    }
+    if(this.strLoginUser=='Super User'){
+      frmPublishedData.append('intCompanyId',this.intSelectedCompanyId)
     }
     if(this.intPaymentMode=='1'){
       frmPublishedData.append('strBankName',this.strBankName);
@@ -1206,19 +1326,21 @@ localStorage.removeItem('intNewEmpJobId');
     }
     frmPublishedData.append('lstFamilyDetails',JSON.stringify(this.lstFamilyDetails));
     frmPublishedData.append('lstEduDetails',JSON.stringify(this.lstEduDetails));
-    frmPublishedData.append('lstExpDetails',JSON.stringify(this.lstExpDetails))
+    frmPublishedData.append('lstExpDetails',JSON.stringify(this.lstExpDetails));
+    frmPublishedData.append('lstDeletedEductn',JSON.stringify(this.lstDeletedEductn));
+    frmPublishedData.append('lstDeletedExp',JSON.stringify(this.lstDeletedExp));
+    frmPublishedData.append('lstDeletedFamily',JSON.stringify(this.lstDeletedFamily));
+    
     
 
-    
-
-    // this.spinner.show();
-    this.serverService.postData('user/adduser/', frmPublishedData).subscribe(
+    this.spinner.show();
+    this.serverService.putData('user/add_user/', frmPublishedData).subscribe(
       (response) => {
-        // this.spinner.hide();
+        this.spinner.hide();
         if (response.status == 1) {
-          Swal.fire('Success!', 'Employee added successfully', 'success');
-          this.router.navigate(["/employee/listemployee"]);
-          
+          Swal.fire('Success!', 'Employee Updated successfully', 'success');
+          this.router.navigate(['/employee/listemployee'])
+
 
         }
         else if (response.status == 0) {
@@ -1226,64 +1348,19 @@ localStorage.removeItem('intNewEmpJobId');
         }
         else{
           Swal.fire('Error!', 'error', 'error');
-            
         }
       },
       (error) => {
-        // this.spinner.hide();
         Swal.fire('Error!', 'error', 'error');
+        this.spinner.hide();
       });
     
   }
-  groupChanged(item){
-    this.selectedGroup=item.name;
-    this.selectedGroupId=item.id;
+  backToList(){
+    this.router.navigate(["/employee/listemployee"]);
 
   }
-  groupChange(){
-    if(this.selectedGroup!=this.strGroupName){
-      this.selectedGroup='';
-      this.selectedGroupId=null;
-    }
-  }
-  departmentChanged(){
-    // console.log("departmentid",this.intDepartmentId);
-    
-    
-  }
 
-  getSalarySplit(){
-    let dctData = {};
-    dctData['intCategoryId'] = this.selectedCategoryId;
-    dctData['intSalaryStructId'] = this.intSalaryStructure;
-    dctData['dctAllowances'] = this.dctAllowance;
-    dctData['fltGrossPay'] = this.fltGrossPay;
-    if (this.selectedCategory.toUpperCase() == 'EMPLOYEE' && 
-    this.intSalaryStructure && this.fltGrossPay !=0) {
-     
-      
-      this.serverService.postData('user/salarysplit/', dctData).subscribe(
-        (response) => {
-          if (response['status'] == 1){
-          this.dctSalarySplit = response['data'];
-          this.fltCTC = response['dbl_cost_to_company'];
-          this.dctRules = response['json_rules'];
-          this.intCostToCompany=this.fltCTC;
-          this.CTCBreakupchanged();
-          }
-        },
-        (error) => {
-          Swal.fire('Error!', 'error', 'error');
-  
-        });
-    }
-    else{
-      if(this.selectedCategory.toUpperCase() == 'EMPLOYEE'){
-        this.fltGrossPay=0;
-      }
-    }
-    
-  }
   clearFields(){
 
     this.strFirstName='';
@@ -1300,8 +1377,6 @@ localStorage.removeItem('intNewEmpJobId');
     this.strAddress='';
     this.strEmpCode='';
     this.strUserName='';
-    this.strPassword1 = new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)]));
-    this.strConfirmPassword1 = new FormControl('', CustomValidators.equalTo(this.strPassword1));
     this.strCategoryName='';
     this.intCategoryId=null;
     this.selectedCategory='';
@@ -1323,9 +1398,6 @@ localStorage.removeItem('intNewEmpJobId');
     this.strGrade='';
     this.strLevelOfGrade='';
     this.intSalaryStructure=null;
-    this.strSalaryStructName='';
-    this.intNetSalary=null;
-    this.intCostToCompany=null;
     this.strDesignation='';
     this.dctAllowance={
       "bln_esi":true,
@@ -1343,108 +1415,50 @@ localStorage.removeItem('intNewEmpJobId');
     this.lstShift=[];
     this.selectedFixedShift='';
     this.selectedFixedShiftId=null;
-
-    this.intPaymentMode=null;
-    this.strBankName='';
-    this.intAccountNum;
-    this.strIfscCode='';
-    this.intAadharNo;
-    this.intPanNo;
-    this.ImageSrc = '';
-    this.ImageLocation = '';
-    this.lstDesignationData;
-    this.blnShowBankDetails=false;
-    this.strFatherName='';
-    this.intEmPhNo=null;
-
-    this.intSelectedBrandId;
-    this.intSelectedProductId;
-    this.strPhysicalLocation='';
-    this.imgPath=''
-  
-    this.intSelectedCompanyId=null;
-    // this.strLoginUser='';
-    this.strMiddleName='';
-    this.intPanNo=null;
-    this.intAccountNum=null;
-    this.intSelectedProductId=null;
-    this.intSelectedBrandId=null;
-    this.intSelectedDesignation=null;
-    this.intAadharNo=null;
-    this.intWeekOffType='';
-    this.strPostOffice='';
-    this.strLandMark='';
-    this.strPlace='';
-    this.strDistrict='';
-    this.intDistrictId=null;
-    this.strState='';
-    this.intStateId=null;
-    this.strCountry='';
-    this.intCountryId=null
-    this.lstDistrictData=[];
-    this.lstStateData=[];
-    this.intPinCode=null;
-    this.intEsiNumber=null;
-    this.intUANNumber=null;
-    this.intWWFNumber=null;
     this.strDay = '';
-    this.blnFixed = false;
+    this.blnFixed =false;
 
-    this.strSalutation = '';
-    this.strReligion = '';
-    this.intReligionId = null;
-    this.strMaritalStatus = '';
-    this.strEmPerson = '';
-    this.strEmerRelattion = '';
-    this.strBloodGroup = '';
-    
-    this.lstSelectedLocation;
-    this.intWPSGroupId=null;
-    this.intOfficialNumber=null;
-    this.strEmpRemarks='';
-    this.strIllnessDetails='';
-    this.lstExpDetails=[];
-    this.lstExpDetails.push({
-      strEmployer:null,
-      strDesig:'',
-      vchrExpDetails:'',
-    });
-    this.lstFamilyDetails=[];
-    this.lstFamilyDetails.push({
-     strRelation:'',
-     strRelativeName:'',
-     strOccupation:'' ,
-     isAlive:'',
-     relativeDOB:null
-    });
-    this.lstEduDetails=[];
-    this.lstEduDetails.push({
-      'blnHighest' : false,
-      'strQualif' : '',
-      'strCourse' : '',
-      'strInstituion' : '',
-      'strPlace' : '',
-      'intCourseType' : null,
-      'intYear' : null,
-      'fltPercentage' : null,
-    });
-    this.lstReference=[
-      {
-        'strRefName':'',
-        'strCompName':'',
-        'strRefDesig':'',
-        'intRefPhone':null,
-        'strRefEmail':''
+  }
+
+  savePassWord(){
+    let dctData={}
+    // dctData['strCurrentPassword']=this.strCurrentPassword;
+    dctData['strNewPassword']=this.strPassword1;
+    dctData['intId']=this.intEmployeeId;
+    dctData['strUserName']=this.strUserName;
+    // if(!this.strCurrentPassword){
+    //   Swal.fire('Error!', 'Enter Current Password', 'error');
+    //   return false;
+    // }
+     if(!this.strPassword1){
+      Swal.fire('Error!', 'Enter New Password', 'error');
+      return false;
+    }
+    else if(this.strPassword1!=this.strConfirmPassword1){
+      Swal.fire('Error!', 'Passwords does not match', 'error');
+      return false;
+    }
+    this.spinner.show();
+    this.serverService.postData('user/update_password/', dctData).subscribe(
+      (response) => {
+        this.spinner.hide();
+        if (response['status'] == 1){
+          Swal.fire('Success!', 'Password changed successfully', 'success');
+          this.router.navigate(['/employee/listemployee'])
+          this.strPassword1 = new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)]));
+          this.strConfirmPassword1 = new FormControl('', CustomValidators.equalTo(this.strPassword1));
+
+        }
+        else if(response['status'] == 0){
+          Swal.fire('Error!', response['message'], 'error');
+
+        }
       },
-      {
-        'strRefName':'',
-        'strCompName':'',
-        'strRefDesig':'',
-        'intRefPhone':null,
-        'strRefEmail':''
-      }
-    ];
+      (error) => {
+        this.spinner.hide();
+        Swal.fire('Error!', 'error', 'error');
 
+      });
 
   }
 
@@ -1452,14 +1466,19 @@ localStorage.removeItem('intNewEmpJobId');
     const imgs = event.target.files[0];
     this.ImageSrc = imgs;
     this.ImageLocation = event.target.files[0];
-    // console.log("Imgsrc",this.ImageSrc['name']);
+    this.blnShowImage=true;
     
-
-    if(this.ImageSrc){
-      
-    }
     
     status = this.checkImage();
+
+              // for preview...............
+              var reader = new FileReader();
+              reader.readAsDataURL(imgs);
+              reader.onload = () => {
+                this.imgUrl = reader.result;
+              }
+              //...........................  
+
   }
   
   checkImage() {
@@ -1472,6 +1491,7 @@ localStorage.removeItem('intNewEmpJobId');
         img_up.src = window.URL.createObjectURL(this.ImageSrc);
         return status;
     }
+
   }
   paymentModeClicked(){
     if(this.intPaymentMode=='1'){
@@ -1480,15 +1500,13 @@ localStorage.removeItem('intNewEmpJobId');
     else if(this.intPaymentMode=='0'){
       this.blnShowBankDetails=false;
     }
-    this.intAccountNum=null;
-    this.strIfscCode='';
-    this.strBankName=''
+    this.intAccountNum;
+    this.strIfscCode;
+    this.strBankName
   }
-
   fileManager2(fileInput) {
     fileInput.click();
   }
-
   changeWeekofftype(){
     if(this.intWeekOffType == 0){
       this.blnFixed = true;
@@ -1498,7 +1516,7 @@ localStorage.removeItem('intNewEmpJobId');
     }
   }
   salaryStructureChanged(salStruct) {
-    console.log(salStruct);
+    // console.log(salStruct);
     this.strSalaryStructName=salStruct.vchr_name;
   }
   CTCBreakupchanged(){
@@ -1510,10 +1528,10 @@ localStorage.removeItem('intNewEmpJobId');
     //     return false;
     //   }
     // }
+     if (Object.keys(this.dctSalarySplit).length != 0) {
       // let allowanceTot:number=Number(this.dctSalarySplit['Allowances']['ESI'])+Number(this.dctSalarySplit['Allowances']['Gratuity'])+Number(this.dctSalarySplit['Allowances']['PF'])+Number(this.dctSalarySplit['Allowances']['WWF']);
-      // let deductionsTot:number=Number(this.dctSalarySplit['Deductions']['ESI'])+Number(this.dctSalarySplit['Deductions']['PF'])+Number(this.dctSalarySplit['Deductions']['SalaryAdvance'])+this.dctSalarySplit['Deductions']['WWF']+this.fltCharity;
-    let tempGrossPay: number = this.fltGrossPay;      
-      let allowanceTot:number=0
+      let tempGrossPay: number = this.fltGrossPay;
+      let allowanceTot:number=0;
       if(Number(this.dctSalarySplit['Allowances']['ESI'])){
         allowanceTot=allowanceTot+Number(this.dctSalarySplit['Allowances']['ESI'])
       }
@@ -1526,10 +1544,11 @@ localStorage.removeItem('intNewEmpJobId');
       if(Number(this.dctSalarySplit['Allowances']['WWF'])){
         allowanceTot=allowanceTot+Number(this.dctSalarySplit['Allowances']['WWF'])
       }
-      if(Number(this.dctSalarySplit['VariablePay'])){
-        allowanceTot=allowanceTot+Number(this.dctSalarySplit['VariablePay']);
-        tempGrossPay=tempGrossPay+Number(this.dctSalarySplit['VariablePay']);
-      }
+      // if(Number(this.dctSalarySplit['VariablePay'])){
+      //   allowanceTot=allowanceTot+Number(this.dctSalarySplit['VariablePay']);
+      //   tempGrossPay=tempGrossPay+Number(this.dctSalarySplit['VariablePay']);
+      // }
+
       // let deductionsTot:number=Number(this.dctSalarySplit['Deductions']['ESI'])+Number(this.dctSalarySplit['Deductions']['PF'])+Number(this.dctSalarySplit['Deductions']['SalaryAdvance'])+Number(this.dctSalarySplit['Deductions']['WWF'])+Number(this.fltCharity);
       let deductionsTot:number=0;
       if(Number(this.dctSalarySplit['Deductions']['ESI'])){
@@ -1558,71 +1577,15 @@ localStorage.removeItem('intNewEmpJobId');
       
       this.intNetSalary=Number(tempGrossPay)-Number(deductionsTot);
       this.intCostToCompany=Number(tempGrossPay)+Number(allowanceTot);
+     }
+      
   }
   religionChanged(item){
-   this.intReligionId = item.intId;
+    this.intReligionId = item.intId;
+ 
+   }
 
-  }
-
-  getEnteredDetails(){
-    this.serverService.postData('applicant_details/joinedlist/', {intId:this.intNewEmpId,intNewEmpJobId:this.intNewEmpJobId}).subscribe(
-      (response) => {
-        if(response.status === 1){
-          this.blnNewEmp = true;        
-          let dctEmpData = response['data']
-          this.intCountryId=dctEmpData.fk_country_id
-          
-          this.strFirstName = dctEmpData.vchr_name;
-          this.datOBirth = dctEmpData.dat_dob;
-          this.strGender = dctEmpData.vchr_gender;
-          this.intPhoneNumber = dctEmpData.bint_mobile1;
-          this.strEmail = dctEmpData.vchr_email2;
-          this.strAddress = dctEmpData.vchr_house;
-          this.strPostOffice = dctEmpData.vchr_city;
-          this.strLandMark = dctEmpData.vchr_street;
-          this.intDistrictId = dctEmpData.fk_district_id;
-          this.intPinCode = dctEmpData.dbl_pincode;
-          this.strMaritalStatus =   dctEmpData.vchr_martial_status;
-          this.intAadharNo = dctEmpData.vchr_aadhar_no;
-  
-          this.strBranchName = dctEmpData.branch_name;
-          this.intBranchId = dctEmpData.fk_branch_id;
-          this.selectedBranchId = dctEmpData.fk_branch_id;
-          this.selectedBranch=dctEmpData.branch_name;
-  
-          this.strDepartmentName = dctEmpData.dept_name;
-          this.selectedDepartment = dctEmpData.dept_name;
-          this.intDepartmentId = dctEmpData.fk_department_id;
-          this.selectedDepartmentId = dctEmpData.fk_department_id;
-          this.strDesignation = dctEmpData.desig_name;
-          this.intSelectedDesignation = dctEmpData.fk_designation_id
-          this.intSalaryStructure=dctEmpData.fk_salary_struct_id;
-          this.strSalaryStructName=dctEmpData.slab_name;
-          this.dctSalarySplit = dctEmpData.dctSalarySplit;
-          this.lstCategory.forEach(element => {
-            if(element.vchr_name == 'Employee'){
-              this.intCategoryId=element.pk_bint_id;
-              this.strCategoryName=element.vchr_name;
-              this.selectedCategory=element.vchr_name;
-            }
-          });
-          this.fltGrossPay=dctEmpData.dbl_gross;
-            this.intStateId=dctEmpData.fk_state_id
-            this.intDistrictId=dctEmpData.fk_district_id;
-        }
-        else{
-          Swal.fire('Error!', response['message'], 'error');
-
-        }
-
-
-      },
-      (error) => {
-        Swal.fire('Error!', 'error', 'error');
-
-      });
-  }
-  addFamilyDetails( ) {
+   addFamilyDetails( ) {
     let dctTemp={
       strRelation:'',
       strRelativeName:'',
@@ -1678,7 +1641,7 @@ localStorage.removeItem('intNewEmpJobId');
     
     let lstLen;
      lstLen=this.lstEduDetails.length;
-     this.lstDeletedEductn.push(this.lstEduDetails[index]['pk_bint_id']);
+     this.lstDeletedEductn.push(this.lstEduDetails[index]['intEduId']);
      if(this.lstEduDetails[index]['blnHighest']==true){
        this.intHighestQualif=this.intHighestQualif-1;
      }
@@ -1739,7 +1702,7 @@ localStorage.removeItem('intNewEmpJobId');
   deleteExperience(index) {
     let lstLen;
      lstLen=this.lstExpDetails.length;
-     this.lstDeletedExp.push(this.lstExpDetails[index]['pk_bint_id']);
+     this.lstDeletedExp.push(this.lstExpDetails[index]['intExpId']);
      if(!(lstLen==1)){
        this.lstExpDetails.splice(index,1);
 
@@ -1868,6 +1831,5 @@ let dblFixedComp = Number(this.dctSalarySplit['BP_DA'])+Number(this.dctSalarySpl
     this.dctSalarySplit['SA']=0;
   }            
                         
-                       }
-  
+                       }  
 }

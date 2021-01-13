@@ -1,0 +1,50 @@
+h4{
+    font-weight: 500;
+    color: #16507f;
+    font-size: 16px;
+    /* background-color: #f0f2f3; */
+    padding: 10px;
+}
+
+ .edit {
+    color: #4caf50 !important;
+    background: none;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgb(76, 175, 80);
+    border-radius: 30px;
+    border: none;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+      }
+.icon{
+    vertical-align: middle;
+    text-align: center;
+    font-size: 13px;
+    margin: 0;
+     }
+                
+.delete{
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgb(253, 75, 62);
+    color: #fd4b3e;
+    background: none;
+    border: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    }
+    
+ .view {
+    color: #137eff !important;
+    background: none;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgb(135, 189, 255);
+    border-radius: 30px;
+    border: none;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+      }
+    .ml-2{
+        margin-left: 2px;
+    }
+::ng-deep .cdk-overlay-container{ z-index:2000; }

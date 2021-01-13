@@ -7,7 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HierarchyComponent } from './hierarchy/hierarchy.component'
-import { SnotifyService } from 'ng-snotify';
+// import { SnotifyService } from 'ng-snotify';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CardModule } from '../card.module';
 import { MatTableModule } from '@angular/material/table';

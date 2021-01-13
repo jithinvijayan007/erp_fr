@@ -1,0 +1,17 @@
+ul { list-style: none outside none; margin:0; padding: 0; clear:both;  }
+li { float: left;width: 16%;    line-height: 35px;}
+/* ul :first-child{
+    padding-left: 25px;
+} */
+li:hover{
+    background: #eeeeee66;
+    color: #2c9598;
+}
+/* li :last-child:hover{
+    background: #fff;
+    color: #2c4359;
+} */
+li:nth-child():hover { 
+    background: #fff;
+    color: #2c4359;
+ }

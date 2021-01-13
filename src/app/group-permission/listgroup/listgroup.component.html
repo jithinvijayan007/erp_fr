@@ -123,8 +123,7 @@
           <i class="fa fa-eye" aria-hidden="true"></i>
         </button>
         <!-- <button title="Edit" class="edit_btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button> -->
-        <!-- <button *ngIf="blnEdit" title="Edit" class="edit_btn" (click)=editGroup(row.id) > -->
-          <button  title="Edit" class="edit_btn" (click)=editGroup(row.id) >
+        <button *ngIf="blnEdit" title="Edit" class="edit_btn" (click)=editGroup(row.id) >
           <i class="ti-pencil text-info m-r-10" aria-hidden="true"></i>
         </button>
         <button *ngIf="blnDelete" title="Delete" class="delete_btn" (click)=deleteGroup(row.id) >

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { AdduserComponent } from './adduser.component';
+import { EditgroupComponent } from './editgroup.component';
 
-describe('AdduserComponent', () => {
-  let component: AdduserComponent;
-  let fixture: ComponentFixture<AdduserComponent>;
+describe('EditgroupComponent', () => {
+  let component: EditgroupComponent;
+  let fixture: ComponentFixture<EditgroupComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdduserComponent ]
+      declarations: [ EditgroupComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdduserComponent);
+    fixture = TestBed.createComponent(EditgroupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

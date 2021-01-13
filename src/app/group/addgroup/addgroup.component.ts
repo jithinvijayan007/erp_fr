@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-addgroup',
   templateUrl: './addgroup.component.html',
@@ -33,6 +34,54 @@ export class AddgroupComponent implements OnInit {
   lst_subItem = []
   lst_menuItem =[]
   dictMenuItems = {}
+  intDepartmentId=null;
+  lstDepartment=[];
+  lstCourse=[
+    "SSLC",
+    "HSE",
+    "B.A",
+    "B.Com",
+    "B.Ed",
+    "B.LiSc",
+    "B.P.Ed",
+    "B.Sc",
+    "B.Tech",
+    "B.Voc.",
+    "BBA",
+    "BCA",
+    "BBM",
+    "BHM",
+    "BSW",
+    "M.A",
+    "M.Com",
+    "M.Ed.",
+    "M.Phil.",
+    "M.Sc.",
+    "MBA",
+    "MCA",
+    "MSW",
+    "Other"
+  ];
+  lstDesc: string[]=[""];
+  intNoticePeriod;
+  strApplyTo='0';
+  lstStatesData=[];
+  lstZonesData=[];
+  lstTerritoryData=[];
+  lstSelectedStates=[];
+  lstSelectedZones=[];
+  lstSelectedTerritories=[];
+  lstPermission=[];
+  blnAdd=true;
+  blnView=true;
+  blnEdit=true;
+  blnDelete=true;
+  fltExp=null;
+  intAgeFrom=null;
+  intAgeTo=null;
+  lstQualifications=[];
+
+
 
   constructor(
     private serverService: ServerService,
@@ -50,7 +99,7 @@ export class AddgroupComponent implements OnInit {
       this.router.navigate(["/user/sign-in"]);
     }
     this.data = { role: this.companyId };
-    console.log('comapnyId',this.data);
+    // console.log('comapnyId',this.data);
     
     this.serverService.postData("user_groups/get_category_list/",this.data).subscribe(res => {
       const result = res;
@@ -93,6 +142,20 @@ export class AddgroupComponent implements OnInit {
       }
     }
   );
+  
+   //--------------------department list dropdown ----------------//
+   this.serverService.getData('department/list_departments/').subscribe(
+    (response) => {
+        if (response.status == 1) {
+          this.lstDepartment=response['lst_department'];
+        }  
+    },
+    (error) => {   
+      
+    });
+  //--------------------department list dropdown ends ----------------//
+
+
   }
 
   isAllChecked(item,i, strType){
@@ -534,10 +597,10 @@ export class AddgroupComponent implements OnInit {
   getPermissionList(data) {
 
    
-    this.serverService.postData("groups/get_category_list/",data).subscribe(res => {
+    this.serverService.postData("user_groups/get_category_list/",data).subscribe(res => {
       const result = res;
 
-      if (result.status === 0) {
+      if (result.status === 1) {
         this.lstPerms = result['data']
         // for (const i of result.data) {
         //   this.lstTableData.push(i);
@@ -549,7 +612,7 @@ export class AddgroupComponent implements OnInit {
     });
   }
 
-    levelOneClicked(item){
+  levelOneClicked(item){
   
 
 
@@ -629,9 +692,9 @@ export class AddgroupComponent implements OnInit {
       // }
 
       
-    }
+  }
 
-    levelTwoClicked(item,subItem){
+  levelTwoClicked(item,subItem){
 
 
 
@@ -688,57 +751,104 @@ export class AddgroupComponent implements OnInit {
 
 
 
-    }
+  }
 
 
   saveGroup() {
-    let validation = true;
+    // let validation = true;
     let compid = 0;
+    let dctTempData={}
+
     if (this.intCompanyId > 0) {
       compid = this.intCompanyId;
     } else {
       compid = this.companyId;
     }
+
     const data = { group_name: "", group_data: [], company_id: compid };
     if (this.strName.trim() == null) {
       swal.fire("Group Name", "Enter a group name", "error");
-      validation = false;
-    } else if (!/^[a-zA-Z]+[\s]*/g.test(this.strName.trim())) {
+      return false;
+    } 
+    else if (!/^[a-zA-Z]+[\s]*/g.test(this.strName.trim())) {
       swal.fire("Group Name", "Enter a group name", "error");
-      validation = false;
+      return false;
     }
     else if(!this.strCode){
       swal.fire("Code", "Enter a group code", "error");
-      validation = false;
+      return false;
     }
-    if (this.companyId === 0 ) {
+    else if (this.companyId === 0 ) {
       swal.fire("Company", "Select a company", "error");
       return false;
     }
+    else if(!this.intDepartmentId){
+      Swal.fire('Error!',"Select Department","error");
+      return false;
+    } 
+    else if(this.lstDesc.length==0){
+      Swal.fire('Error!',"Enter Job Description","error");
+      return false;
+    }
+    else if(this.intNoticePeriod<0){
+      Swal.fire('Error!',"Enter valid notice period in days","error");
+      return false;
+    }
+    dctTempData['intDepartmentId']=this.intDepartmentId;
+    let strAgeLimit;
+    if (this.intAgeFrom && this.intAgeTo){
+      strAgeLimit=(this.intAgeFrom).toString()+'-'+this.intAgeTo.toString();
 
-    if (validation === true) {
-      data["group_code"]=this.strCode;
-      data["group_name"] = this.strName.trim();
-      // data["department"] = this.department;
-      data["group_data"] = this.lstPerms;
+    }
+    dctTempData["fltExp"]=this.fltExp;
+    dctTempData["strAgeLimit"]=strAgeLimit;
+    dctTempData["lstQualifications"]=this.lstQualifications;
+    dctTempData["lstDesc"]=this.lstDesc;
+    dctTempData["intAgeFrom"]=this.intAgeFrom;
+    dctTempData["intAgeTo"]=this.intAgeTo;
+    dctTempData["intNoticePeriod"]=this.intNoticePeriod;
+    dctTempData["group_code"]=this.strCode;
+    dctTempData["group_name"] = this.strName.trim();
+    dctTempData["group_data"] = this.lstPerms;
+    dctTempData["companyName"] = compid;
 
-      // console.log('postdata',data);
-
-      this.serverService.postData("user_groups/grouppadd/",data).subscribe(res => {
-        if (res.status === 1) {
+    
+      
+    
+    this.serverService.postData("user_groups/grouppadd/",dctTempData).subscribe(res => {
+      if (res.status === 1) {
           swal.fire("Group Added", res['data'], "success");
 
-    localStorage.setItem('previousUrl','/group/listgroup');
+      localStorage.setItem('previousUrl','/group/listgroup');
           
-          this.router.navigate(["/group/listgroup"]);
-        } else {
+      this.router.navigate(["/group/listgroup"]);
+      } else {
           swal.fire("Group Add Failed", res['data'], "error");
         }
       });
-    }
+    
     // else {
     //   swal("Group Name", "Enter a group name", "error");
     // }
+  }
+  addDesc() {
+    this.lstDesc.push("");
+  }
+  deleteDesc(index){
+    let lstLen;
+    lstLen=this.lstDesc.length;
+    if(!(lstLen==1)){
+      this.lstDesc.splice(index,1);
+    }
+    else{
+     this.lstDesc=[];
+     this.lstDesc.push("")
+     }
+  }
+  pushToDesc(index,desc){
+    this.lstDesc[index]=desc;
+
+    
   }
 
 }

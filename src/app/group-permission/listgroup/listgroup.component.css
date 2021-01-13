@@ -1,0 +1,19 @@
+.view_btn{
+    background: none;
+    border: none;
+    color: #6495ed;
+    cursor: pointer;
+    padding-left: 0;
+}
+.edit_btn{
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.delete_btn{
+    background: none;
+    border: none;
+
+    cursor: pointer;
+    padding: 0px !important;
+}

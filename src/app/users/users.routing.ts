@@ -1,13 +1,16 @@
 import { Routes } from '@angular/router';
 
-import { AdduserComponent } from './adduser/adduser.component';
-import { UserlistComponent } from './userlist/userlist.component';
+// import { AdduserComponent } from './adduser/adduser.component';
+// import { UserlistComponent } from './userlist/userlist.component';
 import { ViewuserComponent } from './viewuser/viewuser.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { EdituserComponent } from './edituser/edituser.component';
 import { UsergroupaddComponent } from './usergroupadd/usergroupadd.component';
 // import { Addemployee1Component } from './addemployee1/addemployee1.component'
 import { AddemployeeComponent } from './addemployee/addemployee.component';
+import { ListemployeeComponent } from './listemployee/listemployee.component';
+import { EditemployeeComponent } from './editemployee/editemployee.component';
+// import { EditemployeeComponent } from './editemployee/editemployee.component';
 
 export const UsersRoutes: Routes = [
   {
@@ -32,12 +35,12 @@ export const UsersRoutes: Routes = [
     children: [
       {
         path: 'listuser',
-        component: UserlistComponent,
+        component: ListemployeeComponent,
         data: {
-          title: 'user list ',
+          title: 'employee list ',
           urls: [
             { title: 'Dashboard', url: '/dashboard' },
-            { title: 'user list' }
+            { title: 'employee list' }
           ]
         }
       }
@@ -94,17 +97,34 @@ export const UsersRoutes: Routes = [
     ]
   },
 
+  // {
+  //   path: '',
+  //   children: [
+  //     {
+  //       path: 'edituser',
+  //       component: EdituserComponent,
+  //       data: {
+  //         title: 'user edit ',
+  //         urls: [
+  //           { title: 'Dashboard', url: '/dashboard' },
+  //           { title: 'user edit' }
+  //         ]
+  //       }
+  //     }
+  //   ]
+  // },
+
   {
     path: '',
     children: [
       {
-        path: 'edituser',
-        component: EdituserComponent,
+        path: 'editemployee',
+        component: EditemployeeComponent,
         data: {
-          title: 'user edit ',
+          title: 'employee edit ',
           urls: [
             { title: 'Dashboard', url: '/dashboard' },
-            { title: 'user edit' }
+            { title: 'employee edit' }
           ]
         }
       }

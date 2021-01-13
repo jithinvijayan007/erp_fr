@@ -5,8 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { UsersRoutes } from './users.routing';
 
-import { AdduserComponent } from './adduser/adduser.component';
-import { UserlistComponent } from './userlist/userlist.component';
+// import { AdduserComponent } from './adduser/adduser.component';
+import { ListemployeeComponent } from './listemployee/listemployee.component';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
@@ -25,11 +25,15 @@ import {MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ViewuserComponent } from './viewuser/viewuser.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
-import { EdituserComponent } from './edituser/edituser.component';
+// import { EdituserComponent } from './edituser/edituser.component';
 import { UsergroupaddComponent } from './usergroupadd/usergroupadd.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { AddemployeeComponent } from './addemployee/addemployee.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+
+// import { NgxSpinner } from 'ngx-spinner/lib/ngx-spinner.enum';
+import { EditemployeeComponent } from './editemployee/editemployee.component';
 // import { MatChipsModule } from '@angular/material/chips';
 
 
@@ -58,16 +62,18 @@ import { AddemployeeComponent } from './addemployee/addemployee.component';
     MatSortModule,
     Ng2SmartTableModule,
     SelectDropDownModule,   
+    NgxSpinnerModule
+    // NgxSpinner
   
   ],
   declarations: [
-    AdduserComponent,
-    UserlistComponent,
+    ListemployeeComponent,
     ViewuserComponent,
     ChangepasswordComponent,
-    EdituserComponent,
+    // EdituserComponent,
     UsergroupaddComponent,
-    AddemployeeComponent
+    AddemployeeComponent,
+    EditemployeeComponent
   ]
 })
 export class UsersModule {}

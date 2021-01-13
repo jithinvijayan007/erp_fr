@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { UserlistComponent } from './userlist.component';
+import { ViewgroupComponent } from './viewgroup.component';
 
-describe('UserlistComponent', () => {
-  let component: UserlistComponent;
-  let fixture: ComponentFixture<UserlistComponent>;
+describe('ViewgroupComponent', () => {
+  let component: ViewgroupComponent;
+  let fixture: ComponentFixture<ViewgroupComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserlistComponent ]
+      declarations: [ ViewgroupComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserlistComponent);
+    fixture = TestBed.createComponent(ViewgroupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

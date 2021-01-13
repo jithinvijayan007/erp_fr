@@ -1,8 +1,8 @@
 <div class="card">
   <div class="card-body">
-        <h4 class="formhead"> <i class="mdi mdi-briefcase"></i>&nbsp;Add Designation</h4>
+        <h4 class="formhead"> <i class="mdi mdi-briefcase"></i>&nbsp;Add Permission</h4>
         <div> </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-3 col-lg-4">
                 <mat-form-field>
                     <input placeholder="Designation name" matInput type="text" [(ngModel)]="strName">
@@ -14,99 +14,30 @@
                 </mat-form-field>
             </div>
         
-            <div class="col-md-3 col-lg-4" *ngIf="userType =='superuser' ">
+        </div> -->
+        <div class="row">
 
-                <mat-form-field>
-                    <input matInput placeholder="Company*" [formControl]="searchCompany" [matAutocomplete]="company" [(ngModel)]="companyName">
-                    <mat-autocomplete #company="matAutocomplete">
-                        <mat-option *ngFor="let item of lstCompany" [value]="item.pk_bint_id" (click)="companyChanged(item)">
-                            {{ item.name }}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-
-            </div>
-            <div class="col-md-3 mt-1">
+            <div class="col-md-4 mt-1">
                 <mat-form-field class="example-full-width">
-                    <mat-label>Department Name</mat-label>
-                    <mat-select disableOptionCentering [(ngModel)]="intDepartmentId" [disableOptionCentering]="true">
-                        <mat-option *ngFor="let department of lstDepartment" [value]="department.pk_bint_id">
-                            {{department.vchr_code+'-'+department.vchr_name | uppercase}}
+                    <mat-label>Group Name</mat-label>
+                    <mat-select disableOptionCentering [(ngModel)]="intGroupId" [disableOptionCentering]="true" (ngModelChange)="selectGroupId(intGroupId)">
+                        <mat-option *ngFor="let group of lstGroup" [value]="group.pk_bint_id">
+                            {{group.vchr_code+'-'+group.vchr_name | uppercase}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="col-md-3">
-                <mat-form-field>
-                    <input matInput placeholder="Experience in Year.Months" type="number" [(ngModel)]="fltExp" value="" name="Experince">
-                </mat-form-field>
-            </div>
-        </div>
 
-            
-        <div class="row">
-            <div class="col-md-3">
-                <mat-form-field>
-                    <input type="number" matInput placeholder="Age Limit From" [(ngModel)]="intAgeFrom" value="" name="ageFrom">
-                </mat-form-field>
-            </div>
-            <div class="col-md-3">
-                <mat-form-field>
-                    <input type="number" matInput placeholder="Age Limit To" [(ngModel)]="intAgeTo" value="" name="ageTo">
-                </mat-form-field>
-            </div>
-            <div class="col-md-3">
-                <mat-form-field class="example-full-width">
-                    <mat-label>Qualification</mat-label>
-                    <mat-select disableOptionCentering id="qualifications" multiple [(ngModel)]="lstQualifications" [disableOptionCentering]="true" style="margin-top: 5px;">
-                        <mat-option *ngFor="let course of lstCourse" value="{{course}}">{{ course}}</mat-option>
-                        <!-- <mat-option value="SSLC">SSLC</mat-option>
-                        <mat-option value="HSE">HSE (PLUS TWO)</mat-option>
-                        <mat-option value="Bachelor of Science">Bachelor of Science</mat-option>
-                        <mat-option value="Bachelor of Technologies">Bachelor of Technologies</mat-option>
-                        <mat-option value="Bachelor of Arts">Bachelor of Arts</mat-option>
-                        <mat-option value="Bachelor of Commerce">Bachelor of Commerce</mat-option>
-                        <mat-option value="Master of Science">Master of Science</mat-option>
-                        <mat-option value="Master of Technologies">Master of Technologies</mat-option>
-                        <mat-option value="Master of Arts">Master of Arts</mat-option>
-                        <mat-option value="Master of Commerce">Master of Commerce</mat-option> -->
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-md-3">
-                <mat-form-field>
-                    <input type="number" matInput placeholder="Notice Period in Days" [(ngModel)]="intNoticePeriod">
-                </mat-form-field>
-            </div>
-        </div>
-    
-        <div class="row">
-            <div class="col-md-12">
-                <label style="font-weight:400;margin-bottom:0px;">Job Description</label>
-            </div>
-        </div>
-        <div *ngFor="let desc of lstDesc; let i = index" class="row">
-            <div class="col-md-4" >
-                <mat-form-field>
-                    <input type="text" matInput #myInput required [ngModel]="desc" id="jobdescription" name="jobdescription" (blur)="pushToDesc(i,myInput.value)">
-                </mat-form-field>
-            </div>
-            <div class="col-md-4 mt-4">
-                <button (click)="addDesc()" style="background:none;border:none;color:#37b137;font-size: 17px;"><i class="mdi mdi-plus"></i></button>
-                <button (click)="deleteDesc(i)" style="background:none;border:none;color:red;font-size: 17px;"><i class="mdi mdi-minus"></i></button>
-            </div>
-        </div>
+            <div class="col-md-3 mt-2">
+                <button class="btn save_btn m-r-10" color="accent" (click)="editGroup()" style="margin-right: 10px;">EDIT</button>
+                <button class="btn btn-secondary" [routerLink]="['/group/listgroup']">Cancel</button>
 
-        <div class="col-md-3 mt-2">
-            <button class="btn save_btn m-r-10" color="accent" (click)="saveGroup()" style="margin-right: 10px;">SAVE</button>
-            <button class="btn btn-secondary" [routerLink]="['/group/listgroup']">Cancel</button>
-
+            </div>
         </div>
-        
     </div>
 </div>
 
-<!-- 
+
 <div class="card">
     <div class="card-body">
         <div class="row">
@@ -121,7 +52,7 @@
                 </ul>
                 <!-- test case -->
 
-                <!-- <ul *ngFor="let item of lstPermsKeys; let i = index">
+                <ul *ngFor="let item of lstPermsKeys; let i = index">
                     <li style="padding: 5px 10px;font-weight:600;" class="cursor" scope="row" (click)="levelOneClicked(item)">{{item}}</li>
                     <li style="padding: 5px 10px;">
                         <mat-checkbox [disabled]="isAllDisabled(item,i, 'bln_add_perm')" [indeterminate]="isAllDisabled(item,i, 'bln_add_perm')" [checked]="isAllChecked(item,i, 'bln_add_perm')" (change)="mainChanged($event, item,i, 'bln_add_perm')" style="padding: 5px;"></mat-checkbox>
@@ -136,8 +67,8 @@
                         <mat-checkbox [disabled]="isAllDisabled(item,i, 'bln_view_perm')" [indeterminate]="isAllDisabled(item,i, 'bln_view_perm')" [checked]="isAllChecked(item,i, 'bln_view_perm')" (change)="mainChanged($event,item,i, 'bln_view_perm')" style="padding: 5px; "></mat-checkbox>
                     </li>
                     <li style="padding: 5px 10px;">
-                        <mat-checkbox [disabled]="isAllDisabled(item,i, 'bln_download_perm')" [indeterminate]="isAllDisabled(item,i, 'bln_download_perm')" [checked]="isAllChecked(item,i, 'bln_download_perm')" (change)="mainChanged($event,item,i, 'bln_download_perm')" style="padding: 5px; "></mat-checkbox>
-                    </li>
+                      <mat-checkbox [disabled]="isAllDisabled(item,i, 'bln_download_perm')" [indeterminate]="isAllDisabled(item,i, 'bln_download_perm')" [checked]="isAllChecked(item,i, 'bln_download_perm')" (change)="mainChanged($event,item,i, 'bln_download_perm')" style="padding: 5px; "></mat-checkbox>
+                  </li>
                     <ul *ngFor="let subItem of lst_subItem; let j = index">
                         <li scope="row" (click)="levelTwoClicked(item,subItem)" style="cursor:pointer;padding: 0px 25px; font-size: 13px;font-weight:600;" *ngIf="lstPerms[item]['levelOneClicked']">{{subItem}}</li>
                         <li style=" padding-left: 15px;" *ngIf="lstPerms[item]['levelOneClicked']">
@@ -157,9 +88,9 @@
                                 [(ngModel)]="lstPerms[item][subItem]['bln_view_perm']"></mat-checkbox>
                         </li>
                         <li style=" padding-left: 15px;" *ngIf="lstPerms[item]['levelOneClicked']">
-                            <mat-checkbox [disabled]="isAllDisabledSub(item,subItem,'bln_download_perm')" [indeterminate]="isAllDisabledSub(item,subItem,'bln_download_perm')" [checked]="isAllCheckedSub(item,subItem,'bln_download_perm')" (change)="mainChangedSub($event,item,subItem,'bln_download_perm')"
-                                [(ngModel)]="lstPerms[item][subItem]['bln_download_perm']"></mat-checkbox>
-                        </li>
+                          <mat-checkbox [disabled]="isAllDisabledSub(item,subItem,'bln_download_perm')" [indeterminate]="isAllDisabledSub(item,subItem,'bln_download_perm')" [checked]="isAllCheckedSub(item,subItem,'bln_download_perm')" (change)="mainChangedSub($event,item,subItem,'bln_download_perm')"
+                              [(ngModel)]="lstPerms[item][subItem]['bln_download_perm']"></mat-checkbox>
+                      </li>
 
                         <ul *ngFor="let menuSubItem of dictMenuItems[subItem]">
                           
@@ -178,18 +109,14 @@
                                 <mat-checkbox [(ngModel)]="lstPerms[item][subItem][menuSubItem]['bln_view_perm']" *ngIf="lstPerms[item][subItem]['levelTwoClicked']" (change)="menuItemChanged($event,item,subItem,menuSubItem,'bln_view_perm')"></mat-checkbox>
                             </li>
                             <li style="padding-left: 15px;">
-                                <mat-checkbox [(ngModel)]="lstPerms[item][subItem][menuSubItem]['bln_download_perm']" *ngIf="lstPerms[item][subItem]['levelTwoClicked']" (change)="menuItemChanged($event,item,subItem,menuSubItem,'bln_download_perm')"></mat-checkbox>
-                            </li>
+                              <mat-checkbox [(ngModel)]="lstPerms[item][subItem][menuSubItem]['bln_download_perm']" *ngIf="lstPerms[item][subItem]['levelTwoClicked']" (change)="menuItemChanged($event,item,subItem,menuSubItem,'bln_download_perm')"></mat-checkbox>
+                          </li>
 
 
                         </ul>
                     </ul>
                 </ul>
-
-
-
-
             </div>
         </div>
     </div>
-</div>   -->
+</div>

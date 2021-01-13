@@ -1280,7 +1280,7 @@ export class EditgroupComponent implements OnInit {
       validation = false;
     }
   
-    if (this.companyId== 0) {
+    if (this.companyId === 0 ) {
       swal.fire("Company", "Select a company", "error");
       return false;
     }
@@ -1291,8 +1291,6 @@ export class EditgroupComponent implements OnInit {
       data["group_data"] = this.lstPerms;
       data["group_id"] = this.groupId;
       data["group_code"] = this.strCode;
-      data["company_id"] = compid;
-
       // data[]
     
       
