@@ -19,6 +19,7 @@ Main sidebar
     background: $sidebar;
     box-shadow: $shadow;
     transition: 0.2s ease-in;
+    box-shadow: 0 5px 15px rgba(57, 98, 254, 0.02), 0 3px 6px rgba(117, 108, 254, 0.12);
 }
 
 
@@ -59,11 +60,11 @@ sidebar navigation
             }
             &.selected>.sidebar-link {
                 color: $white;
-                background: linear-gradient(87deg,#f5365c,#f56036)!important;
+                background: linear-gradient(45deg, #6a11cb , #2575fc)!important;
                 width: 248px;
                 border: none;
-                border-radius: 5px;
-                padding: 5px;
+                border-radius: 1px;
+                // padding: 5px;
                 // margin: 20px;
                 text-align:center;
                 transition: all 150ms ease-in;
@@ -76,7 +77,7 @@ sidebar navigation
            ******************/
             .first-level {
                 padding: $sidebar-first-level-padding;
-                background: rgba(0, 0, 0, 0.07) !important;
+                background: rgba(129, 90, 232, 0.12) !important;
                 >.sidebar-item.active>.sidebar-link {
                     opacity: 1;
                 }

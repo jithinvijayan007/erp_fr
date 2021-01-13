@@ -474,23 +474,30 @@
                                                 <input type="text" placeholder="Occupation" matInput class="matinput1" [(ngModel)]="fam['strOccupation']" name="{{'famjob'+f}}">
                                             </mat-form-field>
                                         </div> 
-                                        <div class="col-md-4 mt-2">
+                                        <div class="col-md-4">
+                                            <label style="width:100%;font-weight: 400 !important;">Alive</label> 
+                                        <mat-radio-group aria-label="Select an option" [(ngModel)]="fam['isAlive']">
+                                            <mat-radio-button type="radio" value="Yes" >Yes</mat-radio-button>
+                                            <mat-radio-button type="radio" value="No">No</mat-radio-button>
+                                          </mat-radio-group>
+                                        </div>
+                                        <!-- <div class="col-md-4 mt-2">
                                             <label style="width:100%;font-weight: 400 !important;">Alive</label>
                                             <span class="pretty p-icon p-round p-jelly mr-5">
                                                 <input type="radio" value="Yes" name="{{f}}" [(ngModel)]="fam['isAlive']" />
-                                                <span class="state p-warning">
+                                                <span class="state p-warning"> -->
                                                     <!-- <i class="icon mdi mdi-check"></i> -->
-                                                    <label>Yes</label>
+                                                    <!-- <label>Yes</label>
                                                 </span>
                                             </span>
                                             <span class="pretty p-icon p-round p-jelly">
                                                 <input type="radio" value="No" name="{{f}}" [(ngModel)]="fam['isAlive']" />
-                                                <span class="state p-warning">
+                                                <span class="state p-warning"> -->
                                                     <!-- <i class="icon mdi mdi-check"></i> -->
-                                                    <label>No</label>
+                                                    <!-- <label>No</label>
                                                 </span>
                                             </span>
-                                        </div>
+                                        </div> -->
                                         <button (click)="deleteFamily(f)" class="closebtn"><i class="ti-trash"></i></button>
                                       
                         </div>
@@ -518,7 +525,7 @@
                                             <input type="checkbox" [(ngModel)]="course['blnHighest']" (ngModelChange)="highestQualifChanged($event)" />
                                             <div class="state">
                                                     <!-- <img class="image" src="assets/images/tick.png"> -->
-                                                    <i class="icon mdi mdi-check"></i>
+                                                    <!-- <i class="icon mdi mdi-check"></i> -->
                                                 <label style="font-size: 14px;color: #314f7f;font-weight: 500;">Highest Qualification</label>
                                                 
                                             </div>
@@ -868,26 +875,35 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
+                                <div class = "row  mt-4">
+                                    <div class="col-md-12">
+                                    <label style="width:100%;font-weight: 400 !important;">Select Payment Mode</label> 
+                                <mat-radio-group aria-label="Select an option"[(ngModel)]="intPaymentMode" (ngModelChange)="paymentModeClicked()">
+                                    <mat-radio-button type="radio" value="0" name="paymentIcon">Cash</mat-radio-button>
+                                    <mat-radio-button  type="radio" value="1" name="paymentIcon">Bank</mat-radio-button>
+                                  </mat-radio-group>
+                                </div>
+                                
                                 
 
-                                <div class="row mt-3">
+                                <!-- <div class="row mt-3">
                                     <div class="col-md-12">
                                         <label style="width:100%;font-weight: 400 !important;">Select Payment Mode</label>
                                         <span class="pretty p-icon p-round p-jelly mr-5">
                                             <input type="radio" value="0" name="paymentIcon" [(ngModel)]="intPaymentMode" (ngModelChange)="paymentModeClicked()" />
-                                            <span class="state p-warning">
+                                            <span class="state p-warning"> -->
                                                 <!-- <i class="icon mdi mdi-check"></i> -->
-                                                <label style="margin-left: 10px;">Cash</label>
+                                                <!-- <label style="margin-left: 10px;">Cash</label>
                                             </span>
                                         </span>
                                         <span class="pretty p-icon p-round p-jelly">
                                             <input type="radio" value="1" name="paymentIcon" [(ngModel)]="intPaymentMode" (ngModelChange)="paymentModeClicked()" />
-                                            <span class="state p-warning">
+                                            <span class="state p-warning"> -->
                                                 <!-- <i class="icon mdi mdi-check"></i> -->
-                                                <label style="margin-left: 10px;">Bank</label>
+                                                <!-- <label style="margin-left: 10px;">Bank</label>
                                             </span>
                                         </span>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-3">
                                         <mat-form-field class="example-full-width">
                                             <input matInput [disabled]="intPaymentMode==0" required placeholder="Bank Name" [(ngModel)]="strBankName" class="matinput1" name="bankName" value="">
@@ -915,25 +931,32 @@
                                 </div>
                         
                         
-                                <div class="row mt-3">
+                                <div class="row mt-4">
                                     <div class="col-md-3">
+                                        <label style="width:100%;font-weight: 400 !important;">Select Payment Mode</label> 
+                                    <mat-radio-group aria-label="Select an option" [(ngModel)]="intWeekOffType" (ngModelChange)="changeWeekofftype()">
+                                        <mat-radio-button type="radio" value="0" name="WeekOffType" >Fixed</mat-radio-button>
+                                        <mat-radio-button  type="radio" value="1" name="WeekOffType">Variable</mat-radio-button>
+                                      </mat-radio-group>
+                                    </div>
+                                    <!-- <div class="col-md-3">
                                         <label style="width:100%;font-weight: 400 !important;">Select Week Off Type</label>
                                         <span class="pretty p-icon p-round p-jelly mr-5">
                                             <input type="radio" value="0" name="WeekOffType" [(ngModel)]="intWeekOffType" (ngModelChange)="changeWeekofftype()" />
-                                            <span class="state p-warning">
+                                            <span class="state p-warning"> -->
                                                 <!-- <i class="icon mdi mdi-check"></i> -->
-                                                <label style="margin-left: 10px;">Fixed</label>
+                                                <!-- <label style="margin-left: 10px;">Fixed</label>
                                             </span>
                                         </span>
                                         <span class="pretty p-icon p-round p-jelly">
                                             <input type="radio" value="1" name="WeekOffType" [(ngModel)]="intWeekOffType" (ngModelChange)="changeWeekofftype()" />
-                                            <span class="state p-warning">
+                                            <span class="state p-warning"> -->
                                                 <!-- <i class="icon mdi mdi-check"></i> -->
-                                                <label style="margin-left: 10px;">Variable</label>
+                                                <!-- <label style="margin-left: 10px;">Variable</label>
                                             </span>
                                         </span>
                                        
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-3" *ngIf="blnFixed">
                                         <mat-form-field class="example-full-width">
                                             <mat-label>Select Day</mat-label>
@@ -949,31 +972,39 @@
                         
                                    
                                 </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-5">
+                                <div class="row mt-4">
+                                    <div class="col-md-3">
+                                        <label style="width:100%;font-weight: 400 !important;">Select Payment Mode</label> 
+                                    <mat-radio-group aria-label="Select an option" [(ngModel)]="strShiftType">
+                                        <mat-radio-button type="radio" value="0" name="icon"  >Fixed</mat-radio-button>
+                                        <mat-radio-button  type="radio" value="1" name="icon">Variable</mat-radio-button>
+                                        <mat-radio-button  type="radio" value="2" name="icon">Exempted Shift</mat-radio-button>
+                                      </mat-radio-group>
+                                    </div>
+                                    <!-- <div class="col-md-5">
                                         <label style="width:100%;font-weight: 400 !important;">Select Shift Type</label>
                                         <span class="pretty p-icon p-round p-jelly mr-5">
                                             <input type="radio" value="0" name="icon" [(ngModel)]="strShiftType" />
-                                            <span class="state p-warning">
+                                            <span class="state p-warning"> -->
                                                 <!-- <i class="icon mdi mdi-check"></i> -->
-                                                <label style="margin-left: 10px;">Fixed</label>
+                                                <!-- <label style="margin-left: 10px;">Fixed</label>
                                             </span>
                                         </span>
                                         <span class="pretty p-icon p-round p-jelly mr-5">
                                             <input type="radio" value="1" name="icon" [(ngModel)]="strShiftType" />
-                                            <span class="state p-warning">
+                                            <span class="state p-warning"> -->
                                                 <!-- <i class="icon mdi mdi-check"></i> -->
-                                                <label style="margin-left: 10px;">Variable</label>
+                                                <!-- <label style="margin-left: 10px;">Variable</label>
                                             </span>
                                         </span>
                                         <span class="pretty p-icon p-round p-jelly">
                                             <input type="radio" value="2" name="icon" [(ngModel)]="strShiftType" />
-                                            <span class="state p-warning">
+                                            <span class="state p-warning"> -->
                                                 <!-- <i class="icon mdi mdi-check"></i> -->
-                                                <label style="margin-left: 10px;">Exempted Shift</label>
+                                                <!-- <label style="margin-left: 10px;">Exempted Shift</label>
                                             </span>
                                         </span>
-                                    </div>
+                                    </div> -->
                         
                                     <div class="col-md-3 mt-1" *ngIf="strShiftType=='0'">
                                         <mat-form-field>
@@ -1285,7 +1316,7 @@
         <div class="row  mt-3">
             <div class="col-md-12">
                 <button class="btn save_btn  mr-2" style="margin: 0;" (click)="saveData()">Save</button>
-                <button class="btn cancel_btn" style="margin: 0;" (click)="clearFields()">Cancel</button>
+                <button class="btn-secondary cancel_btn" style="margin: 0;" (click)="clearFields()" style="line-height: 10px;min-width: 82px;height: 35px;">Cancel</button>
             </div>
         </div>
 <ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

@@ -142,18 +142,20 @@ input[type=number] {-moz-appearance: textfield;}
 
 .save_btn {
   // background: linear-gradient(to right, #35546e, #4286f4);
-  background: linear-gradient(87deg, #580707a3 0, #354156 100%) !important;
+  background:linear-gradient(45deg, #043ca2, #00a9dc) !important;
   padding: 8px 20px;
   color: #fff;
   border: none;
   border-radius: 5px;
+  box-shadow: 0 3px 10px rgba(10, 86, 249, 0.309);
 }
 .save_btn:hover{
-  background: linear-gradient(87deg, #980101a3 0, #841800 100%) !important;
+  background: linear-gradient(87deg, #042f8db0 0, #003584 100%) !important;
   padding: 8px 20px;
   color: #fff;
   border: none;
   border-radius: 5px;
+  box-shadow: 0 3px 10px rgba(10, 86, 249, 0.309);
 }
 
 .delete_btn {
@@ -216,7 +218,12 @@ input[type=number] {-moz-appearance: textfield;}
 }
 
 .btn-secondary {
-  color: #fff;
+  color: #0352ad;
+  background-color: #ffffff;
+  border-color: #0352ad;
+  border-radius: 5px;
+  box-shadow: 0 3px 10px rgba(10, 86, 249, 0.309);
+  
 }
 
 .mat-radio-button.mat-accent .mat-radio-inner-circle,

@@ -36,8 +36,7 @@
   border-radius: 50%;
   z-index: 103;
   transition-duration: 400ms;
-  background: linear-gradient(87deg, #580707a3 0, #354156 100%) !important;
-
+  background: linear-gradient(87deg, #0450ad 0, #019dd6 100%) !important;
 }
 
 .button_open,
@@ -46,7 +45,7 @@
   outline: none;
   transition-duration: 400ms;
   transform: scale(1.1, 1.1) translate3d(0, 0, 0);
-  background: linear-gradient(87deg, #980101a3 0, #841800 100%) !important;
+  background: linear-gradient(87deg, #013d98a3 0, #003584 100%) !important;
 }
 
 .button label {
@@ -106,7 +105,7 @@
   // background: #456784;
   color: #fff;
   cursor: pointer;
-  background: linear-gradient(87deg, #580707a3 0, #354156 100%) !important;
+  background: linear-gradient(87deg, #013d98a3 0, #003584 100%) !important;
 
 }
 
@@ -180,7 +179,7 @@ margin: auto;
     background-color: #FF6700;
    }
 :host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-    background-color: #FF6700 ;
+    background-color: #2575fc ;
    }
 :host ::ng-deep .mat-slide-toggle-ripple {
   height: 0px !important;

@@ -729,7 +729,8 @@ localStorage.removeItem('intNewEmpJobId');
       var lstSelectedFunction
       lstSelectedFunction = this.lstFunction.map(x => x.pk_bint_id)
     }
-    console.log(this.lstFunction);
+    // console.log(this.lstFunction);
+// console.log(this.lstFunction);
 
     let dctTempData={}
     // console.log("aadharnumber",this.intAadharNo.length);
@@ -1099,6 +1100,8 @@ localStorage.removeItem('intNewEmpJobId');
     dctTempData['groupId'] = this.intGroupId;
     dctTempData['hGroup']=this.intSelectedGroup;
 
+    
+
     const frmPublishedData = new FormData;
 
     frmPublishedData.append('blnNewEmp',this.blnNewEmp.toString());
@@ -1137,7 +1140,9 @@ localStorage.removeItem('intNewEmpJobId');
     frmPublishedData.append('strBloodGroup',this.strBloodGroup);
     frmPublishedData.append('strEmerPerson',this.strEmPerson);
     frmPublishedData.append('strEmerRelation',this.strEmerRelattion);
-    frmPublishedData.append('hGroup',this.intSelectedGroup);
+    frmPublishedData.append('hGroup',this.intSelectedGroup);    
+    frmPublishedData.append('groupId',this.intGroupId); 
+
   
 
     if(this.selectedCategory.toUpperCase()== 'EMPLOYEE'){

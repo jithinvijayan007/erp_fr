@@ -33,7 +33,7 @@ export class DealerlistComponent implements OnInit {
     this.source = new LocalDataSource(this.data); // create the source
 
   }
-  lstPermission=JSON.parse(localStorage.group_permissions)
+  // lstPermission=JSON.parse(localStorage.group_permissions)
   lstCustom=[]
   dctDelete={}
  dctData={}
@@ -86,14 +86,14 @@ export class DealerlistComponent implements OnInit {
     this.getData(null,null,'',"1")
     let dct_perms= {'ADD':false,'VIEW':false,'EDIT':false,'DELETE':false,'HISTORY':false}
 
-    this.lstPermission.forEach(item=> {
-      if (item["NAME"] == "Dealer List") {
-        dct_perms.ADD = item["ADD"];
-        dct_perms.EDIT= item["EDIT"];
-        dct_perms.DELETE = item["DELETE"];
-        dct_perms.VIEW = item["VIEW"]
-      }
-    });
+    // this.lstPermission.forEach(item=> {
+    //   if (item["NAME"] == "Dealer List") {
+    //     dct_perms.ADD = item["ADD"];
+    //     dct_perms.EDIT= item["EDIT"];
+    //     dct_perms.DELETE = item["DELETE"];
+    //     dct_perms.VIEW = item["VIEW"]
+    //   }
+    // });
     
     if(dct_perms.VIEW==true && dct_perms.EDIT==true ){
       this.lstCustom= [

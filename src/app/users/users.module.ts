@@ -34,6 +34,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 
 // import { NgxSpinner } from 'ngx-spinner/lib/ngx-spinner.enum';
 import { EditemployeeComponent } from './editemployee/editemployee.component';
+import {MatRadioModule} from '@angular/material/radio';
 // import { MatChipsModule } from '@angular/material/chips';
 
 
@@ -62,8 +63,10 @@ import { EditemployeeComponent } from './editemployee/editemployee.component';
     MatSortModule,
     Ng2SmartTableModule,
     SelectDropDownModule,   
-    NgxSpinnerModule
+    NgxSpinnerModule,
     // NgxSpinner
+    // SelectDropDownModule, 
+    MatRadioModule,  
   
   ],
   declarations: [
