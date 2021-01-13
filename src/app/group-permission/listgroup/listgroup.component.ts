@@ -92,7 +92,7 @@ export class ListgroupComponent implements OnInit {
     localStorage.setItem("groupId", pk_bint_id);
     localStorage.setItem('previousUrl','/group/editgroup');
     
-    this.router.navigate(["/group/editgroup"]);
+    this.router.navigate(["/group/editdesignation"]);
   }
   viewGroup(pk_bint_id) {
     localStorage.setItem("groupId", pk_bint_id);

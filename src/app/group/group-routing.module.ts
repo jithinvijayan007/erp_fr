@@ -4,6 +4,7 @@ import { AddgroupComponent } from './addgroup/addgroup.component';
 import { ListgroupComponent } from './listgroup/listgroup.component';
 import { ViewgroupComponent } from './viewgroup/viewgroup.component';
 import { EditgroupComponent } from './editgroup/editgroup.component';
+import { EditdesignationComponent } from './editdesignation/editdesignation.component';
 import { AuthGuard } from '../auth.guard';
 const routes: Routes = [
   {
@@ -66,6 +67,22 @@ const routes: Routes = [
           urls: [
             { title: 'Dashboard', url: '/dashboard' },
             { title: 'edit group' }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    path: '',
+    children: [
+      {
+        path: 'editdesignation',
+        component: EditdesignationComponent,
+        data: {
+          title: 'edit designation ',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'edit designation' }
           ]
         }
       }

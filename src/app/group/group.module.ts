@@ -19,8 +19,9 @@ import { ListgroupComponent } from './listgroup/listgroup.component';
 import { ViewgroupComponent } from './viewgroup/viewgroup.component';
 import { EditgroupComponent } from './editgroup/editgroup.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { EditdesignationComponent } from './editdesignation/editdesignation.component';
 @NgModule({
-  declarations: [AddgroupComponent, ListgroupComponent, ViewgroupComponent, EditgroupComponent],
+  declarations: [AddgroupComponent, ListgroupComponent, ViewgroupComponent, EditgroupComponent, EditdesignationComponent],
   imports: [
     CommonModule,
     GroupRoutingModule,
