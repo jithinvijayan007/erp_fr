@@ -30,7 +30,7 @@
     <mat-chip-list #chipList aria-label="Group selection">
         <mat-chip *ngFor="let data of levelNames[element.vchr_name]" [selectable]="selectable"
                 [removable]="removable" (removed)="remove(data,element['vchr_name'])">
-        {{data}}
+        {{data.name}}
         <span matChipRemove *ngIf="removable"  class="fa fa-times"></span> 
         </mat-chip>
         <input placeholder="New Group..."
