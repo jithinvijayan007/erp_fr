@@ -27,7 +27,7 @@ export class ListgroupComponent implements OnInit {
     "downloadPermission",
     "action"
   ];
-  lstPermission = JSON.parse(localStorage.permission)
+  lstPermission = JSON.parse(localStorage.group_permissions)
   blnAdd = false;
   blnEdit = false;
   blnDelete = false;
