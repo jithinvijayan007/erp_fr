@@ -95,7 +95,7 @@ export class ListemployeeComponent implements OnInit {
     // console.log (id);
     localStorage.setItem("intEmployeeId","edit")
     localStorage.setItem("intEmployeeId", employeeId);
-    this.router.navigate(["/user/viewuser"]);
+    this.router.navigate(["/user/viewemployee"]);
     
   }
   editEmployee(id){
@@ -133,7 +133,7 @@ export class ListemployeeComponent implements OnInit {
         this.dctResigData['blnReflectGap']=blnReflectGap
         this.dctResigData['datResignation']=moment(this.dctResigData['datResignation']).format('YYYY-MM-DD')
         this.spinner.show();
-        this.serverService.patchData('user/add_user/',this.dctResigData)
+        this.serverService.patchData('user/adduser/',this.dctResigData)
           .subscribe(
               (response) => {
                 this.spinner.hide();
@@ -159,7 +159,7 @@ export class ListemployeeComponent implements OnInit {
         this.dctResigData['blnReflectGap']=blnReflectGap
         this.dctResigData['datResignation']=moment(this.dctResigData['datResignation']).format('YYYY-MM-DD')
         this.spinner.show();
-        this.serverService.patchData('user/add_user/',this.dctResigData)
+        this.serverService.patchData('user/adduser/',this.dctResigData)
           .subscribe(
               (response) => {
                 this.spinner.hide();

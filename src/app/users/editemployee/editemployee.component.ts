@@ -1,3 +1,4 @@
+import { log } from 'util';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ServerService } from '../../server.service'
@@ -120,10 +121,11 @@ export class EditemployeeComponent implements OnInit {
   lstBrandData=[];
   lstProductData=[];
   intSelectedBrandId;
-  intSelectedProductId;
+  intSelectedProductId = [];
   strPhysicalLocation='';
   strFatherName;
   intEmPhNo;
+
 
   intSelectedCompanyId=null;
   lstCompanyData=[];
@@ -134,7 +136,7 @@ export class EditemployeeComponent implements OnInit {
   imgUrl;
   intWeekOffType;
   lstLocationData=[];
-  lstSelectedLoc=[];
+  // lstSelectedLoc=[];
   intEsiNumber=null;
   intUANNumber=null;
   intWWFNumber=null;
@@ -462,6 +464,7 @@ export class EditemployeeComponent implements OnInit {
           (response) => {
               if (response.status == 1) {
                 this.lstProductData=response['data'];
+                
               }  
             },
             (error) => {   
@@ -623,11 +626,10 @@ export class EditemployeeComponent implements OnInit {
       (response) => {
         this.spinner.hide();
           
-          if (response.status == 1) {
+          if (response['status'] == 1) {
           
             
             this.lstEmployeeDetails=response['lst_userdetailsview'];
-            console.log("responseee",this.lstEmployeeDetails);
             
             if(response['lstRefDetails'].length==2){
               this.lstReference=response['lstRefDetails'];
@@ -644,7 +646,13 @@ export class EditemployeeComponent implements OnInit {
             if(response['lstFamilyDetails']!=0){
               this.lstFamilyDetails=response['lstFamilyDetails'];
             }
-
+            if((response['lstfunctions']).length > 0){
+              let data = []
+              data = response['lstfunctions'];
+              this.intSelectedProductId = data.map(data => data.pk_bint_id);
+              console.log(this.intSelectedProductId);
+              
+            }
       
             this.strFirstName=this.lstEmployeeDetails[0].first_name;
             this.strLastName=this.lstEmployeeDetails[0].last_name;
@@ -725,13 +733,13 @@ export class EditemployeeComponent implements OnInit {
             this.ImageLocation=this.lstEmployeeDetails[0].vchr_img;
             this.ImageSrc=this.lstEmployeeDetails[0].vchr_img;
             this.strPhysicalLocation=this.lstEmployeeDetails[0].vchr_physical_loc;
-            this.intSelectedProductId=this.lstEmployeeDetails[0].fk_product_id;
+            // this.intSelectedProductId=this.lstEmployeeDetails[0].fk_product_id;
             this.intSelectedBrandId=this.lstEmployeeDetails[0].fk_brand_id;
             if(this.lstEmployeeDetails[0].int_weekoff_type != null){
               this.intWeekOffType=this.lstEmployeeDetails[0].int_weekoff_type.toString();
             }
            
-            this.lstSelectedLoc=this.lstEmployeeDetails[0].json_physical_loc;
+            // this.lstSelectedLoc=this.lstEmployeeDetails[0].json_physical_loc;
             
 
             if(this.intWeekOffType=='0'){
@@ -910,7 +918,7 @@ export class EditemployeeComponent implements OnInit {
 
   saveData(){
     let dctTempData={}
-    // console.log("intReligionId",this.intReligionId);
+    console.log("intReligionId",this.intSelectedProductId);
     // console.log("strSalutation",this.strSalutation);
     
     
@@ -982,10 +990,10 @@ export class EditemployeeComponent implements OnInit {
       Swal.fire('Error!', 'Select salary structure', 'error');
       return false;
     }
-    else if(this.lstSelectedLoc.length==0){
-      Swal.fire('Error!', 'Select Physical Location', 'error');
-      return false;
-    }
+    // else if(this.lstSelectedLoc.length==0){
+    //   Swal.fire('Error!', 'Select Physical Location', 'error');
+    //   return false;
+    // }
     // else if(!this.strGroupName){
     //   Swal.fire('Error!', 'Enter group', 'error');
     //   return false
@@ -1228,6 +1236,8 @@ export class EditemployeeComponent implements OnInit {
 
     
     const frmPublishedData = new FormData;
+
+
     frmPublishedData.append('intId',this.intEmployeeId);
     frmPublishedData.append('strFirstName',this.strFirstName);
     frmPublishedData.append('strLastName',this.strLastName);
@@ -1283,7 +1293,7 @@ export class EditemployeeComponent implements OnInit {
     frmPublishedData.append('imgSrc',this.ImageSrc);
     frmPublishedData.append('strPhysicalLoc',this.strPhysicalLocation);
     frmPublishedData.append('intWeekOffType',this.intWeekOffType);
-    frmPublishedData.append('lstLoc',JSON.stringify(this.lstSelectedLoc));
+    // frmPublishedData.append('lstLoc',JSON.stringify(this.lstSelectedLoc));
     if(this.intEsiNumber!=undefined && this.intEsiNumber !=null){
       frmPublishedData.append('strEsiNo',this.intEsiNumber);
     }
@@ -1302,7 +1312,7 @@ export class EditemployeeComponent implements OnInit {
       frmPublishedData.append('intBrandId',this.intSelectedBrandId);
     }
     if(this.intSelectedProductId!=undefined && this.intSelectedProductId!=null){
-      frmPublishedData.append('intProductId',this.intSelectedProductId);
+      frmPublishedData.append('intProductId',JSON.stringify(this.intSelectedProductId));
     }
     if(this.strLoginUser=='Super User'){
       frmPublishedData.append('intCompanyId',this.intSelectedCompanyId)
@@ -1339,7 +1349,7 @@ export class EditemployeeComponent implements OnInit {
         this.spinner.hide();
         if (response.status == 1) {
           Swal.fire('Success!', 'Employee Updated successfully', 'success');
-          this.router.navigate(['/employee/listemployee'])
+          this.router.navigate(['/user/listuser'])
 
 
         }
@@ -1357,7 +1367,7 @@ export class EditemployeeComponent implements OnInit {
     
   }
   backToList(){
-    this.router.navigate(["/employee/listemployee"]);
+    this.router.navigate(["/user/listuser"]);
 
   }
 
@@ -1444,7 +1454,7 @@ export class EditemployeeComponent implements OnInit {
         this.spinner.hide();
         if (response['status'] == 1){
           Swal.fire('Success!', 'Password changed successfully', 'success');
-          this.router.navigate(['/employee/listemployee'])
+          this.router.navigate(['/user/listuser'])
           this.strPassword1 = new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)]));
           this.strConfirmPassword1 = new FormControl('', CustomValidators.equalTo(this.strPassword1));
 

@@ -856,7 +856,7 @@
                                                 <mat-form-field>
                                                     <mat-label>Select Functions</mat-label>
                                                     <mat-select [(ngModel)]="lstFunction" multiple [disableOptionCentering]="true">
-                                                        <mat-option *ngFor="let loc of lstProductData" value="{{loc.pk_bint_id}}">
+                                                        <mat-option *ngFor="let loc of lstProductData" [value]="loc.pk_bint_id">
                                                             {{ loc.vchr_name | uppercase}}
                                                         </mat-option>
                                                     </mat-select>

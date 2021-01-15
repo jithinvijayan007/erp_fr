@@ -10,6 +10,8 @@ import { UsergroupaddComponent } from './usergroupadd/usergroupadd.component';
 import { AddemployeeComponent } from './addemployee/addemployee.component';
 import { ListemployeeComponent } from './listemployee/listemployee.component';
 import { EditemployeeComponent } from './editemployee/editemployee.component';
+import { ViewemployeeComponent } from './viewemployee/viewemployee.component';
+
 // import { EditemployeeComponent } from './editemployee/editemployee.component';
 
 export const UsersRoutes: Routes = [
@@ -129,7 +131,25 @@ export const UsersRoutes: Routes = [
         }
       }
     ]
-  }
+  },
+  {
+    path: '',
+    children: [
+      {
+        path: 'viewemployee',
+        component: ViewemployeeComponent,
+        data: {
+          title: 'user view ',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'user view' }
+          ]
+        }
+      }
+    ]
+  },
+  
+  
   
 
 
