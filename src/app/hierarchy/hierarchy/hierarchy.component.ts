@@ -95,7 +95,7 @@ export class HierarchyComponent implements OnInit {
     // Add our group
     if ((value || '').trim()) {
       
-      this.levelNames[vchr_name].push( value.trim() );
+      this.levelNames[vchr_name].push( { name:value.trim() });
       this.levelInserted[vchr_name].push( value.trim());
       console.log(this.levelInserted);
       
@@ -114,8 +114,12 @@ export class HierarchyComponent implements OnInit {
     const index = this.levelNames[vchr_name].indexOf(data);
     
     if (index >= 0) {
+     
       this.levelNames[vchr_name].splice(index, 1);
-      this.levelREmoved[vchr_name].push( data.trim())
+      if (data['id']) {
+      this.levelREmoved[vchr_name].push( data['id'])
+    }
+    console.log(this.levelREmoved);
     }
   }
   levelSave(){    

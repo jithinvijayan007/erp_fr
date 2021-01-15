@@ -1,8 +1,10 @@
 
         <h4 style="background:none;"><span><i class="fa fa-user-plus"></i></span> &nbsp;Edit Employee - <small style="color:#f36b22"> {{strEmpCode}}</small></h4>
   <!-- personal detals start       -->
+  <div class="row mt-4">    
+    <fieldset style="width:100% !important" class="fieldset1">
   <div class="row mt-4">
-        <fieldset style="width:100% !important" class="fieldset1">
+            <fieldset style="width:100% !important" class="fieldset1">
                  
                 <legend class="legend1">Personal Details</legend>
 
@@ -514,7 +516,14 @@
                                     </mat-form-field>
                                 </div> 
                                 <div class="col-md-4">
-                                        <label style="width:100%;font-weight: 400 !important;">Alive</label>
+                                    
+                                        <label style="width:100%;font-weight: 400 !important;">Alive</label> 
+                                    <mat-radio-group aria-label="Select an option" [(ngModel)]="fam['isAlive']" >
+                                        <mat-radio-button type="radio" value="Yes" name="{{f}}" >Yes</mat-radio-button>
+                                        <mat-radio-button  type="radio" value="No" name="{{f}}" style="margin-left: 10px;">No</mat-radio-button>
+                                      </mat-radio-group>
+                                
+                                        <!-- <label style="width:100%;font-weight: 400 !important;">Alive</label>
                                         <div class="pretty p-icon p-round p-jelly mr-5">
                                             <input type="radio" value="Yes" name="{{f}}" [(ngModel)]="fam['isAlive']" />
                                             <div class="state p-warning">
@@ -528,7 +537,7 @@
                                                 <i class="icon mdi mdi-check"></i>
                                                 <label>No</label>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <button (click)="deleteFamily(f)" class="closebtn"><i class="ti-trash"></i></button>
                 </div>
@@ -912,7 +921,13 @@
 
                         <div class="row mt-3">
                             <div class="col-md-3">
-                                <label style="width:100%;font-weight: 400 !important;">Select Payment Mode</label>
+                                <label style="width:100%;font-weight: 400 !important;">Select Payment Mode</label> 
+                                <mat-radio-group aria-label="Select an option"  [(ngModel)]="intPaymentMode" (ngModelChange)="paymentModeClicked()" >
+                                    <mat-radio-button type="radio" value="0" name="paymentIcon" >Cash</mat-radio-button>
+                                    <mat-radio-button  type="radio" value="1" name="paymentIcon"style="margin-left: 10px;">Bank</mat-radio-button>
+                                  </mat-radio-group>
+
+                                <!-- <label style="width:100%;font-weight: 400 !important;">Select Payment Mode</label>
                                 <div class="pretty p-icon p-round p-jelly mr-5">
                                     <input type="radio" value="0" name="paymentIcon" [(ngModel)]="intPaymentMode" (ngModelChange)="paymentModeClicked()" />
                                     <div class="state p-warning">
@@ -926,7 +941,7 @@
                                         <i class="icon mdi mdi-check"></i>
                                         <label>Bank</label>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-md-3">
                                 <mat-form-field class="example-full-width">
@@ -955,7 +970,13 @@
                         </div>
                         <div class="row mt-2">
                                 <div class="col-md-3">
-                                        <label style="width:100%;font-weight: 400 !important;">Select Week Off Type</label>
+                                    <label style="width:100%;font-weight: 400 !important;">Select Week Off Type</label> 
+                                <mat-radio-group aria-label="Select an option"  [(ngModel)]="intWeekOffType" (ngModelChange)="changeWeekofftype()">
+                                    <mat-radio-button type="radio" value="0" name="WeekOffType" >Fixed</mat-radio-button>
+                                    <mat-radio-button  type="radio" value="1" name="WeekOffType"style="margin-left: 10px;">Variable</mat-radio-button>
+                                  </mat-radio-group>
+
+                                        <!-- <label style="width:100%;font-weight: 400 !important;">Select Week Off Type</label>
                                         <div class="pretty p-icon p-round p-jelly mr-5">
                                             <input type="radio" value="0" name="WeekOffType" [(ngModel)]="intWeekOffType" (ngModelChange)="changeWeekofftype()" />
                                             <div class="state p-warning">
@@ -969,7 +990,7 @@
                                                 <i class="icon mdi mdi-check"></i>
                                                 <label>Variable</label>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="col-md-3" *ngIf="blnFixed">
                                         <mat-form-field>
@@ -1025,8 +1046,15 @@
                 
                         <div class="row mt-2">
 
-                                <div class="col-md-4">
-                                        <label style="width:100%;font-weight: 400 !important;">Select Shift Type</label>
+                                <div class="col-md-3">
+                                    <label style="width:100%;font-weight: 400 !important;">Select Shift Type</label> 
+                                    <mat-radio-group aria-label="Select an option" [(ngModel)]="strShiftType">
+                                        <mat-radio-button type="radio" value="0" name="icon"  >Fixed</mat-radio-button>
+                                        <mat-radio-button  type="radio" value="1" name="icon" style="margin-left: 10px;">Variable</mat-radio-button>
+                                        <mat-radio-button  type="radio" value="2" name="icon" style="margin-left: 10px;">Exempted Shift</mat-radio-button>
+                                      </mat-radio-group>
+                                    
+                                        <!-- <label style="width:100%;font-weight: 400 !important;">Select Shift Type</label>
                                         <div class="pretty p-icon p-round p-jelly mr-5">
                                             <input type="radio" value="0" name="icon" [(ngModel)]="strShiftType" />
                                             <div class="state p-warning">
@@ -1047,7 +1075,7 @@
                                                 <i class="icon mdi mdi-check"></i>
                                                 <label>Exempted Shift</label>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                         
                                     <div class="col-md-3 mt-2" *ngIf="strShiftType=='0'">
@@ -1342,6 +1370,9 @@
             <button class="btn cancel_btn" style="margin: 0;" (click)="backToList()">Cancel</button>
         </div>
     </div>
+    </fieldset>
+  </div>    
+    
 <div class="card mt-3">
     <div class="card-body">
         <h4 style="font-size: 15px;">Change Password</h4>

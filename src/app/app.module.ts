@@ -52,6 +52,7 @@ import { PrintcomponentComponent } from './printcomponent/printcomponent.compone
 import { TitleCasePipe } from '@angular/common';
 import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { DataService } from './global.service';
+import { TypeaheadService } from './typeahead.service';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -114,6 +115,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TitleCasePipe,
     DataService,
     AuthGuard,
+    TypeaheadService,
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG

@@ -47,12 +47,13 @@ export class UserloginComponent implements OnInit {
               localStorage.setItem('BranchName', logCheck['userdetails']['branch_name']);
               localStorage.setItem('BranchCode', logCheck['userdetails']['branch_code']);
               localStorage.setItem('BranchCode', logCheck['userdetails']['branch_code']);
-              localStorage.setItem('group_permissions', JSON.stringify(logCheck['permission']));
+              localStorage.setItem('group_permissions', JSON.stringify(logCheck['lst_menu_data']));
               localStorage.setItem('companyId', logCheck['userdetails']['company_id']);
               localStorage.setItem('group_name', logCheck['userdetails']['group_name']);
               localStorage.setItem('bln_indirect_discount', JSON.stringify(logCheck['userdetails']['bln_indirect_discount']));
               localStorage.setItem('blnDirectDiscount', logCheck['userdetails']['bln_direct_discount']);
               localStorage.setItem('BranchType', logCheck['userdetails']['branch_type']);
+              localStorage.setItem('int_user_id', logCheck['userdetails']['int_user_id']);
 
               // this.router.navigateByUrl('company/addcompany');
               // this.router.navigateByUrl('dayclosure/dayclosure');

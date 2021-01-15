@@ -27,7 +27,7 @@ export class ListgroupComponent implements OnInit {
     "downloadPermission",
     "action"
   ];
-  // lstPermission=JSON.parse(localStorage.group_permissions)
+  lstPermission = JSON.parse(localStorage.group_permissions)
   blnAdd = false;
   blnEdit = false;
   blnDelete = false;
@@ -48,14 +48,14 @@ export class ListgroupComponent implements OnInit {
       this.router.navigate(["/user/sign-in"]);
     }
     this.getGroup();
-    // this.lstPermission.forEach(item=> {
-    //   if (item["NAME"] == "Group List") {
-    //     this.blnAdd = item["ADD"];
-    //     this.blnEdit= item["EDIT"];
-    //     this.blnDelete = item["DELETE"];
-    //     this.blnView = item["VIEW"]
-    //   }
-    // });
+    this.lstPermission.forEach(item=> {
+      if (item["NAME"] == "Group List") {
+        this.blnAdd = item["ADD"];
+        this.blnEdit= item["EDIT"];
+        this.blnDelete = item["DELETE"];
+        this.blnView = item["VIEW"]
+      }
+    });
   }
   getGroup() {
     const data = { company_id: Number(localStorage.getItem("companyId")) };
