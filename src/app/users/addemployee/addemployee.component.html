@@ -798,9 +798,9 @@
                                     <div class="col-md-3 mt-1">
                                         <mat-form-field>
                                             <mat-label>Select level Group</mat-label>
-                                            <mat-select [(ngModel)]="lstSelectedGroup" [disableOptionCentering]="true">
-                                                <mat-option *ngFor="let grp of lstGroupData" value="{{grp}}">
-                                                    {{ grp | uppercase}}
+                                            <mat-select [(ngModel)]="intSelectedGroup" [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let grp of lstGroupData" value="{{grp.id}}">
+                                                    {{ grp.name | uppercase}}
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>

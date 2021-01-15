@@ -92,14 +92,16 @@ export class ListemployeeComponent implements OnInit {
   viewEmployee(id){
     let
     employeeId = id;
-    // localStorage.setItem("intEmployeeId","edit")
+    // console.log (id);
+    localStorage.setItem("intEmployeeId","edit")
     localStorage.setItem("intEmployeeId", employeeId);
-    this.router.navigate(["/user/viewemployee"]);
+    this.router.navigate(["/user/viewuser"]);
     
   }
-  editEmployee(id){    
+  editEmployee(id){
+    let employeeId = id;    
     localStorage.setItem("intEmployeeEditId",id);
-    this.router.navigate(["/user/editemployee"])
+    this.router.navigate(["/user/editemployee"]);
   }
 
   deleteEmployee(){
