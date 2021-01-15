@@ -117,7 +117,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
 
   blnCustomerAdd = false;
   blnAdd = true;
-  lstPermission = JSON.parse(localStorage.getItem('permission'));
+  lstPermission = JSON.parse(localStorage.getItem('group_permissions'));
 
   stickyTitle = '';
   stickyDesc = '';
@@ -144,7 +144,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
   logo;
   file;
   companyId = Number(localStorage.getItem('companyId'));
-  userId = localStorage.getItem('userId');
+  userId = localStorage.getItem('int_user_id');
   currentUserName = localStorage.getItem('username');
   lstAvailable = []
 
@@ -1006,7 +1006,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
   }
   getList() {
     this.serverService
-      .postData("mobile/get_for_add_mobile_enquiry/", { user_id: localStorage.getItem('userId'), company_id: this.companyId })
+      .postData("mobile/get_for_add_mobile_enquiry/", { user_id: localStorage.getItem('int_user_id'), company_id: this.companyId })
       .subscribe(
         response => {
           this.dctSelectBox.lstEnquirySource = response['lst_source'];

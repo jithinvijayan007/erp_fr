@@ -53,6 +53,7 @@ export class UserloginComponent implements OnInit {
               localStorage.setItem('bln_indirect_discount', JSON.stringify(logCheck['userdetails']['bln_indirect_discount']));
               localStorage.setItem('blnDirectDiscount', logCheck['userdetails']['bln_direct_discount']);
               localStorage.setItem('BranchType', logCheck['userdetails']['branch_type']);
+              localStorage.setItem('int_user_id', logCheck['userdetails']['int_user_id']);
 
               // this.router.navigateByUrl('company/addcompany');
               // this.router.navigateByUrl('dayclosure/dayclosure');
