@@ -58,7 +58,8 @@ export const Approutes: Routes = [
       { path: 'job-position', loadChildren: './jobposition/jobposition.module#JobpositionModule' },
       { path: 'hierarchy', loadChildren: './hierarchy/hierarchy.module#HierarchyModule' },
       { path: 'department', loadChildren: './department/department.module#DepartmentModule' },
-      { path: 'group-permission', loadChildren: './group-permission/group-permission.module#GroupModule' }
+      { path: 'group-permission', loadChildren: './group-permission/group-permission.module#GroupModule' },
+      { path: 'enquiry', loadChildren: './lead-mobile/lead-mobile.module#LeadMobileModule' },
 
 
     ]
