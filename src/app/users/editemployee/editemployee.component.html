@@ -766,6 +766,24 @@
                                     </mat-error>
                                 </mat-form-field>
                             </div>
+                            <!-- ************************** -->
+                            <!-- <div class="col-md-3 mt-1">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Grade *</mat-label>
+                                    <mat-select [(ngModel)]="strGrade" [formControl]="form.controls['grade']" [disableOptionCentering]="true">
+                                        <mat-option *ngFor="let grade of lstGrades" [value]="grade">
+                                            {{ grade }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="form.controls['grade'].hasError('required')">
+                                        Grade required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div> -->
+
+                            <!-- ************************** -->
+
+
                 
                             <div class="col-md-3 mt-1" *ngIf="(selectedCategory.toUpperCase() == 'EMPLOYEE')">
                                 <mat-form-field class="example-full-width">
@@ -782,11 +800,11 @@
                                 </mat-form-field>
                             </div>
 
-
+                     <!-- ************************************** -->
                             <div class="col-md-3 mt-1">                                      
                                 <mat-form-field>
                                     <mat-label>Select Group</mat-label>
-                                    <mat-select [(ngModel)]="intGroupId"  [disableOptionCentering]="true">
+                                    <mat-select [(ngModel)]="intGroupId" [formControl]="form.controls['groupName']" [disableOptionCentering]="true">
                                         <mat-option *ngFor="let loc of lstgroups" value="{{loc.pk_bint_id}}">
                                             {{ loc.vchr_name | uppercase}}
                                         </mat-option>
@@ -794,23 +812,48 @@
                                 </mat-form-field>                
                  </div>
 
-                            <div class="col-md-3 mt-1">                                      
+                 
+
+    <div class="col-md-3 mt-1">                                      
+                    <mat-form-field>
+                        <mat-label>Select level</mat-label>
+                        <mat-select [(ngModel)]="int_Level" (ngModelChange)="levelChanged()" [disableOptionCentering]="true">
+                            <mat-option *ngFor="let loc of lstLevelData" value="{{loc.pk_bint_id}}">
+                                {{ loc.vchr_name | uppercase}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>                
+     </div>
+
+
+                       <!-- ************************************** -->
+                            <!-- <div class="col-md-3 mt-1">
                                 <mat-form-field>
-                                    <mat-label>Select level</mat-label>
-                                    <mat-select [(ngModel)]="int_Level" (ngModelChange)="levelChanged()" [disableOptionCentering]="true">
-                                        <mat-option *ngFor="let loc of lstLevelData" value="{{loc.pk_bint_id}}">
-                                            {{ loc.vchr_name | uppercase}}
+                                    <mat-label>Select Physical Location</mat-label>
+                                    <mat-select [(ngModel)]="lstSelectedLocation" [disableOptionCentering]="true">
+                                        <mat-option *ngFor="let loc of lstLocationData" value="{{loc.pk_bint_id}}">
+                                            {{ loc.str_name | uppercase}}
                                         </mat-option>
                                     </mat-select>
-                                </mat-form-field>                
-                 </div>
+                                </mat-form-field>
+                            </div> -->
 
+                            <!-- <div class="col-md-3 mt-1">
+                                <mat-form-field>
+                                    <mat-label>Select Physical Location</mat-label>
+                                    <mat-select [(ngModel)]="lstSelectedLoc" multiple [disableOptionCentering]="true">
+                                        <mat-option *ngFor="let loc of lstLocationData" value="{{loc.pk_bint_id}}">
+                                            {{ loc.vchr_physical_loc | uppercase}}
+                                        </mat-option>
+                                    </mat-select>
 
+                                </mat-form-field>
+                            </div> -->
 
                             <div class="col-md-3 mt-1">
                                 <mat-form-field>
                                     <mat-label>Select Physical Location</mat-label>
-                                    <mat-select [(ngModel)]="lstSelectedLocation" [disableOptionCentering]="true">
+                                    <mat-select [(ngModel)]="lstSelectedLoc" [disableOptionCentering]="true">
                                         <mat-option *ngFor="let loc of lstLocationData" value="{{loc.pk_bint_id}}">
                                             {{ loc.str_name | uppercase}}
                                         </mat-option>
@@ -822,9 +865,9 @@
                             <div class="col-md-3 mt-1">
                                 <mat-form-field>
                                     <mat-label>Select level Group</mat-label>
-                                    <mat-select [(ngModel)]="lstSelectedGroup" [disableOptionCentering]="true">
-                                        <mat-option *ngFor="let grp of lstGroupData" value="{{grp}}">
-                                            {{ grp | uppercase}}
+                                    <mat-select [(ngModel)]="intSelectedGroup" [disableOptionCentering]="true">
+                                        <mat-option *ngFor="let grp of lstGroupData" value="{{grp.id}}">
+                                            {{ grp.name | uppercase}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
