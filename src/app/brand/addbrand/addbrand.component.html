@@ -6,11 +6,19 @@
         <h4 class="card-title">Add Brand</h4>
         <!-- <h5 class="card-subtitle">made with bootstrap elements</h5> -->
         <form class="form p-t-10 row">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <mat-form-field>
               <input matInput [(ngModel)]="strBrand" placeholder="Brand Name" value="" name="brandname">
             </mat-form-field>
           </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput [(ngModel)]="strCode" placeholder="Brand Code" value="" name="brandcode">
+            </mat-form-field>
+          </div>
+
+          
           <button type="submit" class="btn save_btn m-r-10 m-t-10" (click)="addBrand()">Submit</button>
           <button type="submit" class="btn btn-secondary m-t-10" (click)="cancel()">Cancel</button>
         </form>

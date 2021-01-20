@@ -431,7 +431,7 @@ console.log(localStorage,"local");
               swal.fire({
                 position: "center",
                 type: "success",
-                text: "Data Updated successfully",
+                text: "Data added successfully",
                 showConfirmButton: true,
               });
           localStorage.setItem('previousUrl','dealer/dealerlist');

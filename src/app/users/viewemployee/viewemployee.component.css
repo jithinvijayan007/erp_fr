@@ -1,0 +1,99 @@
+h4{
+    font-weight: 500;
+    color: #16507f;
+    font-size: 16px;
+    background-color: #f0f2f3; 
+    padding: 10px;
+    margin-bottom: 43px;
+}
+p{
+    color: black;
+}
+.image{
+    width: 140px;
+    /* border-radius: 50%; */
+    height: 140px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    margin-top: -31px;
+    border: 1px solid #dcdcdc;
+    background: url("/assets/images/users/employee.jpg")
+}
+.name{
+    font-weight: 500;
+    color: #16507f;
+    font-size: 16px;
+}
+label {
+  font-weight: 400;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+}
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+    background: none !important;
+}
+.expand label{
+    color: #16507f;
+    font-weight: 600;
+}
+::ng-deep .mat-expansion-indicator::after, .mat-expansion-panel-header-description {
+    color: #f8763b !important;
+}
+fieldset {
+    border: 1px solid #c9d0d6 !important;
+    margin: 0;
+    position: relative;
+    border-radius: 4px;
+    padding:15px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    height: 224px;
+}	
+legend{
+        font-size: 14px;
+        margin-bottom: 0px;
+        width: 50%;
+        border-radius: 4px;
+        padding: 3px 3px 3px 9px;
+        color: #4680b4 !important;
+        background-color: white !important;
+}
+.fieldset1 {
+border: none !important;
+margin: 0px 10px 0px 10px;
+position: relative;
+border-radius: 4px;
+padding:15px;
+background: white;
+box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+height: auto !important;
+
+
+}	
+.legend1{
+font-size: 14px;
+margin-bottom: 0px;
+border-radius: 4px;
+padding: 3px 3px 3px 9px;
+color: white !important;
+width: 153px;
+background: linear-gradient(60deg,#ff8567,#f09819) !important;
+box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,188,212,.4) !important;
+}
+#salary p{
+color: black;
+}
+#salary label{
+font-weight: 400;
+}
+
+.view {
+    color: #137eff !important;
+    background: none;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px #87bdff;
+    border-radius: 30px;
+    border: none;
+    width: 28px;
+    height: 23px;
+    cursor: pointer;
+}
