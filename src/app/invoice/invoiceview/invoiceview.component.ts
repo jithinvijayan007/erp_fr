@@ -626,7 +626,11 @@ export class InvoiceviewComponent implements OnInit {
 
   ngOnInit() {
     this.blnStart = true;
+    console.log(this.strGroupName);
+    console.log(this.lstGroup);
+    
     if (this.lstGroup.includes(this.strGroupName)) {
+      console.log(this.strGroupName)
       this.saveButtonStatus = false;
     }
 
