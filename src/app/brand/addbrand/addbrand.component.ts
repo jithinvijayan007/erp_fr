@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class AddbrandComponent {
   strBrand:'';
+  strCode:'';
   constructor(private serviceObject: ServerService,
     public router: Router,
 
@@ -25,9 +26,11 @@ export class AddbrandComponent {
       swal.fire('Error!', 'Enter Brand Name', 'error');
       
     }
+    
     else{
       let dct_data = {}
       dct_data['strBrand']=this.strBrand
+      dct_data['strCode']=this.strCode
       this.serviceObject.postData('brands/add_brands/', dct_data)   .subscribe(
         (response) => {
             if (response.status == 1) {
@@ -53,8 +56,7 @@ export class AddbrandComponent {
           
         });
     }
-  
-  }
+}
   cancel(){
     this.strBrand=''
   }
