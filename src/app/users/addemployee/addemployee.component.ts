@@ -103,7 +103,7 @@ export class AddemployeeComponent implements OnInit {
   lstVariableShift=[];
   lstShift=[];
   datBirthStart;
-  intSelectedGroup
+  intSelectedGroup=null;
   intPaymentMode=null;
   strBankName='';
   intAccountNum;
