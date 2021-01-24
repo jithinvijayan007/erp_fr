@@ -136,7 +136,7 @@ export class AddemployeeComponent implements OnInit {
   lstLocationData=[];
   lstGroupData=[];
   lst
-  lstSelectedLocation;
+  lstSelectedLocation = [];
   intEsiNumber=null;
   intUANNumber=null;
   intWWFNumber=null;
@@ -807,31 +807,33 @@ localStorage.removeItem('intNewEmpJobId');
       Swal.fire('Error!', 'Select Department', 'error');
       return false
     }
-    else if(!this.intSelectedDesignation){
-      Swal.fire('Error!', 'Select Employee Designation', 'error');
-      return false;
-    }
+      // commented for o2force
+    // else if(!this.intSelectedDesignation){
+    //   Swal.fire('Error!', 'Select Employee Designation', 'error');
+    //   return false;
+    // }
     else if(!this.datOJoin){      
       Swal.fire('Error!', 'Select Date of join', 'error');
       return false
     }
-
-    else if(!this.strLevelOfGrade){
-      Swal.fire('Error!', 'Select Level of grade', 'error');
-      return false;
-    }
-    else if(!this.strGrade){
-      Swal.fire('Error!', 'Select Grade', 'error');
-      return false;
-    }
+// commented for o2force
+    // else if(!this.strLevelOfGrade){
+    //   Swal.fire('Error!', 'Select Level of grade', 'error');
+    //   return false;
+    // }
+    // else if(!this.strGrade){
+    //   Swal.fire('Error!', 'Select Grade', 'error');
+    //   return false;
+    // }
     else if((this.intSalaryStructure==undefined || this.intSalaryStructure==null || this.intSalaryStructure=='') && (this.selectedCategory.toUpperCase()=='EMPLOYEE')){
       Swal.fire('Error!', 'Select Salary structure', 'error');
       return false;
     }
-    else if(this.lstSelectedLocation == null){
-      Swal.fire('Error!', 'Select Physical Location', 'error');
-      return false;
-    }
+      // commented for o2force
+    // else if(this.lstSelectedLocation == null){
+    //   Swal.fire('Error!', 'Select Physical Location', 'error');
+    //   return false;
+    // }
 
 
 
@@ -1175,7 +1177,7 @@ localStorage.removeItem('intNewEmpJobId');
     frmPublishedData.append('imgSrc',this.ImageSrc);
     frmPublishedData.append('strPhysicalLoc',this.strPhysicalLocation);
     frmPublishedData.append('intWeekOffType',this.intWeekOffType);
-    frmPublishedData.append('lstLoc',this.lstSelectedLocation);
+    // frmPublishedData.append('lstLoc',this.lstSelectedLocation);
     frmPublishedData.append('strFatherName',this.strFatherName);
     frmPublishedData.append('intEmPhNo',this.intEmPhNo);
     frmPublishedData.append('lstReference',JSON.stringify(this.lstReference));

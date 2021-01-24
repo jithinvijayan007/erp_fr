@@ -39,7 +39,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatChipsModule,
     MatIconModule,
     MatAutocompleteModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule
 
   ],
   // providers: [

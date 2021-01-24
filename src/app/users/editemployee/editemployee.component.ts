@@ -1077,23 +1077,25 @@ export class EditemployeeComponent implements OnInit {
       Swal.fire('Error!', 'Select department', 'error');
       return false
     }
-    if(!this.intSelectedDesignation){
+    // commented for o2force
+    // if(!this.intSelectedDesignation){
       
-      Swal.fire('Error!', 'Select Employee Designation', 'error');
-      return false
-    }
+    //   Swal.fire('Error!', 'Select Employee Designation', 'error');
+    //   return false
+    // }
     if(!this.datOJoin){      
       Swal.fire('Error!', 'Select Date of join', 'error');
       return false
     }
-    else if(!this.strLevelOfGrade){
-      Swal.fire('Error!', 'Select level of grade', 'error');
-      return false;
-    }
-    else if(!this.strGrade){
-      Swal.fire('Error!', 'Select grade', 'error');
-      return false;
-    }
+        // commented for o2force
+    // else if(!this.strLevelOfGrade){
+    //   Swal.fire('Error!', 'Select level of grade', 'error');
+    //   return false;
+    // }
+    // else if(!this.strGrade){
+    //   Swal.fire('Error!', 'Select grade', 'error');
+    //   return false;
+    // }
     else if((this.intSalaryStructure==undefined || this.intSalaryStructure==null || this.intSalaryStructure=='') && (this.selectedCategory.toUpperCase()=='EMPLOYEE')) {
       Swal.fire('Error!', 'Select salary structure', 'error');
       return false;

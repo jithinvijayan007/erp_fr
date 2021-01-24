@@ -712,8 +712,8 @@
                                     </mat-error>
                                 </mat-form-field>
                             </div>
-                
-                            <div class="col-md-3 mt-1">
+                <!-- commented for o2 froce -->
+                            <!-- <div class="col-md-3 mt-1">
                                 <mat-form-field>
                                     <mat-label>Employee Designation *</mat-label>
                                     <mat-select [(ngModel)]="intSelectedDesignation" [formControl]="form.controls['designationName']" [disableOptionCentering]="true">
@@ -722,7 +722,19 @@
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                            </div>
+                            </div> -->
+
+                                                    <div class="col-md-3 mt-1">                                      
+                                <mat-form-field>
+                                    <mat-label>Select Designation</mat-label>
+                                    <mat-select [(ngModel)]="intGroupId" [formControl]="form.controls['groupName']" [disableOptionCentering]="true">
+                                        <mat-option *ngFor="let loc of lstgroups" value="{{loc.pk_bint_id}}">
+                                            {{ loc.vchr_name | uppercase}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>                
+                 </div>
+
                 
                             <div class="col-md-3">
                                 <mat-form-field class="example-full-width">
@@ -801,17 +813,7 @@
                             </div>
 
                      <!-- ************************************** -->
-                            <div class="col-md-3 mt-1">                                      
-                                <mat-form-field>
-                                    <mat-label>Select Group</mat-label>
-                                    <mat-select [(ngModel)]="intGroupId" [formControl]="form.controls['groupName']" [disableOptionCentering]="true">
-                                        <mat-option *ngFor="let loc of lstgroups" value="{{loc.pk_bint_id}}">
-                                            {{ loc.vchr_name | uppercase}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>                
-                 </div>
-
+    
                  
 
     <div class="col-md-3 mt-1">                                      
@@ -865,7 +867,7 @@
                             <div class="col-md-3 mt-1">
                                 <mat-form-field>
                                     <mat-label>Select level Group</mat-label>
-                                    <mat-select [(ngModel)]="intSelectedGroup" [disableOptionCentering]="true">
+                                    <mat-select [(ngModel)]="selectedGroupId" [disableOptionCentering]="true">
                                         <mat-option *ngFor="let grp of lstGroupData" value="{{grp.id}}">
                                             {{ grp.name | uppercase}}
                                         </mat-option>

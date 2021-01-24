@@ -10,7 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class EditdesignationComponent implements OnInit {
 
-  intDepartmentId=null;
+  intDepartmentId = null;
   lstDepartment=[];
   strDesignationName='';
   strApplyTo='';
@@ -32,8 +32,9 @@ export class EditdesignationComponent implements OnInit {
   intNoticePeriod;
   strCode=null;
   strName='';
-
-
+  searchCompany;
+  companyName;
+  lstCompany = [];
   lstCourse=[
     "SSLC",
     "HSE",

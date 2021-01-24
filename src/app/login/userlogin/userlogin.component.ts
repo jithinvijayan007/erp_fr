@@ -67,14 +67,14 @@ export class UserloginComponent implements OnInit {
                 localStorage.setItem('previousUrl','/saleslist');
                 localStorage.setItem('menuName','Master');
 
-                this.router.navigateByUrl('service-main/list-service');
+                this.router.navigateByUrl('/user/adduser');
 
               }
               else{
                 localStorage.setItem('previousUrl','salesreport/dailysalesreport');
                 localStorage.setItem('menuName','Reports');
 
-                this.router.navigateByUrl('salesreport/dailysalesreport');
+                this.router.navigateByUrl('invoice/saleslist');
               }
               
 
