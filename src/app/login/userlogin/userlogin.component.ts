@@ -72,7 +72,7 @@ export class UserloginComponent implements OnInit {
               }
               else{
                 localStorage.setItem('previousUrl','salesreport/dailysalesreport');
-                localStorage.setItem('menuName','Reports');
+                localStorage.setItem('menuName','Transactions');
 
                 this.router.navigateByUrl('salesreport/dailysalesreport');
               }
