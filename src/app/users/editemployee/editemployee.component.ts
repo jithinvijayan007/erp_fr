@@ -339,7 +339,6 @@ export class EditemployeeComponent implements OnInit {
     this.hostName = this.hostName.slice(0, this.hostName.length - 1)
     this.blnOnload=true;
     this.intEmployeeId=localStorage.getItem('intEmployeeEditId');
-    console.log("Iddd",this.intEmployeeId);
 
     let strDepartment = localStorage.getItem('strDepartment');
     let Name =localStorage.getItem('Name')

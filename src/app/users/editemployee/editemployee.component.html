@@ -727,7 +727,7 @@
                                                     <div class="col-md-3 mt-1">                                      
                                 <mat-form-field>
                                     <mat-label>Select Designation</mat-label>
-                                    <mat-select [(ngModel)]="intGroupId" [formControl]="form.controls['groupName']" [disableOptionCentering]="true">
+                                    <mat-select [(ngModel)]="intSelectedDesignation" [formControl]="form.controls['groupName']" [disableOptionCentering]="true">
                                         <mat-option *ngFor="let loc of lstgroups" value="{{loc.pk_bint_id}}">
                                             {{ loc.vchr_name | uppercase}}
                                         </mat-option>
