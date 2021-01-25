@@ -568,7 +568,7 @@ export class InvoiceviewComponent implements OnInit {
   blnCreditSale = false;
   dblPartialAmount = 0;
   dblBalanceAmount = 0;
-
+  saveDisablee = true;
   printInvoice() {
     let dctInvoiceId = { invoiceId: this.invoiceId };
 
