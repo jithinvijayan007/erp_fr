@@ -10,6 +10,7 @@ import { MatSort } from '@angular/material/sort';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NgxSpinnerService } from "ngx-spinner";
 import { DataSource } from '@angular/cdk/collections';
+import { debounceTime } from 'rxjs/operators';
 
 
 
@@ -70,7 +71,7 @@ export class UserListComponent implements OnInit {
 
     
     this.searchStaff.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstStaff = [];

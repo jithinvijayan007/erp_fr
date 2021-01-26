@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-imei-batch-scan',
@@ -108,7 +109,7 @@ export class ImeiBatchScanComponent implements OnInit {
 
   
     this.searchBranch.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null || strData ==='') {
           this.lstBranchTo = [];
@@ -129,7 +130,7 @@ export class ImeiBatchScanComponent implements OnInit {
       }
       );
       this.searchBranchFrom.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstBranch = [];

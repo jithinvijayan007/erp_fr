@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ServerService } from '../../server.service';
@@ -57,7 +59,7 @@ export class EditcustomerComponent implements OnInit {
 
   ngOnInit() {
 
-    this.searchMobile.valueChanges.debounceTime(100).subscribe(
+    this.searchMobile.valueChanges.pipe(debounceTime(100)).subscribe(
       data=>{
       if (data === undefined || data === null) {
       } else {
@@ -73,8 +75,8 @@ export class EditcustomerComponent implements OnInit {
 
 
 
-    this.searchLocation.valueChanges
-    .debounceTime(400)
+    this.searchLocation.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((data: string) => {
       
       if (!data) {
@@ -90,8 +92,8 @@ export class EditcustomerComponent implements OnInit {
     });
 
 
-    this.searchState.valueChanges
-    .debounceTime(400)
+    this.searchState.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((data: string) => {
       
       if (!data) {

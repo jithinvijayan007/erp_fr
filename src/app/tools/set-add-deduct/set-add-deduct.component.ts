@@ -6,7 +6,7 @@ import { FormControl } from '@angular/forms';
 import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {debounceTime, map, startWith} from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { ToastrService } from 'ngx-toastr';
 import swal from 'sweetalert2';
@@ -179,7 +179,7 @@ this.serviceObject.postData('tool_settings/tool_api/',this.dictData).subscribe(
 
 
     this.searchCharge.valueChanges
-    .debounceTime(400)
+      .pipe(debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         // this.filteredCharges = [];

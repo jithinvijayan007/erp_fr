@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ServerService } from '../../server.service';
@@ -55,8 +57,8 @@ export class PurchaserequestComponent implements OnInit {
     this.datFrom = new Date()
     this.datTo = new Date();
     this.getData();
-    this.searchProduct.valueChanges
-    .debounceTime(400)
+    this.searchProduct.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lst_product = [];
@@ -75,8 +77,8 @@ export class PurchaserequestComponent implements OnInit {
     }
   ); 
     
-  this.searchSupplier.valueChanges
-  .debounceTime(400)
+  this.searchSupplier.valueChanges.pipe(
+  debounceTime(400))
   .subscribe((strData: string) => {
     if (strData === undefined || strData === null) {
       this.lstSuppliers = [];
@@ -95,8 +97,8 @@ export class PurchaserequestComponent implements OnInit {
   }
   );
 
-  this.searchBrand.valueChanges
-  .debounceTime(400)
+  this.searchBrand.valueChanges.pipe(
+  debounceTime(400))
   .subscribe((strData: string) => {
     if (strData === undefined || strData === null) {
       this.lst_brand = [];

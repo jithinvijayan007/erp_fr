@@ -1,6 +1,8 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
-import 'rxjs/add/operator/map';
+
 import { environment } from '../environments/environment';
 @Injectable()
 export class TypeaheadService {
@@ -81,10 +83,10 @@ export class TypeaheadService {
                     'int_company':company,
                    'type':type};
     return this.http
-        .post(this.url_country_branch, data, { headers: headers })
-        .map(res => {
+        .post(this.url_country_branch, data, { headers: headers }).pipe(
+        map(res => {
             return res.json();
-        });
+        }));
   }
 
   searchBrand(term,productId){
@@ -95,10 +97,10 @@ export class TypeaheadService {
     });
     const data = { term: term,product_id: productId};
     return this.http
-        .post(this.hostAddress + 'productivityreport/list_brand/', data, { headers: headers })
-        .map(res => {
+        .post(this.hostAddress + 'productivityreport/list_brand/', data, { headers: headers }).pipe(
+        map(res => {
             return res.json();
-        });
+        }));
   }
 
   searchProduct(term){
@@ -109,10 +111,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-        .post(this.hostAddress + 'productivityreport/product_api/', data, { headers: headers })
-        .map(res => {
+        .post(this.hostAddress + 'productivityreport/product_api/', data, { headers: headers }).pipe(
+        map(res => {
             return res.json();
-        });
+        }));
   }
 
   searchPromoter(term){
@@ -123,10 +125,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-        .post(this.hostAddress + 'productivityreport/list_promoter/', data, { headers: headers })
-        .map(res => {
+        .post(this.hostAddress + 'productivityreport/list_promoter/', data, { headers: headers }).pipe(
+        map(res => {
             return res.json();
-        });
+        }));
   }
 
   searchItem(term){
@@ -137,10 +139,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-        .post(this.hostAddress + 'productivityreport/list_item/', data, { headers: headers })
-        .map(res => {
+        .post(this.hostAddress + 'productivityreport/list_item/', data, { headers: headers }).pipe(
+        map(res => {
             return res.json();
-        });
+        }));
   }
 
   search_brand(term) {
@@ -151,10 +153,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-      .post(this.url_brand, data, { headers: headers })
-      .map(res => {
+      .post(this.url_brand, data, { headers: headers }).pipe(
+      map(res => {
         return res.json();
-      });
+      }));
   }
 
   search_source(term) {
@@ -165,10 +167,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-      .post(this.url_source, data, { headers: headers })
-      .map(res => {
+      .post(this.url_source, data, { headers: headers }).pipe(
+      map(res => {
         return res.json();
-      });
+      }));
   }
 
 
@@ -182,10 +184,10 @@ export class TypeaheadService {
   return this.http
     .get(this.url_auto_variants + '?fk_model=' + data, {
       headers: headers
-    })
-    .map(res=> {
+    }).pipe(
+    map(res=> {
       return res.json();
-  });
+  }));
  }
 
   search_automobile_model(data) {
@@ -194,9 +196,9 @@ export class TypeaheadService {
       'content-type': 'application/json',
       Authorization: jwttoken
     });
-    return this.http.post(this.url_auto_model, data, { headers: headers }).map(res => {
+    return this.http.post(this.url_auto_model, data, { headers: headers }).pipe(map(res => {
       return res.json();
-    });
+    }));
 
   }
 
@@ -208,10 +210,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-      .post(this.url_territory, data, { headers: headers })
-      .map(res => {
+      .post(this.url_territory, data, { headers: headers }).pipe(
+      map(res => {
         return res.json();
-      });
+      }));
 
   }
 
@@ -223,10 +225,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-      .post(this.url_zone, data, { headers: headers })
-      .map(res => {
+      .post(this.url_zone, data, { headers: headers }).pipe(
+      map(res => {
         return res.json();
-      });
+      }));
   }
 
   search_customer(term) {
@@ -238,9 +240,9 @@ export class TypeaheadService {
 
     const data = { term: term, username: localStorage.getItem('username') };
     // return this.http.post(this.url,data).map(res => {
-    return this.http.post(this.url, data, { headers: headers }).map(res => {
+    return this.http.post(this.url, data, { headers: headers }).pipe(map(res => {
       return res.json();
-    });
+    }));
   }
 
   search_customer_report(term) {
@@ -252,9 +254,9 @@ export class TypeaheadService {
 
     const data = { term: term, username: localStorage.getItem('username') };
     // return this.http.post(this.url,data).map(res => {
-    return this.http.post(this.url_customer, data, { headers: headers }).map(res => {
+    return this.http.post(this.url_customer, data, { headers: headers }).pipe(map(res => {
       return res.json();
-    });
+    }));
   }
 
   search_company(term) {
@@ -265,10 +267,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-      .post(this.url_company, data, { headers: headers })
-      .map(res => {
+      .post(this.url_company, data, { headers: headers }).pipe(
+      map(res => {
         return res.json();
-      });
+      }));
   }
 
   search_airport(term) {
@@ -279,10 +281,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-      .post(this.url_airport, data, { headers: headers })
-      .map(res => {
+      .post(this.url_airport, data, { headers: headers }).pipe(
+      map(res => {
         return res.json();
-      });
+      }));
   }
 
   search_country(term) {
@@ -293,10 +295,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-      .post(this.url_country, data, { headers: headers })
-      .map(res => {
+      .post(this.url_country, data, { headers: headers }).pipe(
+      map(res => {
         return res.json();
-      });
+      }));
   }
 
   search_timezone(term) {
@@ -310,10 +312,10 @@ export class TypeaheadService {
     // return this.http.post(this.url,data).map(res => {
     const dctData = { term: term };
     return this.http
-      .post(this.url_timezone, dctData, { headers: headers })
-      .map(res => {
+      .post(this.url_timezone, dctData, { headers: headers }).pipe(
+      map(res => {
         return res.json();
-      });
+      }));
   }
 
 //   searchBranch(term) {
@@ -338,10 +340,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-      .post(this.url_station, data, { headers: headers })
-      .map(res => {
+      .post(this.url_station, data, { headers: headers }).pipe(
+      map(res => {
         return res.json();
-      });
+      }));
   }
 
   search_package(term) {
@@ -352,10 +354,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-      .post(this.url_package, data, { headers: headers })
-      .map(res => {
+      .post(this.url_package, data, { headers: headers }).pipe(
+      map(res => {
         return res.json();
-      });
+      }));
   }
 
   search_airline(term) {
@@ -366,10 +368,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
     return this.http
-      .post(this.url_airline, data, { headers: headers })
-      .map(res => {
+      .post(this.url_airline, data, { headers: headers }).pipe(
+      map(res => {
         return res.json();
-      });
+      }));
   }
 
   searchBranch(term) {
@@ -380,10 +382,10 @@ export class TypeaheadService {
     });
     const data = { term: term };
       return this.http
-      .post(this.url_branch, data, { headers: headers })
-      .map(res => {
+      .post(this.url_branch, data, { headers: headers }).pipe(
+      map(res => {
       return res.json();
-      });
+      }));
     }
 
     searchGroup(term,filterData) {
@@ -394,10 +396,10 @@ export class TypeaheadService {
       });
       const data = { term: term, 'filter': filterData};
         return this.http
-        .post(this.url_group, data, { headers: headers })
-        .map(res => {
+        .post(this.url_group, data, { headers: headers }).pipe(
+        map(res => {
         return res.json();
-        });
+        }));
       }
 
     searchBranchTransfer(term) {
@@ -408,10 +410,10 @@ export class TypeaheadService {
       });
       // const data = { term: term };
         return this.http
-        .post(this.url_branch_transfer, term, { headers: headers })
-        .map(res => {
+        .post(this.url_branch_transfer, term, { headers: headers }).pipe(
+        map(res => {
         return res.json();
-        });
+        }));
       }
 
       searchBranchStaff(term) {
@@ -422,10 +424,10 @@ export class TypeaheadService {
         });
         const data = { term: term };
           return this.http
-          .post(this.url_branch_staff, data, { headers: headers })
-          .map(res => {
+          .post(this.url_branch_staff, data, { headers: headers }).pipe(
+          map(res => {
           return res.json();
-          });
+          }));
         }
 
     searchStaff(term) {
@@ -436,10 +438,10 @@ export class TypeaheadService {
       });
       const data = { term: term };
         return this.http
-        .post(this.url_staff, data, { headers: headers })
-        .map(res => {
+        .post(this.url_staff, data, { headers: headers }).pipe(
+        map(res => {
         return res.json();
-        });
+        }));
       }
       searchAuditor(term) {
         const jwttoken = 'JWT ' + localStorage.getItem('Tokeniser');
@@ -449,10 +451,10 @@ export class TypeaheadService {
         });
         const data = { term: term };
           return this.http
-          .post(this.url_auditor_staff, data, { headers: headers })
-          .map(res => {
+          .post(this.url_auditor_staff, data, { headers: headers }).pipe(
+          map(res => {
           return res.json();
-          });
+          }));
         }
 
 
@@ -464,10 +466,10 @@ export class TypeaheadService {
         });
         const data = { term: term };
         return this.http
-            .post(this.hostAddress + 'inventory/api_category_typeahead/', data, { headers: headers })
-            .map(res => {
+            .post(this.hostAddress + 'inventory/api_category_typeahead/', data, { headers: headers }).pipe(
+            map(res => {
                 return res.json();
-            });
+            }));
     }
 
     searchSubcategory(term,category) {
@@ -478,10 +480,10 @@ export class TypeaheadService {
         });
       const data = { term: term, category: category};
         return this.http
-            .post(this.hostAddress + 'inventory/api_subcategory_typeahead/', data, { headers: headers })
-            .map(res => {
+            .post(this.hostAddress + 'inventory/api_subcategory_typeahead/', data, { headers: headers }).pipe(
+            map(res => {
                 return res.json();
-            });
+            }));
     }
 
     searchItemGroup(term) {
@@ -492,10 +494,10 @@ export class TypeaheadService {
       });
     const data = { term: term};
       return this.http
-          .post(this.hostAddress + 'inventory/item_group_typeahead/', data, { headers: headers })
-          .map(res => {
+          .post(this.hostAddress + 'inventory/item_group_typeahead/', data, { headers: headers }).pipe(
+          map(res => {
               return res.json();
-          });
+          }));
   }
 
     searchSubcategoryByCat(data) {
@@ -505,10 +507,10 @@ export class TypeaheadService {
           Authorization: jwttoken
       });
       return this.http
-          .post(this.hostAddress + 'inventory/api_subcategory_by_cat/', data, { headers: headers })
-          .map(res => {
+          .post(this.hostAddress + 'inventory/api_subcategory_by_cat/', data, { headers: headers }).pipe(
+          map(res => {
               return res.json();
-          });
+          }));
   }
 
   searchSolarBrand(data) {
@@ -518,10 +520,10 @@ export class TypeaheadService {
         Authorization: jwttoken
     });
     return this.http
-        .post(this.hostAddress + 'enquiry_solar/search_brand/', data, { headers: headers })
-        .map(res => {
+        .post(this.hostAddress + 'enquiry_solar/search_brand/', data, { headers: headers }).pipe(
+        map(res => {
             return res.json();
-        });
+        }));
 }
 
 searchSolarItem(data) {
@@ -531,10 +533,10 @@ searchSolarItem(data) {
       Authorization: jwttoken
   });
   return this.http
-      .post(this.hostAddress + 'enquiry_solar/search_item/', data, { headers: headers })
-      .map(res => {
+      .post(this.hostAddress + 'enquiry_solar/search_item/', data, { headers: headers }).pipe(
+      map(res => {
           return res.json();
-      });
+      }));
 }
 
   searchItemBySub(data) {
@@ -544,10 +546,10 @@ searchSolarItem(data) {
         Authorization: jwttoken
     });
     return this.http
-        .post(this.hostAddress + 'inventory/api_item_by_sub/', data, { headers: headers })
-        .map(res => {
+        .post(this.hostAddress + 'inventory/api_item_by_sub/', data, { headers: headers }).pipe(
+        map(res => {
             return res.json();
-        });
+        }));
 }
 
 searchSupplier(data) {
@@ -557,10 +559,10 @@ searchSupplier(data) {
       Authorization: jwttoken
   });
   return this.http
-      .post(this.hostAddress + 'stock_app/api_supplier/', data, { headers: headers })
-      .map(res => {
+      .post(this.hostAddress + 'stock_app/api_supplier/', data, { headers: headers }).pipe(
+      map(res => {
           return res.json();
-      });
+      }));
 }
 
 
@@ -572,10 +574,10 @@ search_state(term) {
   });
   const data = { term: term };
   return this.http
-    .post(this.hostAddress + 'territory_hierarchy/state_typeahead/', data, { headers: headers })
-    .map(res => {
+    .post(this.hostAddress + 'territory_hierarchy/state_typeahead/', data, { headers: headers }).pipe(
+    map(res => {
       return res.json();
-    });
+    }));
 }
 
 searchUser(term) {
@@ -586,10 +588,10 @@ searchUser(term) {
   });
   const data = { term: term };
   return this.http
-    .post(this.url_branch_user, data, { headers: headers })
-    .map(res => {
+    .post(this.url_branch_user, data, { headers: headers }).pipe(
+    map(res => {
       return res.json();
-    });
+    }));
 }
 
 searchAssignee(term,id) {
@@ -600,10 +602,10 @@ searchAssignee(term,id) {
   });
   const data = { term: term, id: id };
   return this.http
-    .post(this.hostAddress + 'user/getbranchassignee/', data, { headers: headers })
-    .map(res => {
+    .post(this.hostAddress + 'user/getbranchassignee/', data, { headers: headers }).pipe(
+    map(res => {
       return res.json();
-    });
+    }));
 }
 searchGift(term) {
   const jwttoken = 'JWT ' + localStorage.getItem('Tokeniser');
@@ -613,10 +615,10 @@ searchGift(term) {
   });
   const data = { term: term };
     return this.http
-    .post(this.hostAddress + 'gifts/api_gift_typeahead/', data, { headers: headers })
-    .map(res => {
+    .post(this.hostAddress + 'gifts/api_gift_typeahead/', data, { headers: headers }).pipe(
+    map(res => {
     return res.json();
-    });
+    }));
   }
   searchLocation(term) {
     const jwttoken = 'JWT ' + localStorage.getItem('Tokeniser');
@@ -626,10 +628,10 @@ searchGift(term) {
     });
     const data = { term: term };
       return this.http
-      .post(this.hostAddress + 'customer/v0.1/locationTypeahed/', data, { headers: headers })
-      .map(res => {
+      .post(this.hostAddress + 'customer/v0.1/locationTypeahed/', data, { headers: headers }).pipe(
+      map(res => {
       return res.json();
-      });
+      }));
     }
 
     searchItemByProduct(data) {
@@ -639,10 +641,10 @@ searchGift(term) {
         Authorization: jwttoken
       });
       return this.http
-        .post(this.hostAddress + 'inventory/api_item_by_brand/', data, { headers: headers })
-        .map(res => {
+        .post(this.hostAddress + 'inventory/api_item_by_brand/', data, { headers: headers }).pipe(
+        map(res => {
           return res.json();
-        });
+        }));
       }
     searchProducts(data) {
       const jwttoken = 'JWT ' + localStorage.getItem('Tokeniser');
@@ -652,10 +654,10 @@ searchGift(term) {
       });
       const datas = { 'term': data };
       return this.http
-        .post(this.hostAddress + 'inventory/api_product/', datas, { headers: headers })
-        .map(res => {
+        .post(this.hostAddress + 'inventory/api_product/', datas, { headers: headers }).pipe(
+        map(res => {
           return res.json();
-        });
+        }));
     }
     searchItemAll(term) {
       const jwttoken = 'JWT ' + localStorage.getItem('Tokeniser');
@@ -665,10 +667,10 @@ searchGift(term) {
       });
       const data = { term: term };
         return this.http
-        .post(this.hostAddress + 'schema/item_typeahead/', data, { headers: headers })
-        .map(res => {
+        .post(this.hostAddress + 'schema/item_typeahead/', data, { headers: headers }).pipe(
+        map(res => {
         return res.json();
-        });
+        }));
       }
       searchProductByGDP(term){
         const jwttoken = 'JWT ' + localStorage.getItem('Tokeniser');
@@ -678,10 +680,10 @@ searchGift(term) {
         });
         const data = { term: term };
         return this.http
-            .post(this.hostAddress + 'productivityreport/product_api_gdp/', data, { headers: headers })
-            .map(res => {
+            .post(this.hostAddress + 'productivityreport/product_api_gdp/', data, { headers: headers }).pipe(
+            map(res => {
                 return res.json();
-            });
+            }));
       }
   itemByProduct(data) {
     const jwttoken = 'JWT ' + localStorage.getItem('Tokeniser');
@@ -690,10 +692,10 @@ searchGift(term) {
       Authorization: jwttoken
     });
     return this.http
-      .post(this.hostAddress + 'invoice/item_typahead/', data, { headers: headers })
-      .map(res => {
+      .post(this.hostAddress + 'invoice/item_typahead/', data, { headers: headers }).pipe(
+      map(res => {
         return res.json();
-      });
+      }));
   }
 
   searchStaffByBranch(data){
@@ -703,10 +705,10 @@ searchGift(term) {
         Authorization: jwttoken
     });
     return this.http
-      .post(this.hostAddress + 'staff_rewards/staff_by_branch/', data, { headers: headers })
-        .map(res => {
+      .post(this.hostAddress + 'staff_rewards/staff_by_branch/', data, { headers: headers }).pipe(
+        map(res => {
             return res.json();
-        });
+        }));
   }
   searchBranchDept(term) {
     const jwttoken = 'JWT ' + localStorage.getItem('Tokeniser');
@@ -716,10 +718,10 @@ searchGift(term) {
     });
     const data = { term: term };
       return this.http
-      .post(this.url_branch_dept, data, { headers: headers })
-      .map(res => {
+      .post(this.url_branch_dept, data, { headers: headers }).pipe(
+      map(res => {
       return res.json();
-      });
+      }));
     }
     getAuditor(term) {
       const jwttoken = 'JWT ' + localStorage.getItem('Tokeniser');
@@ -729,10 +731,10 @@ searchGift(term) {
       });
       const data = { term: term };
         return this.http
-        .post(this.url_auditor, data, { headers: headers })
-        .map(res => {
+        .post(this.url_auditor, data, { headers: headers }).pipe(
+        map(res => {
         return res.json();
-        });
+        }));
       }
       getDept(term) {
         const jwttoken = 'JWT ' + localStorage.getItem('Tokeniser');
@@ -742,19 +744,19 @@ searchGift(term) {
         });
         const data = { term: term };
           return this.http
-          .post(this.url_dept, data, { headers: headers })
-          .map(res => {
+          .post(this.url_dept, data, { headers: headers }).pipe(
+          map(res => {
           return res.json();
-          });
+          }));
         }
         searchEmployee(term: string) {
           const token = localStorage.getItem('Tokeniser');
           const headers = new Headers({ 'Authorization': 'JWT ' + token, 'content-type': 'application/json' });
           const data = { term: term.trim() };
           return this.http
-              .post(this.hostAddress + 'leave_report/emp_typeahead/', data, { headers: headers })
-              .map(res => {
+              .post(this.hostAddress + 'leave_report/emp_typeahead/', data, { headers: headers }).pipe(
+              map(res => {
                   return res.json();
-              });
+              }));
       }
 }

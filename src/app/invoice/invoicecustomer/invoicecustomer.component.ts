@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -68,8 +70,8 @@ export class InvoicecustomerComponent implements OnInit {
     this.objectKeys = Object.keys;
 
 
-    this.searchCity.valueChanges
-    .debounceTime(400)
+    this.searchCity.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCity = [];
@@ -87,8 +89,8 @@ export class InvoicecustomerComponent implements OnInit {
       }
     );
 
-    this.searchState.valueChanges
-    .debounceTime(400)
+    this.searchState.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstState = [];

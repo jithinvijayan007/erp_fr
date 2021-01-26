@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit, Input, ViewChild, ViewChildren, ElementRef, HostListener } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -509,8 +511,8 @@ dctImages={}
    }, 1000);
 
 
-    this.searchItemName.valueChanges
-    .debounceTime(400)
+    this.searchItemName.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemName = [];
@@ -529,8 +531,8 @@ dctImages={}
       }
     );
 
-    this.searchCity.valueChanges
-    .debounceTime(400)
+    this.searchCity.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCity = [];
@@ -548,8 +550,8 @@ dctImages={}
       }
     );
 
-    this.searchState.valueChanges
-    .debounceTime(400)
+    this.searchState.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstState = [];
@@ -567,8 +569,8 @@ dctImages={}
       }
     );
 
-    this.searchProduct.valueChanges
-    .debounceTime(400)
+    this.searchProduct.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstProduct = [];
@@ -586,8 +588,8 @@ dctImages={}
       }
     );
 
-    this.searchBrand.valueChanges
-    .debounceTime(400)
+    this.searchBrand.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstBrand = [];
@@ -626,8 +628,8 @@ dctImages={}
       }
     );
 
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItem = [];
@@ -666,8 +668,8 @@ dctImages={}
       }
     );
 
-    this.searchItemCategory.valueChanges
-    .debounceTime(400)
+    this.searchItemCategory.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemCategory = [];
@@ -705,8 +707,8 @@ dctImages={}
       }
     );
 
-    this.searchItemGroup.valueChanges
-    .debounceTime(400)
+    this.searchItemGroup.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemGroup = [];

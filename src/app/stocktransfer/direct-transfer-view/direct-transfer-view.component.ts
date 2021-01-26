@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import swal from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-direct-transfer-view',
@@ -61,7 +62,7 @@ export class DirectTransferViewComponent implements OnInit {
     }
 
     this.searchBranch.valueChanges
-    .debounceTime(400)
+    .pipe(debounceTime(400))
     .subscribe((strData: string) => {
       
       if (strData === undefined || strData === null || strData ==='') {          

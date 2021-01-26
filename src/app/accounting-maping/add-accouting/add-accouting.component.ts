@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit,ViewChild} from '@angular/core';
 import { ServerService } from '../../server.service';
 import { FormBuilder, FormGroup, Validators,FormControl} from '@angular/forms';
@@ -52,8 +54,8 @@ export class AddAccoutingComponent implements OnInit {
      
       });
 
-      this.searchBranch.valueChanges
-      .debounceTime(400)
+      this.searchBranch.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstBranch = [];
@@ -72,8 +74,8 @@ export class AddAccoutingComponent implements OnInit {
       }
       );
 
-      this.searchCategory.valueChanges
-      .debounceTime(400)
+      this.searchCategory.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstCategory = [];
@@ -92,8 +94,8 @@ export class AddAccoutingComponent implements OnInit {
       }
       );
 
-      this.searchChartofAccount.valueChanges
-      .debounceTime(400)
+      this.searchChartofAccount.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstChart = [];

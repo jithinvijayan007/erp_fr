@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit , ViewChild} from '@angular/core';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ServerService } from '../../server.service';
@@ -102,8 +104,8 @@ export class AddpaymentComponent implements OnInit {
 
 
 
-    this.searchStaff.valueChanges
-      .debounceTime(400)
+    this.searchStaff.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstStaff = [];
@@ -121,8 +123,8 @@ export class AddpaymentComponent implements OnInit {
         }
       }
       );
-      this.searchCustomer.valueChanges
-      .debounceTime(400)
+      this.searchCustomer.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstStaff = [];
@@ -140,8 +142,8 @@ export class AddpaymentComponent implements OnInit {
         }
       }
       );
-      this.searchVentor.valueChanges
-      .debounceTime(400)
+      this.searchVentor.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstVentor = [];
@@ -159,8 +161,8 @@ export class AddpaymentComponent implements OnInit {
         }
       }
       );
-      this.searchExpenses.valueChanges
-      .debounceTime(400)
+      this.searchExpenses.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstExpenses = [];
@@ -179,8 +181,8 @@ export class AddpaymentComponent implements OnInit {
       }
       );
 
-      this.searchExpenseName.valueChanges
-      .debounceTime(400)
+      this.searchExpenseName.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstExpenses = [];
@@ -199,8 +201,8 @@ export class AddpaymentComponent implements OnInit {
       }
       );
 
-      this.searchBranch.valueChanges
-      .debounceTime(400)
+      this.searchBranch.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstBranch = [];

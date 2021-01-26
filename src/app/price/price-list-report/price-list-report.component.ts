@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import swal from 'sweetalert2';
@@ -245,8 +247,8 @@ export class PriceListReportComponent implements OnInit {
     
 
   ngOnInit() {
-    this.searchProduct.valueChanges
-    .debounceTime(400)
+    this.searchProduct.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (this.strProduct != strData){
         this.intProductId = null
@@ -268,8 +270,8 @@ export class PriceListReportComponent implements OnInit {
     }
   ); 
     
-  this.searchBrand.valueChanges
-  .debounceTime(400)
+  this.searchBrand.valueChanges.pipe(
+  debounceTime(400))
   .subscribe((strData: string) => {
 
     if (this.strBrand != strData){
@@ -298,8 +300,8 @@ export class PriceListReportComponent implements OnInit {
   }
   );
 
-  this.searchItem.valueChanges
-      .debounceTime(400)
+  this.searchItem.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
 
         

@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component,ViewChild,OnInit,ElementRef ,ViewChildren, HostListener, Input} from '@angular/core';
 import {NgbModal,ModalDismissReasons,NgbActiveModal,} from '@ng-bootstrap/ng-bootstrap';
 import * as tableData from './invoice-table';
@@ -555,8 +557,8 @@ total_receipt = 0;
    }, 1000);
 
 
-    this.searchItemName.valueChanges
-    .debounceTime(400)
+    this.searchItemName.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemName = [];
@@ -575,8 +577,8 @@ total_receipt = 0;
       }
     );
 
-    this.searchCity.valueChanges
-    .debounceTime(400)
+    this.searchCity.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCity = [];
@@ -594,8 +596,8 @@ total_receipt = 0;
       }
     );
 
-    this.searchState.valueChanges
-    .debounceTime(400)
+    this.searchState.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstState = [];
@@ -613,8 +615,8 @@ total_receipt = 0;
       }
     );
 
-    this.searchProduct.valueChanges
-    .debounceTime(400)
+    this.searchProduct.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstProduct = [];
@@ -632,8 +634,8 @@ total_receipt = 0;
       }
     );
 
-    this.searchBrand.valueChanges
-    .debounceTime(400)
+    this.searchBrand.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstBrand = [];
@@ -672,8 +674,8 @@ total_receipt = 0;
       }
     );
 
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItem = [];
@@ -712,8 +714,8 @@ total_receipt = 0;
       }
     );
 
-    this.searchItemCategory.valueChanges
-    .debounceTime(400)
+    this.searchItemCategory.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemCategory = [];
@@ -751,8 +753,8 @@ total_receipt = 0;
       }
     );
 
-    this.searchItemGroup.valueChanges
-    .debounceTime(400)
+    this.searchItemGroup.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemGroup = [];

@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ServerService } from '../../server.service';
 import { ToastrService } from 'ngx-toastr';
@@ -48,8 +50,8 @@ export class BajajViewComponent implements OnInit {
     this.bajajId = localStorage.getItem('bajajId');
     this.getData()
 
-    this.searchStaff.valueChanges
-      .debounceTime(400)
+    this.searchStaff.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstStaff = [];

@@ -17,7 +17,7 @@ import { TransferviewComponent } from './transferview/transferview.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
-import {Observable} from 'rxjs/Observable'
+import {Observable} from 'rxjs'
 import { NgxSpinnerModule } from "ngx-spinner";import { RequestTransferComponent } from './request-transfer/request-transfer.component';
 import { ImeiScanComponent } from './imei-scan/imei-scan.component';
 import { ImeiBatchScanComponent } from './imei-batch-scan/imei-batch-scan.component';

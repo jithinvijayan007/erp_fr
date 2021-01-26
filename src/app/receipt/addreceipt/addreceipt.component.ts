@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit , ViewChild} from '@angular/core';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ServerService } from '../../server.service';
@@ -91,8 +93,8 @@ export class AddreceiptComponent implements OnInit {
     }
     this.fopSelected = null;
  
-    this.searchCustomer.valueChanges
-    .debounceTime(400)
+    this.searchCustomer.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCustomer = [];
@@ -120,8 +122,8 @@ export class AddreceiptComponent implements OnInit {
     );
   
     
-    this.searchProduct.valueChanges
-    .debounceTime(400)
+    this.searchProduct.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstProduct = [];

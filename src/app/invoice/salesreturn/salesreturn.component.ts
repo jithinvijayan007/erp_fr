@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import {NgbModal,ModalDismissReasons,NgbActiveModal,} from '@ng-bootstrap/ng-bootstrap';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Component, ViewChild,OnInit,ElementRef ,ViewChildren, HostListener, Input} from '@angular/core';
@@ -36,8 +38,8 @@ export class SalesreturnComponent implements OnInit {
 
   blnCustAddDisabled = true;
   ngOnInit() {
-    this.searchBranch.valueChanges
-      .debounceTime(400)
+    this.searchBranch.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         
         if (strData === undefined || strData === null || strData ==='') {          
@@ -58,8 +60,8 @@ export class SalesreturnComponent implements OnInit {
         }
       }
       );
-    this.searchCustomerNo.valueChanges
-    .debounceTime(400)
+    this.searchCustomerNo.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCustomerNumber = [];

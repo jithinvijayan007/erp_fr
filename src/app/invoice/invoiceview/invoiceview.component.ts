@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons, NgbActiveModal, } from '@ng-bootstrap/ng-bootstrap';
 import * as tableData from './invoice-table';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -709,8 +711,8 @@ export class InvoiceviewComponent implements OnInit {
     }, 1000);
 
 
-    this.searchItemName.valueChanges
-      .debounceTime(400)
+    this.searchItemName.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstItemName = [];
@@ -732,8 +734,8 @@ export class InvoiceviewComponent implements OnInit {
       }
       );
 
-    this.searchEmi.valueChanges
-      .debounceTime(400)
+    this.searchEmi.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstEmiOptions = [];
@@ -752,8 +754,8 @@ export class InvoiceviewComponent implements OnInit {
       }
       );
 
-    this.searchCreditEmi.valueChanges
-      .debounceTime(400)
+    this.searchCreditEmi.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstEmiCreditOptions = [];
@@ -772,8 +774,8 @@ export class InvoiceviewComponent implements OnInit {
       }
       );
 
-    this.searchCity.valueChanges
-      .debounceTime(400)
+    this.searchCity.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstCity = [];
@@ -791,8 +793,8 @@ export class InvoiceviewComponent implements OnInit {
       }
       );
 
-    this.searchState.valueChanges
-      .debounceTime(400)
+    this.searchState.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstState = [];
@@ -810,8 +812,8 @@ export class InvoiceviewComponent implements OnInit {
       }
       );
 
-    this.searchProduct.valueChanges
-      .debounceTime(400)
+    this.searchProduct.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstProduct = [];
@@ -829,8 +831,8 @@ export class InvoiceviewComponent implements OnInit {
       }
       );
 
-    this.searchBrand.valueChanges
-      .debounceTime(400)
+    this.searchBrand.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstBrand = [];
@@ -869,8 +871,8 @@ export class InvoiceviewComponent implements OnInit {
       }
       );
 
-    this.searchItem.valueChanges
-      .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstItem = [];
@@ -909,8 +911,8 @@ export class InvoiceviewComponent implements OnInit {
       }
       );
 
-    this.searchItemCategory.valueChanges
-      .debounceTime(400)
+    this.searchItemCategory.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstItemCategory = [];
@@ -948,8 +950,8 @@ export class InvoiceviewComponent implements OnInit {
       }
       );
 
-    this.searchItemGroup.valueChanges
-      .debounceTime(400)
+    this.searchItemGroup.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstItemGroup = [];
@@ -989,8 +991,8 @@ export class InvoiceviewComponent implements OnInit {
 
 
 
-    this.searchCustomer.valueChanges
-      .debounceTime(400)
+    this.searchCustomer.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         // if (strData === undefined || strData === null) {
         //   this.lstStaff = [];
@@ -1040,8 +1042,8 @@ export class InvoiceviewComponent implements OnInit {
     // );
 
 
-    this.searchCustomerNo.valueChanges
-      .debounceTime(400)
+    this.searchCustomerNo.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstCustomerNumber = [];

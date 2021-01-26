@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import {NgbModal,ModalDismissReasons,NgbActiveModal,} from '@ng-bootstrap/ng-bootstrap';
 import * as tableData from './salesreturn-table';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -264,8 +266,8 @@ export class SalesreturnviewComponent implements OnInit {
    }, 1000);
 
 
-    this.searchItemName.valueChanges
-    .debounceTime(400)
+    this.searchItemName.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemName = [];
@@ -284,8 +286,8 @@ export class SalesreturnviewComponent implements OnInit {
       }
     );
 
-    this.searchCity.valueChanges
-    .debounceTime(400)
+    this.searchCity.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCity = [];
@@ -303,8 +305,8 @@ export class SalesreturnviewComponent implements OnInit {
       }
     );
 
-    this.searchState.valueChanges
-    .debounceTime(400)
+    this.searchState.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstState = [];
@@ -322,8 +324,8 @@ export class SalesreturnviewComponent implements OnInit {
       }
     );
 
-    this.searchProduct.valueChanges
-    .debounceTime(400)
+    this.searchProduct.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstProduct = [];
@@ -341,8 +343,8 @@ export class SalesreturnviewComponent implements OnInit {
       }
     );
 
-    this.searchBrand.valueChanges
-    .debounceTime(400)
+    this.searchBrand.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstBrand = [];
@@ -381,8 +383,8 @@ export class SalesreturnviewComponent implements OnInit {
       }
     );
 
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItem = [];
@@ -421,8 +423,8 @@ export class SalesreturnviewComponent implements OnInit {
       }
     );
 
-    this.searchItemCategory.valueChanges
-    .debounceTime(400)
+    this.searchItemCategory.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemCategory = [];
@@ -460,8 +462,8 @@ export class SalesreturnviewComponent implements OnInit {
       }
     );
 
-    this.searchItemGroup.valueChanges
-    .debounceTime(400)
+    this.searchItemGroup.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemGroup = [];
@@ -501,8 +503,8 @@ export class SalesreturnviewComponent implements OnInit {
     
 
 
-    this.searchCustomer.valueChanges
-    .debounceTime(400)
+    this.searchCustomer.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       // if (strData === undefined || strData === null) {
       //   this.lstStaff = [];
@@ -527,8 +529,8 @@ export class SalesreturnviewComponent implements OnInit {
     )
 
 
-    this.searchCustomerNo.valueChanges
-    .debounceTime(400)
+    this.searchCustomerNo.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCustomerNumber = [];

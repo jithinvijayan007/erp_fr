@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -559,8 +561,8 @@ export class SpecialinvoiceviewComponent implements OnInit {
       this.saveButtonStatus = false;
     }
 
-    this.searchItemName.valueChanges
-    .debounceTime(400)
+    this.searchItemName.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemName = [];
@@ -582,8 +584,8 @@ export class SpecialinvoiceviewComponent implements OnInit {
     }
     );
 
-    this.searchCity.valueChanges
-    .debounceTime(400)
+    this.searchCity.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCity = [];
@@ -601,8 +603,8 @@ export class SpecialinvoiceviewComponent implements OnInit {
     }
     );
 
-    this.searchState.valueChanges
-    .debounceTime(400)
+    this.searchState.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstState = [];
@@ -620,8 +622,8 @@ export class SpecialinvoiceviewComponent implements OnInit {
     }
     );
 
-    this.searchCustomerNo.valueChanges
-    .debounceTime(400)
+    this.searchCustomerNo.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCustomerNumber = [];

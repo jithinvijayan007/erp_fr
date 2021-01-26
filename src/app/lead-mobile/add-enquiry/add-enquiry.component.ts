@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { TypeaheadService } from '../../typeahead.service';
 import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
@@ -5,7 +7,7 @@ import { DataService } from '../../global.service';
 
 // calender
 import { startOfDay, endOfDay, subDays, addDays, isSameDay, isSameMonth } from 'date-fns';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 // import { SnotifyService } from 'ng-snotify';
 import {
@@ -26,8 +28,8 @@ import {
   FormControl
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime';
+
+
 import { ServerService } from '../..//server.service';
 import { DatePipe } from '@angular/common';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
@@ -883,8 +885,8 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
     localStorage.removeItem('customerCallSource');
     // this.listSticky();
 
-    this.searchMobile.valueChanges
-      .debounceTime(400)
+    this.searchMobile.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData == null || strData === '') {
           this.lstMobileNumbers = [];
@@ -961,8 +963,8 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
     // this.strEnquiryPriority = null;
 
     // Branch
-    this.searchBranchType.valueChanges
-      .debounceTime(400)
+    this.searchBranchType.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((data: string) => {
         if (data === undefined) {
         } else {

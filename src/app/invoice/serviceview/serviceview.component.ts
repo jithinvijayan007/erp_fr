@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ServerService } from '../../server.service';
@@ -160,8 +162,8 @@ export class ServiceviewComponent implements OnInit {
         
       });
 
-      this.searchDeliveryStaff.valueChanges
-      .debounceTime(400)
+      this.searchDeliveryStaff.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstDeliveryStaffs = [];

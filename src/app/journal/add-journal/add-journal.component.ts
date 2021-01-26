@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit , ViewChild ,HostListener} from '@angular/core';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ServerService } from '../../server.service';
@@ -143,8 +145,8 @@ export class AddJournalComponent implements OnInit {
     this.datIssue=new Date();
 
 
-    this.searchBranch.valueChanges
-    .debounceTime(400)
+    this.searchBranch.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstBranch = [];
@@ -163,8 +165,8 @@ export class AddJournalComponent implements OnInit {
     }
     );
     //credit branch
-    this.searchCreditBranch.valueChanges
-    .debounceTime(400)
+    this.searchCreditBranch.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCreditBranch = [];
@@ -184,8 +186,8 @@ export class AddJournalComponent implements OnInit {
     );
 
   
-    this.searchExpenses.valueChanges
-    .debounceTime(400)
+    this.searchExpenses.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstExpenses = [];
@@ -204,8 +206,8 @@ export class AddJournalComponent implements OnInit {
     }
     );
 
-    this.searchCreditExpenses.valueChanges
-    .debounceTime(400)
+    this.searchCreditExpenses.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCreditExpenses = [];
@@ -224,8 +226,8 @@ export class AddJournalComponent implements OnInit {
     }
     );
 
-    this.searchExpenseName.valueChanges
-    .debounceTime(400)
+    this.searchExpenseName.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstExpenseName = [];
@@ -245,8 +247,8 @@ export class AddJournalComponent implements OnInit {
     );
 
 
-    this.searchCreditExpenseName.valueChanges
-    .debounceTime(400)
+    this.searchCreditExpenseName.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCreditExpenseName = [];
@@ -265,8 +267,8 @@ export class AddJournalComponent implements OnInit {
     }
     );
 
-    this.searchCustomer.valueChanges
-    .debounceTime(400)
+    this.searchCustomer.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCustomer = [];
@@ -286,8 +288,8 @@ export class AddJournalComponent implements OnInit {
     );
 
 
-    this.searchCreditCustomer.valueChanges
-    .debounceTime(400)
+    this.searchCreditCustomer.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCreditCustomer = [];
@@ -307,8 +309,8 @@ export class AddJournalComponent implements OnInit {
     );
 
 
-    this.searchVentor.valueChanges
-    .debounceTime(400)
+    this.searchVentor.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstVentor = [];
@@ -327,8 +329,8 @@ export class AddJournalComponent implements OnInit {
     }
     );
 
-    this.searchCreditVentor.valueChanges
-    .debounceTime(400)
+    this.searchCreditVentor.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCreditVentor = [];
@@ -347,8 +349,8 @@ export class AddJournalComponent implements OnInit {
     }
     );
 
-    this.searchStaff.valueChanges
-    .debounceTime(400)
+    this.searchStaff.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstStaff = [];
@@ -367,8 +369,8 @@ export class AddJournalComponent implements OnInit {
       }
     );
       //JOURNAL NEW CHANGE
-    this.searchDebitSystemAcName.valueChanges
-    .debounceTime(400)
+    this.searchDebitSystemAcName.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstDebitSystemAc = [];
@@ -389,8 +391,8 @@ export class AddJournalComponent implements OnInit {
     }
     );
 
-    this.searchCreditSystemAcName.valueChanges
-    .debounceTime(400)
+    this.searchCreditSystemAcName.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCreditSystemAc = [];
@@ -412,8 +414,8 @@ export class AddJournalComponent implements OnInit {
     );
 
 
-    this.searchCreditStaff.valueChanges
-    .debounceTime(400)
+    this.searchCreditStaff.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCreditStaff = [];

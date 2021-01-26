@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 // import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Component, ViewChild,OnInit } from '@angular/core';
@@ -151,8 +153,8 @@ export class LedgerStatementComponent implements OnInit {
     this.dblDebit = 0;
     this.intBranchId =Number( localStorage.BranchId);
 
-    this.searchCustomer.valueChanges
-    .debounceTime(400)
+    this.searchCustomer.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCustomer = [];
@@ -170,8 +172,8 @@ export class LedgerStatementComponent implements OnInit {
       }
     }
     );
-    this.searchStaff.valueChanges
-    .debounceTime(400)
+    this.searchStaff.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstStaff = [];
@@ -206,8 +208,8 @@ export class LedgerStatementComponent implements OnInit {
       }
     }
     );
-    this.searchExpenses.valueChanges
-    .debounceTime(400)
+    this.searchExpenses.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstExpenses = [];
@@ -225,8 +227,8 @@ export class LedgerStatementComponent implements OnInit {
       }
     }
     );
-    this.searchExpenseName.valueChanges
-    .debounceTime(400)
+    this.searchExpenseName.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstExpenses = [];
@@ -244,8 +246,8 @@ export class LedgerStatementComponent implements OnInit {
       }
     }
     );
-    this.searchSystemAcName.valueChanges
-    .debounceTime(400)
+    this.searchSystemAcName.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstSystemAc = [];

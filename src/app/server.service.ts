@@ -1,13 +1,16 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { HttpClient  } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+
+
 
 
 import {  HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ServerService {
     url_company: string;
@@ -27,14 +30,14 @@ export class ServerService {
     getloginCheck(url, data) {
       const header = new HttpHeaders({ 'Content-Type': 'application/json' });
       return this.http
-            .post(this.hostAddress + url, data, { headers: header})
-            .map((response: Response) => {
+            .post(this.hostAddress + url, data, { headers: header}).pipe(
+            map((response: Response) => {
               // const res = response.json();
                 return response;
-            })
-            .catch((error: Response) => {
-                    return Observable.throw('something went wrong');
-                  });
+            }),
+            catchError((error: Response) => {
+                    return observableThrowError('something went wrong');
+                  }),);
 
     }
     postData(url, data) {
@@ -44,14 +47,14 @@ export class ServerService {
 
         // const header = new HttpHeaders({ 'Content-Type': 'application/json' })
         return this.http
-            .post(this.hostAddress + url, data, { headers: header})
-            .map((response: Response) => {
+            .post(this.hostAddress + url, data, { headers: header}).pipe(
+            map((response: Response) => {
               // const res = response.json();
                 return response;
-            })
-            .catch((error: Response) => {
-                    return Observable.throw('something went wrong');
-                  });
+            }),
+            catchError((error: Response) => {
+                    return observableThrowError('something went wrong');
+                  }),);
 
     }
     postFormData(url,data) {
@@ -59,10 +62,10 @@ export class ServerService {
         const token = localStorage.getItem('Tokeniser');
         const header = new HttpHeaders({ Authorization: 'JWT ' + token });
         return this.http
-            .post(this.hostAddress + url, data,{headers: header} )
-            .map((response: Response) => {
+            .post(this.hostAddress + url, data,{headers: header} ).pipe(
+            map((response: Response) => {
                 return response;
-            })
+            }))
 
     }
 
@@ -71,11 +74,11 @@ export class ServerService {
       const token = localStorage.getItem('Tokeniser');
       const header = new HttpHeaders({ Authorization: 'JWT ' + token });
         return this.http
-          .get(this.hostAddress + url, { headers: header })
-          .map((response: Response) => {
+          .get(this.hostAddress + url, { headers: header }).pipe(
+          map((response: Response) => {
             const data = response;
             return data;
-          });
+          }));
         //   .catch((error: Response) => {
         //     // return Observable.throw("something went wrong");
         //   });
@@ -84,12 +87,12 @@ export class ServerService {
         const token = localStorage.getItem('Tokeniser');
         const header = new HttpHeaders({ Authorization: 'JWT ' + token });
           return this.http
-            .get(this.hostAddress + url, { headers: header ,params:params})
-            .map((response: Response) => {
+            .get(this.hostAddress + url, { headers: header ,params:params}).pipe(
+            map((response: Response) => {
               const data = response;
 
               return data;
-            });
+            }));
           //   .catch((error: Response) => {
           //     // return Observable.throw("something went wrong");
           //   });
@@ -101,10 +104,10 @@ export class ServerService {
     const header = new HttpHeaders({ 'Content-Type': 'application/json' })
     const data = { term: term };
     return this.http
-      .post(this.url_company, data, { headers: header })
-      .map(response => {
+      .post(this.url_company, data, { headers: header }).pipe(
+      map(response => {
         return response
-      });
+      }));
   }
 
 
@@ -114,10 +117,10 @@ export class ServerService {
         const token = localStorage.getItem("Tokeniser");
         const header = new HttpHeaders({ Authorization: "JWT " + token });
         return this.http
-          .put(this.hostAddress + url, data, { headers: header })
-          .map((response: Response) => {
+          .put(this.hostAddress + url, data, { headers: header }).pipe(
+          map((response: Response) => {
             return response;
-        })
+        }))
         //   .catch((error: Response) => {
         //     return Observable.throw("something went wrong");
         //   });
@@ -126,10 +129,10 @@ export class ServerService {
         const token = localStorage.getItem("Tokeniser");
         const header = new HttpHeaders({ Authorization: "JWT " + token });
         return this.http
-          .patch(this.hostAddress + url, data, { headers: header })
-          .map((response: Response) => {
+          .patch(this.hostAddress + url, data, { headers: header }).pipe(
+          map((response: Response) => {
             return response;
-        })
+        }))
         //   .catch((error: Response) => {
         //     return Observable.throw("something went wrong");
         //   });
@@ -137,10 +140,10 @@ export class ServerService {
       addCompany(url,data) {
         // const header = new HttpHeaders({ 'Content-Type': 'application/json' })
         return this.http
-            .post(this.hostAddress + url, data,{} )
-            .map((response: Response) => {
+            .post(this.hostAddress + url, data,{} ).pipe(
+            map((response: Response) => {
                 return response;
-            })
+            }))
 
     }
 

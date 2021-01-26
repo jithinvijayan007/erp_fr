@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit,ViewChild,ElementRef,Inject} from '@angular/core';
 import { ServerService } from '../../server.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -129,8 +131,8 @@ export class StockHistoryComponent implements OnInit {
     this.datTo = new Date();
 
  
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
        if (strData === undefined || strData === null) {
         this.lstItem = [];
@@ -178,8 +180,8 @@ export class StockHistoryComponent implements OnInit {
       }
     }
   ); 
-  this.searchBranch.valueChanges
-  .debounceTime(400)
+  this.searchBranch.valueChanges.pipe(
+  debounceTime(400))
   .subscribe((strData: string) => {
     if (strData === undefined || strData === null) {
       this.lstBranch = [];
@@ -200,8 +202,8 @@ export class StockHistoryComponent implements OnInit {
   }
   ); 
     
-this.searchProduct.valueChanges
-.debounceTime(400)
+this.searchProduct.valueChanges.pipe(
+debounceTime(400))
 .subscribe((strData: string) => {
   if (strData === undefined || strData === null) {
     this.lst_product = [];
@@ -220,8 +222,8 @@ this.searchProduct.valueChanges
 }
 ); 
 
-this.searchBrand.valueChanges
-.debounceTime(400)
+this.searchBrand.valueChanges.pipe(
+debounceTime(400))
 .subscribe((strData: string) => {
 if (strData === undefined || strData === null) {
   this.lst_brand = [];

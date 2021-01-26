@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 // import * as tableData from './../../table/smart-table/smart-data-table';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Component, ViewChild,OnInit } from '@angular/core';
@@ -70,8 +72,8 @@ export class ListpaymentComponent implements OnInit {
         this.blnView = item["VIEW"]
       }
     });
-    this.searchBranch.valueChanges
-      .debounceTime(400)
+    this.searchBranch.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstBranch = [];

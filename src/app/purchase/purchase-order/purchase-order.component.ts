@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ServerService } from '../../server.service';
@@ -66,7 +68,7 @@ export class PurchaseOrderComponent implements OnInit {
 
     this.lstItem.push(dctItem);
 
-    this.searchSupplier.valueChanges.debounceTime(100).subscribe(
+    this.searchSupplier.valueChanges.pipe(debounceTime(100)).subscribe(
       data=>{
       if (data === undefined || data === null) {
       } else {

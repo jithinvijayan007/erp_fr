@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { ServerService } from 'src/app/server.service';
@@ -91,8 +93,8 @@ export class SalesReturnListComponent implements OnInit {
 
 
 
-    this.searchProduct.valueChanges
-    .debounceTime(400)
+    this.searchProduct.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstProduct = [];
@@ -121,8 +123,8 @@ export class SalesReturnListComponent implements OnInit {
       }
     );
 
-    this.searchBrand.valueChanges
-    .debounceTime(400)
+    this.searchBrand.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstBrand = [];
@@ -156,8 +158,8 @@ export class SalesReturnListComponent implements OnInit {
       }
     );
 
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItem = [];
@@ -194,8 +196,8 @@ export class SalesReturnListComponent implements OnInit {
         }
       }
     );
-    this.searchStaff.valueChanges
-    .debounceTime(400)
+    this.searchStaff.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstStaff = [];
