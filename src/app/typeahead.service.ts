@@ -8,7 +8,7 @@ export class TypeaheadService {
   protocol = window.location.protocol
   // hostAddress= 'http://192.168.0.174:5000/'; // freddy
   hostname = window.location.hostname
-  port = environment.production ? 2024 : 8000;
+  port = environment.production ? 6001 : 8000;
   hostAddress = `${this.protocol}//${this.hostname}:${this.port}/`;
 
   url: string;

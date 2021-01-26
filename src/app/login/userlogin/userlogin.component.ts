@@ -65,16 +65,16 @@ export class UserloginComponent implements OnInit {
               
               if(this.lstGroup.includes(logCheck['userdetails']['group_name'])){
                 localStorage.setItem('previousUrl','/saleslist');
-                localStorage.setItem('menuName','Master');
+                localStorage.setItem('menuName','Transactions');
 
-                this.router.navigateByUrl('/user/adduser');
+                this.router.navigateByUrl('invoice/saleslist'); 
 
               }
               else{
                 localStorage.setItem('previousUrl','salesreport/dailysalesreport');
                 localStorage.setItem('menuName','Transactions');
 
-                this.router.navigateByUrl('invoice/saleslist');
+                this.router.navigateByUrl('/user/adduser');
               }
               
 

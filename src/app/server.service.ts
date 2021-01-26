@@ -13,12 +13,13 @@ export class ServerService {
     url_company: string;
     public token : string;
 
-    hostAddress = 'http://0.0.0.0:8000/';
+  hostAddress = 'http://o2force.com:6001/';
+  // hostAddress = 'http://192.168.0.116:8000/';
     
     protocol = window.location.protocol;
     hostname = window.location.hostname;
-    port = environment.production ? 6088 : 8000;
-    public url = 'http://travidux.com:2020/'; //live
+    port = environment.production ? 6001 : 8000;
+  public url = 'http://o2force.com:6001/'; //live
 
     constructor(private http: HttpClient) {
         this.url_company = this.hostAddress + 'user/get_company_list/';
