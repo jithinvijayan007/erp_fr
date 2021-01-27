@@ -14,7 +14,7 @@ import { DetailedModelWiseSalesReportComponent } from './detailed-model-wise-sal
 import { CreditsalereportComponent } from './creditsalereport/creditsalereport.component';
 import { EmisalesreportComponent } from './emisalesreport/emisalesreport.component';
 import { DayclosurereportComponent } from './dayclosurereport/dayclosurereport.component';
-
+import { BranchReportComponent } from './branch-report/branch-report.component'
 
 const routes: Routes = [
   {
@@ -237,6 +237,22 @@ const routes: Routes = [
           urls: [
             { title: 'Dashboard', url: '/dashboard' },
             { title: 'Dayclosure report ' }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    path: 'branchreport',
+    children: [
+      {
+        path: '',
+        component: BranchReportComponent,
+        data: {
+          title: 'Branch Report ',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Branch report ' }
           ]
         }
       }

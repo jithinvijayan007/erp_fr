@@ -74,7 +74,7 @@ export class UserloginComponent implements OnInit {
                 localStorage.setItem('previousUrl','salesreport/dailysalesreport');
                 localStorage.setItem('menuName','Transactions');
 
-                this.router.navigateByUrl('/user/adduser');
+                this.router.navigateByUrl('invoice/saleslist'); 
               }
               
 

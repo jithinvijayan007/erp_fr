@@ -1,0 +1,26 @@
+.show {
+    display: block
+}
+
+.hide {
+    display: none
+}
+// .mat-header-cell, .mat-cell {
+//   overflow: hidden;
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
+// }
+
+
+//   Removes modal transform 
+.modal.in .modal-dialog {
+    transform: none !important;
+  }
+  .modal.fade .modal-dialog {
+     transform: none !important;
+   }
+   .modal-dialog {
+    top: 94px !important;
+    }
+
+//   Removes modal transform 
