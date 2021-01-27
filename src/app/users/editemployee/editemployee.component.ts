@@ -1564,7 +1564,7 @@ export class EditemployeeComponent implements OnInit {
       return false;
     }
     this.spinner.show();
-    this.serverService.postData('user/update_password/', dctData).subscribe(
+    this.serverService.postData('user/updateuserpassword/', dctData).subscribe(
       (response) => {
         this.spinner.hide();
         if (response['status'] == 1){
