@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit,ViewChild,Inject} from '@angular/core';
 import { ServerService } from '../../server.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -85,8 +87,8 @@ export class EditpriceComponent implements OnInit {
 
     );
 
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lst_item = [];

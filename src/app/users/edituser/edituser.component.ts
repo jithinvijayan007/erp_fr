@@ -5,6 +5,7 @@ import { ServerService } from '../../server.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { CustomValidators } from 'ng2-validation';
+import { debounceTime } from 'rxjs/operators';
 
 // import { DataService } from '../../global.service';
 
@@ -296,7 +297,7 @@ export class EdituserComponent implements OnInit {
     );
 
     this.searchBranch.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
         } else {

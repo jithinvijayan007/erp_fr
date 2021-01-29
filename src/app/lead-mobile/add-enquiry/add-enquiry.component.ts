@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { TypeaheadService } from '../../typeahead.service';
 import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
@@ -5,7 +7,7 @@ import { DataService } from '../../global.service';
 
 // calender
 import { startOfDay, endOfDay, subDays, addDays, isSameDay, isSameMonth } from 'date-fns';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 // import { SnotifyService } from 'ng-snotify';
 import {
@@ -26,8 +28,8 @@ import {
   FormControl
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime';
+
+
 import { ServerService } from '../..//server.service';
 import { DatePipe } from '@angular/common';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
@@ -117,7 +119,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
 
   blnCustomerAdd = false;
   blnAdd = true;
-  lstPermission = JSON.parse(localStorage.getItem('permission'));
+  lstPermission = JSON.parse(localStorage.getItem('group_permissions'));
 
   stickyTitle = '';
   stickyDesc = '';
@@ -144,7 +146,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
   logo;
   file;
   companyId = Number(localStorage.getItem('companyId'));
-  userId = localStorage.getItem('userId');
+  userId = localStorage.getItem('int_user_id');
   currentUserName = localStorage.getItem('username');
   lstAvailable = []
 
@@ -393,7 +395,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
     newStart,
     newEnd
   }: CalendarEventTimesChangedEvent): void {
-    alert('tst');
+    // alert('tst');
     event.start = newStart;
     event.end = newEnd;
     this.handleEvent('Dropped or resized', event);
@@ -494,7 +496,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
 
     //edited
 
-    this.serverService.postData("reminder/calendar_list_reminder/", { user_id: localStorage.getItem('userId') })
+    this.serverService.postData("reminder/calendar_list_reminder/", { user_id: localStorage.getItem('int_user_id') })
       .subscribe(
         response => {
           // {start:'01/03/2018',title:1}
@@ -515,7 +517,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
               actions: this.actions
             });
           }
-          this.getCalendarNote();
+          // this.getCalendarNote();
         },
         error => { }
       );
@@ -533,7 +535,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
     //edited
 
     this.serverService
-      .postData("reminder/list_reminder/", { user_id: localStorage.getItem('userId') })
+      .postData("reminder/list_reminder/", { user_id: localStorage.getItem('int_user_id') })
       .subscribe(
         response => {
           this.lstAllReminder = response['data'];
@@ -597,7 +599,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
               text: 'Cannot add note 90 days before '
             });
           } else {
-            this.addCalendarNote();
+            // this.addCalendarNote();
           }
         } else {
           swal.fire({
@@ -644,17 +646,17 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
 
     //edited
 
-    this.serverService
-      .postData(
-        "calendar_notes/list_note/", { user_id: localStorage.getItem('userId') }
-      )
-      .subscribe(
-        response => {
-          this.lstCalendarNote = response['data'];
-          this.getCalendarNoteCalendarList();
-        },
-        error => { }
-      );
+    // this.serverService
+    //   .postData(
+    //     "calendar_notes/list_note/", { user_id: localStorage.getItem('int_user_id') }
+    //   )
+    //   .subscribe(
+    //     response => {
+    //       this.lstCalendarNote = response['data'];
+    //       this.getCalendarNoteCalendarList();
+    //     },
+    //     error => { }
+    //   );
 
     // this.servServ
   }
@@ -677,61 +679,61 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
     this.events = this.lstCalendarNoteMarked;
   }
 
-  addCalendarNote() {
-    // this.serverService
-    //   .addCalendarNote(JSON.stringify(this.dctCalendarNoteChange))
-    //   .subscribe(
-    //     response => {
-    //       if (response['status'] === 'success') {
-    //         swal.fire({
-    //           title: 'Success',
-    //           type: 'success',
-    //           text: 'Note added successfully',
-    //           timer: 2000,
-    //           showConfirmButton: false
-    //         });
-    //         this.getCalendarNote();
-    //       } else {
-    //         swal.fire({
-    //           title: 'Error',
-    //           type: 'error',
-    //           text: 'Note added failed due to some unauthorised issues',
-    //           timer: 2000,
-    //           showConfirmButton: false
-    //         });
-    //       }
-    //     },
-    //     error => {}
-    //   );
+  // addCalendarNote() {
+  //   // this.serverService
+  //   //   .addCalendarNote(JSON.stringify(this.dctCalendarNoteChange))
+  //   //   .subscribe(
+  //   //     response => {
+  //   //       if (response['status'] === 'success') {
+  //   //         swal.fire({
+  //   //           title: 'Success',
+  //   //           type: 'success',
+  //   //           text: 'Note added successfully',
+  //   //           timer: 2000,
+  //   //           showConfirmButton: false
+  //   //         });
+  //   //         this.getCalendarNote();
+  //   //       } else {
+  //   //         swal.fire({
+  //   //           title: 'Error',
+  //   //           type: 'error',
+  //   //           text: 'Note added failed due to some unauthorised issues',
+  //   //           timer: 2000,
+  //   //           showConfirmButton: false
+  //   //         });
+  //   //       }
+  //   //     },
+  //   //     error => {}
+  //   //   );
 
-    //edited
+  //   //edited
 
-    this.serverService
-      .postData("calendar_notes/add_note/", this.dctCalendarNoteChange)
-      .subscribe(
-        response => {
-          if (response['status'] == 1) {
-            swal.fire({
-              title: 'Success',
-              type: 'success',
-              text: 'Note added successfully',
-              timer: 2000,
-              showConfirmButton: false
-            });
-            this.getCalendarNote();
-          } else {
-            swal.fire({
-              title: 'Error',
-              type: 'error',
-              text: 'Note added failed due to some unauthorised issues',
-              timer: 2000,
-              showConfirmButton: false
-            });
-          }
-        },
-        error => { }
-      );
-  }
+  //   this.serverService
+  //     .postData("calendar_notes/add_note/", this.dctCalendarNoteChange)
+  //     .subscribe(
+  //       response => {
+  //         if (response['status'] == 1) {
+  //           swal.fire({
+  //             title: 'Success',
+  //             type: 'success',
+  //             text: 'Note added successfully',
+  //             timer: 2000,
+  //             showConfirmButton: false
+  //           });
+  //           this.getCalendarNote();
+  //         } else {
+  //           swal.fire({
+  //             title: 'Error',
+  //             type: 'error',
+  //             text: 'Note added failed due to some unauthorised issues',
+  //             timer: 2000,
+  //             showConfirmButton: false
+  //           });
+  //         }
+  //       },
+  //       error => { }
+  //     );
+  // }
   updateCalendarNote() {
     // const data = {user_id: localStorage.getItem('userId'),vchr_note: this.strCalendarNote}
     // this.serverService
@@ -774,7 +776,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
               timer: 2000,
               showConfirmButton: false
             });
-            this.getCalendarNote();
+            // this.getCalendarNote();
           } else {
             swal.fire({
               title: 'Error',
@@ -791,7 +793,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
 
   removeCalendarNote() {
     const data = {
-      user_id: localStorage.getItem('userId'),
+      user_id: localStorage.getItem('int_user_id'),
       vchr_note: this.strCalendarNote
     };
     // this.serverService
@@ -834,7 +836,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
               timer: 2000,
               showConfirmButton: false
             });
-            this.getCalendarNote();
+            // this.getCalendarNote();
           } else {
             swal.fire({
               title: 'Error',
@@ -883,8 +885,8 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
     localStorage.removeItem('customerCallSource');
     // this.listSticky();
 
-    this.searchMobile.valueChanges
-      .debounceTime(400)
+    this.searchMobile.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData == null || strData === '') {
           this.lstMobileNumbers = [];
@@ -961,8 +963,8 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
     // this.strEnquiryPriority = null;
 
     // Branch
-    this.searchBranchType.valueChanges
-      .debounceTime(400)
+    this.searchBranchType.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((data: string) => {
         if (data === undefined) {
         } else {
@@ -1006,7 +1008,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
   }
   getList() {
     this.serverService
-      .postData("mobile/get_for_add_mobile_enquiry/", { user_id: localStorage.getItem('userId'), company_id: this.companyId })
+      .postData("mobile/get_for_add_mobile_enquiry/", { user_id: localStorage.getItem('int_user_id'), company_id: this.companyId })
       .subscribe(
         response => {
           this.dctSelectBox.lstEnquirySource = response['lst_source'];
@@ -1039,14 +1041,14 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
               actions: this.actions
             });
           }
-          this.getCalendarNote();
-          this.lstStickyData = response['notes_list'];
-          if (response['notes_list']) {
-            this.intlength = response['notes_list'].length;
-          }
-          if (this.lstStickyData.length === 0) {
-            this.addSticky();
-          }
+          // this.getCalendarNote();
+          // this.lstStickyData = response['notes_list'];
+          // if (response['notes_list']) {
+          //   this.intlength = response['notes_list'].length;
+          // }
+          // if (this.lstStickyData.length === 0) {
+          //   this.addSticky();
+          // }
         },
         error => { }
       );
@@ -1364,9 +1366,12 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
           }) => {
             this.dctProductDetails[item][i].lst_brands = response.data;
             const tempData = this.dctProductDetails[item][i].lst_brands.filter(x => x.name === this.dctProductDetails[item][i].strBrand);
+            console.log("temmmmm",tempData);
+            
             if (tempData.length === 1) {
               this.dctProductDetails[item][i].blnBrand = true;
               this.dctProductDetails[item][i].fk_brand_id = tempData[0]['id'];
+              
             }
             else {
               this.dctProductDetails[item][i].blnBrand = false;
@@ -1811,6 +1816,8 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
         dbl_rating: this.starRating,
         fk_user_id: this.userId
       };
+      console.log(this.dctProductDetails);
+      
       for (let key in this.dctProductDetails) {
         if (this.dctProductDetails[key]) {
 
@@ -1820,8 +1827,10 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
 
               if (
                 this.dctProductDetails[key][i].strBrand == null ||
+                // this.dctProductDetails[key][i].strBrand.trim() === '' || this.dctProductDetails[key][i].blnBrand
                 this.dctProductDetails[key][i].strBrand.trim() === '' || !this.dctProductDetails[key][i].blnBrand
               ) {
+                
                 swal.fire('Error', 'Invalid Brand ' + (key.toLowerCase()) + ' tab ' + (i + 1), 'error');
                 return false;
               }
@@ -2574,21 +2583,24 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
 
     for (const i of Object.keys(data)) {
 
+      console.log("checkkkkkkk",data);
+      
+
       if (
         ['customerData', 'username', 'rating', 'print', 'otherData'].indexOf(
           i
         ) === -1
       ) {
 
-        for (let j = 0; j < data[i].length; j++) {
-          if (
-            ['BOOKED'].indexOf(
-              data[i][j].vchr_enquiry_status
-            ) > -1
-          ) {
-            return true;
-          }
-        }
+        // for (let j = 0; j < data[i].length; j++) {
+        //   if (
+        //     ['BOOKED'].indexOf(
+        //       data[i][j].vchr_enquiry_status
+        //     ) > -1
+        //   ) {
+        //     return true;
+        //   }
+        // }
       } else if (i === 'otherData') {
         if (
           ['BOOKED'].indexOf(data[i].vchr_enquiry_status) > -1
@@ -2866,9 +2878,13 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
       this.strEmailAddress = this.lstMobileNumbers[intSelectedIndex].email;
       this.intCustomerId = this.lstMobileNumbers[intSelectedIndex].id;
       this.dctStatus.SMS = this.lstMobileNumbers[intSelectedIndex].sms;
-      this.strSalutation = this.lstMobileNumbers[
-        intSelectedIndex
-      ].salutation.toUpperCase();
+      if (this.lstMobileNumbers[intSelectedIndex].salutation){
+        this.strSalutation = this.lstMobileNumbers[intSelectedIndex].salutation.toUpperCase();
+      }
+      else{
+        this.strSalutation = this.lstMobileNumbers[intSelectedIndex].salutation
+      }
+      
       this.dctStatus.MOBILESTATUS = true;
       this.getEnquiryHistory(this.intCustomerId);
       this.blnClicked = false;

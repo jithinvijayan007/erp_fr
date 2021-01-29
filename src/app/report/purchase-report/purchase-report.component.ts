@@ -1,3 +1,5 @@
+
+import {debounceTime, map, startWith} from 'rxjs/operators';
 import {Component, ElementRef, ViewChild,OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ServerService } from '../../server.service';
@@ -9,7 +11,6 @@ import { LocalDataSource } from 'ng2-smart-table';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
 import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
 import { timeHours } from 'd3';
 import { MatPaginator } from '@angular/material/paginator';
@@ -231,8 +232,8 @@ dctData = {}
         this.blnDownload = item["DOWNLOAD"]
       }
     });
-    this.searchStaff.valueChanges
-    .debounceTime(400)
+    this.searchStaff.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstStaff = [];
@@ -251,8 +252,8 @@ dctData = {}
       }
     );
 
-    this.searchCustomer.valueChanges
-    .debounceTime(400)
+    this.searchCustomer.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstStaff = [];
@@ -271,8 +272,8 @@ dctData = {}
         }
       }
     );
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItem = [];
@@ -291,7 +292,7 @@ dctData = {}
     }
     );
 
-    this.searchSupplier.valueChanges.debounceTime(100).subscribe(
+    this.searchSupplier.valueChanges.pipe(debounceTime(100)).subscribe(
       data=>{
       if (data === undefined || data === null) {
       } else {
@@ -306,8 +307,8 @@ dctData = {}
     })
 
 
-    this.searchMoreFilter.valueChanges
-    .debounceTime(400)
+    this.searchMoreFilter.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData) {
           let data =this._filter(strData)

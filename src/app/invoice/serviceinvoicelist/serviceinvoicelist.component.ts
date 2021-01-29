@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Component, ViewChild,OnInit } from '@angular/core';
 import { ServerService } from '../../server.service';
@@ -90,7 +92,7 @@ export class ServiceinvoicelistComponent implements OnInit {
     }
     this.settings.actions.custom = this.lstCustom
 
-    this.searchProduct.valueChanges.debounceTime(400)
+    this.searchProduct.valueChanges.pipe(debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstProduct = [];
@@ -119,8 +121,8 @@ export class ServiceinvoicelistComponent implements OnInit {
       }
     );
 
-    this.searchBrand.valueChanges
-    .debounceTime(400)
+    this.searchBrand.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstBrand = [];
@@ -152,8 +154,8 @@ export class ServiceinvoicelistComponent implements OnInit {
       }
     );
 
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItem = [];
@@ -184,8 +186,8 @@ export class ServiceinvoicelistComponent implements OnInit {
         }
       }
     );
-    this.searchStaff.valueChanges
-    .debounceTime(400)
+    this.searchStaff.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstStaff = [];

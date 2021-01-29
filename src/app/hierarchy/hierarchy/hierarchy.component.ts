@@ -28,7 +28,8 @@ export class HierarchyComponent implements OnInit {
   levelInserted = {}
   levelREmoved = {}
   lstGroupData = [];
-
+  department;
+  blnUpdate;
   // mat-MAT_PAGINATOR_DEFAULT_OPTIONS
  
   

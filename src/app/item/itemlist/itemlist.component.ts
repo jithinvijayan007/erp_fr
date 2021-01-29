@@ -1,10 +1,12 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ServerService } from '../../server.service';
 import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import Swal from 'sweetalert2';
 import { FormControl } from '@angular/forms';
-import 'rxjs/add/operator/debounceTime';
+
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment' ;
 import { ToastrService } from 'ngx-toastr';
@@ -121,8 +123,8 @@ export class ItemlistComponent implements OnInit {
     this.datTo = ToDate
     this.datFrom = FromDate
 
-    this.searchProduct.valueChanges
-      .debounceTime(400)
+    this.searchProduct.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstProduct = [];
@@ -141,8 +143,8 @@ export class ItemlistComponent implements OnInit {
       }
     ); 
 
-    this.searchBrand.valueChanges
-      .debounceTime(400)
+    this.searchBrand.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstBrand = [];
@@ -162,8 +164,8 @@ export class ItemlistComponent implements OnInit {
       }
     ); 
 
-    this.searchItem.valueChanges
-      .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstItem = [];
@@ -183,8 +185,8 @@ export class ItemlistComponent implements OnInit {
       }
     );  
     
-    this.searchCategory.valueChanges
-      .debounceTime(400)
+    this.searchCategory.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstCategory = [];
@@ -204,8 +206,8 @@ export class ItemlistComponent implements OnInit {
       }
     );  
 
-    this.searchGroup.valueChanges
-      .debounceTime(400)
+    this.searchGroup.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstGroup = [];

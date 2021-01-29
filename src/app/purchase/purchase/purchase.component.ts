@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ServerService } from '../../server.service';
 import Swal from 'sweetalert2';
@@ -197,8 +199,8 @@ export class PurchaseComponent implements OnInit {
     //   batch:null
 
     // }
-    this.searchBranch.valueChanges
-      .debounceTime(400)
+    this.searchBranch.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         
         if (strData === undefined || strData === null || strData ==='') {          
@@ -226,7 +228,7 @@ export class PurchaseComponent implements OnInit {
         }
       }
       );
-    this.searchSupplier.valueChanges.debounceTime(100).subscribe(
+    this.searchSupplier.valueChanges.pipe(debounceTime(100)).subscribe(
       data=>{
       if (data === undefined || data === null) {
       } else {
@@ -239,8 +241,8 @@ export class PurchaseComponent implements OnInit {
         }
       }
     })
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       
       if (strData === undefined || strData === null || strData ==='') {          

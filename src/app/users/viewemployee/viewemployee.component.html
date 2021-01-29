@@ -1,0 +1,1253 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h4><i class="fa fa-eye"></i>&nbsp;View Employee
+                    <span style="float: right;color: #32b3b5;font-size: 14px;font-weight: 400;cursor: pointer;" (click)="BackClicked()"><i class="mdi mdi-redo-variant"></i>&nbsp; Back</span>
+                </h4>
+            </div>
+        </div>
+        <div style="background-color: #f290211c;">
+            <div class="row" *ngIf="lstEmployeeDetails.length>0">
+
+                <div class="col-md-2" style="text-align: center">
+                    <div>
+                        <img src="{{hostName}}{{lstEmployeeDetails[0].vchr_img}}" class="image">
+                        <!-- <div class="middle">
+                                      <div class="text" (click)="openzoomimage(zoomimage)"><i class="fa fa-search-plus fa-2x"></i></div>
+                                  </div> -->
+                    </div>
+                    <!-- <img (click)="openzoomimage(zoomimage)" class="img" src="{{hostname}}{{imgBillSrc}}" alt="Image is temporrarly unavailable" style="max-width: 50%;" /> -->
+                    <!-- <p>{{ dctPurchaseData['dbl_total']}}</p> -->
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="name mt-2 mb-1">{{lstEmployeeDetails[0].first_name.charAt(0).toUpperCase()+lstEmployeeDetails[0].first_name.slice(1).toLowerCase()}}
+                                <span *ngIf="lstEmployeeDetails[0].vchr_middle_name"> 
+                                                &nbsp;{{lstEmployeeDetails[0].vchr_middle_name.charAt(0).toUpperCase()+lstEmployeeDetails[0].vchr_middle_name.slice(1).toLowerCase()}}
+                                                &nbsp;{{lstEmployeeDetails[0].last_name.charAt(0).toUpperCase()+lstEmployeeDetails[0].last_name.slice(1).toLowerCase()}}
+                                            </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i style="font-size: 14px;">{{lstEmployeeDetails[0].fk_desig__vchr_name}}</i>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <p class="mb-1"><i class="mdi mdi-email-outline" style="color:orange"></i> &nbsp;{{lstEmployeeDetails[0].vchr_email}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p><i class="mdi mdi-phone" style="color:orange"></i> &nbsp;{{lstEmployeeDetails[0].bint_phone}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Personal -->
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="true">
+                          <mat-expansion-panel-header style="margin-top: 10px;">
+                              <mat-panel-title>
+                                    <h4  style="padding-left: 0;background:none;color: #f8763b;font-size: 15px;margin:0px;font-weight: 600;"><i class="icon-user"></i>&nbsp;Personal Details</h4>
+                              </mat-panel-title>
+                         </mat-expansion-panel-header>
+                         <div style="background: #fff9f3;padding:10px;" class="expand">
+                                <div class="row" *ngIf="lstEmployeeDetails.length>0">
+                              
+                                        <div class="col-md-3">
+                                            <label>Username </label>
+                                            <p *ngIf="lstEmployeeDetails[0].username"> {{lstEmployeeDetails[0].username}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].username"> -----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Salutation</label>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_salutation" class="">{{lstEmployeeDetails[0].vchr_salutation}}</p>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_salutation" class="">{{lstEmployeeDetails[0].vchr_salutation}}</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>First name</label>
+                                            <p *ngIf="!lstEmployeeDetails[0].first_name" class="">{{lstEmployeeDetails[0].first_name}}</p>
+                    
+                                            <p *ngIf="lstEmployeeDetails[0].first_name" class="">{{lstEmployeeDetails[0].first_name.charAt(0).toUpperCase()+lstEmployeeDetails[0].first_name.slice(1).toLowerCase()}}</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Middle name</label>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_middle_name" class="">{{lstEmployeeDetails[0].vchr_middle_name}}</p>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_middle_name" class="">{{lstEmployeeDetails[0].vchr_middle_name.charAt(0).toUpperCase()+lstEmployeeDetails[0].vchr_middle_name.slice(1).toLowerCase()}}</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Last name</label>
+                                            <p *ngIf="!lstEmployeeDetails[0].last_name" class="">{{lstEmployeeDetails[0].last_name}}</p>
+                                            <p *ngIf="lstEmployeeDetails[0].last_name" class="">{{lstEmployeeDetails[0].last_name.charAt(0).toUpperCase()+lstEmployeeDetails[0].last_name.slice(1).toLowerCase()}}</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Date Of Birth</label>
+                                            <p *ngIf="datDOB" class="">{{datDOB}}</p>
+                                            <p *ngIf="!datDOB" class="">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Gender</label>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_gender" class="">{{lstEmployeeDetails[0].vchr_gender}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_gender" class="">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Religion/Caste</label>
+                                            <p *ngIf="lstEmployeeDetails[0].fk_religion__vchr_name" class="">{{lstEmployeeDetails[0].fk_religion__vchr_name}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].fk_religion__vchr_name" class="">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Marital Status</label>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_marital_status" class="">{{lstEmployeeDetails[0].vchr_marital_status}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_marital_status" class="">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Personal Mobile Number</label>
+                                            <p *ngIf="lstEmployeeDetails[0].bint_phone" class="">{{lstEmployeeDetails[0].bint_phone}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].bint_phone" class="">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Official Contact Number</label>
+                                            <p class="" *ngIf="lstEmployeeDetails[0].int_official_num">{{lstEmployeeDetails[0].int_official_num}}</p>
+                                            <p class="" *ngIf="!lstEmployeeDetails[0].int_official_num">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Email Id</label>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_email" class="">{{lstEmployeeDetails[0].vchr_email}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_email" class="">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Aadhaar Number</label>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_aadhar_no" class="">{{lstEmployeeDetails[0].vchr_aadhar_no}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_aadhar_no" class="">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>PAN Number</label>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_pan_no" class="">{{lstEmployeeDetails[0].vchr_pan_no}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_pan_no" class="">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Father's Name</label>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_father_name" class="">{{lstEmployeeDetails[0].vchr_father_name}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_father_name" class="">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Address</label>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_address" class="">{{lstEmployeeDetails[0].vchr_address}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_address" class="">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Post</label>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_po" class="">{{lstEmployeeDetails[0].vchr_po}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_po" class="">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Landmark</label>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_land_mark" class="">{{lstEmployeeDetails[0].vchr_land_mark}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_land_mark" class="">-----</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Place</label>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_place" class="">{{lstEmployeeDetails[0].vchr_place}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_place" class="">-----</p>
+                    
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Pin Code</label>
+                                            <p *ngIf="lstEmployeeDetails[0].int_pincode" class="">{{lstEmployeeDetails[0].int_pincode}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].int_pincode" class="">-----</p>
+                    
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>District</label>
+                                            <p *ngIf="lstEmployeeDetails[0].fk_dist__vchr_name" class="">{{lstEmployeeDetails[0].fk_dist__vchr_name}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].fk_dist__vchr_name" class="">-----</p>
+                    
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>State</label>
+                                            <p *ngIf="lstEmployeeDetails[0].fk_dist__fk_state__vchr_name" class="">{{lstEmployeeDetails[0].fk_dist__fk_state__vchr_name}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].fk_dist__fk_state__vchr_name" class="">-----</p>
+                    
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Country</label>
+                                            <p *ngIf="lstEmployeeDetails[0].fk_dist__fk_state__fk_country__vchr_name" class="">{{lstEmployeeDetails[0].fk_dist__fk_state__fk_country__vchr_name}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].fk_dist__fk_state__fk_country__vchr_name" class="">-----</p>
+                    
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Blood Group</label>
+                                            <p *ngIf="lstEmployeeDetails[0].vchr_blood_group" class="">{{lstEmployeeDetails[0].vchr_blood_group}}</p>
+                                            <p *ngIf="!lstEmployeeDetails[0].vchr_blood_group" class="">-----</p>
+                                        </div>
+                                </div>
+                         </div>
+                        
+                        </mat-expansion-panel>
+                </mat-accordion>
+        
+<!-- Personal ends-->
+
+<!-- Emergency -->
+            <div style="margin-top: 10px;">
+                <mat-accordion>
+                        <mat-expansion-panel>
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                    <h4  style="padding-left: 0;background:none;color: #f8763b;font-size: 15px;margin:0px;font-weight: 600;"><i class=" icon-bell"></i>&nbsp;Emergency Details</h4>
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <div style="background: #fff9f3;padding:10px;" class="expand">
+                          <div class="row" *ngIf="lstEmployeeDetails.length>0">
+                               <div class="col-md-3">
+                                    <label>Emergency Contact Person</label>
+                                    <p *ngIf="lstEmployeeDetails[0].vchr_emergency_person" class="">{{lstEmployeeDetails[0].vchr_emergency_person}}</p>
+                                    <p *ngIf="!lstEmployeeDetails[0].vchr_emergency_person" class="">-----</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Relation with employee</label>
+                                    <p *ngIf="lstEmployeeDetails[0].vchr_emergency_relation" class="">{{lstEmployeeDetails[0].vchr_emergency_relation}}</p>
+                                    <p *ngIf="!lstEmployeeDetails[0].vchr_emergency_relation" class="">-----</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Emergency Phone No.</label>
+                                    <p *ngIf="lstEmployeeDetails[0].bint_emergency_phno" class="">{{lstEmployeeDetails[0].bint_emergency_phno}}</p>
+                                    <p *ngIf="!lstEmployeeDetails[0].bint_emergency_phno" class="">-----</p>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Major operation or illnesses in the last five years.</label>
+                                    <p *ngIf="lstEmployeeDetails[0].vchr_disease" class="">{{lstEmployeeDetails[0].vchr_disease}}</p>
+                                    <p *ngIf="!lstEmployeeDetails[0].vchr_disease" class="">-----</p>
+                                </div>
+                         </div>
+                         </div>
+                        </mat-expansion-panel>
+                 </mat-accordion>
+            </div>
+              
+       
+<!-- Emergency Ends -->
+
+
+<!-- Career History Details -->
+<div style="margin-top: 10px;" *ngIf="lstReference.length>0 && lstExpDetails.length>0">
+    <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                        <h4  style="padding-left: 0;background:none;color: #f8763b;font-size: 15px;margin:0px;font-weight: 600;"><i class=" icon-bell"></i>&nbsp; Career History</h4>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div >
+                <div class="row expand" *ngFor="let exp of lstExpDetails" style="background: #fff9f3;padding:10px;">
+                    <div class="col-md-3">
+                         <label>Company Name </label>
+                         <p *ngIf="exp.strEmployer" class="">{{exp.strEmployer}}</p>
+                         <p *ngIf="!exp.strEmployer" class="">-----</p>
+                     </div>
+                     <div class="col-md-3">
+                         <label>Designation</label>
+                         <p *ngIf="exp.strDesig" class="">{{exp.strDesig}}</p>
+                         <p *ngIf="!exp.strDesig" class="">-----</p>
+                     </div>
+                     <div class="col-md-3">
+                         <label>Exp in Yrs</label>
+                         <p *ngIf="exp.vchrExpDetails" class="">{{exp.vchrExpDetails}}</p>
+                         <p *ngIf="!exp.vchrExpDetails" class="">-----</p>
+                     </div>
+              </div>
+              <br>
+              <!-- reference -->
+              <div class="row expand" *ngFor="let ref of lstReference" style="background: #fff9f3;padding:10px;">
+                   <div class="col-md-3">
+                        <label>Name </label>
+                        <p *ngIf="ref.strRefName" class="">{{ref.strRefName}}</p>
+                        <p *ngIf="!ref.strRefName" class="">-----</p>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Designation</label>
+                        <p *ngIf="ref.strRefDesig" class="">{{ref.strRefDesig}}</p>
+                        <p *ngIf="!ref.strRefDesig" class="">-----</p>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Company Name</label>
+                        <p *ngIf="ref.strCompName" class="">{{ref.strCompName}}</p>
+                        <p *ngIf="!ref.strCompName" class="">-----</p>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Contact</label>
+                        <p *ngIf="ref.intRefPhone" class="">{{ref.intRefPhone}}</p>
+                        <p *ngIf="!ref.intRefPhone" class="">-----</p>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Email</label>
+                        <p *ngIf="ref.strRefEmail" class="">{{ref.strRefEmail}}</p>
+                        <p *ngIf="!ref.strRefEmail" class="">-----</p>
+                    </div>
+             </div>
+             </div>
+            </mat-expansion-panel>
+     </mat-accordion>
+</div>
+<!-- Career History Ends-->
+<!-- Education Details-->
+<div style="margin-top: 10px;" *ngIf="lstEduDetails.length>0">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h4  style="padding-left: 0;background:none;color: #f8763b;font-size: 15px;margin:0px;font-weight: 600;"><i class=" icon-bell"></i>&nbsp;Educational Details</h4>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div style="background: #fff9f3;padding:10px;" class="expand">
+                <div class="row" *ngIf="lstEduDetails.length>0">
+                    <div class="col-md-3">
+                        <label>Qualification</label>
+                        <p *ngIf="lstEduDetails[0].strQualif" class="">{{lstEduDetails[0].strQualif}}</p>
+                        <p *ngIf="!lstEduDetails[0].strQualif" class="">-----</p>
+                    </div>
+                    <div class="col-md-3">
+                        <label> Course</label>
+                        <p *ngIf="lstEduDetails[0].strCourse" class="">{{lstEduDetails[0].strCourse}}</p>
+                        <p *ngIf="!lstEduDetails[0].strCourse" class="">-----</p>
+                    </div>
+                    <div class="col-md-3">
+                        <label>University/College </label>
+                        <p *ngIf="lstEduDetails[0].strInstituion" class="">{{lstEduDetails[0].strInstituion}}</p>
+                        <p *ngIf="!lstEduDetails[0].strInstituion" class="">-----</p>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Place </label>
+                        <p *ngIf="lstEduDetails[0].strPlace" class="">{{lstEduDetails[0].strPlace}}</p>
+                        <p *ngIf="!lstEduDetails[0].strPlace" class="">-----</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Passing Year:</label>
+                        <p *ngIf="lstEduDetails[0].intYear" class="">{{lstEduDetails[0].intYear}}</p>
+                        <p *ngIf="!lstEduDetails[0].intYear" class="">-----</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Percentage</label>
+                        <p *ngIf="lstEduDetails[0].fltPercentage" class="">{{lstEduDetails[0].fltPercentage}}</p>
+                        <p *ngIf="!lstEduDetails[0].fltPercentage" class="">-----</p>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+  
+
+<!-- Education Details Ends -->
+<!-- Family Details-->
+<div style="margin-top: 10px;" *ngIf="lstEduDetails.length>0">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h4  style="padding-left: 0;background:none;color: #f8763b;font-size: 15px;margin:0px;font-weight: 600;"><i class=" icon-bell"></i>&nbsp;Family Details</h4>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div style="background: #fff9f3;padding:10px;" class="expand">
+                <div class="row" *ngIf="lstFamilyDetails.length>0">
+                    <div class="col-md-3">
+                        <label>Relative Name</label>
+                        <p *ngIf="lstFamilyDetails[0].strRelativeName" class="">{{lstFamilyDetails[0].strRelativeName}}</p>
+                        <p *ngIf="!lstFamilyDetails[0].strRelativeName" class="">-----</p>
+                    </div>
+                    <div class="col-md-3">
+                        <label> Relation with employee </label>
+                        <p *ngIf="lstFamilyDetails[0].strRelation" class="">{{lstFamilyDetails[0].strRelation}}</p>
+                        <p *ngIf="!lstFamilyDetails[0].strRelation" class="">-----</p>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Date of Birth </label>
+                        <p *ngIf="lstFamilyDetails[0].relativeDOB" class="">{{lstFamilyDetails[0].relativeDOB}}</p>
+                        <p *ngIf="!lstFamilyDetails[0].relativeDOB" class="">-----</p>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Occupation </label>
+                        <p *ngIf="lstFamilyDetails[0].strOccupation" class="">{{lstFamilyDetails[0].strOccupation}}</p>
+                        <p *ngIf="!lstFamilyDetails[0].strOccupation" class="">-----</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Passing Year:</label>
+                        <p *ngIf="lstFamilyDetails[0].intYear" class="">{{lstFamilyDetails[0].intYear}}</p>
+                        <p *ngIf="!lstFamilyDetails[0].intYear" class="">-----</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Alive</label>
+                        <p *ngIf="lstFamilyDetails[0].isAlive" class="">{{lstFamilyDetails[0].isAlive}}</p>
+                        <p *ngIf="!lstFamilyDetails[0].isAlive" class="">-----</p>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+  
+
+<!-- Family Details Ends -->
+
+<!-- Professional -->
+<div style="margin-top: 10px;">
+                <mat-accordion class="mt-3">
+                        <mat-expansion-panel>
+                              <mat-expansion-panel-header style="margin-bottom: 10px;">
+                                  <mat-panel-title>
+                                        <h4  style="padding-left: 0;background:none;color: #f8763b;font-size: 15px;margin:0px;font-weight: 600;"><i class="icon-briefcase"></i>&nbsp;Professional Details</h4>
+                                  </mat-panel-title>
+                             </mat-expansion-panel-header>
+                             <div style="background: #fff9f3;padding:10px;" class="expand">
+                             <div class="row" *ngIf="lstEmployeeDetails.length>0">
+                                  <div class="col-md-3">
+                                        <label>Employee Code </label>
+                                        <p *ngIf="lstEmployeeDetails[0].vchr_employee_code"> {{lstEmployeeDetails[0].vchr_employee_code}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].vchr_employee_code"> -----</p>
+                
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Employee Category </label>
+                                        <p *ngIf="lstEmployeeDetails[0].fk_category__vchr_name"> {{lstEmployeeDetails[0].fk_category__vchr_name}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].fk_category__vchr_name">-----</p>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="lstEmployeeDetails[0].fk_company_id">
+                                        <label>Company</label>
+                                        <p *ngIf="lstEmployeeDetails[0].fk_company__vchr_name" class="">{{lstEmployeeDetails[0].fk_company__vchr_name}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].fk_company__vchr_name" class="">-----</p>
+                
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Branch</label>
+                                        <p *ngIf="lstEmployeeDetails[0].fk_branch__vchr_name" class="">{{lstEmployeeDetails[0].fk_branch__vchr_name}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].fk_branch__vchr_name" class="">-----</p>
+                
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Department</label>
+                                        <p *ngIf="lstEmployeeDetails[0].fk_department__vchr_name" class="">{{lstEmployeeDetails[0].fk_department__vchr_name}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].fk_department__vchr_name" class="">-----</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Designation</label>
+                                        <p *ngIf="lstEmployeeDetails[0].fk_desig__vchr_name" class="">{{lstEmployeeDetails[0].fk_desig__vchr_name}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].fk_desig__vchr_name" class=""> -----</p>
+                                    </div>
+                                    <div class="col-md-3" >
+                                        <label>Date Of Join</label>
+                                        <p *ngIf="datDOJ" class="">{{datDOJ}}</p>
+                                        <p *ngIf="!datDOJ" class="">-----</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Level of Grade</label>
+                                        <p *ngIf="lstEmployeeDetails[0].vchr_grade" class="">{{lstEmployeeDetails[0].vchr_grade}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].vchr_grade" class="">-----</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Grade</label>
+                                        <p *ngIf="lstEmployeeDetails[0].vchr_level" class="">{{lstEmployeeDetails[0].vchr_level}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].vchr_level" class="">-----</p>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="lstEmployeeDetails[0].fk_category__vchr_name.toUpperCase()=='EMPLOYEE'">
+                                        <label>Salary Structure</label>
+                                        <p *ngIf="lstEmployeeDetails[0].fk_salary_struct__vchr_name" class="">{{lstEmployeeDetails[0].fk_salary_struct__vchr_name}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].fk_salary_struct__vchr_name" class="">-----</p>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <label>Payment Mode</label>
+                                        <p class="" *ngIf="lstEmployeeDetails[0].int_payment==0">Cash</p>
+                                        <p class="" *ngIf="lstEmployeeDetails[0].int_payment==1">Bank</p>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="lstEmployeeDetails[0].int_payment==1">
+                                        <label>Bank Name</label>
+                                        <p *ngIf="lstEmployeeDetails[0].vchr_bank_name" class="">{{lstEmployeeDetails[0].vchr_bank_name}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].vchr_bank_name" class="">-----</p>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="lstEmployeeDetails[0].int_payment==1">
+                                        <label>IFSC Code</label>
+                                        <p *ngIf="lstEmployeeDetails[0].vchr_ifsc" class="">{{lstEmployeeDetails[0].vchr_ifsc}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].vchr_ifsc" class="">-----</p>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="lstEmployeeDetails[0].int_payment==1">
+                                        <label>Account Number</label>
+                                        <p *ngIf="lstEmployeeDetails[0].vchr_acc_no" class="">{{lstEmployeeDetails[0].vchr_acc_no}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].vchr_acc_no" class="">-----</p>
+                                    </div>
+                                    <!-- <div class="col-md-3">
+                                        <label>Function</label>
+                                        <p *ngIf="lstEmployeeDetails[0].json_function__vchr_name" class="">{{lstEmployeeDetails[0].json_function__vchr_name}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].json_function__vchr_name" class="">-----</p>
+                                    </div> -->
+                                    
+                                    <!-- <div class="col-md-3 mt-1"> -->
+                                       
+                                        <!-- <mat-form-field>
+                                            <mat-label>Select Functions</mat-label>
+                                            <mat-select [(ngModel)]="lstfunctions" multiple [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let loc of lstProductData" value="{{loc.pk_bint_id}}">
+                                                    {{ loc.vchr_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    
+                                    </div> -->
+                                    <div class="col-md-3">
+                                        <label>Function</label>
+                                        <p *ngIf="str_products" class="">{{str_products}}</p>
+                                        <p *ngIf="!str_products" class="">--we---</p>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <label>Sub Function</label>
+                                        <p *ngIf="lstEmployeeDetails[0].fk_brand__vchr_name" class="">{{lstEmployeeDetails[0].fk_brand__vchr_name}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].fk_brand__vchr_name" class="">-----</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Week Off Type</label>
+                                        <p class="" *ngIf="lstEmployeeDetails[0].int_weekoff_type==0">Fixed</p>
+                                        <p class="" *ngIf="lstEmployeeDetails[0].int_weekoff_type==1">Variable</p>
+                                        <p class="" *ngIf="lstEmployeeDetails[0].int_weekoff_type==null">-----</p>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="lstEmployeeDetails[0].int_weekoff_type==0">
+                                        <label>Day</label>
+                                        <p class="" *ngIf="lstEmployeeDetails[0].vchr_weekoff_day">{{lstEmployeeDetails[0].vchr_weekoff_day}}</p>
+                                        <p class="" *ngIf="!lstEmployeeDetails[0].vchr_weekoff_day">-----</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>ESI Number</label>
+                                        <p class="" *ngIf="lstEmployeeDetails[0].vchr_esi_no">{{lstEmployeeDetails[0].vchr_esi_no}}</p>
+                                        <p class="" *ngIf="!lstEmployeeDetails[0].vchr_esi_no">-----</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>UAN Number</label>
+                                        <p class="" *ngIf="lstEmployeeDetails[0].vchr_uan_no">{{lstEmployeeDetails[0].vchr_uan_no}}</p>
+                                        <p class="" *ngIf="!lstEmployeeDetails[0].vchr_uan_no">-----</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>WWF Number</label>
+                                        <p class="" *ngIf="lstEmployeeDetails[0].vchr_wwf_no">{{lstEmployeeDetails[0].vchr_wwf_no}}</p>
+                                        <p class="" *ngIf="!lstEmployeeDetails[0].vchr_wwf_no">-----</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>WPS Group</label>
+                                        <p class="" *ngIf="lstEmployeeDetails[0].fk_wps__vchr_name">{{lstEmployeeDetails[0].fk_wps__vchr_name}}</p>
+                                        <p class="" *ngIf="!lstEmployeeDetails[0].fk_wps__vchr_name">-----</p>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="lstEmployeeDetails[0]['int_shift_type']!=2">
+                                        <label>Shift </label>
+                                        <p *ngIf="lstEmployeeDetails[0]['lst_shift_shedule']">
+                                            <span *ngFor="let shift of lstEmployeeDetails[0]['lst_shift_shedule'];let i = index;">{{shift.vchr_shift_name | titlecase}}
+                                                <span *ngIf="i+1 != lstEmployeeDetails[0]['lst_shift_shedule'].length">,</span>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3"  *ngIf="lstEmployeeDetails[0]['int_shift_type']==2">
+                                        <label>Shift </label>
+                                        <p class="">Shift Exempted</p>
+                                    </div>
+                                <div class="col-md-3">
+                                        <label>Physical Location</label>
+                                        <p *ngIf="lstEmployeeDetails[0]['lst_phy_loc_name']">
+                                            <span *ngFor="let acc of lstEmployeeDetails[0]['lst_phy_loc_name'];let i = index;">{{acc | titlecase}}
+                                            <span *ngIf="i+1 != lstEmployeeDetails[0]['lst_phy_loc_name'].length">,</span>
+                                            </span>
+                                        </p>
+                                </div>
+                
+                            </div>
+                            </div>
+                        </mat-expansion-panel>
+                </mat-accordion>
+</div>       
+<!-- Professional Ends-->
+
+<!-- Documents  -->
+<div style="margin-top: 10px;" *ngIf="dctDocuments">
+    <mat-accordion class="mt-3">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header style="margin-bottom: 10px;">
+                <mat-panel-title>
+                    <h4
+                        style="padding-left: 0;background:none;color: #f8763b;font-size: 15px;margin:0px;font-weight: 600;">
+                        <i class="far fa-file-alt"></i>&nbsp;Documents</h4>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div style="background: #fff9f3;padding:10px;" class="expand">
+                <div class="row">
+                    <div class="col-md-2" *ngIf="dctDocuments.hasOwnProperty('aadhar')">
+                        <label for="">Aadhaar Card</label><button class="view mr-2 ml-2" title="View" (click)="ViewFile(dctDocuments['aadhar'])"><i class="fas fa-folder-open" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="col-md-2" *ngIf="dctDocuments.hasOwnProperty('otherId')">
+                        <label for="">Other Id Card</label><button class="view mr-2 ml-2" title="View" (click)="ViewFile(dctDocuments['otherId'])"><i class="fas fa-folder-open" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="col-md-2" *ngIf="dctDocuments.hasOwnProperty('pancard')">
+                        <label for="">Pancard Card</label><button class="view mr-2 ml-2" title="View" (click)="ViewFile(dctDocuments['pancard'])"><i class="fas fa-folder-open" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="col-md-2" *ngIf="dctDocuments.hasOwnProperty('appointmentletter')">
+                        <label for="">Appointment Letter</label><button class="view mr-2 ml-2" title="View" (click)="ViewFile(dctDocuments['appointmentletter'])"><i class="fas fa-folder-open" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="col-md-2" *ngIf="dctDocuments.hasOwnProperty('signedoffer')">
+                        <label for="">Offer Letter</label><button class="view mr-2 ml-2" title="View" (click)="ViewFile(dctDocuments['signedoffer'])"><i class="fas fa-folder-open" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+<!-- Documents Ends -->
+
+<div style="margin-top: 10px;"  *ngIf="lstEmployeeDetails.length>0">
+        <mat-accordion class="mt-3" *ngIf = "!lstEmployeeDetails[0].is_active">
+                <mat-expansion-panel>
+                      <mat-expansion-panel-header style="margin-bottom: 10px;">
+                          <mat-panel-title>
+                                <h4  style="padding-left: 0;background:none;color: #f8763b;font-size: 15px;margin:0px;font-weight: 600;"><i class="icon-note"></i>&nbsp;Resignation Details</h4>
+                          </mat-panel-title>
+                     </mat-expansion-panel-header>
+                     <div style="background: #fff9f3;padding:10px;" class="expand">
+                           
+                            <div class="row" *ngIf="lstEmployeeDetails.length>0">
+                                <div class="col-md-3" *ngIf = "!lstEmployeeDetails[0].is_active">
+                                        <label>Date Of Resigned</label>
+                                        <p *ngIf="lstEmployeeDetails[0].dat_resignation" class="">{{lstEmployeeDetails[0].dat_resignation}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].dat_resignation" class="">-----</p>
+                                </div>
+                                <div class="col-md-3" *ngIf = "!lstEmployeeDetails[0].is_active">
+                                        <label>Resignation Reason</label>
+                                        <p *ngIf="lstEmployeeDetails[0].txt_resignation_reason" class="">{{lstEmployeeDetails[0].txt_resignation_reason}}</p>
+                                        <p *ngIf="!lstEmployeeDetails[0].txt_resignation_reason" class="">-----</p>
+                
+                                </div>
+                
+                            </div>
+                            <div class="row  mt-3"  *ngIf = "!lstEmployeeDetails[0].is_active">
+                                    <div class="col-md-12">
+                                        <button class="btn save_btn  mr-2" style="margin: 0;" (click)="activateEmployee()">Activate</button>
+                                        <button class="btn cancel_btn" style="margin: 0;" (click)="BackClicked()">Cancel</button>
+                                    </div>
+                           </div>
+                    </div>
+                </mat-expansion-panel>
+        </mat-accordion>
+</div>   
+
+
+<!-- Notes -->
+<div style="margin-top: 10px;">
+        <mat-accordion>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                            <h4  style="padding-left: 0;background:none;color: #f8763b;font-size: 15px;margin:0px;font-weight: 600;"><i class="mdi mdi-note-text"></i>&nbsp;Notes</h4>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div style="background: #fff9f3;padding:10px;" class="expand">
+                  <div class="row" *ngIf="lstEmployeeDetails.length>0">
+                    <div class="col-md-3">
+                        <label>Remarks</label>
+                        <p class="" *ngIf="lstEmployeeDetails[0].vchr_emp_remark">{{lstEmployeeDetails[0].vchr_emp_remark}}</p>
+                        <p class="" *ngIf="!lstEmployeeDetails[0].vchr_emp_remark">-----</p>
+                    </div>
+                 </div>
+                 </div>
+                </mat-expansion-panel>
+         </mat-accordion>
+    </div>
+      
+
+<!-- Notes Ends -->
+<!-- salary split -->
+<div style="margin-top: 10px;"  *ngIf="blnShowCTCBreakup && selectedCategory.toUpperCase()=='EMPLOYEE'">
+    <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+                    <h4  style="padding-left: 0;background:none;color: #f8763b;font-size: 15px;margin:0px;font-weight: 600;"><i class=" icon-bell"></i>&nbsp;CTC Break up Details</h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div style="background: #fff9f3;padding:10px;" class="expand">
+            <div class="row mt-3" *ngIf="selectedCategory.toUpperCase()=='EMPLOYEE'" id="salary">
+                <!-- <span>Salary Structure</span> -->
+                <fieldset  class="fieldset1" style="box-shadow:none !important;width: 100%;padding: 0;">
+                    
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <!-- <mat-form-field class="example-full-width"> -->
+    
+                            <label style="width: 10%;font-weight: 400;">Allowances : </label>
+    
+                            <!-- <input class="switch-input" [formControl]="form.controls['allowances']" type="checkbox" [(ngModel)]="dctAllowance.bln_esi" (change)="changeOption()"/> -->
+                            <mat-checkbox name="PF" [checked]="false" disabled [(ngModel)]="dctAllowance.bln_pf" (ngModelChange)="getSalarySplit()"><span class="mr-3">PF</span></mat-checkbox>
+                            <mat-checkbox name="ESI" [checked]="false" disabled [(ngModel)]="dctAllowance.bln_esi" (ngModelChange)="getSalarySplit()"><span class="mr-3">ESI</span></mat-checkbox>
+                            <mat-checkbox name="GRATUITY" [checked]="false" disabled [(ngModel)]="dctAllowance.bln_gratuity" (ngModelChange)="getSalarySplit()"><span class="mr-3">GRATUITY</span></mat-checkbox>
+                            <mat-checkbox name="WWF" [checked]="false" disabled [(ngModel)]="dctAllowance.bln_wwf" (ngModelChange)="getSalarySplit()"><span>WWF</span></mat-checkbox>
+                            <mat-checkbox name="TDS" [checked]="false" disabled [(ngModel)]="dctAllowance.bln_tds" (ngModelChange)="getSalarySplit()"><span>TDS</span></mat-checkbox>
+                            <!-- </mat-form-field> -->
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <fieldset>
+                                <legend>Fixed Allowances</legend>
+                                <div style="border-bottom:1px dotted #b7b1b1">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label style="width:100%;margin-bottom: 2px">Basic Pay + DA</label>
+                                        </div>
+                                        <div class="col-md-6" style="text-align:right">
+                                            <p style="margin-bottom: 2px">{{dctSalarySplit['BP_DA']}}</p>
+                                            <!-- <input type="number" style="width: 100%;border: none;text-align: right;" [(ngModel)]="dctSalarySplit['BP_DA']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="border-bottom:1px dotted #b7b1b1">
+                                    <div class="row mt-2">
+    
+                                        <div class="col-md-6">
+                                            <label style="width:100%;margin-bottom: 2px">HRA</label>
+                                        </div>
+                                        <div class="col-md-6" style="text-align:right">
+                                            <p style="margin-bottom: 2px">{{dctSalarySplit['HRA']}}</p>
+                                            <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['HRA']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="border-bottom:1px dotted #b7b1b1">
+                                    <div class="row mt-2">
+    
+                                        <div class="col-md-6">
+                                            <label style="width:100%;margin-bottom: 2px">CCA </label>
+                                        </div>
+                                        <div class="col-md-6" style="text-align:right">
+                                            <p style="margin-bottom: 2px">{{dctSalarySplit['CCA']}}</p>
+                                            <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['CCA']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="border-bottom:1px dotted #b7b1b1">
+                                    <div class="row mt-2">
+    
+                                        <div class="col-md-6">
+                                            <label style="width:100%;margin-bottom: 2px">WA </label>
+                                        </div>
+                                        <div class="col-md-6" style="text-align:right">
+                                            <p style="margin-bottom: 2px">{{dctSalarySplit['WA']}}</p>
+                                            <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['WA']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label style="width:100%;margin-bottom: 2px">SA </label>
+                                    </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p style="margin-bottom: 2px">{{dctSalarySplit['SA']}}</p>
+                                        <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['SA']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                    </div>
+                                </div>
+    
+                            </fieldset>
+                        </div>
+                        <div class="col-md-4">
+                            <fieldset>
+                                <legend>Variable Allowances</legend>
+                                <div style="border-bottom:1px dotted #b7b1b1">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label style="width:100%;margin-bottom: 2px">PF</label>
+                                        </div>
+                                        <div class="col-md-6" style="text-align:right">
+                                            <p *ngIf="dctSalarySplit.hasOwnProperty('Allowances')" style="margin-bottom: 2px">{{dctSalarySplit['Allowances']['PF']}}</p>
+                                            <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Allowances']['PF']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="border-bottom:1px dotted #b7b1b1">
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <label style="width:100%;margin-bottom: 2px">ESI</label>
+                                        </div>
+                                        <div class="col-md-6" style="text-align:right">
+                                            <p *ngIf="dctSalarySplit.hasOwnProperty('Allowances')" style="margin-bottom: 2px">{{dctSalarySplit['Allowances']['ESI']}}</p>
+                                            <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Allowances']['ESI']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="border-bottom:1px dotted #b7b1b1">
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <label style="width:100%;margin-bottom: 2px">WWF</label>
+                                        </div>
+                                        <div class="col-md-6" style="text-align:right">
+                                            <p *ngIf="dctSalarySplit.hasOwnProperty('Allowances')" style="margin-bottom: 2px">{{dctSalarySplit['Allowances']['WWF']}}</p>
+                                            <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Allowances']['WWF']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="row mt-2" style="border-bottom:1px dotted #b7b1b1">
+                                    <div class="col-md-6">
+                                        <label style="width:100%;margin-bottom: 2px">Gratuity </label>
+                                    </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p *ngIf="dctSalarySplit.hasOwnProperty('Allowances')" style="margin-bottom: 2px">{{dctSalarySplit['Allowances']['Gratuity']}}</p>
+                                        <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Allowances']['Gratuity']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                    </div>
+                                </div>
+                                <div class="row mt-2" style="border-bottom:1px dotted #b7b1b1" *ngIf="dctSalarySplit.hasOwnProperty('VariablePay')">
+                                    <div class="col-md-6">
+                                        <label style="width:100%;margin-bottom: 2px">Variable Pay </label>
+                                    </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p *ngIf="dctSalarySplit.hasOwnProperty('VariablePay')" style="margin-bottom: 2px">{{dctSalarySplit['VariablePay']}}</p>
+                                        <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Allowances']['Gratuity']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                    </div>
+                                </div>
+                                <div class="row mt-2" *ngIf="dctSalarySplit.hasOwnProperty('FixedAllowance')">
+                                    <div class="col-md-6">
+                                        <label style="width:100%;margin-bottom: 2px">Fixed Allowance </label>
+                                    </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                        <p *ngIf="dctSalarySplit.hasOwnProperty('VariablePay')" style="margin-bottom: 2px">{{dctSalarySplit['FixedAllowance']}}</p>
+                                        <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Allowances']['Gratuity']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                    </div>
+                                </div>
+    
+                            </fieldset>
+                        </div>
+                        <div class="col-md-4">
+                            <fieldset>
+                                <legend>Variable Deductions</legend>
+                                <div style="border-bottom:1px dotted #b7b1b1">
+                                    <div class="row">
+                                        <div class="col-md-6"> <label style="width:100%;margin-bottom: 2px">PF</label> </div>
+                                        <div class="col-md-6" style="text-align:right">
+                                            <p *ngIf="dctSalarySplit.hasOwnProperty('Deductions')" style="margin-bottom: 2px">{{dctSalarySplit['Deductions']['PF']}}</p>
+                                            <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Deductions']['PF']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="border-bottom:1px dotted #b7b1b1">
+                                    <div class="row mt-2">
+                                        <div class="col-md-6"> <label style="width:100%;margin-bottom: 2px">ESI</label> </div>
+                                        <div class="col-md-6" style="text-align:right">
+                                            <p *ngIf="dctSalarySplit.hasOwnProperty('Deductions')" style="margin-bottom: 2px">{{dctSalarySplit['Deductions']['ESI']}}</p>
+                                            <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Deductions']['ESI']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="border-bottom:1px dotted #b7b1b1">
+                                    <div class="row mt-2">
+                                        <div class="col-md-6"> <label style="width:100%;margin-bottom: 2px">WWF</label> </div>
+                                        <div class="col-md-6" style="text-align:right">
+                                            <p *ngIf="dctSalarySplit.hasOwnProperty('Deductions')" style="margin-bottom: 2px">{{dctSalarySplit['Deductions']['WWF']}}</p>
+                                            <!-- <input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Deductions']['WWF']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="border-bottom:1px dotted #b7b1b1" *ngIf="dctSalarySplit.hasOwnProperty('Deductions')">
+                                    <div class="row mt-2" *ngIf="dctSalarySplit['Deductions']['Charity']">
+                                        <div class="col-md-6"> <label style="width:100%;margin-bottom: 2px">Charity</label> </div>
+                                        <div class="col-md-6" style="text-align:right">
+                                             <p *ngIf="dctSalarySplit.hasOwnProperty('Deductions')" style="margin-bottom: 2px"><span *ngIf="dctSalarySplit['Deductions']['Charity']" >{{dctSalarySplit['Deductions']['Charity']}}</span></p>
+                                            <!--<input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Deductions']['Charity']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                            <!-- <input *ngIf=" strSalaryStructName!='Slab-0'" type="number" required [(ngModel)]="fltCharity" class="input1" (ngModelChange)="CTCBreakupchanged()"> -->
+                                            <!-- <input *ngIf=" strSalaryStructName=='Slab-0'" style="width: 100%;border: none;text-align: right;" type="number" required [(ngModel)]="fltCharity" (ngModelChange)="CTCBreakupchanged()"> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2" *ngIf="dctAllowance.bln_tds">
+                                    <div class="col-md-6"> <label style="width:100%;margin-bottom: 2px">TDS</label> </div>
+                                    <div class="col-md-6" style="text-align:right">
+                                         <p *ngIf="dctSalarySplit.hasOwnProperty('Deductions')" style="margin-bottom: 2px">{{fltTds}}</p>
+                                        <!--<input type="number" style="width: 100%;border: none;text-align: right;" *ngIf="dctSalarySplit.hasOwnProperty('Allowances') && strSalaryStructName=='Slab-0'" [(ngModel)]="dctSalarySplit['Deductions']['Charity']" (ngModelChange)="CTCBreakupchanged()"> -->
+                                        <!-- <input type="number" required [(ngModel)]="fltTds" class="input1" (ngModelChange)="CTCBreakupchanged()"> -->
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+    
+                    <div class="row mt-3">
+                        <span class="col-md-4" *ngIf="fltGrossPay!=0">Gross Pay :<span style="color: #293462;font-size: 20px;font-weight: 500;">&#8377; {{fltGrossPay }} /-</span></span>
+                        <span class="col-md-4" *ngIf="intNetSalary!=0">Net pay :<span style="color: #293462;font-size: 20px;font-weight: 500;">&#8377; {{intNetSalary}} /-</span></span>
+                        <span class="col-md-4" *ngIf="intCostToCompany!=0" >Cost to the Company :<span style="text-align: right;color: #293462;font-size: 20px;font-weight: 500;">&#8377; {{intCostToCompany}} /-</span></span>
+                    </div>
+                </fieldset>
+            </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>
+
+
+
+
+
+
+<!-- <div *ngIf="lstEmployeeDetails.length>0">
+        <div class="card" *ngIf = "!lstEmployeeDetails[0].is_active">
+            <div class="card-body">
+                    <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="form-head" style="margin-bottom: 20px;;color: #f8763b;font-size: 15px;">Resignation Details
+                                </h4>
+                            </div>
+                    </div>
+                    <div class="row" *ngIf="lstEmployeeDetails.length>0">
+                        <div class="col-md-3" *ngIf = "!lstEmployeeDetails[0].is_active">
+                                <label>Date Of Resigned</label>
+                                <p *ngIf="lstEmployeeDetails[0].dat_resignation" class="">{{lstEmployeeDetails[0].dat_resignation}}</p>
+                                <p *ngIf="!lstEmployeeDetails[0].dat_resignation" class="">-----</p>
+                        </div>
+                        <div class="col-md-3" *ngIf = "!lstEmployeeDetails[0].is_active">
+                                <label>Resignation Reason</label>
+                                <p *ngIf="lstEmployeeDetails[0].txt_resignation_reason" class="">{{lstEmployeeDetails[0].txt_resignation_reason}}</p>
+                                <p *ngIf="!lstEmployeeDetails[0].txt_resignation_reason" class="">-----</p>
+        
+                        </div>
+        
+                    </div>
+                    
+                   
+        
+        
+            </div>
+            
+        </div>
+        <div class="row  mt-3"  *ngIf = "!lstEmployeeDetails[0].is_active">
+            <div class="col-md-12">
+                <button class="btn save_btn  mr-2" style="margin: 0;" (click)="activateEmployee()">Activate</button>
+                <button class="btn cancel_btn" style="margin: 0;" (click)="BackClicked()">Cancel</button>
+            </div>
+        </div>
+        </div>         -->
+
+
+
+
+        <!-- <div class="row mt-3" *ngIf="lstEmployeeDetails.length>0">
+
+            <div class="col-md-3">
+                <label>Username </label>
+                <p *ngIf="lstEmployeeDetails[0].username"> {{lstEmployeeDetails[0].username}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].username"> -----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>Employee Code </label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_employee_code"> {{lstEmployeeDetails[0].vchr_employee_code}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_employee_code"> -----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>Employee Category </label>
+                <p *ngIf="lstEmployeeDetails[0].fk_category__vchr_name"> {{lstEmployeeDetails[0].fk_category__vchr_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].fk_category__vchr_name">-----</p>
+            </div>
+
+         
+            <div class="col-md-3">
+                <label>Salutation</label>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_salutation" class="">{{lstEmployeeDetails[0].vchr_salutation}}</p>
+
+                <p *ngIf="lstEmployeeDetails[0].vchr_salutation" class="">{{lstEmployeeDetails[0].vchr_salutation}}</p>
+            </div>
+            <div class="col-md-3">
+                <label>First name</label>
+                <p *ngIf="!lstEmployeeDetails[0].first_name" class="">{{lstEmployeeDetails[0].first_name}}</p>
+
+                <p *ngIf="lstEmployeeDetails[0].first_name" class="">{{lstEmployeeDetails[0].first_name.charAt(0).toUpperCase()+lstEmployeeDetails[0].first_name.slice(1).toLowerCase()}}</p>
+            </div>
+            {{lstEmployeeDetails['userlist'][0].last_name.charAt(0).toUpperCase()+lstEmployeeDetails['userlist'][0].last_name.slice(1).toLowerCase()}}
+            <div class="col-md-3">
+                <label>Middle name</label>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_middle_name" class="">{{lstEmployeeDetails[0].vchr_middle_name}}</p>
+                <p *ngIf="lstEmployeeDetails[0].vchr_middle_name" class="">{{lstEmployeeDetails[0].vchr_middle_name.charAt(0).toUpperCase()+lstEmployeeDetails[0].vchr_middle_name.slice(1).toLowerCase()}}</p>
+            </div>
+            <div class="col-md-3">
+                <label>Last name</label>
+                <p *ngIf="!lstEmployeeDetails[0].last_name" class="">{{lstEmployeeDetails[0].last_name}}</p>
+                <p *ngIf="lstEmployeeDetails[0].last_name" class="">{{lstEmployeeDetails[0].last_name.charAt(0).toUpperCase()+lstEmployeeDetails[0].last_name.slice(1).toLowerCase()}}</p>
+            </div>
+
+
+
+            <div class="col-md-3" *ngIf="lstEmployeeDetails[0].fk_company_id">
+                <label>Company</label>
+                <p *ngIf="lstEmployeeDetails[0].fk_company__vchr_name" class="">{{lstEmployeeDetails[0].fk_company__vchr_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].fk_company__vchr_name" class="">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>Branch</label>
+                <p *ngIf="lstEmployeeDetails[0].fk_branch__vchr_name" class="">{{lstEmployeeDetails[0].fk_branch__vchr_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].fk_branch__vchr_name" class="">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>Department</label>
+                <p *ngIf="lstEmployeeDetails[0].fk_department__vchr_name" class="">{{lstEmployeeDetails[0].fk_department__vchr_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].fk_department__vchr_name" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Designation</label>
+                <p *ngIf="lstEmployeeDetails[0].fk_desig__vchr_name" class="">{{lstEmployeeDetails[0].fk_desig__vchr_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].fk_desig__vchr_name" class=""> -----</p>
+            </div>
+            <div class="col-md-3" >
+                <label>Date Of Join</label>
+                <p *ngIf="datDOJ" class="">{{datDOJ}}</p>
+                <p *ngIf="!datDOJ" class="">-----</p>
+
+            </div>
+            <div class="col-md-3" *ngIf = "!lstEmployeeDetails[0].is_active">
+                <label>Date Of Resign</label>
+                <p *ngIf="lstEmployeeDetails[0].dat_resignation" class="">{{lstEmployeeDetails[0].dat_resignation}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].dat_resignation" class="">-----</p>
+
+            </div>
+            <div class="col-md-3" *ngIf = "!lstEmployeeDetails[0].is_active">
+                <label>Resignation Reason</label>
+                <p *ngIf="lstEmployeeDetails[0].txt_resignation_reason" class="">{{lstEmployeeDetails[0].txt_resignation_reason}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].txt_resignation_reason" class="">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>Level of Grade</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_grade" class="">{{lstEmployeeDetails[0].vchr_grade}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_grade" class="">-----</p>
+
+
+            </div>
+            <div class="col-md-3">
+                <label>Grade</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_level" class="">{{lstEmployeeDetails[0].vchr_level}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_level" class="">-----</p>
+
+            </div>
+            <div class="col-md-3" *ngIf="lstEmployeeDetails[0].fk_category__vchr_name.toUpperCase()=='EMPLOYEE'">
+                <label>Salary Structure</label>
+                <p *ngIf="lstEmployeeDetails[0].fk_salary_struct__vchr_name" class="">{{lstEmployeeDetails[0].fk_salary_struct__vchr_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].fk_salary_struct__vchr_name" class="">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>Date Of Birth</label>
+                <p *ngIf="datDOB" class="">{{datDOB}}</p>
+                <p *ngIf="!datDOB" class="">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>Gender</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_gender" class="">{{lstEmployeeDetails[0].vchr_gender}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_gender" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Religion/Caste</label>
+                <p *ngIf="lstEmployeeDetails[0].fk_religion__vchr_name" class="">{{lstEmployeeDetails[0].fk_religion__vchr_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].fk_religion__vchr_name" class="">-----</p>
+
+            </div>
+
+            <div class="col-md-3">
+                <label>Marital Status</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_marital_status" class="">{{lstEmployeeDetails[0].vchr_marital_status}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_marital_status" class="">-----</p>
+            </div>
+
+            <div class="col-md-3">
+                <label>Mobile Number</label>
+                <p *ngIf="lstEmployeeDetails[0].bint_phone" class="">{{lstEmployeeDetails[0].bint_phone}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].bint_phone" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Email Id</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_email" class="">{{lstEmployeeDetails[0].vchr_email}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_email" class="">-----</p>
+            </div>
+
+            <div class="col-md-3">
+                <label>Aadhaar Number</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_aadhar_no" class="">{{lstEmployeeDetails[0].vchr_aadhar_no}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_aadhar_no" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Pan Number</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_pan_no" class="">{{lstEmployeeDetails[0].vchr_pan_no}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_pan_no" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Father's Name</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_father_name" class="">{{lstEmployeeDetails[0].vchr_father_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_father_name" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Emergency Contact Person</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_emergency_person" class="">{{lstEmployeeDetails[0].vchr_emergency_person}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_emergency_person" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Relation with employee</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_emergency_relation" class="">{{lstEmployeeDetails[0].vchr_emergency_relation}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_emergency_relation" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Emergency Phone No.</label>
+                <p *ngIf="lstEmployeeDetails[0].bint_emergency_phno" class="">{{lstEmployeeDetails[0].bint_emergency_phno}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].bint_emergency_phno" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Blood Group</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_blood_group" class="">{{lstEmployeeDetails[0].vchr_blood_group}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_blood_group" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Address</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_address" class="">{{lstEmployeeDetails[0].vchr_address}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_address" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Post</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_po" class="">{{lstEmployeeDetails[0].vchr_po}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_po" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Landmark</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_land_mark" class="">{{lstEmployeeDetails[0].vchr_land_mark}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_land_mark" class="">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>Place</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_place" class="">{{lstEmployeeDetails[0].vchr_place}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_place" class="">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>Pin Code</label>
+                <p *ngIf="lstEmployeeDetails[0].int_pincode" class="">{{lstEmployeeDetails[0].int_pincode}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].int_pincode" class="">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>District</label>
+                <p *ngIf="lstEmployeeDetails[0].fk_dist__vchr_name" class="">{{lstEmployeeDetails[0].fk_dist__vchr_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].fk_dist__vchr_name" class="">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>State</label>
+                <p *ngIf="lstEmployeeDetails[0].fk_dist__fk_state__vchr_name" class="">{{lstEmployeeDetails[0].fk_dist__fk_state__vchr_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].fk_dist__fk_state__vchr_name" class="">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>Country</label>
+                <p *ngIf="lstEmployeeDetails[0].fk_dist__fk_state__fk_country__vchr_name" class="">{{lstEmployeeDetails[0].fk_dist__fk_state__fk_country__vchr_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].fk_dist__fk_state__fk_country__vchr_name" class="">-----</p>
+
+            </div>
+
+            <div class="col-md-3">
+                <label>Payment Mode</label>
+                <p class="" *ngIf="lstEmployeeDetails[0].int_payment==0">Cash</p>
+                <p class="" *ngIf="lstEmployeeDetails[0].int_payment==1">Bank</p>
+            </div>
+            <div class="col-md-3" *ngIf="lstEmployeeDetails[0].int_payment==1">
+                <label>Bank Name</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_bank_name" class="">{{lstEmployeeDetails[0].vchr_bank_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_bank_name" class="">-----</p>
+            </div>
+            <div class="col-md-3" *ngIf="lstEmployeeDetails[0].int_payment==1">
+                <label>IFSC Code</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_ifsc" class="">{{lstEmployeeDetails[0].vchr_ifsc}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_ifsc" class="">-----</p>
+
+            </div>
+            <div class="col-md-3" *ngIf="lstEmployeeDetails[0].int_payment==1">
+                <label>Account Number</label>
+                <p *ngIf="lstEmployeeDetails[0].vchr_acc_no" class="">{{lstEmployeeDetails[0].vchr_acc_no}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].vchr_acc_no" class="">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>Function</label>
+                <p *ngIf="lstEmployeeDetails[0].fk_product__vchr_product_name" class="">{{lstEmployeeDetails[0].fk_product__vchr_product_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].fk_product__vchr_product_name" class="">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>Sub Function</label>
+                <p *ngIf="lstEmployeeDetails[0].fk_brand__vchr_brand_name" class="">{{lstEmployeeDetails[0].fk_brand__vchr_brand_name}}</p>
+                <p *ngIf="!lstEmployeeDetails[0].fk_brand__vchr_brand_name" class="">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>Week Off Type</label>
+                <p class="" *ngIf="lstEmployeeDetails[0].int_weekoff_type==0">Fixed</p>
+                <p class="" *ngIf="lstEmployeeDetails[0].int_weekoff_type==1">Variable</p>
+                <p class="" *ngIf="lstEmployeeDetails[0].int_weekoff_type==null">-----</p>
+            </div>
+            <div class="col-md-3" *ngIf="lstEmployeeDetails[0].int_weekoff_type==0">
+                <label>Day</label>
+                <p class="" *ngIf="lstEmployeeDetails[0].vchr_weekoff_day">{{lstEmployeeDetails[0].vchr_weekoff_day}}</p>
+                <p class="" *ngIf="!lstEmployeeDetails[0].vchr_weekoff_day">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>ESI Number</label>
+                <p class="" *ngIf="lstEmployeeDetails[0].vchr_esi_no">{{lstEmployeeDetails[0].vchr_esi_no}}</p>
+                <p class="" *ngIf="!lstEmployeeDetails[0].vchr_esi_no">-----</p>
+            </div>
+            <div class="col-md-3">
+                <label>UAN Number</label>
+                <p class="" *ngIf="lstEmployeeDetails[0].vchr_uan_no">{{lstEmployeeDetails[0].vchr_uan_no}}</p>
+                <p class="" *ngIf="!lstEmployeeDetails[0].vchr_uan_no">-----</p>
+
+            </div>
+            <div class="col-md-3">
+                <label>WWF Number</label>
+                <p class="" *ngIf="lstEmployeeDetails[0].vchr_wwf_no">{{lstEmployeeDetails[0].vchr_wwf_no}}</p>
+                <p class="" *ngIf="!lstEmployeeDetails[0].vchr_wwf_no">-----</p>
+
+            </div>
+
+
+            <div class="col-md-3">
+                <label>Shift </label>
+               
+                <p *ngIf="lstEmployeeDetails[0]['lst_shift_shedule']">
+                    <span *ngFor="let shift of lstEmployeeDetails[0]['lst_shift_shedule'];let i = index;">{{shift.vchr_shift_name | titlecase}}
+                         <span *ngIf="i+1 != lstEmployeeDetails[0]['lst_shift_shedule'].length">,</span>
+                    </span>
+                </p>
+                
+
+            </div>
+            <div class="col-md-3">
+                <label>Physical Location</label>
+
+                <p *ngIf="lstEmployeeDetails[0]['lst_phy_loc_name']">
+                    <span *ngFor="let acc of lstEmployeeDetails[0]['lst_phy_loc_name'];let i = index;">{{acc | titlecase}}
+                      <span *ngIf="i+1 != lstEmployeeDetails[0]['lst_phy_loc_name'].length">,</span>
+                    </span>
+                </p>
+            </div>
+
+
+        </div> -->
+
+    

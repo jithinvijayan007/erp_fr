@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'
 import { ServerService } from '../../server.service';
@@ -54,8 +56,8 @@ export class StockAgeReportComponent implements OnInit {
 
   ngOnInit() {
 
-    this.searchBranch.valueChanges
-    .debounceTime(400)
+    this.searchBranch.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstBranch = [];
@@ -76,8 +78,8 @@ export class StockAgeReportComponent implements OnInit {
 
     
       
-  this.searchProduct.valueChanges
-  .debounceTime(400)
+  this.searchProduct.valueChanges.pipe(
+  debounceTime(400))
   .subscribe((strData: string) => {
     if (strData === undefined || strData === null) {
       this.lst_product = [];
@@ -97,8 +99,8 @@ export class StockAgeReportComponent implements OnInit {
  );
 
 
- this.searchBrand.valueChanges
-.debounceTime(400)
+ this.searchBrand.valueChanges.pipe(
+debounceTime(400))
 .subscribe((strData: string) => {
   if (strData === undefined || strData === null) {
     this.lst_brand = [];
@@ -118,8 +120,8 @@ export class StockAgeReportComponent implements OnInit {
 );
  
 
-this.searchItem.valueChanges
-.debounceTime(400)
+this.searchItem.valueChanges.pipe(
+debounceTime(400))
 .subscribe((strData: string) => {
   if (strData === undefined || strData === null) {
     this.lstItem = [];

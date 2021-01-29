@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit,ViewChild,ElementRef,Inject} from '@angular/core';
 import { ServerService } from '../../server.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -218,8 +220,8 @@ export class StockReportComponent implements OnInit {
         this.blnDownload = item["DOWNLOAD"]
       }
     });
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItem = [];
@@ -238,8 +240,8 @@ export class StockReportComponent implements OnInit {
     }
     );
 
-     this.searchMoreFilter.valueChanges
-    .debounceTime(400)
+     this.searchMoreFilter.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData) {
         // console.log("if");
@@ -283,8 +285,8 @@ export class StockReportComponent implements OnInit {
       this.lstData
     );
     this.date = new Date()
-    this.searchVentor.valueChanges
-    .debounceTime(400)
+    this.searchVentor.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstVentor = [];

@@ -1,4 +1,6 @@
 
+import {debounceTime} from 'rxjs/operators';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ServerService } from '../../server.service';
@@ -101,8 +103,8 @@ export class DetailedModelWiseSalesReportComponent implements OnInit {
     });
 
     this.getBranch()
-    this.searchStaff.valueChanges
-    .debounceTime(400)
+    this.searchStaff.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstStaff = [];
@@ -121,8 +123,8 @@ export class DetailedModelWiseSalesReportComponent implements OnInit {
       }
     );
 
-    this.searchCustomer.valueChanges
-    .debounceTime(400)
+    this.searchCustomer.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstStaff = [];
@@ -141,8 +143,8 @@ export class DetailedModelWiseSalesReportComponent implements OnInit {
         }
       }
     );
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItem = [];

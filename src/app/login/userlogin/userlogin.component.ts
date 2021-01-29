@@ -38,7 +38,8 @@ export class UserloginComponent implements OnInit {
           (response: any) => {
             const logCheck = response;
             this.spinner.hide();
-            if ( logCheck['status'] === 1) {
+            if (logCheck['status'] === 1) {
+              
               localStorage.setItem('Tokeniser', logCheck['token']);
               localStorage.setItem('Name', logCheck['userdetails']['Name']);
               localStorage.setItem('username',openMail.value );
@@ -46,13 +47,17 @@ export class UserloginComponent implements OnInit {
               localStorage.setItem('BranchId', logCheck['userdetails']['branch_id']);
               localStorage.setItem('BranchName', logCheck['userdetails']['branch_name']);
               localStorage.setItem('BranchCode', logCheck['userdetails']['branch_code']);
-              localStorage.setItem('BranchCode', logCheck['userdetails']['branch_code']);
+              // localStorage.setItem('BranchCode', logCheck['userdetails']['branch_code']);
               localStorage.setItem('group_permissions', JSON.stringify(logCheck['lst_menu_data']));
               localStorage.setItem('companyId', logCheck['userdetails']['company_id']);
+              localStorage.setItem('int_user_id', logCheck['userdetails']['int_user_id']);
               localStorage.setItem('group_name', logCheck['userdetails']['group_name']);
-              localStorage.setItem('bln_indirect_discount', JSON.stringify(logCheck['userdetails']['bln_indirect_discount']));
-              localStorage.setItem('blnDirectDiscount', logCheck['userdetails']['bln_direct_discount']);
               localStorage.setItem('BranchType', logCheck['userdetails']['branch_type']);
+
+              localStorage.setItem('bln_indirect_discount', 'false');
+              // localStorage.setItem('bln_indirect_discount', JSON.stringify(logCheck['userdetails']['bln_indirect_discount']));
+              localStorage.setItem('blnDirectDiscount', 'true');
+              // localStorage.setItem('blnDirectDiscount', logCheck['userdetails']['bln_direct_discount']);
 
               // this.router.navigateByUrl('company/addcompany');
               // this.router.navigateByUrl('dayclosure/dayclosure');
@@ -60,16 +65,16 @@ export class UserloginComponent implements OnInit {
               
               if(this.lstGroup.includes(logCheck['userdetails']['group_name'])){
                 localStorage.setItem('previousUrl','/saleslist');
-                localStorage.setItem('menuName','Master');
+                localStorage.setItem('menuName','Transactions');
 
-                this.router.navigateByUrl('service-main/list-service');
+                this.router.navigateByUrl('invoice/saleslist'); 
 
               }
               else{
                 localStorage.setItem('previousUrl','salesreport/dailysalesreport');
-                localStorage.setItem('menuName','Reports');
+                localStorage.setItem('menuName','Transactions');
 
-                this.router.navigateByUrl('salesreport/dailysalesreport');
+                this.router.navigateByUrl('/user/adduser');
               }
               
 

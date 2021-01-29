@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit,ViewChild ,ElementRef} from '@angular/core';
 import { ServerService } from '../../server.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -108,8 +110,8 @@ export class AddcouponComponent implements OnInit {
     
 
   
-  this.searchProduct.valueChanges
-  .debounceTime(400)
+  this.searchProduct.valueChanges.pipe(
+  debounceTime(400))
   .subscribe((strData: string) => {
     if (strData === undefined || strData === null) {
       this.lst_product = [];
@@ -128,8 +130,8 @@ export class AddcouponComponent implements OnInit {
   }
 ); 
 
-this.searchBrand.valueChanges
-.debounceTime(400)
+this.searchBrand.valueChanges.pipe(
+debounceTime(400))
 .subscribe((strData: string) => {
   if (strData === undefined || strData === null) {
     this.lst_brand = [];
@@ -148,8 +150,8 @@ this.searchBrand.valueChanges
 }
 );
 
-this.searchItemCategory.valueChanges
-.debounceTime(400)
+this.searchItemCategory.valueChanges.pipe(
+debounceTime(400))
 .subscribe((strData: string) => {
   if (strData === undefined || strData === null) {
     this.lst_item_category = [];
@@ -168,8 +170,8 @@ this.searchItemCategory.valueChanges
 }
 );
 
-this.searchItemGroup.valueChanges
-.debounceTime(400)
+this.searchItemGroup.valueChanges.pipe(
+debounceTime(400))
 .subscribe((strData: string) => {
   if (strData === undefined || strData === null) {
     this.lst_item_group = [];
@@ -188,8 +190,8 @@ this.searchItemGroup.valueChanges
 }
 );
 
-this.searchItem.valueChanges
-.debounceTime(400)
+this.searchItem.valueChanges.pipe(
+debounceTime(400))
 .subscribe((strData: string) => {
   if (strData === undefined || strData === null) {
     this.lst_item = [];

@@ -1,3 +1,4 @@
+import { log } from 'util';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ServerService } from '../../server.service'
@@ -19,6 +20,12 @@ export class EditemployeeComponent implements OnInit {
 
   public form: FormGroup;
   public passwordForm: FormGroup;
+
+  lstGroupData=[];
+  lstLevelData=[];
+  lstgroups;
+  int_Level
+  str_Level='';
 
   strFirstName='';
   strLastName='';
@@ -64,7 +71,7 @@ export class EditemployeeComponent implements OnInit {
   selectedDepartment='';
   selectedDepartmentId=null;
   strGroupName='';
-  // intGroupId=null;
+  intGroupId;
   selectedGroup='';
   selectedGroupId=null;
   lstBranches=[];
@@ -120,10 +127,13 @@ export class EditemployeeComponent implements OnInit {
   lstBrandData=[];
   lstProductData=[];
   intSelectedBrandId;
-  intSelectedProductId;
+  intSelectedProductId = [];
   strPhysicalLocation='';
   strFatherName;
   intEmPhNo;
+  lstSelectedLocation
+
+
 
   intSelectedCompanyId=null;
   lstCompanyData=[];
@@ -320,6 +330,7 @@ export class EditemployeeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+   
     
     
     this.datBirthStart = new Date(1990, 0, 1);
@@ -328,7 +339,6 @@ export class EditemployeeComponent implements OnInit {
     this.hostName = this.hostName.slice(0, this.hostName.length - 1)
     this.blnOnload=true;
     this.intEmployeeId=localStorage.getItem('intEmployeeEditId');
-    console.log("Iddd",this.intEmployeeId);
 
     let strDepartment = localStorage.getItem('strDepartment');
     let Name =localStorage.getItem('Name')
@@ -441,6 +451,7 @@ export class EditemployeeComponent implements OnInit {
           (response) => {
               if (response.status == 1) {
                 this.lstDesignationData=response['lst_job_position'];
+                
               }  
             },
             (error) => {   
@@ -462,6 +473,7 @@ export class EditemployeeComponent implements OnInit {
           (response) => {
               if (response.status == 1) {
                 this.lstProductData=response['data'];
+                
               }  
             },
             (error) => {   
@@ -479,16 +491,67 @@ export class EditemployeeComponent implements OnInit {
       });
     //-------------------Company dropdown ends-------------------------//
 
+    
+
     //-------------------Physical Location dropdown-------------------------//
-        this.serverService.getData('location/list_loc/').subscribe(
-          (response) => {
-              if (response.status == 1) {
-                this.lstLocationData=response['lst_loc'];
-              }  
-            },
-            (error) => {   
-          });
+    
+        // this.serverService.getData('location/list_loc/').subscribe(
+        //   (response) => {
+        //       if (response.status == 1) {
+        //         this.lstLocationData=response['lst_loc'];
+        //       }  
+        //     },
+        //     (error) => {   
+        //   });
     //-------------------Physical Location dropdown ends-------------------------//
+
+
+
+    //------------------- Group dropdown-------------------------//
+    this.serverService.getData('user_groups/grouplist/').subscribe(
+      (response) => {
+          if (response['status'] == 1) {
+            this.lstgroups=response['data'];
+            // this.intGroupId = this.lstEmployeeDetails[0]['fk_group_id'];
+            // console.log(this.intGroupId);
+            // console.log('this.intGroupId');
+
+            
+
+          }  
+        },
+        (error) => {   
+      });
+//------------------- Group dropdown ends-------------------------//
+
+
+
+ //------------------- Level dropdown-------------------------//
+ this.serverService.getData('hierarchy/levels/').subscribe(
+  (response) => {
+      if (response.status == 1) {
+        this.lstLevelData=response['data'];
+        
+      }  
+    },
+    (error) => {   
+  });
+//------------------- Level dropdown ends-------------------------//
+
+
+
+ //-------------------Level Group dropdown-------------------------//
+ this.serverService.getData('hierarchy/get_groups/').subscribe(
+  (response) => {
+      if (response.status == 1) {
+        this.lstGroupData=response['data'];
+      }  
+    },
+    (error) => {   
+  });
+//-------------------Level Group dropdown ends-------------------------//
+
+
 
     //-------------------Country dropdown-------------------------//
     this.serverService.getData('location/country_list/').subscribe(
@@ -566,6 +629,7 @@ export class EditemployeeComponent implements OnInit {
       religion:[null,Validators.compose([Validators.required])],
       emerPerson:[null,Validators.compose([Validators.required])],
       emerRelation:[null,Validators.compose([Validators.required])],
+     
       WPSGroup:[null],
       illnessDetails:[null],
       officialNumber:[null],
@@ -580,7 +644,43 @@ export class EditemployeeComponent implements OnInit {
     this.getEmployeeDetails()
   }
 
+  levelChanged(){
+    console.log(this.lstLevelData,'this.lstLevelData')
+    let level_type = ""
+    this.lstLevelData.forEach(element => {
+      if(element.pk_bint_id == this.int_Level){
+        level_type = element.vchr_name
+      }
+    });
+  
+    this.serverService.getData('hierarchy/levels?hierarchy_name='+level_type).subscribe(
+      (response) => {
+          if (response.status == 1) {
+          
+            this.lstLocationData=response['data'];
+            console.log('lstdata : ',this.lstLocationData);
+            
+          }  
+        },
+        (error) => {   
+      });
 
+
+      let dict_level = {
+        hierarchy_name:level_type,
+        dep_id:this.intDepartmentId
+      }
+      this.serverService.postData('hierarchy/get_groups/',dict_level).subscribe(
+        (response) => {
+          if (response.status == 1) {
+            console.log(response['data'],'dgsdhgsfhdfh')
+              this.lstGroupData=response['data'][level_type];
+            }  
+          },
+          (error) => {   
+        });
+    
+  }
  countryChanged(intCountryId) {  // state dropdown list
   // this.lstStateData=[];
   // this.lstDistrictData=[];
@@ -623,11 +723,10 @@ export class EditemployeeComponent implements OnInit {
       (response) => {
         this.spinner.hide();
           
-          if (response.status == 1) {
+          if (response['status'] == 1) {
           
             
             this.lstEmployeeDetails=response['lst_userdetailsview'];
-            console.log("responseee",this.lstEmployeeDetails);
             
             if(response['lstRefDetails'].length==2){
               this.lstReference=response['lstRefDetails'];
@@ -644,7 +743,13 @@ export class EditemployeeComponent implements OnInit {
             if(response['lstFamilyDetails']!=0){
               this.lstFamilyDetails=response['lstFamilyDetails'];
             }
-
+            if((response['lstfunctions']).length > 0){
+              let data = []
+              data = response['lstfunctions'];
+              this.intSelectedProductId = data.map(data => data.pk_bint_id);
+              console.log(this.intSelectedProductId);
+              
+            }
       
             this.strFirstName=this.lstEmployeeDetails[0].first_name;
             this.strLastName=this.lstEmployeeDetails[0].last_name;
@@ -664,13 +769,17 @@ export class EditemployeeComponent implements OnInit {
             this.selectedDepartmentId=this.lstEmployeeDetails[0].fk_department_id;
             this.strGroupName=this.lstEmployeeDetails[0].fk_group__vchr_name;
             this.selectedGroup=this.lstEmployeeDetails[0].fk_group__vchr_name;
-            // this.intGroupId=this.lstEmployeeDetails[0].fk_group_id;
-            this.selectedGroupId=this.lstEmployeeDetails[0].fk_group_id;
+            this.intGroupId=this.lstEmployeeDetails[0].fk_group_id;
+            // console.log(this.intGroupId);
+            
+            this.selectedGroupId=[this.lstEmployeeDetails[0]['fk_group_id']];
+            console.log(this.selectedGroupId);
+            
             this.datOBirth=this.lstEmployeeDetails[0].dat_dob;
             this.strGender=this.lstEmployeeDetails[0].vchr_gender;
             this.intPhoneNumber=this.lstEmployeeDetails[0].bint_phone;
             this.strEmail=this.lstEmployeeDetails[0].vchr_email;
-
+            this.lstSelectedLocation = this.lstEmployeeDetails[0].fk_hierarchy_data_id;
             this.strAddress=this.lstEmployeeDetails[0].vchr_address;
             this.strPostOffice=this.lstEmployeeDetails[0].vchr_po;
             this.strLandMark=this.lstEmployeeDetails[0].vchr_land_mark;
@@ -679,6 +788,10 @@ export class EditemployeeComponent implements OnInit {
             this.intStateId=this.lstEmployeeDetails[0].fk_dist__fk_state_id
             this.intCountryId=this.lstEmployeeDetails[0].fk_dist__fk_state__fk_country_id
             this.intPinCode=this.lstEmployeeDetails[0].int_pincode;
+
+            this.str_Level=this.lstEmployeeDetails[0].vchr_name;
+            console.log(this.str_Level);
+            
 
             this.strDesignation=this.lstEmployeeDetails[0].fk_desig__vchr_name;
             this.intSelectedDesignation=this.lstEmployeeDetails[0].fk_desig_id
@@ -692,7 +805,7 @@ export class EditemployeeComponent implements OnInit {
             this.strEmPerson = this.lstEmployeeDetails[0].vchr_emergency_person;
             this.strEmerRelattion = this.lstEmployeeDetails[0].vchr_emergency_relation;
             this.strBloodGroup = this.lstEmployeeDetails[0].vchr_blood_group;
-
+            this.int_Level = this.lstEmployeeDetails[0].fk_hierarchy_data__fk_hierarchy_id;
             if(this.selectedCategory.toUpperCase() == 'EMPLOYEE'){
               this.intSalaryStructure=this.lstEmployeeDetails[0].fk_salary_struct_id;
             }
@@ -725,7 +838,7 @@ export class EditemployeeComponent implements OnInit {
             this.ImageLocation=this.lstEmployeeDetails[0].vchr_img;
             this.ImageSrc=this.lstEmployeeDetails[0].vchr_img;
             this.strPhysicalLocation=this.lstEmployeeDetails[0].vchr_physical_loc;
-            this.intSelectedProductId=this.lstEmployeeDetails[0].fk_product_id;
+            // this.intSelectedProductId=this.lstEmployeeDetails[0].fk_product_id;
             this.intSelectedBrandId=this.lstEmployeeDetails[0].fk_brand_id;
             if(this.lstEmployeeDetails[0].int_weekoff_type != null){
               this.intWeekOffType=this.lstEmployeeDetails[0].int_weekoff_type.toString();
@@ -796,7 +909,7 @@ export class EditemployeeComponent implements OnInit {
         
       });
       
-
+      
   }
   branchChanged(item){
     
@@ -857,6 +970,7 @@ export class EditemployeeComponent implements OnInit {
     
     
   }
+  
   getSalarySplit(){
   
     if(this.blnOnload){
@@ -909,8 +1023,9 @@ export class EditemployeeComponent implements OnInit {
   }
 
   saveData(){
+    // alert(this.intGroupId)
     let dctTempData={}
-    // console.log("intReligionId",this.intReligionId);
+    console.log("intReligionId",this.intSelectedProductId);
     // console.log("strSalutation",this.strSalutation);
     
     
@@ -961,31 +1076,33 @@ export class EditemployeeComponent implements OnInit {
       Swal.fire('Error!', 'Select department', 'error');
       return false
     }
-    if(!this.intSelectedDesignation){
+    // commented for o2force
+    // if(!this.intSelectedDesignation){
       
-      Swal.fire('Error!', 'Select Employee Designation', 'error');
-      return false
-    }
+    //   Swal.fire('Error!', 'Select Employee Designation', 'error');
+    //   return false
+    // }
     if(!this.datOJoin){      
       Swal.fire('Error!', 'Select Date of join', 'error');
       return false
     }
-    else if(!this.strLevelOfGrade){
-      Swal.fire('Error!', 'Select level of grade', 'error');
-      return false;
-    }
-    else if(!this.strGrade){
-      Swal.fire('Error!', 'Select grade', 'error');
-      return false;
-    }
+        // commented for o2force
+    // else if(!this.strLevelOfGrade){
+    //   Swal.fire('Error!', 'Select level of grade', 'error');
+    //   return false;
+    // }
+    // else if(!this.strGrade){
+    //   Swal.fire('Error!', 'Select grade', 'error');
+    //   return false;
+    // }
     else if((this.intSalaryStructure==undefined || this.intSalaryStructure==null || this.intSalaryStructure=='') && (this.selectedCategory.toUpperCase()=='EMPLOYEE')) {
       Swal.fire('Error!', 'Select salary structure', 'error');
       return false;
     }
-    else if(this.lstSelectedLoc.length==0){
-      Swal.fire('Error!', 'Select Physical Location', 'error');
-      return false;
-    }
+    // else if(this.lstSelectedLoc.length==0){
+    //   Swal.fire('Error!', 'Select Physical Location', 'error');
+    //   return false;
+    // }
     // else if(!this.strGroupName){
     //   Swal.fire('Error!', 'Enter group', 'error');
     //   return false
@@ -1208,7 +1325,7 @@ export class EditemployeeComponent implements OnInit {
     dctTempData['datDob']=moment(this.datOBirth).format('YYYY-MM-DD')
     dctTempData['datJoin']=moment(this.datOJoin).format('YYYY-MM-DD')
     dctTempData['strGender']=this.strGender;
-    // dctTempData['intGroupId']=this.selectedGroupId;
+    dctTempData['intGroupId']=this.intGroupId;
     dctTempData['intDptId']=this.intDepartmentId;
     dctTempData['intBranchId']=this.selectedBranchId;
     dctTempData['intSalaryStructId']=this.intSalaryStructure;
@@ -1225,9 +1342,14 @@ export class EditemployeeComponent implements OnInit {
     dctTempData['intproduct']=this.intSelectedProductId;
     dctTempData['inbrand']=this.intSelectedBrandId;
 
+    dctTempData['str_Level']=this.str_Level;
+
 
     
     const frmPublishedData = new FormData;
+    
+    frmPublishedData.append('str_Level',this.str_Level);
+
     frmPublishedData.append('intId',this.intEmployeeId);
     frmPublishedData.append('strFirstName',this.strFirstName);
     frmPublishedData.append('strLastName',this.strLastName);
@@ -1244,6 +1366,7 @@ export class EditemployeeComponent implements OnInit {
     frmPublishedData.append('strLevelofGrade',this.strLevelOfGrade);
     frmPublishedData.append('strGrade',this.strGrade);
     frmPublishedData.append('strEmail',this.strEmail);
+    frmPublishedData.append('intGroupId',this.intGroupId);
 
     frmPublishedData.append('strAddress',this.strAddress);
     frmPublishedData.append('strPo',this.strPostOffice);
@@ -1283,7 +1406,7 @@ export class EditemployeeComponent implements OnInit {
     frmPublishedData.append('imgSrc',this.ImageSrc);
     frmPublishedData.append('strPhysicalLoc',this.strPhysicalLocation);
     frmPublishedData.append('intWeekOffType',this.intWeekOffType);
-    frmPublishedData.append('lstLoc',JSON.stringify(this.lstSelectedLoc));
+    // frmPublishedData.append('lstLoc',JSON.stringify(this.lstSelectedLoc));
     if(this.intEsiNumber!=undefined && this.intEsiNumber !=null){
       frmPublishedData.append('strEsiNo',this.intEsiNumber);
     }
@@ -1302,7 +1425,7 @@ export class EditemployeeComponent implements OnInit {
       frmPublishedData.append('intBrandId',this.intSelectedBrandId);
     }
     if(this.intSelectedProductId!=undefined && this.intSelectedProductId!=null){
-      frmPublishedData.append('intProductId',this.intSelectedProductId);
+      frmPublishedData.append('intProductId',JSON.stringify(this.intSelectedProductId));
     }
     if(this.strLoginUser=='Super User'){
       frmPublishedData.append('intCompanyId',this.intSelectedCompanyId)
@@ -1339,7 +1462,7 @@ export class EditemployeeComponent implements OnInit {
         this.spinner.hide();
         if (response.status == 1) {
           Swal.fire('Success!', 'Employee Updated successfully', 'success');
-          this.router.navigate(['/employee/listemployee'])
+          this.router.navigate(['/user/listuser'])
 
 
         }
@@ -1357,7 +1480,7 @@ export class EditemployeeComponent implements OnInit {
     
   }
   backToList(){
-    this.router.navigate(["/employee/listemployee"]);
+    this.router.navigate(["/user/listuser"]);
 
   }
 
@@ -1390,7 +1513,7 @@ export class EditemployeeComponent implements OnInit {
     this.selectedDepartment='';
     this.selectedDepartmentId=null;
     this.strGroupName='';
-    // this.intGroupId=null;
+    this.intGroupId;
     this.selectedGroup='';
     this.selectedGroupId=null;
     this.datOBirth=null;
@@ -1418,6 +1541,8 @@ export class EditemployeeComponent implements OnInit {
     this.strDay = '';
     this.blnFixed =false;
 
+    this.str_Level = '';
+
   }
 
   savePassWord(){
@@ -1439,12 +1564,12 @@ export class EditemployeeComponent implements OnInit {
       return false;
     }
     this.spinner.show();
-    this.serverService.postData('user/update_password/', dctData).subscribe(
+    this.serverService.postData('user/updateuserpassword/', dctData).subscribe(
       (response) => {
         this.spinner.hide();
         if (response['status'] == 1){
           Swal.fire('Success!', 'Password changed successfully', 'success');
-          this.router.navigate(['/employee/listemployee'])
+          this.router.navigate(['/user/listuser'])
           this.strPassword1 = new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)]));
           this.strConfirmPassword1 = new FormControl('', CustomValidators.equalTo(this.strPassword1));
 

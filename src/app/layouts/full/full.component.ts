@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { Router } from '@angular/router';
 declare var $: any;
@@ -116,8 +118,8 @@ export class FullComponent implements OnInit {
     }
     this.handleSidebar();
     
-    this.searchItemName.valueChanges
-    .debounceTime(400)
+    this.searchItemName.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemName = [];

@@ -1,8 +1,10 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit ,HostListener} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import { ServerService } from '../../server.service';
-import 'rxjs/add/operator/debounceTime';
+
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
@@ -73,8 +75,8 @@ export class StockrequestComponent implements OnInit {
       intQty: null
     };
     this.lstItems.push(dctItem);
-    this.searchBranch.valueChanges
-      .debounceTime(400)
+    this.searchBranch.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         
         if (strData === undefined || strData === null || strData ==='') {          

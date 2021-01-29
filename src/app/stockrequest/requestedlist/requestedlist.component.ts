@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { NgxSpinnerService } from "ngx-spinner";
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-requestedlist',
@@ -71,7 +72,7 @@ export class RequestedlistComponent implements OnInit {
 
   ngOnInit() {
     this.searchBranch.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstBranch = [];

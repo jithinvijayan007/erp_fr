@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { IfStmt } from '@angular/compiler';
 import { Agent } from 'http';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stocktransfer',
@@ -166,7 +167,7 @@ export class StocktransferComponent implements OnInit {
       // }
 
     this.searchBranch.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null || strData ==='') {
           this.lstBranchTo = [];
@@ -187,7 +188,7 @@ export class StocktransferComponent implements OnInit {
       }
       );
       this.searchBranchFrom.valueChanges
-      .debounceTime(400)
+        .pipe(debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstBranch = [];
@@ -206,7 +207,7 @@ export class StocktransferComponent implements OnInit {
       }
       );
       this.searchImei.valueChanges
-      .debounceTime(400)
+        .pipe(debounceTime(400))
       .subscribe((strData: string) => {
         this.lstImeilist = [];
     

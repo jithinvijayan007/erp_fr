@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl } from '@angular/forms';
@@ -119,8 +121,8 @@ export class StocktransferComponent implements OnInit {
 
   ngOnInit() {
 
-    this.searchBranch.valueChanges
-    .debounceTime(400)
+    this.searchBranch.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null || strData ==='') {
         this.lstBranch = [];

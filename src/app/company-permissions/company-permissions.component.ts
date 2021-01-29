@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit,ViewChild,ElementRef} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -91,8 +93,8 @@ export class CompanyPermissionsComponent implements OnInit {
       confirmPassword: this.confirmPassword2
     });
 
-    this.searchCompany.valueChanges
-  .debounceTime(400)
+    this.searchCompany.valueChanges.pipe(
+  debounceTime(400))
   .subscribe((strData: string) => {
     if (strData === undefined || strData === null) {
       this.lstCompany = [];
@@ -113,8 +115,8 @@ export class CompanyPermissionsComponent implements OnInit {
 ); 
 
 
-this.searchBranch.valueChanges
-.debounceTime(400)
+this.searchBranch.valueChanges.pipe(
+debounceTime(400))
 .subscribe((strData: string) => {
   if (strData === undefined || strData === null) {
     this.lstBranch = [];

@@ -604,7 +604,7 @@
                         (click)="saveInvoice()">Save</button>
                     <button
                         *ngIf="((intGrandTot<=200000 || intApprove==2) && intApprove!=1 && intApprove!=3 && !blnApproved && blnCreditSale) || (strGroupName=='ADMIN' && intApprove!=1) "
-                        [disabled]="saveDisable || strGroupName=='ADMIN' || strGroupName=='MANAGER - SMART CHOICE' "
+                        [disabled]="saveDisable || saveDisablee || strGroupName=='ADMIN' || strGroupName=='MANAGER - SMART CHOICE' "
                         class="btn btn-success" type="submit" (click)="creditSaleRequest()">Request</button>
                     <!-- <button class="btn print_btn" style="background-color: #7eaed4;" type="submit">Preview</button> -->
                     <button *ngIf="intGrandTot>200000  && intApprove!=2 && intApprove!=1 && intApprove!=3 && strGroupName!='ADMIN' && 

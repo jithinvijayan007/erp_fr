@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { IfStmt } from '@angular/compiler';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-request-transfer',
@@ -161,7 +162,7 @@ console.log(this.branch_type,this.blnMoreTransfer,"type");
       
 
     this.searchBranch.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null || strData ==='') {
           this.lstBranch = [];
@@ -182,7 +183,7 @@ console.log(this.branch_type,this.blnMoreTransfer,"type");
       }
       );
       this.searchBranchFrom.valueChanges
-      .debounceTime(400)
+        .pipe(debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstBranch = [];
@@ -201,7 +202,7 @@ console.log(this.branch_type,this.blnMoreTransfer,"type");
       }
       );
       this.searchImei.valueChanges
-      .debounceTime(400)
+        .pipe(debounceTime(400))
       .subscribe((strData: string) => {
         this.lstImeilist = [];
     

@@ -1,3 +1,5 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, CanLoad,
    Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
@@ -28,7 +30,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     
     this.version = localStorage.getItem('version')
     
-    return this.servServ.postData('user/url_web_version/',{}).map(res => {
+    return this.servServ.postData('user/url_web_version/',{}).pipe(map(res => {
         
         if (environment.production && (Number(this.version) !== Number(res['int_version']))) {          
           swal.fire({
@@ -50,7 +52,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
         }
         return true
 
-    });
+    }));
 
 
   }

@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import {NgbModal,ModalDismissReasons,NgbActiveModal,} from '@ng-bootstrap/ng-bootstrap';
 // import * as tableData from './invoice-table';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -654,8 +656,8 @@ intCreditBalance=0
    }, 1000);
 
 
-    this.searchItemName.valueChanges
-    .debounceTime(400)
+    this.searchItemName.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemName = [];
@@ -674,8 +676,8 @@ intCreditBalance=0
       }
     );
 
-    this.searchEmi.valueChanges
-    .debounceTime(400)
+    this.searchEmi.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstEmiOptions = [];
@@ -694,8 +696,8 @@ intCreditBalance=0
       }
     );
 
-    this.searchCreditEmi.valueChanges
-    .debounceTime(400)
+    this.searchCreditEmi.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstEmiCreditOptions = [];
@@ -714,8 +716,8 @@ intCreditBalance=0
       }
     );
 
-    this.searchCity.valueChanges
-    .debounceTime(400)
+    this.searchCity.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCity = [];
@@ -733,8 +735,8 @@ intCreditBalance=0
       }
     );
 
-    this.searchState.valueChanges
-    .debounceTime(400)
+    this.searchState.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstState = [];
@@ -752,8 +754,8 @@ intCreditBalance=0
       }
     );
 
-    this.searchProduct.valueChanges
-    .debounceTime(400)
+    this.searchProduct.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstProduct = [];
@@ -771,8 +773,8 @@ intCreditBalance=0
       }
     );
 
-    this.searchBrand.valueChanges
-    .debounceTime(400)
+    this.searchBrand.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstBrand = [];
@@ -811,8 +813,8 @@ intCreditBalance=0
       }
     );
 
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItem = [];
@@ -851,8 +853,8 @@ intCreditBalance=0
       }
     );
 
-    this.searchItemCategory.valueChanges
-    .debounceTime(400)
+    this.searchItemCategory.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemCategory = [];
@@ -890,8 +892,8 @@ intCreditBalance=0
       }
     );
 
-    this.searchItemGroup.valueChanges
-    .debounceTime(400)
+    this.searchItemGroup.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItemGroup = [];
@@ -931,8 +933,8 @@ intCreditBalance=0
     
 
 
-    this.searchCustomer.valueChanges
-    .debounceTime(400)
+    this.searchCustomer.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
         if (strData.length >= 1) {
           
@@ -952,8 +954,8 @@ intCreditBalance=0
         // }
       }
     );
-    this.searchCustomerNo.valueChanges
-    .debounceTime(400)
+    this.searchCustomerNo.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCustomerNumber = [];

@@ -1,3 +1,5 @@
+
+import {debounceTime, map, startWith} from 'rxjs/operators';
 import {Component, ElementRef, ViewChild,OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ServerService } from '../server.service';
@@ -9,7 +11,6 @@ import { LocalDataSource } from 'ng2-smart-table';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
 import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
 import { timeHours } from 'd3';
 import { MatPaginator } from '@angular/material/paginator';
@@ -246,8 +247,8 @@ dctData = {}
 
     // console.log("#####this.blnDownload",this.blnDownload);
     
-    this.searchStaff.valueChanges
-    .debounceTime(400)
+    this.searchStaff.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstStaff = [];
@@ -266,8 +267,8 @@ dctData = {}
       }
     );
 
-    this.searchCustomer.valueChanges
-    .debounceTime(400)
+    this.searchCustomer.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstStaff = [];
@@ -286,8 +287,8 @@ dctData = {}
         }
       }
     );
-    this.searchItem.valueChanges
-    .debounceTime(400)
+    this.searchItem.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstItem = [];
@@ -307,8 +308,8 @@ dctData = {}
     );
 
 
-    this.searchMoreFilter.valueChanges
-    .debounceTime(400)
+    this.searchMoreFilter.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData) {
           let data =this._filter(strData)
@@ -367,8 +368,8 @@ dctData = {}
   this.dataSource = new MatTableDataSource(
     this.lstData
   );
-  this.searchVentor.valueChanges
-  .debounceTime(400)
+  this.searchVentor.valueChanges.pipe(
+  debounceTime(400))
   .subscribe((strData: string) => {
     if (strData === undefined || strData === null) {
       this.lstVentor = [];

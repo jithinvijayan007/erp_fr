@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -53,8 +55,8 @@ export class DayclosurereportComponent implements OnInit {
 
   ngOnInit() {
 
-    this.searchBranch.valueChanges
-    .debounceTime(400)
+    this.searchBranch.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstBranch = [];

@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ServerService } from '../../server.service';
@@ -102,8 +104,8 @@ export class ListBranchStockComponent implements OnInit {
       }
     });
 
-    this.searchBranch.valueChanges
-      .debounceTime(400)
+    this.searchBranch.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstBranch = [];
@@ -124,8 +126,8 @@ export class ListBranchStockComponent implements OnInit {
       }
       ); 
 
-      this.searchItem.valueChanges
-      .debounceTime(400)
+      this.searchItem.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
 
         if (this.selectedItemGroup  != this.strItemGroup|| !this.selectedItemGroup)
@@ -184,8 +186,8 @@ export class ListBranchStockComponent implements OnInit {
       }
     ); 
       
-  this.searchProduct.valueChanges
-  .debounceTime(400)
+  this.searchProduct.valueChanges.pipe(
+  debounceTime(400))
   .subscribe((strData: string) => {
     if (strData === undefined || strData === null) {
       this.lst_product = [];
@@ -203,8 +205,8 @@ export class ListBranchStockComponent implements OnInit {
     }
   }); 
 
-  this.searchItemGroup.valueChanges
-  .debounceTime(400)
+  this.searchItemGroup.valueChanges.pipe(
+  debounceTime(400))
   .subscribe((strData: string) => {
     if (strData === undefined || strData === null) {
       this.lstItemGroup = [];
@@ -225,8 +227,8 @@ export class ListBranchStockComponent implements OnInit {
 
 ); 
   
-this.searchBrand.valueChanges
-.debounceTime(400)
+this.searchBrand.valueChanges.pipe(
+debounceTime(400))
 .subscribe((strData: string) => {
   if (strData === undefined || strData === null) {
     this.lst_brand = [];

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { FormControl } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
+import { debounceTime } from 'rxjs/operators';
 
 
 
@@ -80,7 +81,7 @@ export class StockrequestlistComponent implements OnInit {
 
   ngOnInit() {
     this.searchBranch.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstBranch = [];

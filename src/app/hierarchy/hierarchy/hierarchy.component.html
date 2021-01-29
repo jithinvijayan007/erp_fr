@@ -5,6 +5,7 @@
     <div class="col-md-3 mt-1">
         
         <mat-form-field class="select mt-4">
+            <!-- <mat-select placeholder="Department" [(ngModel)]="department" (ngModelChange)="departmentSelected(department)"> -->
             <mat-select placeholder="Department" [(ngModel)]="department" (ngModelChange)="departmentSelected(department)">
               <mat-option *ngFor="let dep of lstDepartment" [value]=dep.pk_bint_id>{{dep.vchr_code | uppercase}}-{{dep.vchr_name | titlecase}}</mat-option>
             </mat-select>

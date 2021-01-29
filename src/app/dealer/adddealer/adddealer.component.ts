@@ -5,7 +5,7 @@ import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import 'rxjs/add/operator/debounceTime';
+
 import * as moment from 'moment';
 @Component({
   selector: 'app-adddealer',
@@ -431,7 +431,7 @@ console.log(localStorage,"local");
               swal.fire({
                 position: "center",
                 type: "success",
-                text: "Data Updated successfully",
+                text: "Data added successfully",
                 showConfirmButton: true,
               });
           localStorage.setItem('previousUrl','dealer/dealerlist');

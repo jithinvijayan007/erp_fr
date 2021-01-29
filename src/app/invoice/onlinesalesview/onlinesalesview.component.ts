@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -529,8 +531,8 @@ export class OnlinesalesviewComponent implements OnInit {
       this.saveButtonStatus = false;
     }
 
-    this.searchCity.valueChanges
-    .debounceTime(400)
+    this.searchCity.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCity = [];
@@ -548,8 +550,8 @@ export class OnlinesalesviewComponent implements OnInit {
     }
     );
 
-    this.searchState.valueChanges
-    .debounceTime(400)
+    this.searchState.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstState = [];
@@ -567,8 +569,8 @@ export class OnlinesalesviewComponent implements OnInit {
     }
     );
 
-    this.searchCustomerNo.valueChanges
-    .debounceTime(400)
+    this.searchCustomerNo.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCustomerNumber = [];

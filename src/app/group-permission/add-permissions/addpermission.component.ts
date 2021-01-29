@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from '../../server.service';
 import { ToastrService } from 'ngx-toastr';
@@ -871,8 +873,8 @@ export class AddpermissionComponent implements OnInit {
       }
     });
 
-    this.searchCompany.valueChanges
-    .debounceTime(400)
+    this.searchCompany.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstCompany = [];

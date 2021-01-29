@@ -32,9 +32,12 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { AddemployeeComponent } from './addemployee/addemployee.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 
+import { ViewemployeeComponent } from './viewemployee/viewemployee.component';
+
 // import { NgxSpinner } from 'ngx-spinner/lib/ngx-spinner.enum';
 import { EditemployeeComponent } from './editemployee/editemployee.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { MatExpansionModule } from '@angular/material/expansion';
 // import { MatChipsModule } from '@angular/material/chips';
 
 
@@ -67,6 +70,7 @@ import {MatRadioModule} from '@angular/material/radio';
     // NgxSpinner
     // SelectDropDownModule, 
     MatRadioModule,  
+    MatExpansionModule
   
   ],
   declarations: [
@@ -76,7 +80,9 @@ import {MatRadioModule} from '@angular/material/radio';
     // EdituserComponent,
     UsergroupaddComponent,
     AddemployeeComponent,
-    EditemployeeComponent
+    EditemployeeComponent,
+    ViewemployeeComponent, 
+
   ]
 })
 export class UsersModule {}

@@ -1,10 +1,12 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ServerService } from '../../server.service';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
-import 'rxjs/add/operator/debounceTime';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+
+import { Observable } from 'rxjs';
+
+
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -131,8 +133,8 @@ export class AdditemComponent implements OnInit {
           img3: [''],
     });
 
-    this.searchProduct.valueChanges
-      .debounceTime(400)
+    this.searchProduct.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstProduct = [];
@@ -151,8 +153,8 @@ export class AdditemComponent implements OnInit {
       }
       );
 
-    this.searchBrand.valueChanges
-      .debounceTime(400)
+    this.searchBrand.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstBrand = [];
@@ -172,8 +174,8 @@ export class AdditemComponent implements OnInit {
       }
     );
 
-    this.searchItemGroup.valueChanges
-      .debounceTime(400)
+    this.searchItemGroup.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
         if (strData === undefined || strData === null) {
           this.lstGroup = [];

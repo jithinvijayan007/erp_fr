@@ -1,3 +1,5 @@
+
+import {debounceTime} from 'rxjs/operators';
 import { Component, OnInit,ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { ServerService } from '../../server.service';
@@ -65,8 +67,8 @@ export class ViewreceiptComponent implements OnInit {
     }
     this.getData(this.viewId)
     
-    this.searchBank.valueChanges
-    .debounceTime(400)
+    this.searchBank.valueChanges.pipe(
+    debounceTime(400))
     .subscribe((strData: string) => {
       if (strData === undefined || strData === null) {
         this.lstBank = [];

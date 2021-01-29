@@ -1,3 +1,4 @@
+import { log } from 'util';
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators,FormControl } from '@angular/forms'
 import { CustomValidators } from 'ng2-validation'
@@ -102,7 +103,7 @@ export class AddemployeeComponent implements OnInit {
   lstVariableShift=[];
   lstShift=[];
   datBirthStart;
-  intSelectedGroup
+  intSelectedGroup=null;
   intPaymentMode=null;
   strBankName='';
   intAccountNum;
@@ -135,7 +136,7 @@ export class AddemployeeComponent implements OnInit {
   lstLocationData=[];
   lstGroupData=[];
   lst
-  lstSelectedLocation;
+  lstSelectedLocation = [];
   intEsiNumber=null;
   intUANNumber=null;
   intWWFNumber=null;
@@ -144,7 +145,7 @@ export class AddemployeeComponent implements OnInit {
   strDay = '';
   lstDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   functionConfig = {displayKey:"vchr_name",search:true , height: '200px',customComparator: ()=>{} ,placeholder:'Select Function',searchOnKey: 'vchr_name',clearOnSelection: true  }
-  lstFunction = []
+  lstFunction = [];
   lstSalutationData = ['Mr','Ms','Mrs'];
   strSalutation='';
 
@@ -526,7 +527,11 @@ export class AddemployeeComponent implements OnInit {
         this.serverService.getData('products/add_product/').subscribe(
           (response) => {
               if (response.status == 1) {
+                
                 this.lstProductData=response['data'];
+                
+                
+                
               }  
             },
             (error) => {   
@@ -726,8 +731,14 @@ localStorage.removeItem('intNewEmpJobId');
   }
   saveData(){
     if (this.lstFunction){
-      var lstSelectedFunction
-      lstSelectedFunction = this.lstFunction.map(x => x.pk_bint_id)
+      var lstSelectedFunction;
+      
+      
+      // lstSelectedFunction = this.lstFunction.map(loc => loc.pk_bint_id)
+      
+      console.log(this.lstFunction)
+      console.log("asdfg")
+      console.log(lstSelectedFunction,'fcdyhcdx')
     }
     // console.log(this.lstFunction);
 // console.log(this.lstFunction);
@@ -796,31 +807,33 @@ localStorage.removeItem('intNewEmpJobId');
       Swal.fire('Error!', 'Select Department', 'error');
       return false
     }
-    else if(!this.intSelectedDesignation){
-      Swal.fire('Error!', 'Select Employee Designation', 'error');
-      return false;
-    }
+      // commented for o2force
+    // else if(!this.intSelectedDesignation){
+    //   Swal.fire('Error!', 'Select Employee Designation', 'error');
+    //   return false;
+    // }
     else if(!this.datOJoin){      
       Swal.fire('Error!', 'Select Date of join', 'error');
       return false
     }
-
-    else if(!this.strLevelOfGrade){
-      Swal.fire('Error!', 'Select Level of grade', 'error');
-      return false;
-    }
-    else if(!this.strGrade){
-      Swal.fire('Error!', 'Select Grade', 'error');
-      return false;
-    }
+// commented for o2force
+    // else if(!this.strLevelOfGrade){
+    //   Swal.fire('Error!', 'Select Level of grade', 'error');
+    //   return false;
+    // }
+    // else if(!this.strGrade){
+    //   Swal.fire('Error!', 'Select Grade', 'error');
+    //   return false;
+    // }
     else if((this.intSalaryStructure==undefined || this.intSalaryStructure==null || this.intSalaryStructure=='') && (this.selectedCategory.toUpperCase()=='EMPLOYEE')){
       Swal.fire('Error!', 'Select Salary structure', 'error');
       return false;
     }
-    else if(this.lstSelectedLocation == null){
-      Swal.fire('Error!', 'Select Physical Location', 'error');
-      return false;
-    }
+      // commented for o2force
+    // else if(this.lstSelectedLocation == null){
+    //   Swal.fire('Error!', 'Select Physical Location', 'error');
+    //   return false;
+    // }
 
 
 
@@ -1164,7 +1177,7 @@ localStorage.removeItem('intNewEmpJobId');
     frmPublishedData.append('imgSrc',this.ImageSrc);
     frmPublishedData.append('strPhysicalLoc',this.strPhysicalLocation);
     frmPublishedData.append('intWeekOffType',this.intWeekOffType);
-    frmPublishedData.append('lstLoc',this.lstSelectedLocation);
+    // frmPublishedData.append('lstLoc',this.lstSelectedLocation);
     frmPublishedData.append('strFatherName',this.strFatherName);
     frmPublishedData.append('intEmPhNo',this.intEmPhNo);
     frmPublishedData.append('lstReference',JSON.stringify(this.lstReference));
@@ -1189,8 +1202,8 @@ localStorage.removeItem('intNewEmpJobId');
     if(this.intSelectedBrandId!=undefined && this.intSelectedBrandId !=null ) {
       frmPublishedData.append('intBrandId',this.intSelectedBrandId);
     }
-    if(lstSelectedFunction!=undefined && lstSelectedFunction !=null){
-      frmPublishedData.append('intProductId',lstSelectedFunction);
+    if(this.lstFunction!=undefined && this.lstFunction !=null){
+      frmPublishedData.append('intProductId',JSON.stringify(this.lstFunction));
     }
     if(this.intPaymentMode=='1'){
       frmPublishedData.append('strBankName',this.strBankName);
@@ -1222,7 +1235,7 @@ localStorage.removeItem('intNewEmpJobId');
         // this.spinner.hide();
         if (response.status == 1) {
           Swal.fire('Success!', 'Employee added successfully', 'success');
-          this.router.navigate(["/employee/listemployee"]);
+          this.router.navigate(["/user/listuser"]);
           
 
         }

@@ -682,8 +682,8 @@
                                             </mat-error>
                                         </mat-form-field>
                                     </div>
-                        
-                                    <div class="col-md-3 mt-1">
+                                    <!-- commented for o2force -->
+                                    <!-- <div class="col-md-3 mt-1">
                                         <mat-form-field>
                                             <mat-label>Employee Designation *</mat-label>
                                             <mat-select [(ngModel)]="intSelectedDesignation" [formControl]="form.controls['designationName']" [disableOptionCentering]="true">
@@ -693,7 +693,18 @@
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
-                        
+                         -->
+                                 <div class="col-md-3 mt-1">                                      
+                                        <mat-form-field>
+                                            <mat-label>Select Designation</mat-label>
+                                            <mat-select [(ngModel)]="intGroupId"  [disableOptionCentering]="true">
+                                                <mat-option *ngFor="let loc of lstgroups" value="{{loc.pk_bint_id}}">
+                                                    {{ loc.vchr_name | uppercase}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>                
+                         </div>
+
                                     <div class="col-md-3">
                                         <mat-form-field class="example-full-width">
                                             <input (click)="picker1.open()" [formControl]="form.controls['doj']" matInput required readonly [matDatepicker]="picker1" placeholder="Date of Join" [(ngModel)]="datOJoin" #dojoinvalue>
@@ -759,21 +770,11 @@
                                         <!-- <input type="number" required [(ngModel)]="fltGrossPay" (change)="getSalarySplit()" name="grosspay" value="" class="input1" > -->
                         
                                     </div>
-                                      <div class="col-md-3 mt-1">                                      
-                                        <mat-form-field>
-                                            <mat-label>Select Group</mat-label>
-                                            <mat-select [(ngModel)]="intGroupId"  [disableOptionCentering]="true">
-                                                <mat-option *ngFor="let loc of lstgroups" value="{{loc.pk_bint_id}}">
-                                                    {{ loc.vchr_name | uppercase}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>                
-                         </div>
-
+                              
                                     <div class="col-md-3 mt-1">                                      
                                         <mat-form-field>
                                             <mat-label>Select level</mat-label>
-                                            <mat-select [(ngModel)]="int_Level" (ngModelChange)="levelChanged()" [disableOptionCentering]="true">
+                                            <mat-select [(ngModel)]="int_Level" (ngModelChange)="levelChanged($event)" [disableOptionCentering]="true">
                                                 <mat-option *ngFor="let loc of lstLevelData" value="{{loc.pk_bint_id}}">
                                                     {{ loc.vchr_name | uppercase}}
                                                 </mat-option>
@@ -856,7 +857,7 @@
                                                 <mat-form-field>
                                                     <mat-label>Select Functions</mat-label>
                                                     <mat-select [(ngModel)]="lstFunction" multiple [disableOptionCentering]="true">
-                                                        <mat-option *ngFor="let loc of lstProductData" value="{{loc.pk_bint_id}}">
+                                                        <mat-option *ngFor="let loc of lstProductData" [value]="loc.pk_bint_id">
                                                             {{ loc.vchr_name | uppercase}}
                                                         </mat-option>
                                                     </mat-select>
