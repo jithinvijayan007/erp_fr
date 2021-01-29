@@ -1,5 +1,5 @@
 import { Injectable, ViewChild, QueryList, ViewChildren } from '@angular/core';
-import 'chart.piecelabel.js';
+// import 'chart.piecelabel.js';
 import { BaseChartDirective } from 'ng2-charts/charts/charts';
 import { ServerService } from './server.service';
 import { log } from 'util';

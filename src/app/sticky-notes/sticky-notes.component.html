@@ -1,0 +1,23 @@
+<!-- Sticky start here -->
+<div class="col-lg-4 col-md-12" style="padding: 0px;">
+    <div class="col-md-4 col-lg-12 sticky-display hidden-xs">
+        <div class="sticky_style">
+            <sticky [sticky-offset-top]="20">
+                <div style="margin-top: 0rem !important;" class="mt-2" *ngFor="let data of lstStickyData; let i = index;" [attr.data-index]="i">
+                    <div [style.backgroundColor]="data.vchr_colour" class="sticky_bg">
+                        <i class="fa fa-close" style="float:right; color:#6d7278;" (click)="deleteData(data.pk_bint_id)"></i>
+                        <i class="fa fa-check" style="float:right; color:#6d7278;" (click)="editData(data,data.pk_bint_id)"></i>
+                        <!-- <i *ngIf="flag[i]" class="fa fa-eye-slash" style="float:right; color:grey;" (click)="flag[i]=false"></i>
+                      <i *ngIf="!flag[i]" class="fa fa-eye" style="float:right; color:grey;" (click)="flag[i]=true"></i> -->
+                        <!-- <label>{{data.vchr_head}}</label> -->
+                        <textarea maxlength="30" class="sticky_title" placeholder="Title" [(ngModel)]="data.vchr_head" name="stickyDescEdit" [style.backgroundColor]="data.vchr_colour" style="border:none; height: 40px;resize: none;"></textarea>
+                        <textarea maxlength="700" placeholder="Note here" *ngIf="flag[i]" [(ngModel)]="data.vchr_description" #elem [id]="'text'+data.pk_bint_id" [style.backgroundColor]="data.vchr_colour" style="border:none; height: 140px;resize: none;"></textarea>
+
+                    </div>
+                </div>
+
+            </sticky>
+        </div>
+    </div>
+</div>
+<!-- Sticky end here -->

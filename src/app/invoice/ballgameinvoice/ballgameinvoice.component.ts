@@ -470,7 +470,7 @@ dctImages={}
 
     
     localStorage.setItem('invoiceReceipt','')
-    this.url = this.serviceObject.url
+    this.url = this.serviceObject['url']
     this.hostaddress = this.serviceObject.hostAddress
     this.hostaddress = this.hostaddress.slice(0, this.hostaddress.length - 1)
     this.printDisable=true; //disable print button

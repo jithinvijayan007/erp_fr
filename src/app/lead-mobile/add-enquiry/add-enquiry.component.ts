@@ -2508,7 +2508,7 @@ export class AddEnquiryComponent implements OnInit, AfterViewInit {
             if (this.blnPrint) {
               this.downloadEnquiry(res['enqId']);
             } else {
-              this.router.navigate(['/crm/enquirylist']);
+              // this.router.navigate(['/lead/lead-list']);
             }
           });
         } else {

@@ -1,0 +1,441 @@
+<div *ngIf="groupName !='HOSTESS'">
+<button class="open-navbar" (click)="openNavbar()">
+  <i class="icon fa fa-comments"></i>
+</button>
+</div>
+<div id="additional-navbar" class="navbar-wrap">
+  <!-- Tittle -->
+  <div class="navbar-header">
+    <p> Chat
+      <span class="pull-right mt_1">
+
+        <!-- <button mat-icon-button  (click)="showAddGroup()">
+          <mat-icon>group_add</mat-icon>
+        </button> -->
+        <!-- <button mat-icon-button>
+          <mat-icon>settings</mat-icon>
+        </button> -->
+        <!-- <mat-menu #menu1="matMenu">
+          <button mat-menu-item>
+            <span>New group</span>
+            </button>
+            <button mat-menu-item>
+            <span>Settings</span>
+          </button>
+            </mat-menu> -->
+      </span>
+    </p>
+  </div>
+  <!-- Tittle end here -->
+
+  <!-- Search start here -->
+  <!-- <div id="search">
+    <label for="">
+      <i class="fa fa-search" aria-hidden="true"></i>
+    </label>
+    <input type="text" placeholder="Search ...">
+  </div> -->
+  <!-- Search end hera -->
+
+
+  <!-- tab containing section start here -->
+  <div *ngIf="!addGroup && !editGroup">
+    <mat-tab-group>
+
+      <!-- Contacts start here -->
+      <mat-tab label="Contacts">
+        <div class="navbar-content">
+          <div id="frame">
+            <div id="sidepanel">
+              <!-- <div id="search">
+                                <label for="">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </label>
+                                <input type="text" placeholder="Search ...">
+                            </div> -->
+              <div id="contacts">
+                <ul>
+                  <!--
+                                sdwdsds
+                                <button mat-icon-button [matMenuTriggerFor]="menufavtest">
+                                  <mat-icon>more_vert</mat-icon>
+                                </button> -->
+
+                  <!-- <mat-menu #menufavtest="matMenu">
+                                    <button mat-menu-item (click)="addtofavourite('add member')">
+                                    <span>Add a member</span>
+                                                      </button>
+                                    <button mat-menu-item>
+                                    <span >fav to Favorites</span>
+                                  </button>
+                                    <button mat-menu-item>
+                                    <mat-icon >delete</mat-icon>
+                                    <span>Delete sds</span>
+                                  </button>
+
+                                </mat-menu> -->
+                  <li class="contact" *ngFor="let user of userlist">
+                    <div class="wrap">
+                      <div class="wrap">
+                        <span (click)="getChat(user['_id'],user['username'] , user['firstname'] , user['lastname']  )" *ngIf="user['activestatus']"
+                          class="contact-status online"></span>
+                        <span (click)="getChat(user['_id'],user['username'] , user['firstname'] , user['lastname']  )" *ngIf="!user['activestatus']"
+                          class="contact-status busy"></span>
+                        <img (click)="getChat(user['_id'],user['username'] , user['firstname'] , user['lastname']  )" [src]="userProfileImagePath+user['profile_pic']"
+                          alt="">
+                        <div class="meta">
+                          <span class="name">
+                            <span (click)="getChat(user['_id'],user['username'] , user['firstname'] , user['lastname']  )">{{(user['firstname']+' '+ user['lastname']) | titlecase}} </span>
+                          </span>
+                          <span class="pull-right mt_1">
+                            <button mat-icon-button [matMenuTriggerFor]="menu1">
+                              <mat-icon>more_vert</mat-icon>
+                            </button>
+                          </span>
+                          <!-- <p class="name">
+                                                        <!-- <span (click)="getChat(user['_id'],user['username'] , user['firstname'] , user['lastname']  )">{{(user['firstname']+' '+ user['lastname']) | titlecase}} </span> -->
+                          <!-- <span class="pull-right">
+                                                            <button mat-icon-button [matMenuTriggerFor]="menu1">
+                                                              <mat-icon>more_vert</mat-icon>
+                                                            </button>
+                                                        </span>
+                                                    </p> -->
+                        </div>
+
+                      </div>
+                      <mat-menu #menu1="matMenu">
+                        <!-- <button mat-menu-item>
+                                            <mat-icon >delete</mat-icon>
+                                            <span>Delete</span>
+                                                              </button> -->
+                        <button mat-menu-item (click)="addtofavorite(user['username'])">
+                          <span>Add to Favorites</span>
+                        </button>
+                      </mat-menu>
+                    </div>
+
+
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <!-- Contacts end here -->
+
+      <!-- Recent start here -->
+      <mat-tab label="Recent">
+        <div class="navbar-content">
+          <div id="frame">
+            <div id="sidepanel">
+              <div id="contacts">
+                <ul *ngIf="recentChats.length > 0">
+                  <li class="contact" *ngFor="let recentchat of recentChats">
+                    <div class="wrap">
+                      <span *ngIf="recentchat['activestatus']" class="contact-status online"></span>
+                      <span *ngIf="!recentchat['activestatus']" class="contact-status busy"></span>
+                      <img [src]="userProfileImagePath+recentchat['profile_pic']" alt="" (click)="recentChatFunc(recentchat.from, recentchat.to )">
+                      <div class="meta">
+                        <p class="name">
+                          <span (click)="recentChatFunc(recentchat.from, recentchat.to )">{{recentchat.fname+' '+recentchat.lname | titlecase}}</span>
+                          <!-- <p class="name" *ngIf="recentchat[0].from == fromName">{{recentchat[0].to}} -->
+                          <span class="pull-right">
+                            <button mat-icon-button [matMenuTriggerFor]="menu2">
+                              <mat-icon>more_vert</mat-icon>
+                            </button>
+
+                            <mat-menu #menu2="matMenu">
+                              <button mat-menu-item (click)="clearchat(recentchat['chatpartner'])">
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete</span>
+                              </button>
+                              <button mat-menu-item>
+
+                                <span (click)="addtofavorite(recentchat['chatpartner'])">Add to Favorites</span>
+                              </button>
+                            </mat-menu>
+                          </span>
+                          <span class="preview" *ngIf="recentchat['message']">
+                            <p></p>{{recentchat['message']}}</span>
+                          <span class="preview" *ngIf="! recentchat['message']">file</span>
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <!-- Favourites start here-->
+
+                <label>Favorite contacts</label>
+
+                <ul>
+                  <li class="contact" *ngFor="let fav_user of favList">
+                    <div class="wrap">
+                      <span (click)="getChat('1',fav_user['fav_username'],fav_user['firstname'],fav_user['lastname'])" *ngIf="fav_user['activestatus']"
+                        class="contact-status online"></span>
+                      <span (click)="getChat('1',fav_user['fav_username'],fav_user['firstname'],fav_user['lastname'])" *ngIf="!fav_user['activestatus']"
+                        class="contact-status busy"></span>
+                      <img (click)="getChat('1',fav_user['fav_username'],fav_user['firstname'],fav_user['lastname'])" [src]="userProfileImagePath+fav_user['profile_pic']"
+                        alt="">
+                      <div class="meta">
+                        <p class="name">
+                          <span (click)="getChat('1',fav_user['fav_username'],fav_user['firstname'],fav_user['lastname'])">{{fav_user['firstname']+' '+fav_user['lastname'] | titlecase}} </span>
+                          <span class="pull-right">
+                            <button mat-icon-button [matMenuTriggerFor]="menufav">
+                              <mat-icon>more_vert</mat-icon>
+                            </button>
+
+                            <mat-menu #menufav="matMenu">
+                              <button mat-menu-item (click)="removefavorite(fav_user['fav_username'])">
+                                <span>Remove favorite</span>
+                              </button>
+                              <button mat-menu-item (click)="clearchat(fav_user['fav_username'])">
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete</span>
+                              </button>
+
+                            </mat-menu>
+                          </span>
+                          <!-- <span class="preview">You just got LITT up, Mike.</span> -->
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <!-- Recent end here -->
+
+      <!-- Groups start here -->
+      <!-- <mat-tab label="Groups">
+                <div class="navbar-content">
+                    <div id="frame">
+                        <div id="sidepanel">
+                            <div id="search">
+                                <label for="">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </label>
+                                <input type="text" placeholder="Search ...">
+                            </div>
+                            <div id="contacts">
+                                <ul>
+                                    <li class="contact" *ngFor="let group of myGroups">
+                                        <div class="wrap" (click)="getGroupChat(group['_id'] , group['group_name'] , group['group_icon'])">
+                                            <img [src]=" hostAddress+group['group_icon']" alt=" ">
+                                            <div class="meta ">
+                                                <p class="name ">
+                                                    <span>{{group['group_name'] | titlecase}}</span>
+                                                    <span class="pull-right">
+                                                        <button mat-icon-button [matMenuTriggerFor]="menufav">
+                                                          <mat-icon>more_vert</mat-icon>
+                                                        </button>
+
+                                                        <mat-menu #menufav="matMenu">
+                                                                                  <button mat-menu-item *ngIf="group['admin'][0].username == fromName"
+                                                                                  (click)="showEditGroup(group['_id'])">
+                                                                                      <mat-icon>edit</mat-icon>
+                                                            <span >Edit</span>
+                                                    </button>
+                                                    <button mat-menu-item>
+                                                            <mat-icon>delete</mat-icon>
+                                                            <span>Delete group</span>
+                                                          </button>
+
+                                                    </mat-menu>
+                                                    </span>
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </mat-tab> -->
+      <!-- Groups end here -->
+    </mat-tab-group>
+
+  </div>
+  <!-- tab containing section ends here -->
+
+  <!-- add group section -->
+  <!-- <div *ngIf="addGroup">
+        <div class="navbar-content">
+            <div id="frame">
+                <div id="sidepanel">
+
+
+
+                    <div id="contacts">
+
+
+                        <ul>
+                            <li class="contact" style="padding-bottom:0px;">
+                                <div class="wrap">
+                                    <img [src]="groupImagePath" (click)="fileManager(grpimg)" alt="group image">
+                                    <mat-form-field style="width: 78%">
+                                        <input matInput placeholder="Group Name" value="" [(ngModel)]="addGroupDetails.groupName">
+                                    </mat-form-field>
+                                </div>
+                            </li>
+                        </ul>
+                        <input type="file" accept="image/x-png,image/gif,image/jpeg" hidden='true' #grpimg (change)="onFileChange($event)">
+
+                        <ul>
+                            <li class="contact" *ngFor="let user of userlist">
+                                <div class="wrap">
+                                    <div class="wrap" (click)="addMemberToGroup(user['username'])">
+
+                                        <span class=" addgroup" *ngIf="addGroupDetails.members.includes(user['username'])">
+                                            <i class="fa fa-check"></i>
+                                            </span>
+                                        <img [src]="userProfileImagePath+user['profile_pic']" alt="">
+                                        <div class="meta">
+                                            <p class="name">{{(user['firstname']+' '+ user['lastname']) | titlecase}}
+
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <button (click)="saveNewGroup()">save group</button>
+                        <button (click)="addGroup = false">cancel</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div> -->
+  <!-- add group section ends here -->
+
+
+
+
+
+  <!-- edit group section -->
+  <!-- <div *ngIf="editGroup">
+        <div class="navbar-content">
+            <div id="frame">
+                <div id="sidepanel">
+                    <div id="contacts">
+                        <ul>
+                            <li class="contact" style="padding-bottom:0px;">
+                                <div class="wrap">
+                                    <img [src]="groupImagePath" (click)="fileManager(grpimgedit)" alt="group image">
+                                    <mat-form-field style="width: 78%">
+                                        <input matInput placeholder="Group Name" value="" [(ngModel)]="editGroupDetails.groupName">
+                                    </mat-form-field>
+                                </div>
+                            </li>
+                        </ul>
+                        <input type="file" accept="image/x-png,image/gif,image/jpeg" hidden='true' #grpimgedit (change)="onFileChange($event)">
+
+                        <ul>
+                            <li class="contact" *ngFor="let user of userlist">
+                                <div class="wrap">
+                                    <div class="wrap" (click)="addMemberToEditGroup(user['username'])">
+
+                                        <span class=" addgroup" *ngIf="editGroupDetails.members.includes(user['username'])">
+                                            <i class="fa fa-check"></i>
+                                            </span>
+                                        <img [src]="userProfileImagePath+user['profile_pic']" alt="">
+                                        <div class="meta">
+                                            <p class="name">{{(user['firstname']+' '+ user['lastname']) | titlecase}}
+
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <button (click)="updateGroup()">update group</button>
+                        <button (click)="editGroup = false">cancel</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div> -->
+  <!-- edit group section ends here -->
+
+
+
+
+</div>
+<span *ngFor="let chats of myChatList; let i = index ">
+  <app-chat [chats]="chats " [style.right]="(((i+1)*305))+'px'" [fromName]="fromName" [fromImage]="fromImage" (closeChatEvent)="closeChat($event)"
+    [hostAddress]="hostAddress "></app-chat>
+</span>
+
+
+
+<!-- groups hiding starts here -->
+
+<!-- <span *ngFor="let groupchat of groupChatList; let i = index ">
+  <app-groupchat [style.right]="(((i+1)*305))+'px'"
+   (closeGroupChatEvent)="closeGroupChat($event)" [fromImage]="fromImage"  [groupchat]="groupchat" [fromName]="fromName" [hostAddress]="hostAddress "
+   ></app-groupchat>
+</span> -->
+<!-- Group -->
+
+<!-- groups hiding ends here -->
+
+
+<style>
+  .mat-dialog-title {
+    margin-bottom: 0px;
+  }
+
+  .members {
+    background: #eee;
+    padding: 10px 10px 0px;
+  }
+
+  #frame #sidepanel #contacts ul {
+    -webkit-padding-start: 0px;
+    margin-bottom: 110px;
+  }
+
+  #frame #sidepanel #contacts ul li.contact {
+    position: relative;
+    padding: 10px 0 15px 0;
+    font-size: 0.9em;
+    /* cursor: pointer; */
+    list-style: none;
+    border-bottom: 1px solid #f3f3f3;
+  }
+
+  #frame #sidepanel #contacts ul li.contact .wrap img {
+    width: 40px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 10px;
+  }
+
+</style>

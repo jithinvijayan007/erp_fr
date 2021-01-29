@@ -1,0 +1,90 @@
+<!-- <button class="open-navbar" (click)="openNavbar1()">
+  <i class="icon fa fa-comments"></i>
+</button> -->
+
+<!-- Chating -->
+<div class="navbar-wrap">
+    <div id="frame" [ngClass]="classToShowTheCHat">
+        <div class="content">
+            <div class="contact-profile">
+                <img [src]="userProfileImagePath+chats['profilepic']" alt="" />
+                <p>{{chats['fullname'] | titlecase}}
+                    <br>
+                    <span *ngIf="chats['activestatus'] && !chats['typingstatus'] " class="status"><span class="contact-status online"></span>Online</span>
+                    <span *ngIf="!chats['activestatus'] && !chats['typingstatus']" class="status"><span class="contact-status busy"></span>Offline</span>
+                    <span class="status" *ngIf="chats['typingstatus']"> Typing...</span>
+                </p>
+
+                <div class="social-media">
+                    <span class="pull-right mt-1 name">
+          <!-- <button mat-icon-button (click)="closechatfunc(chats['name'])">
+            <i style="color:#ccc;" class="fa fa-star" aria-hidden="true" (click)="closechatfunc(chats['name'])"></i>
+          </button> -->
+          <button mat-icon-button (click)="minimizeChat()">
+            <i class="fa fa-minus" aria-hidden="true"></i>
+          </button>
+          <button mat-icon-button (click)="closechatfunc(chats['name'])">
+            <i class="fa fa-times" aria-hidden="true" (click)="closechatfunc(chats['name'])"></i>
+          </button>
+        </span>
+                </div>
+            </div>
+            <div class="messages" #scrollMe>
+                <ul>
+                    <span *ngFor="let msg of chats['messages']">
+                  <li *ngIf="msg['from'] != fromName" class="sent">
+                      <img class="small_profile" [src]="userProfileImagePath+chats['profilepic']" alt="" />
+                      <p *ngIf="!msg['bln_is_file']">{{msg['message']}}</p>
+
+                      <div *ngIf="msg['bln_is_file']">
+                          <div *ngIf="(msg['file_details'][0]['file_type']).includes('image')">
+                             <p style="background: transparent;    color: #435f7a;">
+                               <img class="logo attachments" (click)="saveImage(hostAddress+ msg['file_details'][0]['file_path'])" [src]="hostAddress+ msg['file_details'][0]['file_path']" alt="your file"> </p>
+                          </div>
+                          <div *ngIf="!(msg['file_details'][0]['file_type']).includes('image')">
+                             <p style="background: transparent;    color: #435f7a;"> Attachment:<a [href]="hostAddress+ msg['file_details'][0]['file_path']">file</a>  </p>
+                          </div>
+                      </div>
+
+                      <small class="timing">{{msg['send_dt'] | date : 'hh:mm:ss'}}</small>
+                  </li>
+
+                  <li  *ngIf="msg['from'] == fromName" class="replies">
+                    <img class="small_profile" [src]="userProfileImagePath+fromImage"  alt="" />
+                    <p *ngIf="!msg['bln_is_file']">{{msg['message']}}</p>
+
+                    <div *ngIf="msg['bln_is_file']">
+                        <div *ngIf="(msg['file_details'][0]['file_type']).includes('image')">
+                          <p style="background: transparent;    color: #435f7a;">
+                             <img class="logo attachments" (click)="saveImage(hostAddress+ msg['file_details'][0]['file_path'])"
+                             [src]="hostAddress+ msg['file_details'][0]['file_path']" alt="your file"> </p>
+                        </div>
+                        <div *ngIf="!(msg['file_details'][0]['file_type']).includes('image')">
+                          <p style="background: transparent;    color: #435f7a;"> Attachment:<a [href]="hostAddress+ msg['file_details'][0]['file_path']">file</a> </p>
+                        </div>
+                    </div>
+
+                    <small class="pull-right timing">{{msg['send_dt'] | date : 'hh:mm:ss'}}
+                      <span>
+                        <mat-icon *ngIf="msg['read_status']" class="mat-icon material-icons" role="img" aria-hidden="true">done_all</mat-icon>
+                      </span>
+                    </small>
+                    </li>
+                    </span>
+                </ul>
+            </div>
+            <div class="message-input" #msginputdiv>
+                <div class="wrap">
+                    <input type="text" placeholder="Write your message..." [(ngModel)]="chats.newmessage" (focus)="functionFocusChange(chats['name'],'FOCUS')" (blur)="functionFocusChange(chats['name'],'FOCUS-OUT')" (keyup)="$event.keyCode == 13 && sendSingleMessage(chats.newmessage,chats['name'])"
+                    />
+                    <i class="fa fa-paperclip attachment" aria-hidden="true" (click)='fileManager(chatupload)'></i>
+                    <input type="file" hidden='true' #chatupload (change)="onFileChange($event, chats['name'])">
+
+                    <button class="submit" (click)="sendSingleMessage(chats.newmessage,chats['name'])">
+          <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

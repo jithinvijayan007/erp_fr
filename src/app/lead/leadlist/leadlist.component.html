@@ -1,0 +1,171 @@
+<h4>
+    <span>
+    <i class="fa fa-users" aria-hidden="true"></i>
+  </span>&nbsp; All Enquiries
+    <span class="float-right" *ngIf="blnAdd">
+    <!-- <button mat-raised-button [routerLink]="['/crm/addenquirymaster']"> -->
+    <button mat-raised-button (click)="addEnquiryRouting()">
+
+       Add enquiry
+    </button>
+  </span>
+</h4>
+<p>Check your all enquiry basic details.</p>
+<div class="col-md-12 ">
+
+    <div class="row bgwhite">
+        <div class="col-md-2 col-lg-2">
+            <mat-form-field>
+                <input (click)="picker1.open()" #startDate required readonly matInput [matDatepicker]="picker1" placeholder="From" [(ngModel)]="datStartDate">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1>
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2 col-lg-2">
+            <mat-form-field>
+                <input (click)="picker2.open()" #endDate required readonly matInput [matDatepicker]="picker2" placeholder="To" [(ngModel)]="datEndDate">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2>
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3 col-lg-3">
+            <mat-form-field>
+                <input matInput placeholder="Mobile number" id="typeahead-mobile" [formControl]="searchMobile" [matAutocomplete]="mobile" [(ngModel)]="strSelectedMobileNumber" (ngModelChange)="populateFields()">
+                <mat-autocomplete #mobile="matAutocomplete">
+                    <mat-option *ngFor="let item of lstMobileNumbers" [value]="item.mobile">
+                        {{ item.mobile }} {{"-"}} {{ item.fname }} {{ item.lname }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3 col-lg-3">
+            <mat-form-field>
+                <input matInput placeholder="Branch" [(ngModel)]="branchName" (ngModelChange)="branchNameChanged($event)" name="branch" [formControl]="searchBranch" [matAutocomplete]="branch" #idBranch>
+                <mat-autocomplete #branch="matAutocomplete">
+                    <mat-option *ngFor="let item of lstBranches" [value]="item.name" (onSelectionChange)="BranchChanged(item)">
+                        {{ item.code+' - '+item.name }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2 col-lg-2">
+            <button mat-raised-button class="mt-3 mb-1 mat-accent" (click)="searchEnquiryList(startDate,endDate)" name="advancedFilter">
+             <i class="fa fa-search"></i> Search
+             </button>
+        </div>
+
+        <div class="col-md-12 col-lg-12" *ngIf="companyType == 'asd'">
+            <mat-radio-group [(ngModel)]="checkedStatus" (ngModelChange)="onChangeStatus(startDate,endDate,$event)" name="status">
+                <mat-radio-button value="All">All</mat-radio-button>
+                <mat-radio-button value="BOOKED">Booked</mat-radio-button>
+                <mat-radio-button value="NEGOTIATING">Negotiating</mat-radio-button>
+                <mat-radio-button value="PROPOSAL SEND">Proposal Send</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<div class="example-header">
+    <mat-form-field>
+        <input #enqFilter id="enquirysearch" matInput (keyup)="applyFilter($event.target.value)" placeholder="Advance search">
+    </mat-form-field>
+</div>
+
+<mat-table #table [dataSource]="dataSource" matSort>
+
+    <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header='date'> Date </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.date|date:'dd-MM-yyyy'}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="enqNo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header='enquiry'> Enq no </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            {{row.enquiry}}
+        </mat-cell>
+    </ng-container>
+    <div  *ngIf="groupname !=='FINANCIER'">
+    <ng-container matColumnDef="branchName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header='branch_name'> Branch </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            {{row.branch_name|titlecase}}
+        </mat-cell>
+    </ng-container>
+</div>
+    <!-- Progress Column -->
+    <ng-container matColumnDef="customerName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header='customer_name'> Customer </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            {{row.customer_name|titlecase}}
+        </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <!-- <ng-container matColumnDef="customerContact">
+        <mat-header-cell *matHeaderCellDef mat-sort-header='customer_contact'> Customer contact </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            {{row.customer_contact}}
+        </mat-cell>
+    </ng-container> -->
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="staffName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header='staff_name'> Staff </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color">
+            {{row.staff_name|titlecase}}
+        </mat-cell>
+    </ng-container>
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="service">
+        <mat-header-cell *matHeaderCellDef mat-sort-header='services'> Service </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color">
+            <span *ngFor="let service of row.services | slice:0:2;let tempId=index;">
+              <span *ngIf="tempId==1">, </span> {{service}}
+            </span>
+            <span *ngIf="row.services.length>2">...</span>
+            <!-- {{row.services}} -->
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header='status'> Enquiry status </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+
+            <span *ngFor="let status of row.status | slice:0:1;let tempId=index;">
+              <span *ngIf="tempId==1">, </span> {{status}}
+            </span>
+            <span *ngIf="row.status.length>1"> , ...</span>
+
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="change">
+        <mat-header-cell *matHeaderCellDef>
+            Actions
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color">
+            <button id="view" title="View" class="view_btn" (click)=detailEnquiry(row.enquiry_id) *ngIf="blnView"><i class="fa fa-eye" aria-hidden="true"></i></button>
+            <button id="followup" title="Follow-up" (click)=FollowUpHistory(row.enquiry_id) class="followup_btn" *ngIf="blnFollowupAdd"><i class="fa fa-retweet" aria-hidden="true"></i></button>
+            <button id="download" disabled title="Download" class="edit_btn" (click)="downloadEnquiry(row.enquiry_id)" *ngIf="blnView"><i class="fa fa-download" aria-hidden="true" ></i></button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<div class="bgwhite" *ngIf="lstEnquiryList.length == 0">
+    <h5 class="mat-toolbar">No Data</h5>
+</div>
+
+<mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>

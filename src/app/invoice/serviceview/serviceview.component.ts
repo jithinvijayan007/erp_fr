@@ -125,7 +125,7 @@ export class ServiceviewComponent implements OnInit {
 
     this.salesRowId = localStorage.getItem('salesRowId');
     
-    this.nodeURL = this.serviceObject.url    
+    this.nodeURL = this.serviceObject['url']    
     this.hostName = this.serviceObject.hostAddress
     // this.hostName = 'http://192.168.0.108:8080/'
 

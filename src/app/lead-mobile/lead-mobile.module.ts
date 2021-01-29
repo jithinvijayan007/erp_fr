@@ -18,10 +18,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgbModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { StarRatingModule } from 'angular-star-rating';
 import { StickyModule } from 'ng2-sticky-kit';
+import { ViewmobileleadComponent } from './viewmobilelead/viewmobilelead.component';
+import { SnotifyService } from 'ng-snotify';
+
 
 
 @NgModule({
-  declarations: [AddEnquiryComponent],
+  declarations: [AddEnquiryComponent, ViewmobileleadComponent],
   imports: [
     CommonModule,
     LeadMobileRoutingModule,

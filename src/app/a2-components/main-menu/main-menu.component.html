@@ -1,0 +1,43 @@
+<nav class="main-menu">
+  <ul>
+    <li
+      class="menu-item"
+      *ngFor="let item of mainMenuItems"
+      [ngClass]="{
+        'has-sub': item.sub,
+        'active': item.active,
+        'menu-item-group': item.groupTitle
+      }"
+      routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+    >
+      <!-- Group title -->
+      <span class="group-title" *ngIf="item.groupTitle && (item.visible === true)">{{ item.title }}</span>
+
+      <!-- Simple item -->
+      <a href="#" routerLink="{{ item.routing }}" class="item-link" *ngIf="!item.groupTitle && !item.sub && (item.visible === true)">
+        <span class="item-badge" *ngIf="item.budge" [ngStyle]="{'background': item.budgeColor}">{{ item.budge }}</span>
+        <span class="icon" *ngIf="item.icon" [ngClass]="item.icon"></span>{{ item.title }}
+      </a>
+
+      <!-- Item with sub -->
+      <a class="item-link" 
+      (click)="toggle($event, item, this)">
+        <span class="item-badge" *ngIf="item.budge" [ngStyle]="{'background': item.budgeColor}">{{ item.budge }}</span>
+        <span class="icon" *ngIf="item.icon" [ngClass]="item.icon"></span>{{ item.title }}
+        <i class="caret fa fa-angle-right" *ngIf="item.sub"></i>
+      </a>
+
+      <!-- Menu sub -->
+      <ul class="sub" *ngIf="!item.groupTitle && item.sub && (item.visible === true)">
+        <ng-container *ngFor="let itemSub of item.sub">
+        <li
+          class="menu-item"
+          routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+        >
+          <a href="#" routerLink="{{ itemSub.routing }}" class="item-link">{{ itemSub.title }}</a>
+        </li>
+      </ng-container>
+      </ul>
+    </li>
+  </ul>
+</nav>

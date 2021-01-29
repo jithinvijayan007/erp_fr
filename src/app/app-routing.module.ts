@@ -60,6 +60,8 @@ export const Approutes: Routes = [
       { path: 'department', loadChildren: './department/department.module#DepartmentModule' },
       { path: 'group-permission', loadChildren: './group-permission/group-permission.module#GroupModule' },
       { path: 'enquiry', loadChildren: './lead-mobile/lead-mobile.module#LeadMobileModule' },
+      { path: 'lead', loadChildren: './lead/lead.module#LeadModule' },
+
 
 
     ]

@@ -12,7 +12,7 @@ import { MatDialog  } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { TypeaheadService } from 'src/app/typeahead.service';
 import { ChartService } from '../../chart.service';
-import 'chart.piecelabel.js';
+// import 'chart.piecelabel.js';
 import { debounceTime } from 'rxjs/operators';
 @Component({
   selector: 'app-branch-report',

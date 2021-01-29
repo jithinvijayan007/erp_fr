@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { BranchReportRoutingModule } from './branch-report-routing.module';
 import { BranchReportComponent } from './branch-report.component';
-import { CommoncomponentsModule } from '../../commoncomponents.module';
+// import { CommoncomponentsModule } from '../../commoncomponents.module';
 
 @NgModule({
   imports: [
     CommonModule,
     BranchReportRoutingModule,
-    CommoncomponentsModule
+    // CommoncomponentsModule
   ],
   declarations: [
     BranchReportComponent

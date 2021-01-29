@@ -53,7 +53,10 @@ import { TitleCasePipe } from '@angular/common';
 import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { DataService } from './global.service';
 import { TypeaheadService } from './typeahead.service';
+import {SharedService} from './layouts/shared-service';
+import { SnotifyService } from 'ng-snotify';
 
+import { from } from 'rxjs';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -107,14 +110,17 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatAutocompleteModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    
   ],
   providers: [
     ServerService,
+    SnotifyService,
     FormBuilder,
     DatePipe,
     TitleCasePipe,
     DataService,
     AuthGuard,
+    SharedService,
     TypeaheadService,
     {
       provide: PERFECT_SCROLLBAR_CONFIG,

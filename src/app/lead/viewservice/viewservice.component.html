@@ -1,0 +1,585 @@
+<div class ="blur">
+<h4>
+  <span>
+    <i class="fa fa-users" aria-hidden="true"></i>
+  </span>&nbsp; View enquiry
+  <span class="float-right">
+    <button mat-raised-button [routerLink]="['/crm/servicelist']">
+      <i class="fa fa-chevron-circle-left"></i> Back
+    </button>
+   
+  </span>
+</h4>
+<p>All the details of selected Service.</p>
+<div class="col-md-12 col-lg-12">
+  <div class="row">
+    <card class="col-md-12">
+      <h4 class="form-head">Service Details {{'- ' + dctEnquiry.vchr_job_num}}
+        <span class="pull-right accent">
+          <i class="fa fa-chevron-up" (click)="blnShowCustFullDetails = !blnShowCustFullDetails" *ngIf="blnShowCustFullDetails"></i>
+          <i class="fa fa-chevron-down" (click)="blnShowCustFullDetails = !blnShowCustFullDetails" *ngIf="!blnShowCustFullDetails"></i>
+        </span>
+        <!-- <span class="pull-right" *ngIf="dctEnquiry['dbl_total_amount']"> Total Amt : {{(dctEnquiry.dbl_total_amount).toFixed(2)}} &nbsp;&nbsp;</span> -->
+        <!-- <span class="pull-right" *ngIf="!dctEnquiry['dbl_total_amount']"> Total Amt : 0.00 &nbsp;&nbsp;</span> -->
+      </h4>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Mobile Number</label>
+            <p *ngIf="dctEnquiry['cust_mobile']">{{dctEnquiry.cust_mobile}}</p>
+            <p *ngIf="!dctEnquiry['cust_mobile']">{{'----'}}</p>
+
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Email Id</label>
+            <p *ngIf="dctEnquiry.cust_email">{{dctEnquiry.cust_email}}</p>
+            <p *ngIf="!dctEnquiry.cust_email">{{'----'}}</p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>First Name</label>
+            <p *ngIf="dctEnquiry.cust_fname">{{dctEnquiry.cust_fname|uppercase}}</p>
+            <p *ngIf="!dctEnquiry.cust_fname">{{'----'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Last Name</label>
+            <p *ngIf="dctEnquiry.cust_lname">{{dctEnquiry.cust_lname|uppercase}}</p>
+            <p *ngIf="!dctEnquiry.cust_lname">{{'----'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="blnShowCustFullDetails">
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Alternate Mobile Number</label>
+            <p *ngIf="dctEnquiry.cust_alternatemobile">{{dctEnquiry.cust_alternatemobile}}</p>
+            <p *ngIf="!dctEnquiry.cust_alternatemobile">{{'----'}}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Alternate Email Id</label>
+            <p *ngIf="dctEnquiry.cust_alternatemail">{{dctEnquiry.cust_alternatemail}}</p>
+            <p *ngIf="!dctEnquiry.cust_alternatemail">{{'----'}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="blnShowCustFullDetails">
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Enquiry Source</label>
+            <p *ngIf="dctEnquiry.vchr_source_name">{{dctEnquiry.vchr_source_name|titlecase}}</p>
+            <p *ngIf="!dctEnquiry.vchr_source_name">{{'----'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Contact Source</label>
+            <p *ngIf="dctEnquiry.cust_contactsrc">{{dctEnquiry.cust_contactsrc|titlecase}}</p>
+            <p *ngIf="!dctEnquiry.cust_contactsrc">{{'----'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="blnShowCustFullDetails">
+
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Send SMS</label>
+            <p *ngIf="dctEnquiry.bln_sms">{{'Yes'}}</p>
+            <p *ngIf="!dctEnquiry.bln_sms">{{'No'}}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Branch</label>
+            <p *ngIf="dctEnquiry.vchr_name">{{dctEnquiry.vchr_name|titlecase}}</p>
+            <p *ngIf="!dctEnquiry.vchr_name">{{'----'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="blnShowCustFullDetails">
+
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Staff Name</label>
+            <p *ngIf="dctEnquiry.staff_full_name">{{dctEnquiry.staff_full_name|titlecase}}</p>
+            <p *ngIf="!dctEnquiry.staff_full_name">{{'----'}}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Date</label>
+            <p *ngIf="dctEnquiry.dat_created_at">{{dctEnquiry.dat_created_at |date:'dd-MM-yyyy'}}</p>
+            <p *ngIf="!dctEnquiry.dat_created_at">{{'----'}}</p>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row" *ngIf="blnShowCustFullDetails"> -->
+
+        <!-- <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Time</label>
+            <p *ngIf="dctEnquiry.time_created_at">{{dctEnquiry.dat_created_at}}</p>
+            <p *ngIf="!dctEnquiry.time_created_at">{{'----'}}</p>
+          </div>
+        </div> -->
+      <!-- </div> -->
+    </card>
+    <!-- </div>
+</div> -->
+    <!-- <card class="col-md-12" *ngIf="(groupName=='FINANCIER' && dctEnquiry['status']!='PENDING') || (groupName=='BRANCH MANAGER' && dctEnquiry['status']!='PENDING') || (groupName=='FINANCE ADMIN')">
+      <h4 class="form-head">Finance Details
+
+      </h4>
+
+      <div class="row">
+        <div class="col-md-6" *ngIf="dctEnquiry['status']">
+          <div class="form-group mt-1">
+            <label>Status</label>
+            <p>{{dctEnquiry['status'] | titlecase}}</p>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="dctEnquiry.status != 'PENDING' && dctEnquiry.status != 'NOT ELIGIBLE'">
+          <div class="form-group mt-1">
+            <label>Amount</label>
+            <p>{{eligibleAmount}}</p>
+          </div>
+        </div>
+        <div class="col-md-12" *ngIf="dctEnquiry.status != 'PENDING' && dctEnquiry.status != 'NOT ELIGIBLE' && strEligibleRemarks">
+          <div class="form-group mt-1">
+            <label>Remarks</label>
+            <p>{{strEligibleRemarks}}</p>
+          </div>
+        </div>
+
+      </div> -->
+      <!-- </div> -->
+    <!-- </card> -->
+    <!-- <div > -->
+    <card class="col-md-12" *ngFor="let key of enqKeys">
+      <span *ngFor="let item of dctEnquiryDetails[key];let tempId=index">
+        <h4 class="form-head" style="padding-right: 4px;">{{key}} 
+
+        <span class="pull-right accent"  *ngIf="item['vchr_job_status'] =='FORWARDED/SERVICED' && groupName=='SERVICE MANAGER'"><button (click)="approve()" class="approve">Approve</button></span>
+
+        <!-- follow-up -->
+      
+        <!-- <span class="pull-right accent" *ngIf="((groupName=='BRANCH MANAGER' || groupName=='ASSISTANT BRANCH MANAGER') && item['vchr_job_status'] == 'CHECKED')">
+          <span class="pull-right accent" (click)="changeFollowUp(tempId,key,0,item)"
+            *ngIf="(!(intFollowUpFlag == tempId && strFollowUpService == key)) && item['vchr_job_status'] == 'CHECKED'">
+            <i class="fa fa-plus-circle" title="Follow-up" aria-hidden="true"></i>follow-up</span>
+          <span class="pull-right accent" (click)="changeFollowUp(-1,'',1,item)"
+            *ngIf="(intFollowUpFlag == tempId && strFollowUpService == key) && item['vchr_job_status'] == 'CHECKED'">
+            <i class="fa fa-minus-circle" title="Follow-up" aria-hidden="true"></i>follow-up </span>
+        </span> -->
+
+        <!-- for gdp normal -->
+
+        <span class="pull-right accent" *ngIf="(item['vchr_type'] == 'GDP NORMAL' && item['vchr_job_status'] == 'GDP ADVANCED RECEIVED' && blnGdot) || (item['vchr_type'] == 'GDEW' && item['vchr_job_status'] == 'GDEW ADVANCED RECEIVED' && blnGdot) ">
+          <span class="pull-right accent" (click)="changeGdpFollowUp(tempId,key,0,item)"
+            *ngIf="(!(intGdpFollowUpFlag == tempId && strGdpFollowUpService == key)) && (item['vchr_job_status'] == 'GDP ADVANCED RECEIVED' || item['vchr_job_status'] == 'GDEW ADVANCED RECEIVED' ) && blnGdot">
+            <i class="fa fa-plus-circle" title="Follow-up" aria-hidden="true"></i> &nbsp;follow-up</span>
+          <span class="pull-right accent" (click)="changeGdpFollowUp(-1,'',1,item)"
+            *ngIf="(intGdpFollowUpFlag == tempId && strGdpFollowUpService == key) && (item['vchr_job_status'] == 'GDP ADVANCED RECEIVED' || item['vchr_job_status'] == 'GDEW ADVANCED RECEIVED' ) && blnGdot">
+            <i class="fa fa-minus-circle" title="Follow-up" aria-hidden="true"></i> &nbsp;follow-up </span>
+        </span>
+
+    <!-- for gdp normal MYG CARE -->
+
+        <span class="pull-right accent" *ngIf="(item['vchr_type'] == 'GDP NORMAL MYG CARE' && item['vchr_job_status'] == 'GDP MYG CARE' && blnHO) || (item['vchr_type'] == 'GDP NORMAL SERVICE CENTER' && item['vchr_job_status'] == 'GDP SERVICE CENTER' && blnGdot) || (item['vchr_type'] == 'GDEW MYG CARE' && item['vchr_job_status'] == 'GDEW MYG CARE' && blnHO) || (item['vchr_type'] == 'GDEW SERVICE CENTER' && item['vchr_job_status'] == 'GDEW SERVICE CENTER' && blnGdot) ">
+          <span class="pull-right accent" (click)="changeGdpMygCare(tempId,key,0,item)"
+            *ngIf="(!(intGdpMygCareFlag == tempId && strGdpMygCareService == key)) ">
+            <i class="fa fa-plus-circle" title="Follow-up" aria-hidden="true"></i>follow-up</span>
+          <span class="pull-right accent" (click)="changeGdpMygCare(-1,'',1,item)"
+            *ngIf="(intGdpMygCareFlag == tempId && strGdpMygCareService == key) ">
+            <i class="fa fa-minus-circle" title="Follow-up" aria-hidden="true"></i>follow-up </span>
+        </span>
+
+
+
+
+      </h4>
+      <div class="row">
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <label>Brand</label>
+              <p *ngIf="item.vchr_brand_name">{{item['vchr_brand_name'] | titlecase}}</p>
+              <p *ngIf="!item.vchr_brand_name">{{'----'}}</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group mt-1">
+              <label>Item</label>
+              <p *ngIf="item.vchr_item_name">{{item['vchr_item_name'] | titlecase}}</p>
+              <p *ngIf="!item.vchr_item_name">{{'----'}}</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <label>Imei</label>
+              <p *ngIf="item.vchr_imei">{{item['vchr_imei'] | titlecase}}</p>
+              <p *ngIf="!item.vchr_imei">{{'----'}}</p>
+            </div>
+          </div>
+      </div>
+
+        <div class="row">
+          <div class="col-md-3" *ngIf =" (item['vchr_type'] !== 'GDP') && item['dat_exp_delivery']" >
+            <div class="form-group mt-1">
+              <label>Expected delivery</label>
+              <p >{{item['dat_exp_delivery']|date:'dd-MM-yyyy'}}</p>
+              <!-- <p *ngIf="!item['int_quantity']">{{'----'}}</p> -->
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mt-1">
+              <label>Job status</label>
+              <p *ngIf="item.vchr_job_status">{{item['vchr_job_status'] | titlecase}}</p>
+              <p *ngIf="!item.vchr_job_status">{{'----'}}</p>
+            </div>
+          </div>
+        
+          <div class="col-md-3" *ngIf ="item['vchr_type'] != 'GDP' && item['vchr_type'] != 'GDP NORMAL' && item['vchr_type'] != 'GDP NORMAL MYG CARE'" >
+            <div class="form-group mt-1">
+              <label>Estimated amount</label>
+              <p *ngIf="item['dbl_est_amt']">{{item['dbl_est_amt']}}</p>
+              <p *ngIf="!item['dbl_est_amt']">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3" *ngIf ="item['vchr_type'] != 'GDP' && item['vchr_type'] != 'GDP NORMAL' && item['vchr_type'] != 'GDP NORMAL MYG CARE' && item['vchr_type'] != 'GDP NORMAL' && item['vchr_type'] != 'GDP NORMAL SERVICE CENTER' && item['vchr_type'] != 'GDP NORMAL MYG CARE' && item['vchr_type'] != 'GDEW MYG CARE' && item['vchr_type'] != 'GDEW SERVICE CENTER'" >
+            <div class="form-group mt-1">
+              <label>Advance paid.</label>
+              <p *ngIf="item['dbl_advc_paid']">{{item['dbl_advc_paid']}}</p>
+              <p *ngIf="!item['dbl_advc_paid']">{{'----'}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3" *ngIf ="item['vchr_type'] == 'GDP NORMAL MYG CARE' || item['vchr_type'] == 'GDP NORMAL SERVICE CENTER' || item['vchr_job_status'] == 'GDP ADVANCED RECEIVED' || item['vchr_job_status'] == 'GDP SERVICE CENTER' || item['vchr_job_status'] == 'GDP MYG CARE' || item['vchr_job_status'] == 'GDP NORMAL SERVICE CENTER'  || item['vchr_job_status'] == 'GDP NORMAL MYG CARE' || item['vchr_job_status'] == 'GDEW MYG CARE' || item['vchr_job_status'] == 'GDEW SERVICE CENTER' " >
+            <div class="form-group mt-1">
+              <label>Advance paid.</label>
+              <p>{{item['int_advance']}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3" *ngIf ="item['vchr_type'] == 'GDP NORMAL MYG CARE'" >
+            <div class="form-group mt-1">
+              <label>Transfer To.</label>
+              <p>MYG Care</p>
+            </div>
+          </div>
+
+          <div class="col-md-3" *ngIf ="item['vchr_type'] == 'GDP NORMAL SERVICE CENTER' " >
+            <div class="form-group mt-1">
+              <label>Transfer To.</label>
+              <p>Service Center</p>
+            </div>
+          </div>
+
+        <div class="col-md-6" *ngIf="dctEnquiry.lst_worked_on.length>0">
+            <div *ngIf="dctEnquiry['lst_worked_on']['0']['worked_on']" class="form-group mt-1">
+              <label>Forward From.</label>
+              <p>{{dctEnquiry['lst_worked_on']['0']['worked_on']}} ({{dctEnquiry['lst_worked_on']['0']['branch']}})</p>
+            </div>
+        </div>
+        <div class="col-md-6" *ngIf="dctEnquiry.lst_worked_on.length>0">
+            <div  *ngIf="dctEnquiry['lst_worked_on']['1']['worked_on_completed']" class="form-group mt-1">
+              <label>Serviced By.</label>
+              <p>{{dctEnquiry['lst_worked_on']['1']['worked_on_completed']}} ({{dctEnquiry['lst_worked_on']['1']['branch']}})</p>
+            </div>
+        </div>
+
+
+          <div class="col-md-3" *ngIf ="item['int_expenses']" >
+            <div class="form-group mt-1">
+              <label>Service Amt.</label>
+              <p>{{item['int_expenses']}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3" *ngIf ="item['vchr_type'] == 'NON-WARRANTY' || item['vchr_type'] == 'SERVICE CENTER' " >
+            <div class="form-group mt-1">
+              <label>Discount Amt.</label>
+              <p>{{item['dbl_discount']}}</p>
+            </div>
+          </div>
+          
+          <!-- <div class="col-md-3" >
+            <div class="form-group mt-1">
+              <label>GDP</label>
+              <p>{{item['dbl_gdp']}}</p>
+            </div>
+          </div> -->
+          <!-- <div class="col-md-3" *ngIf="(item['vchr_enquiry_status'] == 'BOOKED') || (item['vchr_enquiry_status'] == 'INVOICED') && (key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Slr Cam' || key == 'Digital Camera' )">
+            <div class="form-group mt-1">
+              <label>GDEW</label>
+              <p>{{item['dbl_gdew']}}</p>
+            </div>
+          </div> -->
+
+          <div class="col-md-3" *ngIf ="item['vchr_type'] == 'NON-WARRANTY' || item['vchr_type'] == 'SERVICE CENTER' ">
+            <div class="form-group mt-1">
+              <label>Balance Amt.</label>
+              <p>{{item['dbl_total_amount']}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-3" *ngIf ="item['vchr_type'] == 'GDP'">
+            <div class="form-group mt-1">
+              <label>Date of Purchase</label>
+              <p>{{item['dat_purchase'] |date:'dd-MM-yyyy'}}</p>
+            </div>
+          </div>
+
+          <!-- </div> -->
+        </div>
+        <div class="row" *ngIf ="item['vchr_type'] != 'GDP' && item['json_acc_received']['acc_received'].length>0">
+          <div class="col-md-12" >
+            <div class="form-group mt-1">
+              <label>Accessories Received</label>
+                <p *ngIf="item['json_acc_received']"><span *ngFor="let acc of item['json_acc_received']['acc_received'];let i = index;">{{acc | titlecase}}<span *ngIf="i+1 != item['json_acc_received']['acc_received'].length">,</span></span></p>
+                <p *ngIf="!item['json_acc_received']">{{'----'}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3" *ngIf ="item['vchr_type'] == 'GDP'">
+          <div class="form-group mt-1">
+            <label>Days of Missing</label>
+            <p>{{item['int_days_missing']}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf ="item['vchr_type'] == 'GDP'">
+          <div class="form-group mt-1">
+            <label>Depreciation Amount</label>
+            <p>{{item['int_depreciation_amt']}}</p>
+          </div>
+        </div>
+      
+        <div class="row" *ngIf ="item['vchr_type'] != 'GDP' && item['json_problem_category']['problem_category'].length>0" >
+          <div class="col-md-12">
+            <div class="form-group mt-1">
+              <label>Problem Category</label>
+              <p *ngIf="item['json_problem_category']">
+                <span *ngFor="let acc of item['json_problem_category']['problem_category'];let i = index;">{{acc | titlecase}}
+                  <span *ngIf="i+1 != item['json_problem_category']['problem_category'].length">,</span>
+                </span>
+              </p>
+              <p *ngIf="!item['json_problem_category']">{{'----'}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf ="item['vchr_type'] != 'GDP' && objectKeys(item['json_observation']).length>0" >
+          <div class="col-md-12">
+            <div class="form-group mt-1">
+              <label>Observations</label>
+              <div class="row" *ngFor="let observ of objectKeys(item['json_observation'])">
+                <div class="col-md-6">
+                    <p *ngIf="item['json_observation']">{{observ | titlecase}} </p>
+                </div>
+                <div class="col-md-4">
+                    <span *ngIf="item['json_observation'][observ] == 'W'">: Working</span>
+                    <span *ngIf="item['json_observation'][observ] == 'NW'">: Not Working</span>
+                </div>
+                <p *ngIf="!item['json_observation']">{{'----'}}</p>
+              </div>
+              <!-- <span *ngFor="let observ of objectKeys(item['json_observation'])">
+                <p *ngIf="item['json_observation']">{{observ | titlecase}} :
+                  <span *ngIf="item['json_observation'][observ] == 'W'">Working</span>
+                  <span *ngIf="item['json_observation'][observ] == 'NW'">Not Working</span></p>
+                <p *ngIf="!item['json_observation']">{{'----'}}</p>
+              </span> -->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group mt-1">
+              <label>Remarks</label>
+              <p *ngIf="item['vchr_remarks']">{{item['vchr_remarks'] | titlecase}}</p>
+              <p *ngIf="!item['vchr_remarks']">{{'----'}}</p>
+            </div>
+          </div>
+        </div>
+
+     
+      <div class="row mt-3" *ngIf ="item['vchr_type'] != 'GDP' && item['lst_service_image'].length>0" >
+          <div class="col-md-12">
+              <label >Image</label>
+              <div class="form-group mt-1">
+                <img src="{{nodeHost}}{{image}}" alt="" style="width:150px;height:150px;margin-right: 10px;margin-top:10px;" *ngFor = "let image of item['lst_service_image']">
+              </div>
+          </div>
+          <div class="col-md-6" *ngIf ="item['vchr_type'] != 'GDP' && item['vchr_digital_signature']" >
+              <label >Signature</label>
+          <div class="form-group mt-1">
+            <img src="{{hostName}}{{item['vchr_digital_signature']}}" alt="" style="width:100%;height:150px;">
+          </div>
+          </div>
+      </div>
+
+
+
+        <!-- Add follow-up section -->
+
+        <!-- <div class="row"  *ngIf="intFollowUpFlag == tempId && strFollowUpService == key">
+          <div class="col-md-12">
+            <h6>Add Follow-up</h6>
+          </div>
+        </div>
+
+          <div class="col-md-3 col-lg-3">
+            <mat-form-field>
+                <input (click)="picker1.open()" #startDate required readonly matInput [matDatepicker]="picker1" placeholder="Date" [(ngModel)]="datFollowup">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1>
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+
+          <div class="col-md-4">
+            <mat-form-field>
+              <input OnlyNumber="true" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4">
+            <mat-form-field>
+              <input OnlyNumber="true" [(ngModel)]="intFollowUpDiscount" matInput placeholder="Discount amount">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4">
+            <mat-form-field>
+              <input OnlyNumber="true" [(ngModel)]="intFollowUpAdvance" matInput placeholder="Advance paid">
+            </mat-form-field>
+          </div>
+
+
+          <div class="col-md-4">
+            <mat-form-field> 
+              <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+    
+          <div class="col-md-12">
+            <mat-form-field class="mb-0">
+              <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-12">
+            <button class="mat-raised-button mat-accent" type="submit" (click)="saveFollowup(item['pk_bint_id'],tempId, key, item['dbl_amount'])">Save</button>
+            <button class="mat-raised-button cancel_btn" (click)="changeGdpGdew(-1,'',1,item)">Cancel</button>
+          </div> -->
+
+          
+        <!-- </div> -->
+
+     <!-- Add follow-up section END-->
+
+    <!-- Add follow-up section for gdp normal-->
+        <div *ngIf="intGdpFollowUpFlag == tempId && strGdpFollowUpService == key && blnGdot"> 
+            <div class="row">
+                <div class="col-md-12">
+                  <h6>Add Follow-up</h6>
+                </div>
+
+      
+            <div class="col-md-3 col-lg-3">
+              <mat-form-field>
+                <mat-select id="type" required placeholder="Transfer To" [(ngModel)]="strTransfer">
+                    <mat-option value="mygcare">Myg Care</mat-option>
+                    <mat-option value="servicecenter">Service Center</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            
+            <div class="col-md-12">
+              <button class="mat-raised-button mat-accent" type="submit" (click)="saveGdpFollowup(item['pk_bint_id'],tempId, key)">Save</button>
+              <button class="mat-raised-button cancel_btn" (click)="changeGdpFollowUp(-1,'',1,item)">Cancel</button>
+            </div> 
+          </div>
+        </div>
+     
+
+   <!-- Add follow-up section for gdp normal myg care-->
+
+   <div *ngIf="intGdpMygCareFlag == tempId && strGdpMygCareService == key"> 
+    <div class="row">
+        <div class="col-md-12">
+          <h6>Add Follow-up</h6>
+        </div>
+
+        <div class="col-md-3 col-lg-3">
+          <mat-form-field>
+            <input OnlyNumber="true" [(ngModel)]="intMygServiceAmt" matInput placeholder="Service Amount">
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-12">
+            <button class="mat-raised-button mat-accent" type="submit" (click)="saveGdpMygCare(item['pk_bint_id'],tempId, key)">Save</button>
+            <button class="mat-raised-button cancel_btn" (click)="changeGdpMygCare(-1,'',1,item)">Cancel</button>
+        </div> 
+
+      </div>
+    </div>
+
+
+     <label *ngIf ="item['vchr_type'] == 'GDP'">Uploaded Documents</label>
+     <div class="row" *ngIf ="item['vchr_type'] == 'GDP' && item['json_documents']" >
+       
+       <div class="col-md-3" *ngFor = "let key of item['json_documents'];let Id=index">
+          <label style="color:black !important">Document {{Id+1}}</label>
+          <div class="form-group mt-1" (mouseover)="hover=true" (mouseleave)="hover=false">
+            <img src="{{key}}" alt="" (click)="imagePopUp(key)" [ngStyle]="{cursor: hover==true  ? 'zoom-in' : 'default' }">
+          </div>
+       </div>
+     </div>
+      
+
+      </span>
+    </card>
+   
+
+  </div>
+</div>
+<!-- <div>
+  <app-calender></app-calender>
+  <app-sticky-notes></app-sticky-notes>
+</div> -->
+
+</div>
+
+<div class="modal" id="myModal" role="dialog" [style.display]="showModal ? 'block' : 'none'" appOutside (click)="ClickedOut($event)" >
+  <div class="modal-dialog" [style.display]="showModal ? 'block' : 'none'">
+      <div class="modal-content" >
+          <!-- <div class="modal-header"> -->
+              <!-- <button type="button" class="close" data-dismiss="modal" (click)="hideModal()">&times;</button> -->
+              <!-- <h4 class="modal-title" >
+                  <span style="color: #fff">Image</span>
+              </h4> -->
+          <!-- </div> -->
+          
+          <div class="modal-body">
+              <img src="{{imgPath}}" alt="">
+          </div>
+
+      </div>
+  </div>
+</div>
+

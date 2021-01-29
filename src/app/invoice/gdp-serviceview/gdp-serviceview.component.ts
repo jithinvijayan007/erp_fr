@@ -96,7 +96,7 @@ export class GdpServiceviewComponent implements OnInit {
 
     this.salesRowId = localStorage.getItem('salesRowId');
     
-    this.nodeURL = this.serviceObject.url
+    this.nodeURL = this.serviceObject['url']
 
     this.form = this.formBuilder.group({
       img1: [''],

@@ -1,0 +1,84 @@
+<!-- Right Nav -->
+<div class="col-lg-4 col-md-12" style="padding: 0px;">
+    <!-- Calender -->
+
+    <card id="calender" class="col-md-6 col-lg-12 pull-left">
+        <ng-template #modalContent let-close="close()">
+            <div class="modal-header">
+                <h5 class="modal-title">{{eventDate|date:'EEEE dd MMM,yyyy'}}</h5>
+                <button type="button" class="close" (click)="strCalendarNote=''; close">
+        <!-- <span aria-hidden="true">&times;</span> -->
+        <span aria-hidden="true">
+          <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">highlight_off</mat-icon>
+        </span>
+      </button>
+            </div>
+            <div class="modal-body">
+                <!-- add notes -->
+                <div *ngIf="blnCalendarNote">
+                    <mat-form-field>
+                        <textarea matInput rows="1" #strCalendarNotes (keyup)="calendarnoteTrim()" [(ngModel)]="strCalendarNote" placeholder="Add your note"></textarea>
+                    </mat-form-field>
+                    <span *ngIf="!strCalendarNote.trim() && !dctCalendarNotes" style="color: #db2c2c" #errormodal>{{calendarnoteError}}</span>
+                    <!-- <span *ngIf="!strCalendarNote" style="color: #db2c2c" #errormodal>{{'*Cannot add empty spaces and empty new line'}}</span> -->
+
+
+                </div>
+                <div class="modal-body">
+                    <!-- add notes -->
+
+                    <!-- add notes end here -->
+                    <!-- Reminders -->
+                    <div *ngIf="lstSelectedReminder[0] != null">
+                        <h5>
+                            <span>Reminders</span>
+                        </h5>
+                        <div>
+                            <alert [outline]="true" *ngFor="let item of lstSelectedReminder">
+                                <mat-icon>notifications_active</mat-icon>
+                                <strong>{{item.vchr_title}} !</strong>&nbsp; {{item.vchr_description}}</alert>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" *ngIf="blnCalendarNote">
+                <button *ngIf="strCalendarNote || dctCalendarNotes" type="button" class="btn mat-raised-button mat-accent" (click)="noteSection(errormodal);close">
+        <span *ngIf="!dctCalendarNotes && strCalendarNote.trim()">{{'Add'}}</span>
+        <span *ngIf="strCalendarNote && dctCalendarNotes">{{'Update'}}</span>
+        <span *ngIf="!strCalendarNote && dctCalendarNotes">{{'Delete'}}</span>
+
+      </button>
+            </div>
+        </ng-template>
+
+        <div class="row text-center">
+            <div class="col-md-12">
+                <div class="btn-group">
+                    <div class="btn_calender btn" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+                        <mat-icon style="cursor:pointer">keyboard_arrow_left</mat-icon>
+                    </div>
+
+                    <div class="btn btn_calender">
+                        <h6>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h6>
+                    </div>
+                    <div class="btn btn_calender" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+                        <mat-icon style="cursor:pointer">keyboard_arrow_right</mat-icon>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div [ngSwitch]="view">
+            <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+
+            </mwl-calendar-month-view>
+            <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+
+            </mwl-calendar-week-view>
+            <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+
+            </mwl-calendar-day-view>
+        </div>
+    </card>
+</div>
+<!-- calender end here -->

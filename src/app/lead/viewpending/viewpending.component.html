@@ -1,0 +1,1970 @@
+<h4>
+    <span>
+  <i class="fa fa-users" aria-hidden="true"></i>
+</span>&nbsp; View pending enquiry
+    <span class="float-right">
+  <!-- <button mat-raised-button [routerLink]="['/crm/editcustomer']"> -->
+  <!-- <button mat-raised-button (click)="editCustomer()" [routerLink]="['/crm/editcustomer']">
+    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+  </button> -->
+  <button mat-raised-button [routerLink]="[previousUrl]">
+    <i class="fa fa-chevron-circle-left"></i> Back
+  </button>
+  <button mat-raised-button [routerLink]="['/crm/followup']">
+    Follow-up history
+  </button>
+</span>
+</h4>
+<p>All the details of selected enquiry.</p>
+
+<div class="row">
+    <div class="col-md-8">
+        <card>
+            <h4 class="form-head">Enquiry details {{'-' + dctEnquiry.vchr_enquiry_num}}
+                <span class="pull-right accent">
+<i class="fa fa-chevron-down" (click)="blnShowCustFullDetails = !blnShowCustFullDetails" *ngIf="blnShowCustFullDetails"></i>
+<!-- <i class="fa fa-chevron-right" (click)="blnShowCustFullDetails = !blnShowCustFullDetails"  *ngIf="!blnShowCustFullDetails"></i> -->
+<i class="fa fa-chevron-right" (click)="blnShowCustFullDetails = !blnShowCustFullDetails"  *ngIf="!blnShowCustFullDetails"></i>
+
+</span>
+
+            </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Mobile Number</label>
+                        <p class="">{{dctEnquiry.cust_mobile}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Email Id</label>
+                        <p class="">{{dctEnquiry.cust_email}}</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>First Name</label>
+                        <p class="">{{dctEnquiry.cust_fname|titlecase}}</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Last Name</label>
+                        <p class="">{{dctEnquiry.cust_lname|titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="blnShowCustFullDetails">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Alternate Mobile Number</label>
+                        <p class="">{{dctEnquiry.cust_alternatemobile}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Alternate Email Id</label>
+                        <p class="">{{dctEnquiry.cust_alternatemail}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="blnShowCustFullDetails">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Source</label>
+                        <p class="">{{dctEnquiry.vchr_source_name}}</p>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Enquiry priority</label>
+                        <p class="">{{dctEnquiry.vchr_priority_name}}</p>
+                    </div>
+                </div> -->
+                <div class="col-md-6">
+                        <div class="form-group mt-1">
+                            <label>Contact Source</label>
+                            <p class="">{{dctEnquiry.cust_contactsrc}}</p>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="row" *ngIf="blnShowCustFullDetails">
+                
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Send SMS</label>
+                        <p class="" *ngIf="dctEnquiry.bln_sms">{{'Yes'}}</p>
+                        <p class="" *ngIf="!dctEnquiry.bln_sms">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                        <div class="form-group mt-1">
+                            <label>Branch</label>
+                            <p class="">{{dctEnquiry.vchr_name|titlecase}}</p>
+                        </div>
+                    </div>
+
+            </div>
+            <!-- <div class="row" *ngIf="blnShowCustFullDetails">
+                
+            
+            
+            </div> -->
+
+
+        </card>
+    </div>
+</div>
+
+
+
+<div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
+    <div class="col-md-8" *ngFor="let item of lstFlightList; let tempId=index;">
+        <card>
+            <h4 class="form-head">Flight details {{tempId+1}}
+                <!-- <span class="pull-right accent" (click)="intFlightFollowUpID = (intFlightFollowUpID != tempId)? tempId:-1"> -->
+                <span class="pull-right accent">
+                    <span class="pull-right accent" (click)="changeFollowUp(tempId,'flight',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='flight')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='flight'">   <i class="fa fa-minus-circle"  title="Follow-up" aria-hidden="true"></i> Follow-up </span>
+                </span>
+
+
+            </h4>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>From</label>
+                        <p class="">{{item.source|titlecase}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>To</label>
+                        <p class="">{{item.destination|titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Departure</label>
+                        <p class="">{{item.dat_departure|date:'dd MMM, yyyy'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Class</label>
+                        <p class="">{{item.vchr_class|titlecase}}</p>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Preffered airline</label>
+                        <p class="">{{item.vchr_airline|titlecase}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Travel type</label>
+                        <p class="" *ngIf="item.chr_type_of_travel=='O'">{{'One way'|titlecase}}</p>
+                        <p class="" *ngIf="item.chr_type_of_travel=='R'">{{'Round trip'|titlecase}}</p>
+                        <p class="" *ngIf="item.chr_type_of_travel=='M'">{{'Muti city'|titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6" *ngIf="item.chr_type_of_travel=='R'">
+                    <div class="form-group mt-1">
+                        <label>Return</label>
+                        <p class="">{{item.dat_return|date:'dd MMM, yyyy'}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of adults</label>
+                        <p class="">{{item.int_adults}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of child</label>
+                        <p class="">{{item.int_children}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of infants</label>
+                        <p class="">{{item.int_infants}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Status</label>
+                        <p class="">{{item.vchr_enquiry_status}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Estimated Amount </label>
+                        <p class="">{{item.dbl_estimated_amount}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="item.vchr_remarks">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Remarks</label>
+                        <p class="">{{item.vchr_remarks | titlecase }}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Add Follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='flight'">
+                <div class="col-md-12">
+                    <h6>Add Follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id,tempId)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+            <!-- Follow-up end here -->
+        </card>
+    </div>
+</div>
+
+
+
+
+<!-- train start -->
+<div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
+    <div class="col-md-8" *ngFor="let item of lstTrainList; let tempId=index;">
+        <card>
+            <h4 class="form-head">Train details {{tempId+1}}
+
+                <span class="pull-right accent">
+              <span class="pull-right accent" (click)="changeFollowUp(tempId,'train',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='train')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='train'">   <i class="fa fa-minus-circle"  title="Follow-up" aria-hidden="true"></i> Follow-up </span>
+                </span>
+            </h4>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>From</label>
+                        <p class="">{{item.source|titlecase}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>To</label>
+                        <p class="">{{item.destination|titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Departure</label>
+                        <p class="">{{item.dat_departure|date:'dd MMM, yyyy'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Class</label>
+                        <p class="">{{item.vchr_class|titlecase}}</p>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Preffered airline</label>
+                        <p class="">{{item.vchr_train|titlecase}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Travel type</label>
+                        <p class="" *ngIf="item.chr_type_of_travel=='O'">{{'One way'|titlecase}}</p>
+                        <p class="" *ngIf="item.chr_type_of_travel=='R'">{{'Round trip'|titlecase}}</p>
+                        <p class="" *ngIf="item.chr_type_of_travel=='M'">{{'Muti city'|titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6" *ngIf="item.chr_type_of_travel=='R'">
+                    <div class="form-group mt-1">
+                        <label>Return</label>
+                        <p class="">{{item.dat_return|date:'dd MMM, yyyy'}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of adults</label>
+                        <p class="">{{item.int_adults}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of child</label>
+                        <p class="">{{item.int_children}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of infants</label>
+                        <p class="">{{item.int_infants}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Status</label>
+                        <p class="">{{item.vchr_enquiry_status}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Estimated Amount </label>
+                        <p class="">{{item.dbl_estimated_amount}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="item.vchr_remarks">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Remarks</label>
+                        <p class="">{{item.vchr_remarks | titlecase }}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Add Follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='train'">
+                <div class="col-md-12">
+                    <h6>Add Follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+            <!-- Follow-up end here -->
+        </card>
+    </div>
+</div>
+<!-- train end -->
+
+
+
+
+<div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
+    <div class="col-md-8" *ngFor="let item of lstHotelList;let tempId=index;">
+        <card>{{indexRefresh(0)}}
+            <h4 class="form-head">Hotel details {{tempId+1}}
+                <span class="pull-right accent">
+                <span class="pull-right accent" (click)="changeFollowUp(tempId,'hotel',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='hotel')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='hotel'">   <i class="fa fa-minus-circle"  title="Follow-up" aria-hidden="true"></i> Follow-up </span>
+                </span>
+            </h4>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Check-in</label>
+                        <p class="">{{item.dat_check_in|date:'dd MMM, yyyy'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Check-out</label>
+                        <p class="">{{item.dat_check_out|date:'dd MMM, yyyy'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>City</label>
+                        <p class="">{{item.vchr_city|titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Nationality</label>
+                        <p class="">{{item.vchr_nationality|titlecase}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Star rating</label>
+                        <p class="">{{item.vchr_star_rating}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Number of rooms</label>
+                        <p class="">{{item.int_rooms}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngFor="let room of lstRoomList;let roomId= index">
+                <div class="col-md-3" *ngIf="room.fk_hotel_id==item.pk_bint_id">
+                    <!-- *ngIf="roomId>=0 && (room[roomId].fk_hotel_id!=room[roomId-1].fk_hotel_id) then roomId = 0;" -->
+                    <div class="form-group mt-1">
+                        <label>Room {{indexRefresh(1)}}{{intDefaultIndex}}</label>
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="room.fk_hotel_id==item.pk_bint_id">
+                    <div class="form-group mt-1">
+                        <label>Room type</label>
+                        <p class="">{{room.vchr_room_type}}</p>
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="room.fk_hotel_id==item.pk_bint_id">
+                    <div class="form-group mt-1">
+                        <label>No.of adults</label>
+                        <p class="">{{room.int_adults}}</p>
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="room.fk_hotel_id==item.pk_bint_id">
+                    <div class="form-group mt-1">
+                        <label>No.of children</label>
+                        <p class="">{{room.int_children}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Budget</label>
+                        <p class="">{{item.dbl_budget}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Status</label>
+                        <p class="">{{item.vchr_enquiry_status}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Estimated Amount </label>
+                        <p class="">{{item.dbl_estimated_amount}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group mt-1">
+                        <label>Meals service</label>
+                        <p class="">{{item.vchr_meal_type}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="item.vchr_remarks">
+                <div class="col-md-12">
+                    <div class="form-group mt-1">
+                        <label>Remarks</label>
+                        <p class="">{{item.vchr_remarks | titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Add Follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='hotel'">
+                <div class="col-md-12">
+                    <h6>Add Follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" value="">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+            <!-- Follow-up end here -->
+        </card>
+    </div>
+</div>
+
+
+
+
+
+<div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
+    <div class="col-md-8" *ngFor="let item of lstVisaList;let tempId=index">
+        <card>
+            <h4 class="form-head">Visa details {{tempId+1}}
+                <span class="pull-right accent">
+                <span class="pull-right accent" (click)="changeFollowUp(tempId,'visa',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='visa')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='visa'">   <i class="fa fa-minus-circle"  title="Follow-up" aria-hidden="true"></i> Follow-up </span>
+                </span>
+            </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Country</label>
+                        <p class="">{{item.vchr_country_name}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Category</label>
+                        <p class="">{{item.vchr_visa_category}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Visit type</label>
+                        <p class="">{{item.vchr_visit_type}}</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Duration type</label>
+                        <p class="">{{item.vchr_duration_type}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Duration</label>
+                        <p class="">{{item.dbl_duration}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of adults</label>
+                        <p class="">{{item.int_adults}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of child</label>
+                        <p class="">{{item.int_children}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of infants</label>
+                        <p class="">{{item.int_infants}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Status</label>
+                        <p class="">{{item.vchr_enquiry_status}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Estimated Amount </label>
+                        <p class="">{{item.dbl_estimated_amount}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="item.vchr_remarks">
+                <div class="col-md-12">
+                    <div class="form-group mt-1">
+                        <label>Remarks</label>
+                        <p class="">{{item.vchr_remarks | titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Add Follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='visa'">
+                <div class="col-md-12">
+                    <h6>Add Follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" value="">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Follow-up end here -->
+
+
+        </card>
+    </div>
+</div>
+
+
+
+
+
+<!-- <div class="row">
+<div class="col-md-8">
+<card>
+<h4 class="form-head">Package details</h4>
+<div class="row">
+<div class="col-md-6">
+<div class="form-group mt-1">
+<label>Mobile Number</label>
+<p class=""></p>
+</div>
+</div>
+<div class="col-md-6">
+<div class="form-group mt-1">
+<label>Email Id</label>
+<p class=""></p>
+</div>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-md-6">
+<div class="form-group mt-1">
+<label>First Name</label>
+<p class=""></p>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="form-group mt-1">
+<label>Last Name</label>
+<p class=""></p>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-6">
+<div class="form-group mt-1">
+<label>Alternate Mobile Number</label>
+<p class=""></p>
+</div>
+</div>
+<div class="col-md-6">
+<div class="form-group mt-1">
+<label>Alternate Email Id</label>
+<p class=""></p>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-6">
+<div class="form-group mt-1">
+<label>Contact Source</label>
+<p class=""></p>
+</div>
+</div>
+<div class="col-md-6">
+<div class="form-group mt-1">
+<label>Send me Promotion SMS</label>
+<p class=""></p>
+</div>
+</div>
+
+
+</div>
+
+
+</card>
+</div>
+</div> -->
+
+
+
+
+<div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
+    <div class="col-md-8" *ngFor="let item of lstForexList;let tempId = index">
+        <card>
+            <h4 class="form-head">Forex details{{ tempId+1}}
+                <span class="pull-right accent">
+                <span class="pull-right accent" (click)="changeFollowUp(tempId,'forex',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='forex')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='forex'">   <i class="fa fa-minus-circle"  title="Follow-up" aria-hidden="true"></i> Follow-up </span>
+                </span>
+
+            </h4>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Amount</label>
+                        <p class="">{{item.dbl_amount}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Currency from</label>
+                        <p class="">{{item.vchr_from|titlecase}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Currency to</label>
+                        <p class="">{{item.vchr_to|titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Status</label>
+                        <p class="">{{item.vchr_enquiry_status}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Estimated Amount </label>
+                        <p class="">{{item.dbl_estimated_amount}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="item.vchr_remarks">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Remarks</label>
+                        <p class="">{{item.vchr_remarks | titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='forex'">
+                <div class="col-md-12">
+                    <h6>Add Follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" value="">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+            <!-- Follow-up end here -->
+        </card>
+    </div>
+</div>
+
+
+
+
+<div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
+    <div class="col-md-8" *ngFor="let item of lstTravelInsuranceList;let tempId=index">
+        <card>
+            <h4 class="form-head">Travel insurance details{{ tempId+1}}
+
+                <span class="pull-right accent">
+            <span class="pull-right accent" (click)="changeFollowUp(tempId,'travelinsurance',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='travelinsurance')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='travelinsurance'">   <i class="fa fa-minus-circle"  title="Follow-up" aria-hidden="true"></i> Follow-up </span>
+                </span>
+
+
+            </h4>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Type</label>
+                        <p class="">{{item.vchr_insurance_type}}</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Date from</label>
+                        <p class="">{{item.dat_from|date:'dd MMM, yyyy'}}</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Date to</label>
+                        <p class="">{{item.dat_to|date:'dd MMM, yyyy'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of adults</label>
+                        <p class="">{{item.int_adults}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of child</label>
+                        <p class="">{{item.int_children}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of infants</label>
+                        <p class="">{{item.int_infants}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Status</label>
+                        <p class="">{{item.vchr_enquiry_status}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Estimated Amount </label>
+                        <p class="">{{item.dbl_estimated_amount}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="item.vchr_remarks">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Remarks</label>
+                        <p class="">{{item.vchr_remarks | titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Add Follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='travelinsurance'">
+                <div class="col-md-12">
+                    <h6>Add Follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" value="">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+            <!-- Follow-up end here -->
+        </card>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
+    <div class="col-md-8" *ngFor="let item of lstTransportList;let tempId=index">
+        <card>
+            <h4 class="form-head">Transport details {{tempId+1}}
+                <span class="pull-right accent">
+            <span class="pull-right accent" (click)="changeFollowUp(tempId,'transport',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='transport')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='transport'">   <i class="fa fa-minus-circle"  title="Follow-up" aria-hidden="true"></i> Follow-up </span>
+                </span>
+
+            </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Pickup date</label>
+                        <p class="">{{item.dat_from|date:'dd-MM-y h:mm a'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Dropping date</label>
+                        <p class="">{{item.dat_to|date:'dd-MM-y h:mm a'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Pick Up</label>
+                        <p class="">{{item.vchr_pick_up|titlecase}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Drop Off</label>
+                        <p class="">{{item.vchr_drop_off|titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Vehicle Type</label>
+                        <p class="">{{item.vchr_vehical_type}}</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>No. of seats</label>
+                        <p class="">{{item.int_seats}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of adults</label>
+                        <p class="">{{item.int_adults}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of child</label>
+                        <p class="">{{item.int_children}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of infants</label>
+                        <p class="">{{item.int_infants}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Status </label>
+                        <p class="">{{item.vchr_enquiry_status}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Estimated Amount</label>
+                        <p class="">{{item.dbl_estimated_amount}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Facility</label>
+                        <p class="">{{item.vchr_facility}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6" *ngIf="item.vchr_vehical_preferred">
+                    <div class="form-group mt-1">
+                        <label>Vehicle preferred </label>
+                        <p class="">{{item.vchr_vehical_preferred|titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="item.vchr_remarks">
+                <div class="col-md-12">
+                    <div class="form-group mt-1">
+                        <label>Remarks</label>
+                        <p class="">{{item.vchr_remarks | titlecase}}</p>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!-- Add Follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='transport'">
+                <div class="col-md-12">
+                    <h6>Add Follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" id="transport+{{tempId}}" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" value="">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+            <!-- Follow-up end here -->
+
+        </card>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
+    <div class="col-md-8" *ngFor="let item of lstPackageList;let tempId=index">
+        <card>
+            <h4 class="form-head">Holiday package details {{tempId+1}}
+                <span class="pull-right accent">
+                <span class="pull-right accent" (click)="changeFollowUp(tempId,'holiday',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='holiday')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='holiday'">   <i class="fa fa-minus-circle"  title="Follow-up" aria-hidden="true"></i> Follow-up </span>
+                </span>
+
+
+            </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>From</label>
+                        <p class="">{{item.dat_from|date:'dd MMM, yyyy'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>To</label>
+                        <p class="">{{item.dat_to|date:'dd MMM, yyyy'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of adults</label>
+                        <p class="">{{item.int_adults}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of child</label>
+                        <p class="">{{item.int_children}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of infants</label>
+                        <p class="">{{item.int_infants}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Budget</label>
+                        <p class="">{{item.dbl_budget}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Destination</label>
+                        <p class="">{{item.vchr_destination|titlecase }}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Sight seeing</label>
+                        <p class="">{{item.vchr_sightseeing|titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Status </label>
+                        <p class="">{{item.vchr_enquiry_status}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Estimated Amount</label>
+                        <p class="">{{item.dbl_estimated_amount}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="item.vchr_remarks">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Remarks</label>
+                        <p class="">{{item.vchr_remarks | titlecase}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Add Follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='holiday'">
+                <div class="col-md-12">
+                    <h6>Add Follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" value="">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+            <!-- Follow-up end here -->
+        </card>
+    </div>
+</div>
+
+<div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
+    <div class="col-md-8" *ngFor="let item of lstKCTList;let tempId=index">
+        <card>
+            <h4 class="form-head">Kerala City Tour details {{tempId+1}}
+                <span class="pull-right accent" *ngIf="!(lstCompletedStatus.includes(item.vchr_enquiry_status))">
+                    <span class="pull-right accent" (click)="changeFollowUp(tempId,'kct',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='kct')">  <i class="fa fa-plus-circle" title="Follow-up" aria-hidden="true"></i> follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='kct'">   <i class="fa fa-minus-circle" title="Follow-up" aria-hidden="true"></i> follow-up </span>
+                </span>
+
+            </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Package</label>
+                        <p class *ngIf="item.vchr_package_name">{{item.vchr_package_name}}</p>
+                        <p *ngIf="!item.vchr_package_name">{{'----'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Date of Travel</label>
+                        <p class *ngIf="item.dat_travel">{{item.dat_travel | date:'dd MMM, yyyy'}}</p>
+                        <p *ngIf="!item.dat_travel">{{'----'}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>No.of Passengers</label>
+                        <p class *ngIf="item.int_count">{{item.int_count}}</p>
+                        <p *ngIf="!item.int_count">{{'----'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Status</label>
+                        <p class *ngIf="item.vchr_enquiry_status">{{item.vchr_enquiry_status}}</p>
+                        <p *ngIf="!item.vchr_enquiry_status">{{'----'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Estimated Amount </label>
+                        <p class *ngIf="item.dbl_estimated_amount">{{item.dbl_estimated_amount}}</p>
+                        <p *ngIf="!item.dbl_estimated_amount">{{'----'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="item.vchr_remarks">
+                <div class="col-md-12">
+                    <div class="form-group mt-1">
+                        <label>Remarks</label>
+                        <p class *ngIf="item.vchr_remarks">{{item.vchr_remarks | titlecase }}</p>
+                        <p *ngIf="!item.vchr_remarks">{{'----'}}</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Add follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='kct'">
+                <div class="col-md-12">
+                    <h6>Add follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" value>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id,tempId)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Follow-up end here -->
+
+
+        </card>
+    </div>
+</div>
+<div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
+    <div class="col-md-8" *ngIf="lstOtherList[0]">
+        <card>
+            <h4 class="form-head">Others details
+                <span class="pull-right accent" *ngIf="!(lstCompletedStatus.includes(lstOtherList[0].vchr_enquiry_status))">
+                <span class="pull-right accent" (click)="changeFollowUp(0,'other',0)" *ngIf="!(intFollowUpFlag == 0 && strFollowUpService =='other')">
+                  <i class="fa fa-plus-circle" title="Follow-up" aria-hidden="true" >
+                  </i>follow-up
+                </span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == 0 && strFollowUpService =='other'">
+                  <i class="fa fa-minus-circle" title="Follow-up" aria-hidden="true" ></i>
+                  Follow-up
+              </span>
+                </span>
+            </h4>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group mt-1">
+                        <label>Description</label>
+                        <p class="">{{lstOtherList[0].vchr_description}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Status </label>
+                        <p class="">{{lstOtherList[0].vchr_enquiry_status}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <label>Estimated Amount</label>
+                        <p class="">{{lstOtherList[0].dbl_estimated_amount}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == 0 && strFollowUpService=='other'">
+                <div class="col-md-12">
+                    <h6>Add Follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" value="">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(lstOtherList[0].pk_bint_id,0)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+            <!-- Follow-up end here -->
+
+
+
+
+        </card>
+    </div>
+</div>
+
+
+<!-- Software Section starts here -->
+<!-- Enquiry track -->
+
+<div class="row" *ngIf="companyType=='SOFTWARE'">
+    <div class="col-md-8" *ngFor="let item of lstEnquiryTrck;let tempId=index">
+        <card>
+            <h4 class="form-head">Enquiry Track details {{tempId+1}}
+                <span class="pull-right accent" *ngIf="!(lstCompletedStatus.includes(item.vchr_enquiry_status))">
+                    <span class="pull-right accent" (click)="changeFollowUp(tempId,'enquiry track',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='enquiry track')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='enquiry track'">   <i class="fa fa-minus-circle"  title="Follow-up" aria-hidden="true"></i> follow-up </span>
+                </span>
+
+
+            </h4>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>User count</label>
+                        <p *ngIf="item.int_count" class="">{{item.int_count}}</p>
+                        <p *ngIf="!item.int_count">{{'----'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Enquiry status</label>
+                        <p *ngIf="item.vchr_enquiry_status" class="">{{item.vchr_enquiry_status}}</p>
+                        <p *ngIf="!item.vchr_enquiry_status">{{'----'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Estimated amount</label>
+                        <p *ngIf="item.dbl_amount" class="">{{item.dbl_amount}}</p>
+                        <p *ngIf="!item.dbl_amount">{{'----'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span class="col-md-12">Additional features</span>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Promo campaign</label>
+                        <p *ngIf="item.bln_promo_campaign" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_promo_campaign">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Digital marketing</label>
+                        <p *ngIf="item.bln_digital_marketing" class="">{{'Yes' }}</p>
+                        <p *ngIf="!item.bln_digital_marketing">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Bussiness Intelligence</label>
+                        <p *ngIf="item.bln_business_intelligence" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_business_intelligence">{{'No'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span class="col-md-12">Other products</span>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Accounting Software</label>
+                        <p *ngIf="item.bln_accounting_software" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_accounting_software">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>HR Solutions</label>
+                        <p *ngIf="item.bln_hr_solutions" class="">{{'Yes' }}</p>
+                        <p *ngIf="!item.bln_hr_solutions">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Employee Management</label>
+                        <p *ngIf="item.bln_employee_management" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_employee_management">{{'No'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Requirements </label>
+                </div>
+                <div class="col-md-12">
+                    <p *ngIf="item.vchr_requirements" class="">{{item.vchr_requirements}}</p>
+                    <p *ngIf="!item.vchr_requirements">{{'----'}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Remarks</label>
+                </div>
+                <div class="col-md-12">
+                    <p *ngIf="item.vchr_remarks" class="">{{item.vchr_remarks | titlecase }}</p>
+                    <p *ngIf="!item.vchr_remarks">{{'----'}}</p>
+                </div>
+            </div>
+            <!-- Add follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='enquiry track'">
+                <div class="col-md-12">
+                    <h6>Add follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" value="">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id,tempId)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+            <!-- Follow-up end here -->
+        </card>
+    </div>
+</div>
+
+<!-- Accounting Software -->
+
+<div class="row" *ngIf="companyType=='SOFTWARE'">
+    <div class="col-md-8" *ngFor="let item of lstAccountingSoftware;let tempId=index">
+        <card>
+            <h4 class="form-head">Accounting Software details {{tempId+1}}
+                <span class="pull-right accent" *ngIf="!(lstCompletedStatus.includes(item.vchr_enquiry_status))">
+                        <span class="pull-right accent" (click)="changeFollowUp(tempId,'accounting software',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='accounting software')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='accounting software'">   <i class="fa fa-minus-circle"  title="Follow-up" aria-hidden="true"></i> follow-up </span>
+                </span>
+
+
+            </h4>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>User count</label>
+                        <p *ngIf="item.int_count" class="">{{item.int_count}}</p>
+                        <p *ngIf="!item.int_count">{{'----'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Enquiry status</label>
+                        <p *ngIf="item.vchr_enquiry_status" class="">{{item.vchr_enquiry_status}}</p>
+                        <p *ngIf="!item.vchr_enquiry_status">{{'----'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Estimated amount</label>
+                        <p *ngIf="item.dbl_amount" class="">{{item.dbl_amount}}</p>
+                        <p *ngIf="!item.dbl_amount">{{'----'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span class="col-md-12">Additional features</span>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Promo campaign</label>
+                        <p *ngIf="item.bln_promo_campaign" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_promo_campaign">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Digital marketing</label>
+                        <p *ngIf="item.bln_digital_marketing" class="">{{'Yes' }}</p>
+                        <p *ngIf="!item.bln_digital_marketing">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Bussiness Intelligence</label>
+                        <p *ngIf="item.bln_business_intelligence" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_business_intelligence">{{'No'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span class="col-md-12">Other products</span>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Track</label>
+                        <p *ngIf="item.bln_enquiry_track" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_enquiry_track">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>HR Solutions</label>
+                        <p *ngIf="item.bln_hr_solutions" class="">{{'Yes' }}</p>
+                        <p *ngIf="!item.bln_hr_solutions">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Employee Management</label>
+                        <p *ngIf="item.bln_employee_management" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_employee_management">{{'No'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Requirements </label>
+                </div>
+                <div class="col-md-12">
+                    <p *ngIf="item.vchr_requirements" class="">{{item.vchr_requirements}}</p>
+                    <p *ngIf="!item.vchr_requirements">{{'----'}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Remarks</label>
+                </div>
+                <div class="col-md-12">
+                    <p *ngIf="item.vchr_remarks" class="">{{item.vchr_remarks | titlecase }}</p>
+                    <p *ngIf="!item.vchr_remarks">{{'----'}}</p>
+                </div>
+            </div>
+            <!-- Add follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='accounting software'">
+                <div class="col-md-12">
+                    <h6>Add follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" value="">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id,tempId)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+            <!-- Follow-up end here -->
+        </card>
+    </div>
+</div>
+
+<!-- HR Solutions -->
+
+<div class="row" *ngIf="companyType=='SOFTWARE'">
+    <div class="col-md-8" *ngFor="let item of lstHRSolutions;let tempId=index">
+        <card>
+            <h4 class="form-head">HR Solutions details {{tempId+1}}
+                <span class="pull-right accent" *ngIf="!(lstCompletedStatus.includes(item.vchr_enquiry_status))">
+                        <span class="pull-right accent" (click)="changeFollowUp(tempId,'hr solutions',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='hr solutions')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='hr solutions'">   <i class="fa fa-minus-circle"  title="Follow-up" aria-hidden="true"></i> follow-up </span>
+                </span>
+
+
+            </h4>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>User count</label>
+                        <p *ngIf="item.int_count" class="">{{item.int_count}}</p>
+                        <p *ngIf="!item.int_count">{{'----'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Enquiry status</label>
+                        <p *ngIf="item.vchr_enquiry_status" class="">{{item.vchr_enquiry_status}}</p>
+                        <p *ngIf="!item.vchr_enquiry_status">{{'----'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Estimated amount</label>
+                        <p *ngIf="item.dbl_amount" class="">{{item.dbl_amount}}</p>
+                        <p *ngIf="!item.dbl_amount">{{'----'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span class="col-md-12">Additional features</span>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Promo campaign</label>
+                        <p *ngIf="item.bln_promo_campaign" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_promo_campaign">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Digital marketing</label>
+                        <p *ngIf="item.bln_digital_marketing" class="">{{'Yes' }}</p>
+                        <p *ngIf="!item.bln_digital_marketing">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Bussiness Intelligence</label>
+                        <p *ngIf="item.bln_business_intelligence" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_business_intelligence">{{'No'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span class="col-md-12">Other products</span>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Track</label>
+                        <p *ngIf="item.bln_enquiry_track" class="">{{'Yes' }}</p>
+                        <p *ngIf="!item.bln_enquiry_track">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Accounting Software</label>
+                        <p *ngIf="item.bln_accounting" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_accounting">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Employee Management</label>
+                        <p *ngIf="item.bln_employee_management" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_employee_management">{{'No'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Requirements </label>
+                </div>
+                <div class="col-md-12">
+                    <p *ngIf="item.vchr_requirements" class="">{{item.vchr_requirements}}</p>
+                    <p *ngIf="!item.vchr_requirements">{{'----'}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Remarks</label>
+                </div>
+                <div class="col-md-12">
+                    <p *ngIf="item.vchr_remarks" class="">{{item.vchr_remarks | titlecase }}</p>
+                    <p *ngIf="!item.vchr_remarks">{{'----'}}</p>
+                </div>
+            </div>
+            <!-- Add follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='hr solutions'">
+                <div class="col-md-12">
+                    <h6>Add follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" value="">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id,tempId)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+            <!-- Follow-up end here -->
+        </card>
+    </div>
+</div>
+
+<!-- Employee Management -->
+
+<div class="row" *ngIf="companyType=='SOFTWARE'">
+    <div class="col-md-8" *ngFor="let item of lstEmployeeManagement;let tempId=index">
+        <card>
+            <h4 class="form-head">Employee Management details {{tempId+1}}
+                <span class="pull-right accent" *ngIf="!(lstCompletedStatus.includes(item.vchr_enquiry_status))">
+                        <span class="pull-right accent" (click)="changeFollowUp(tempId,'employee management',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='employee management')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> follow-up</span>
+                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1)" *ngIf="intFollowUpFlag == tempId && strFollowUpService =='employee management'">   <i class="fa fa-minus-circle"  title="Follow-up" aria-hidden="true"></i> follow-up </span>
+                </span>
+
+
+            </h4>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>User count</label>
+                        <p *ngIf="item.int_count" class="">{{item.int_count}}</p>
+                        <p *ngIf="!item.int_count">{{'----'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Enquiry status</label>
+                        <p *ngIf="item.vchr_enquiry_status" class="">{{item.vchr_enquiry_status}}</p>
+                        <p *ngIf="!item.vchr_enquiry_status">{{'----'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Estimated amount</label>
+                        <p *ngIf="item.dbl_amount" class="">{{item.dbl_amount}}</p>
+                        <p *ngIf="!item.dbl_amount">{{'----'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span class="col-md-12">Additional features</span>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Promo campaign</label>
+                        <p *ngIf="item.bln_promo_campaign" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_promo_campaign">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Digital marketing</label>
+                        <p *ngIf="item.bln_digital_marketing" class="">{{'Yes' }}</p>
+                        <p *ngIf="!item.bln_digital_marketing">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Bussiness Intelligence</label>
+                        <p *ngIf="item.bln_business_intelligence" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_business_intelligence">{{'No'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span class="col-md-12">Other products</span>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Enquiry Track</label>
+                        <p *ngIf="item.bln_enquiry_track" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_enquiry_track">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>Accounting Software</label>
+                        <p *ngIf="item.bln_accounting" class="">{{'Yes'}}</p>
+                        <p *ngIf="!item.bln_accounting">{{'No'}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mt-1">
+                        <label>HR Solutions</label>
+                        <p *ngIf="item.bln_hr_solutions" class="">{{'Yes' }}</p>
+                        <p *ngIf="!item.bln_hr_solutions">{{'No'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Requirements </label>
+                </div>
+                <div class="col-md-12">
+                    <p *ngIf="item.vchr_requirements" class="">{{item.vchr_requirements}}</p>
+                    <p *ngIf="!item.vchr_requirements">{{'----'}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Remarks</label>
+                </div>
+                <div class="col-md-12">
+                    <p *ngIf="item.vchr_remarks" class="">{{item.vchr_remarks | titlecase }}</p>
+                    <p *ngIf="!item.vchr_remarks">{{'----'}}</p>
+                </div>
+            </div>
+            <!-- Add follow-up section -->
+            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService=='employee management'">
+                <div class="col-md-12">
+                    <h6>Add follow-up</h6>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" value="">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="mb-0">
+                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <button class="mat-raised-button mat-accent" (click)="saveFollowUp(item.pk_bint_id,tempId)">Save</button>
+                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1)">Cancel</button>
+                </div>
+            </div>
+            <!-- Follow-up end here -->
+        </card>
+    </div>
+</div>
+
+<!-- Software Section ends here -->
