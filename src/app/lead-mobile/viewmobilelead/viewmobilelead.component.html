@@ -1,1310 +1,1329 @@
-<h4>
-    <span>
-    <i class="fa fa-users" aria-hidden="true"></i>
-  </span>&nbsp; View enquiry
-    <span class="float-right">
-    <button mat-raised-button (click)="reverseLocation()">
-      <i class="fa fa-chevron-circle-left"></i> Back
-    </button>
-    <!-- <button mat-raised-button [routerLink]="['/crm/followup']">
-      follow-up history
-    </button> -->
-  </span>
-</h4>
-<p>All the details of selected enquiry.</p>
-<div class="col-md-12 col-lg-8">
-    <div class="row">
-        <!-- <div class="row">
-  <div class="col-md-12 col-lg-8"> -->
-        <card class="col-md-12">
-            <h4 class="form-head">Enquiry details {{'-' + dctEnquiry.vchr_enquiry_num}}
-                <span class="pull-right accent">
-      <i class="fa fa-chevron-up" (click)="blnShowCustFullDetails = !blnShowCustFullDetails" *ngIf="blnShowCustFullDetails"></i>
-      <i class="fa fa-chevron-down" (click)="blnShowCustFullDetails = !blnShowCustFullDetails" *ngIf="!blnShowCustFullDetails"></i>
-    </span>
-                <!-- <span class="pull-right">Billed Amount : 23000.00</span> -->
-                <span class="pull-right" *ngIf="dctEnquiry['total_amount']"> Total Amt : {{(dctEnquiry['total_amount']).toFixed(2)}} &nbsp;&nbsp;</span>
-                <span class="pull-right" *ngIf="!dctEnquiry['total_amount']"> Total Amt : 0.00 &nbsp;&nbsp;</span>
-            </h4>
+
+            <h4 class="card-title"> <i class="fa fa-users" aria-hidden="true"></i>View enquiry</h4>
+            <p>All the details of selected enquiry.</p>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Mobile Number</label>
-                        <p *ngIf="dctEnquiry['cust_mobile']">{{dctEnquiry.cust_mobile}}</p>
-                        <p *ngIf="!dctEnquiry['cust_mobile']">{{'----'}}</p>
-
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Email Id</label>
-                        <p *ngIf="dctEnquiry.cust_email">{{dctEnquiry.cust_email}}</p>
-                        <p *ngIf="!dctEnquiry.cust_email">{{'----'}}</p>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>First Name</label>
-                        <p *ngIf="dctEnquiry.cust_fname">{{dctEnquiry.cust_fname|uppercase}}</p>
-                        <p *ngIf="!dctEnquiry.cust_fname">{{'----'}}</p>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Last Name</label>
-                        <p *ngIf="dctEnquiry.cust_lname">{{dctEnquiry.cust_lname|uppercase}}</p>
-                        <p *ngIf="!dctEnquiry.cust_lname">{{'----'}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row" *ngIf="blnShowCustFullDetails">
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Alternate Mobile Number</label>
-                        <p *ngIf="dctEnquiry.cust_alternatemobile">{{dctEnquiry.cust_alternatemobile}}</p>
-                        <p *ngIf="!dctEnquiry.cust_alternatemobile">{{'----'}}</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Alternate Email Id</label>
-                        <p *ngIf="dctEnquiry.cust_alternatemail">{{dctEnquiry.cust_alternatemail}}</p>
-                        <p *ngIf="!dctEnquiry.cust_alternatemail">{{'----'}}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" *ngIf="blnShowCustFullDetails">
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Enquiry Source</label>
-                        <p *ngIf="dctEnquiry.vchr_source_name">{{dctEnquiry.vchr_source_name|titlecase}}</p>
-                        <p *ngIf="!dctEnquiry.vchr_source_name">{{'----'}}</p>
-                    </div>
-                </div>
-                <!-- <div class="col-md-6">
-      <div class="form-group mt-1">
-        <label>Enquiry priority</label>
-        <p *ngIf="dctEnquiry.vchr_priority_name">{{dctEnquiry.vchr_priority_name|titlecase}}</p>
-        <p *ngIf="!dctEnquiry.vchr_priority_name">{{'----'}}</p>
-      </div>
-    </div> -->
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Contact Source</label>
-                        <p *ngIf="dctEnquiry.cust_contactsrc">{{dctEnquiry.cust_contactsrc|titlecase}}</p>
-                        <p *ngIf="!dctEnquiry.cust_contactsrc">{{'----'}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row" *ngIf="blnShowCustFullDetails">
-
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Send SMS</label>
-                        <p *ngIf="dctEnquiry.bln_sms">{{'Yes'}}</p>
-                        <p *ngIf="!dctEnquiry.bln_sms">{{'No'}}</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Branch</label>
-                        <p *ngIf="dctEnquiry.vchr_name">{{dctEnquiry.vchr_name|titlecase}}</p>
-                        <p *ngIf="!dctEnquiry.vchr_name">{{'----'}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row" *ngIf="blnShowCustFullDetails">
-
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Staff Name</label>
-                        <p *ngIf="dctEnquiry.staff_full_name">{{dctEnquiry.staff_full_name|titlecase}}</p>
-                        <p *ngIf="!dctEnquiry.staff_full_name">{{'----'}}</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Date</label>
-                        <p *ngIf="dctEnquiry.dat_created_at">{{dctEnquiry.dat_created_at}}</p>
-                        <p *ngIf="!dctEnquiry.dat_created_at">{{'----'}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row" *ngIf="blnShowCustFullDetails">
-
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Time</label>
-                        <p *ngIf="dctEnquiry.time_created_at">{{dctEnquiry.time_created_at}}</p>
-                        <p *ngIf="!dctEnquiry.time_created_at">{{'----'}}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group mt-1">
-                        <label>Remarks</label>
-                        <p *ngIf="dctEnquiry['vchr_remarks']">{{dctEnquiry['vchr_remarks'] | titlecase}}</p>
-                        <p *ngIf="!dctEnquiry['vchr_remarks']">{{'----'}}</p>
-                    </div>
-                </div>
-            </div>
-        </card>
-        <!-- </div>
-</div> -->
-        <!-- <card class="col-md-12" *ngIf="(groupName=='FINANCIER' && dctEnquiry['status']!='PENDING') || ((groupName=='BRANCH MANAGER' || groupName=='ASSISTANT BRANCH MANAGER') && dctEnquiry['status']!='PENDING') || (groupName=='FINANCE ADMIN')">
-            <h4 class="form-head">Finance Details
-
-            </h4>
-
-            <div class="row">
-                <div class="col-md-6" *ngIf="dctEnquiry['status']">
-                    <div class="form-group mt-1">
-                        <label>Status</label>
-                        <p>{{dctEnquiry['status'] | titlecase}}</p>
-                    </div>
-                </div>
-                <div class="col-md-6" *ngIf="dctEnquiry.status != 'PENDING' && dctEnquiry.status != 'NOT ELIGIBLE'">
-                    <div class="form-group mt-1">
-                        <label>Amount</label>
-                        <p>{{eligibleAmount}}</p>
-                    </div>
-                </div>
-                <div class="col-md-6" *ngIf="dctEnquiry['finance_schema']">
-                    <div class="form-group mt-1">
-                        <label>Scheme</label>
-                        <p>{{dctEnquiry['finance_schema']}}</p>
-                    </div>
-                </div>
-                <div class="col-md-6" *ngIf="dctEnquiry.status != 'PENDING' && dctEnquiry.status != 'NOT ELIGIBLE' && strEligibleRemarks">
-                    <div class="form-group mt-1">
-                        <label>Remarks</label>
-                        <p>{{strEligibleRemarks}}</p>
-                    </div>
-                </div>
-            </div>
-        </card> -->
-        <!-- <div > -->
-        <card class="col-md-12" *ngFor="let key of enqKeys">
-            <span *ngFor="let item of dctEnquiryDetails[key];let tempId=index">
-    <h4 class="form-head">{{key}} details {{tempId+1}}
-        <span class="pull-right accent" *ngIf="(!(lstCompletedStatus.includes(item['vchr_enquiry_status']))) && ((groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctEnquiry.status != 'TO PROCESS' && dctEnquiry.status != 'BOOKED' && item['vchr_enquiry_status']!= 'PARTIALLY PAID' && item['vchr_enquiry_status']!= 'FINANCED')">
-            <span class="pull-right accent" (click)="changeFollowUp(tempId,key,0,item); item['quantityCopy'] = item['int_quantity'];intFollowUpQuantity = item['int_quantity'] "
-              *ngIf="(!(intFollowUpFlag == tempId && strFollowUpService == key)) && (((groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctEnquiry.status != 'TO PROCESS') || groupName!='FINANCIER') && item['vchr_enquiry_status'] != 'INVOICED'  && (item['vchr_enquiry_status'] != 'IMEI PENDING') && (item['vchr_enquiry_status']!='IMEI REJECTED') && (item['vchr_enquiry_status']!='IMEI REQUESTED')&& (item['vchr_enquiry_status']!='IMEI REQUESTED') && (item['vchr_enquiry_status']!='IMAGE PENDING')">
-              <i class="fa fa-plus-circle" title="Follow-up" aria-hidden="true"></i> follow-up</span>
-                <span class="pull-right accent" (click)="changeFollowUp(-1,'',1,item); item['quantityCopy'] = item['int_quantity'];intFollowUpQuantity = item['int_quantity'] " *ngIf="(intFollowUpFlag == tempId && strFollowUpService == key) && (((groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctEnquiry.status != 'TO PROCESS') || groupName!='FINANCIER') && item['vchr_enquiry_status'] != 'INVOICED'  && (item['vchr_enquiry_status'] != 'IMEI PENDING') && (item['vchr_enquiry_status']!='IMEI REJECTED') && (item['vchr_enquiry_status']!='IMEI REQUESTED') && (item['vchr_enquiry_status']!='IMAGE PENDING')">
-              <i class="fa fa-minus-circle" title="Follow-up" aria-hidden="true"></i> follow-up </span>
-                </span>
-
-
-
-            <!-- add imei button-->
-            <!-- <span class="pull-right accent" *ngIf="((item['vchr_enquiry_status'] == 'IMEI PENDING') || (item['vchr_enquiry_status'] == 'IMEI REJECTED')) && (groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER')">
-        <span (click)="checkClickRequest(item['pk_bint_id'],item['int_quantity'])" class="pull-right request_btn" data-toggle="modal" data-target="#addrequest_modal"
-          aria-hidden="true">
-          Add IMEI
-          <i class="fa fa-chevron-circle-right" title="Add IMEI" aria-hidden="true"></i>
-        </span>&nbsp;
-            </span> -->
-            <!-- add imei button -->
-            <!-- check imei request -->
-            <span class="pull-right accent" *ngIf="(item['vchr_enquiry_status']=='IMEI REQUESTED') && (groupName == 'BAJAJ ONLINE')">
-        <span (click)="checkImeiRequest(item['pk_bint_id'],item['dbl_imei_json'])" class="pull-right request_btn" data-toggle="modal" data-target="#checkrequest_modal"
-          aria-hidden="true">
-          Check IMEI
-          <i class="fa fa-chevron-circle-right" title="Check IMEI" aria-hidden="true"></i>
-        </span>&nbsp;
-            </span>
-            <!-- check imei request -->
-
-
-            <!-- partially paid status -->
-
-
-            <span class="pull-right accent" *ngIf="groupName=='BALL GAME ADMIN' && item['vchr_enquiry_status'] == 'PARTIALLY PAID'">
-        <span class="pull-right accent" (click)="changeOffer(tempId,key,0,item)"
-          *ngIf="(!(intOfferFlag == tempId && strOfferService == key)) && item['vchr_enquiry_status'] == 'PARTIALLY PAID'">
-          <i class="fa fa-plus-circle" title="Offer-Gdew" aria-hidden="true"></i> Add Offer</span>
-            <span class="pull-right accent" (click)="changeOffer(-1,'',1,item)" *ngIf="(intOfferFlag == tempId && strOfferService == key) && item['vchr_enquiry_status'] == 'PARTIALLY PAID'">
-          <i class="fa fa-minus-circle" title="Offer" aria-hidden="true"></i>Add Offer </span>
-            </span>
-            <!-- add gdp and gdew -->
-
-            <!-- <span class="pull-right accent" *ngIf="bln_checkDate && item['int_type'] !=3 && item['vchr_enquiry_status'] == 'INVOICED' && (key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Slr Cam' || key == 'Digital Camera' )">
-        <span class="pull-right accent" (click)="changeGdpGdew(tempId,key,0,item)"
-          *ngIf="(!(intgdpFlag == tempId && strgdpService == key)) && item['vchr_enquiry_status'] == 'INVOICED'">
-          <i class="fa fa-plus-circle" title="Gdp-Gdew" aria-hidden="true"></i> Add GDOT</span>
-            <span class="pull-right accent" (click)="changeGdpGdew(-1,'',1,item)" *ngIf="(intgdpFlag == tempId && strgdpService == key) && item['vchr_enquiry_status'] == 'INVOICED'">
-          <i class="fa fa-minus-circle" title="Gdp-Gdew" aria-hidden="true"></i>Add GDOT </span>
-            </span> -->
-
-
-            </h4>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Brand</label>
-                        <p *ngIf="item.vchr_brand_name">{{item['vchr_brand_name'] | titlecase}}</p>
-                        <p *ngIf="!item.vchr_brand_name">{{'----'}}</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <label>Item</label>
-                        <p *ngIf="item.vchr_item_name">{{item['vchr_item_name'] | titlecase}}</p>
-                        <p *ngIf="!item.vchr_item_name">{{'----'}}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="form-group mt-1">
-                        <label>Quantity</label>
-                        <p *ngIf="item['int_quantity']">{{item['int_quantity']}}</p>
-                        <p *ngIf="!item['int_quantity']">{{'----'}}</p>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Enquiry status</label>
-                        <p *ngIf="item.vchr_enquiry_status">{{item['vchr_enquiry_status'] | titlecase}}</p>
-                        <p *ngIf="!item.vchr_enquiry_status">{{'----'}}</p>
-                    </div>
-                </div>
-                <div class="col-md-12" *ngIf="((item['vchr_enquiry_status'] == 'BOOKED') || (item['vchr_enquiry_status'] == 'INVOICED')) && (key == 'Mobiles' || key == 'Tablets' || key == 'Laptops')">
-                    <div class="form-group mt-1">
-                        <label>Imei</label>
-                        <span *ngIf="item['dbl_imei_json']">
-            <span *ngIf="item['dbl_imei_json']['imei'];else noimei">
-              <mat-list class="row">
-                <mat-list-item *ngFor="let items of item['dbl_imei_json'].imei;let i = index" class="col-sm-6">
-                  <span class="textlistid">{{i+1}}</span>
-                        <span class="textlistid">&#8228;&ensp;</span>
-                        <p class="textlist">{{items}}</p>
-                        </mat-list-item>
-                        </mat-list>
-                        </span>
-                        <ng-template #noimei>
-                            <p>{{'----'}}</p>
-                        </ng-template>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group mt-1">
-                        <label>Estimated amount</label>
-                        <p *ngIf="item['dbl_amount']">{{item['dbl_amount']}}</p>
-                        <p *ngIf="!item['dbl_amount']">{{'----'}}</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mt-1">
-                        <label>Buy back Amt.</label>
-                        <p>{{item['dbl_buyback_amount']}}</p>
-                        <!-- <p *ngIf="item['dbl_buyback_amount']">{{item['dbl_buyback_amount']}}</p>
-          <p *ngIf="!item['dbl_buyback_amount']">{{'----'}}</p> -->
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mt-1">
-                        <label>Discount Amt.</label>
-                        <p>{{item['dbl_discount_amount']}}</p>
-                        <!-- <p *ngIf="item['dbl_discount_amount']">{{item['dbl_discount_amount']}}</p>
-          <p *ngIf="!item['dbl_discount_amount']">{{'----'}}</p> -->
-                    </div>
-                </div>
-                <!-- <div *ngIf="(key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Digital Camera' )"> -->
-                <div class="col-md-3" *ngIf="(item['vchr_enquiry_status'] == 'IMEI PENDING') || (item['vchr_enquiry_status'] == 'IMEI REJECTED') || (item['vchr_enquiry_status'] == 'IMEI REQUESTED') || (item['vchr_enquiry_status'] == 'BOOKED') || (item['vchr_enquiry_status'] == 'INVOICED') && (key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Slr Cam' || key == 'Digital Camera' )">
-                    <div class="form-group mt-1">
-                        <label>GDP</label>
-                        <p>{{item['dbl_gdp']}}</p>
-                    </div>
-                </div>
-                <div class="col-md-3" *ngIf="(item['vchr_enquiry_status'] == 'IMEI PENDING') || (item['vchr_enquiry_status'] == 'IMEI REJECTED') || (item['vchr_enquiry_status'] == 'IMEI REQUESTED') || (item['vchr_enquiry_status'] == 'BOOKED') || (item['vchr_enquiry_status'] == 'INVOICED') && (key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Slr Cam' || key == 'Digital Camera' )">
-                    <div class="form-group mt-1">
-                        <label>GDEW</label>
-                        <p>{{item['dbl_gdew']}}</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="form-group mt-1">
-                        <label>Total Amt.</label>
-                        <p>{{(totalAmount(item['dbl_amount'],item['dbl_buyback_amount'],item['dbl_discount_amount'],item['dbl_gdp'],item['dbl_gdew']).toFixed(2))}}</p>
-                    </div>
-                </div>
-                <!-- </div> -->
-            </div>
-            <!-- <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group mt-1">
-                        <label>Remarks</label>
-                        <p *ngIf="item['vchr_remarks']">{{item['vchr_remarks'] | titlecase}}</p>
-                        <p *ngIf="!item['vchr_remarks']">{{'----'}}</p>
-                    </div>
-                </div>
-            </div> -->
-
-            <!-- Add follow-up section -->
-            <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService == key">
-                <div class="col-md-12">
-                    <h6>Add follow-up</h6>
-                </div>
-                <div class="col-md-4">
-                    <mat-form-field>
-                        <input #quantity OnlyInteger="true" [(ngModel)]="item['quantityCopy']" matInput placeholder="Quantity*" (ngModelChange)="checkQuantity(tempId, quantity.value)">
-                    </mat-form-field>
-                </div>
-                <div class="col-md-4">
-                    <mat-form-field>
-                        <!-- <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" (change)="checkAmount(tempId, item['int_quantity'], key)"> -->
-                        <input OnlyNumber="true" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*">
-                        <!-- <mat-icon matSuffix style="cursor:pointer" [ngbTooltip]="tipContent" (mouseover)="maxPrice= (item['dbl_max_price'] * item['int_quantity'] );minPrice=(item['dbl_min_price'] * item['int_quantity']) ">info_outline</mat-icon> -->
-                        <!-- <ng-template #tipContent>
-                            <span>Min. selling price : {{minPrice}}</span>
-                            <br>
-                            <span>Max. selling price : {{maxPrice}}</span>
-                        </ng-template> -->
-                    </mat-form-field>
-                </div>
-                <div class="col-md-4">
-                    <mat-form-field>
-                        <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
-                            <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-4">
-                    <mat-form-field>
-                        <input OnlyNumber="true" [(ngModel)]="intFollowUpBuyBackAmount" matInput placeholder="Buy back amount">
-                    </mat-form-field>
-                </div>
-                <div class="col-md-4">
-                    <mat-form-field>
-                        <input OnlyNumber="true" [(ngModel)]="intFollowUpDiscountAmount" matInput placeholder="Discount amount">
-                    </mat-form-field>
-                </div>
-
-
-
-                <div class="col-md-4" *ngIf="(strFollowUpStatus == 'BOOKED') || (strFollowUpStatus == 'INVOICED') && (key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Slr Cam' || key == 'Digital Camera' )">
-                    <mat-form-field>
-                        <input OnlyNumber="true" [(ngModel)]="intGDP" matInput placeholder="GDP">
-                    </mat-form-field>
-                </div>
-                <div class="col-md-4" *ngIf="(strFollowUpStatus == 'BOOKED') || (strFollowUpStatus == 'INVOICED') && (key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Slr Cam' || key == 'Digital Camera' )">
-                    <mat-form-field>
-                        <input OnlyNumber="true" [(ngModel)]="intGDEW" matInput placeholder="GDEW">
-                    </mat-form-field>
-                </div>
-
-
-                <div class="col-md-12" *ngIf="(strFollowUpStatus == 'BOOKED') && (key == 'Mobiles' || key == 'Tablets') ">
-                    <div class="col-md-4" *ngFor="let imei of [] | range:intFollowUpQuantity">
-                        <mat-form-field>
-                            <input required OnlyAlphaNum="true" matInput placeholder="IMEI No." name="key-{{imei}}" [(ngModel)]="lstImei[imei]" (keypress)="validate($event)">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <mat-form-field class="mb-0">
-                        <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-12">
-                    <button class="mat-raised-button mat-accent" type="submit" (click)="saveFollowUp(item['pk_bint_id'],tempId, key, item['quantityCopy'])">Save</button>
-                    <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1,item)">Cancel</button>
-                </div>
-            </div>
-            <!-- Follow-up end here -->
-            <!-- Add Offer start here -->
-            <!-- -->
-            <div class="row" *ngIf=" groupName=='BALL GAME ADMIN' && intOfferFlag == tempId && strOfferService == key">
-                <div class="col-md-12">
-                    <h6>Add Offer</h6>
-                </div>
-                <div class="col-md-4">
-                    <mat-form-field>
-                        <mat-select [(ngModel)]="vchr_offer" required placeholder="Offer">
-                            <mat-option *ngFor="let i of lstOffer" [value]="i.pk_bint_id">{{i.vchr_code}}-{{i.vchr_details}} </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-
-                <div class="col-md-12">
-                    <button class="mat-raised-button mat-accent" type="submit" (click)="saveOffer(item['pk_bint_id'],tempId, key,item['vchr_enquiry_status'])">Save</button>
-                    <button class="mat-raised-button cancel_btn" (click)="changeOffer(-1,'',1,item)">Cancel</button>
-                </div>
-            </div>
-            <!-- Add Offer start here -->
-
-            <!-- smart choice details start here -->
-
-
-
-            <div *ngIf="key == 'Smart Choice' && smartchoiceKeys.length != 0 " class="row">
-                <div class="col-md-12">
-                    <span>
-                        <label>Product Images</label>
-                        <div class="row" >
-                            <div class="col-md-3" *ngFor="let image of dctSmartchoice[item.vchr_item_code][((-1*item['key_amount']))]['product']">
-                                <div class="form-group mt-1">
-                                    <img src="{{nodeHost}}/{{image}}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </span>
-                </div>
-                <div class="col-md-12">
-                    <span>
-                        <label>Exchange Form</label>
-                        <div class="row">
-                            <div class="col-md-3" *ngFor="let image of dctSmartchoice[item.vchr_item_code][-1*item['key_amount']]['exchangeform']">
-                                <div class="form-group mt-1">
-                                    <img src="{{nodeHost}}/{{image}}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </span>
-                </div>
-                <div class="col-md-12">
-                    <span>
-                        <label>Id Proof</label>
-                        <div class="row">
-                            <div class="col-md-3" *ngFor="let image of dctSmartchoice[item.vchr_item_code][-1*item['key_amount']]['idproof']">
-                                <div class="form-group mt-1">
-                                    <img src="{{nodeHost}}/{{image}}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </span>
-                </div>
-            </div>
-
-
-            <!-- <div *ngIf="item.smartchoice" class="row">
-                <div class="col-md-12">
-                    <h6>Smart Choice Details</h6>
-                </div>
-                <div *ngFor="let smartChoice of item.items let i=index">
-
-                    <div class="col-md-12">
-                        <div class="form-group mt-1">
-                            <p><b>#{{i+1}}</b></p>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-6">
-                        <div class="form-group mt-1">
-                            <label>Product</label>
-                            <p>{{smartChoice.exchange_product}}</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group mt-1">
-                            <label>Brand</label>
-                            <p>{{smartChoice.exchange_brand}}</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group mt-1">
-                            <label>Item</label>
-                            <p>{{smartChoice.exchange_item}}</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group mt-1">
-                            <label>Exchange amount</label>
-                            <p>{{smartChoice.dbl_exchange_amt}}</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12" *ngIf="smartChoice.exchange_product == 'MOBILES' || smartChoice.exchange_product == 'TABLETS' || item.items.exchange_product == 'LAPTOPS'">
-                        <div class="form-group mt-1">
-                            <label>Imei</label>
-                            <p>{{smartChoice.vchr_exc_imei}}</p>
-                        </div>
-                    </div> -->
-
-            <!-- <div class="col-md-12">
-                        <span *ngIf="smartChoice['images']['image']">
-          <label>Images</label>
-          <div class="col-md-3" *ngFor="let image of smartChoice['images']['image']">
-            <div class="form-group mt-1">
-              <img src="{{nodeHost}}/{{image}}" alt="">
-            </div>
-          </div>
-        </span>
-                    </div> -->
-            <!-- 
-                    <div class="col-md-12">
-                        <span *ngIf="smartChoice['images']['product']">
-        <label >Product Images</label>
-        <div class="row">
-          <div class="col-md-3" *ngFor="let image of smartChoice['images']['product']">
-            <div class="form-group mt-1">
-              <img src="{{nodeHost}}/{{image}}" alt="">
-            </div>
-          </div>
-        </div>
-      </span>
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-12">
-                    <span *ngIf="item.items[0]['images']['exchangeform']">
-      <label>Exchange Form</label>
-      <div class="row">
-        <div class="col-md-3" *ngFor="let image of item.items[0]['images']['exchangeform']">
-          <div class="form-group mt-1">
-            <img src="{{nodeHost}}/{{image}}" alt="">
-          </div>
-        </div>
-      </div>
-      <label>Id Proof</label>
-      <div class="row">
-        <div class="col-md-3" *ngFor="let image of item.items[0]['images']['idproof']">
-          <div class="form-group mt-1">
-            <img src="{{nodeHost}}/{{image}}" alt="">
-          </div>
-        </div>
-      </div>
-      </span>
-                </div>
-
-
-            </div> -->
-
-            <!-- smart choice details end here -->
-
-            <!-- Add gdp and gdew section -->
-
-            <div class="row" *ngIf="intgdpFlag == tempId && strgdpService == key">
-                <div class="col-md-12">
-                    <h6>Add GDP & GDEW</h6>
-                </div>
-                <div class="col-md-4" *ngIf="gdp">
-                    <mat-form-field>
-                        <input OnlyNumber="true" [(ngModel)]="int_GDP" matInput placeholder="GDP">
-                    </mat-form-field>
-                </div>
-                <div class="col-md-4" *ngIf="!gdp">
-                    <label>GDP</label>
-                    <p>{{int_GDP}}</p>
-                </div>
-                <div class="col-md-4" *ngIf="gdew">
-                    <mat-form-field>
-                        <input OnlyNumber="true" [(ngModel)]="int_GDEW" matInput placeholder="GDEW">
-                    </mat-form-field>
-                </div>
-                <div class="col-md-4" *ngIf="!gdew">
-                    <label>GDEW</label>
-                    <p>{{int_GDEW}}</p>
-                </div>
-
-
-                <div class="col-md-12">
-                    <button class="mat-raised-button mat-accent" type="submit" (click)="saveGdpGdew(item['pk_bint_id'],tempId, key, item['dbl_amount'])">Save</button>
-                    <button class="mat-raised-button cancel_btn" (click)="changeGdpGdew(-1,'',1,item)">Cancel</button>
-                </div>
-            </div>
-
-            <!--gdp and gdew end here -->
-
-
-
-            </span>
-        </card>
-        <!-- <card class="col-md-12" *ngIf="groupName =='FINANCIER' && dctEnquiry['status'] =='PENDING'">
-           
-            <h4 class="form-head">Finance Details
-
-            </h4>
-            <div *ngIf="dctEnquiry['status'] =='PENDING'">
-
-                <mat-radio-group name="eligible" [(ngModel)]="eligble">
-                    <mat-radio-button [value]=true>
-                        <strong>Eligible</strong></mat-radio-button>
-                    <mat-radio-button [value]=false>
-                        <strong>Not Eligible</strong></mat-radio-button>
-                </mat-radio-group>
-                <div class="row">
-                    <div class="col-md-4" *ngIf="eligble">
-                        <mat-form-field class="mb-0">
-                            <input required matInput OnlyNumber="true" placeholder="Amount" name="eligibleAmount" [(ngModel)]="eligibleAmount">
-                        </mat-form-field>
-                    </div>
-
-                    <div class="col-md-4" *ngIf="dctEnquiry['finance_schema']">
-                        <div class="form-group mt-1">
-                            <label>Scheme</label>
-                            <p>{{dctEnquiry['finance_schema']}}</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12" *ngIf="!eligble">
-                        <mat-form-field class="mb-0">
-                            <textarea [(ngModel)]="strEligibleRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-12" *ngIf="eligble">
-                        <mat-form-field class="mb-0">
-                            <textarea [(ngModel)]="strEligibleRemarks" matInput placeholder="Remarks" rows="2"></textarea>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="col-md-12">
-                        <button class="mat-raised-button mat-accent" type="submit" (click)="saveEligiblity()">Save</button>
-                       </div>
-                </div>
-            </div> -->
-
-            <!-- <div *ngIf="dctEnquiry['status']!=='PENDING'">
-  <div class="row">
-      <div class="col-md-6">
-          <div class="form-group mt-1">
-            <label>Status</label>
-            <p >{{dctEnquiry['status'] | titlecase}}</p>
-          </div>
-      </div>
-      <div class="col-md-6" *ngIf="eligble">
-          <div class="form-group mt-1">
-            <label>Amount</label>
-            <p >{{eligibleAmount}}</p>
-          </div>
-      </div>
-      <div class="col-md-12" *ngIf="eligble">
-          <div class="form-group mt-1">
-            <label>Remarks</label>
-            <p >{{strEligibleRemarks}}</p>
-          </div>
-      </div>
-
-</div>
-</div> -->
-        <!-- </card> -->
-
-        <!-- <card class="col-md-12" *ngIf="(groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctEnquiry.status == 'TO PROCESS'">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
             
-
-            <div class="row">
-                <div class="col-md-12">
-                    <h4 class="form-head">Finance Approval
-                        <span class="pull-right accent"> Total Amount : {{eligibleAmount}}</span>
+                <!-- <span class="float-right">
+                    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon"(click)="reverseLocation()">
+                        <mat-icon> <i class="fa fa-chevron-circle-left"></i></mat-icon>
+                      </button>
+                -->
+                <!-- <button mat-raised-button [routerLink]="['/crm/followup']">
+                  follow-up history
+                </button> -->
+              <!-- </span>            -->
+           
+            <div class="col-md-12">
+                <div class="row">
+                    <!-- <div class="row">
+              <div class="col-md-12 col-lg-8"> -->
+                    <card class="col-md-12">
+                        <div class="label success">
+                            <h4 style="font-weight: 600;font-family: sans-serif;">
+                        <span class="form-head" style="margin-bottom: 0px;">Enquiry details {{'-' + dctEnquiry.vchr_enquiry_num}}
+                           
+                            <!-- <span class="pull-right">Billed Amount : 23000.00</span> -->
+                            <span style="float: right;">
+                            <span class="pull-right" *ngIf="dctEnquiry['total_amount']"> Total Amt : {{(dctEnquiry['total_amount']).toFixed(2)}} &nbsp;&nbsp;</span>
+                            <span class="pull-right" *ngIf="!dctEnquiry['total_amount']"> Total Amt : 0.00 &nbsp;&nbsp;</span>
+                            <span class="pull-right accent">
+                                <i class="fa fa-chevron-up" (click)="blnShowCustFullDetails = !blnShowCustFullDetails" *ngIf="blnShowCustFullDetails"></i>
+                                <i class="fa fa-chevron-down" (click)="blnShowCustFullDetails = !blnShowCustFullDetails" *ngIf="!blnShowCustFullDetails"></i>
+                              </span>
+                              </span>
+                        </span>
                     </h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Name on Card *" [(ngModel)]="strCardName" name="cardname">
-                        </mat-form-field>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <mat-checkbox class="example-margin" [(ngModel)]="bln_name_card">Verified</mat-checkbox>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Delivery Order No. *" [(ngModel)]="strOrderNo" name="orderno">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <mat-checkbox class="example-margin" [(ngModel)]="bln_delivery_no">Verified</mat-checkbox>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="mat-raised-button mat-accent" type="submit" (click)="saveFinanceApproval()">Save</button>
-                </div>
-            </div>
-        </card> -->
-
-        <!-- Financier to Process -->
-        <!-- <card class="col-md-12" *ngIf="groupName == 'FINANCIER' && dctEnquiry.status == 'FINANCED'">
-
-          
-            <div class="row">
-                <div class="col-md-12">
-                    <h4 class="form-head">Finance Entry
-                    </h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <mat-form-field>
-                        <mat-select aria-required="" placeholder="Schema" required [(ngModel)]="strSchema" name="schema">
-                            <mat-option *ngFor="let schema of lstSchema" value="{{schema.pk_bint_id}}">{{schema.vchr_schema}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1" *ngIf="dctEnquiry['finance_schema']">
-                        <label>Scheme</label>
-                        <p *ngIf="dctEnquiry['finance_schema']">{{dctEnquiry['finance_schema']}}</p>
-                        <p *ngIf="!dctEnquiry['finance_schema']">Not available</p>
-
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="row">
-
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Name on Card *" [(ngModel)]="strCardName" name="cardname">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Delivery Order No. *" [(ngModel)]="strOrderNo" name="orderno">
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="row">
-                <div class="col-md-6">
-                    <mat-form-field>
-                        <mat-select aria-required="" placeholder="Id Type" required [(ngModel)]="strIdType" name="idType">
-                            <mat-option *ngFor="let idType of lstIdType" value="{{idType | uppercase}}">{{idType}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Id No. " [(ngModel)]="intIdNumber" name="idno">
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Pancard No." [(ngModel)]="intPancardNo" name="pancardno">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Bank Name" [(ngModel)]="vchr_bankname" name="bankname">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="A/c No." [(ngModel)]="intAccNo" name="accno">
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Branch Name " [(ngModel)]="vchr_branchname" name="branchname">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Cheque No." [(ngModel)]="intChequeNo" name="chequeno">
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <h6 class="col-md-12">Initial Payment</h6> -->
-            <!-- <h6 class="form-head">Initial Payment</h6> -->
-            <!-- payment option start here -->
-            <!-- <div class="row">
-                <h6 class="col-md-12">Initial Payment</h6>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <input type="radio" name="payment" value="CASH" id="cash" [(ngModel)]="payment_option" />
-                        <label for="cash">Cash</label>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <input type="radio" name="payment" value="CARD" id="card" [(ngModel)]="payment_option" />
-                        <label for="card">Debit Card</label>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <input type="radio" name="payment" value="CREDIT" id="credit" [(ngModel)]="payment_option" />
-                        <label for="credit">Credit Card</label>
-                    </div>
-                </div>
-            </div> -->
-
-
-            <!-- <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Down Payment*" [(ngModel)]="int_downpayment" name="downpayment">
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div> -->
-            <!-- ============================================================================================================================ -->
-            <!-- <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Down Payment" [(ngModel)]="int_downpayment" name="downpayment" type="number" OnlyNumber='true'>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Margin Money" [(ngModel)]="intMarginMoney" name="marginmoney" type="number" OnlyNumber='true'>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Processing Fee" [(ngModel)]="intProsFee" name="prosfee" type="number" OnlyNumber='true'>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div> -->
-
-            <!-- <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="DBD Charge" [(ngModel)]="intdbd" name="intdbd" type="number" OnlyNumber='true'>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Net Loan Amount *" [(ngModel)]="intLoanAmt" name="loanamt" type="number" OnlyNumber='true'>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <mat-form-field class="mat-icon-left">
-                            <input matInput placeholder="Service Charge" [(ngModel)]="intSerCharge" name="sercharge" type="number" OnlyNumber='true'>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div> -->
-            <!-- ====================================================================================== -->
-            <!-- <div class="row">
-                <div class="col-md-12">
-                    <button class="mat-raised-button mat-accent" type="submit" (click)="saveFinanceEntry()">Save</button>
-                </div>
-            </div> -->
-            <!-- </div> -->
-        <!-- </card> -->
-
-
-
-        <card class="col-md-12" *ngIf="(groupName == 'FINANCIER' || groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctfinanceentry['status']">
-            <div class="row">
-                <div class="col-md-12">
-                    <h4 class="form-head">Finance Details
-                        <!-- <span class="pull-right accent"> Total Amount : {{eligibleAmount}}</span> -->
-                    </h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Scheme</label>
-                        <p *ngIf="dctfinanceentry['schema']">{{dctfinanceentry['schema']}}</p>
-                        <p *ngIf="!dctfinanceentry['schema']">Not available</p>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Down Payment</label>
-                        <p>{{dctfinanceentry['down_payment_amount']}}</p>
-                    </div>
-                </div>
-                <!-- <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Id Type</label>
-                        <p *ngIf="dctfinanceentry['id_type']">{{dctfinanceentry['id_type']}}</p>
-                        <p *ngIf="!dctfinanceentry['id_type']">---</p>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Id No.</label>
-                        <p *ngIf="dctfinanceentry['id_number']">{{dctfinanceentry['id_number']}}</p>
-                        <p *ngIf="!dctfinanceentry['id_number']">---</p>
-
-                    </div>
-                </div> -->
-            </div>
-            <!-- <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Pancard No.</label>
-                        <p *ngIf="dctfinanceentry['pan_number']">{{dctfinanceentry['pan_number']}}</p>
-                        <p *ngIf="!dctfinanceentry['pan_number']">---</p>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Bank Name</label>
-                        <p *ngIf="dctfinanceentry['bank_name']">{{dctfinanceentry['bank_name']}}</p>
-                        <p *ngIf="!dctfinanceentry['bank_name']">---</p>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Acc No.</label>
-                        <p *ngIf="dctfinanceentry['account_number']">{{dctfinanceentry['account_number']}}</p>
-                        <p *ngIf="!dctfinanceentry['account_number']">---</p>
-
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Branch Name</label>
-                        <p *ngIf="dctfinanceentry['branch_name']">{{dctfinanceentry['branch_name']}}</p>
-                        <p *ngIf="!dctfinanceentry['branch_name']">---</p>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Cheque No.</label>
-                        <p *ngIf="dctfinanceentry['cheque_number']">{{dctfinanceentry['cheque_number']}}</p>
-                        <p *ngIf="!dctfinanceentry['cheque_number']">---</p>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Payment Type</label>
-                        <p *ngIf="dctfinanceentry['initial_payment_type']">{{dctfinanceentry['initial_payment_type']}}</p>
-                        <p *ngIf="!dctfinanceentry['initial_payment_type']">---</p>
-
-                    </div>
-                </div>
-            </div> -->
-
-            <div class="row">
-                <!-- <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Down Payment</label>
-                        <p>{{dctfinanceentry['down_payment_amount']}}</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Name on Card</label>
-                        <p *ngIf="dctfinanceentry['vchr_name_in_card']">{{dctfinanceentry['vchr_name_in_card']}}</p>
-                        <p *ngIf="!dctfinanceentry['vchr_name_in_card']">-----</p>
-                    </div>
-                </div> -->
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Loan Amount</label>
-                        <p *ngIf="dctfinanceentry['dbl_net_loan_amount']">{{dctfinanceentry['dbl_net_loan_amount']}}</p>
-                        <p *ngIf="!dctfinanceentry['dbl_net_loan_amount']">0</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Delivery Order No</label>
-                        <p *ngIf="dctfinanceentry['vchr_delivery_order_no']">{{dctfinanceentry['vchr_delivery_order_no']}}</p>
-                        <p *ngIf="!dctfinanceentry['vchr_delivery_order_no']">-----</p>
-                    </div>
-                </div>
-            </div>
-            <!-- =======================================================================================================================================             -->
-            <!-- <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Processing Fee</label>
-                        <p *ngIf="dctfinanceentry['dbl_processing_fee']">{{dctfinanceentry['dbl_processing_fee']}}</p>
-                        <p *ngIf="!dctfinanceentry['dbl_processing_fee']">0</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Margin Money</label>
-                        <p *ngIf="dctfinanceentry['dbl_margin_money']">{{dctfinanceentry['dbl_margin_money']}}</p>
-                        <p *ngIf="!dctfinanceentry['dbl_margin_money']">0</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>DBD Amount</label>
-                        <p *ngIf="dctfinanceentry['dbl_dbd_amount']">{{dctfinanceentry['dbl_dbd_amount']}}</p>
-                        <p *ngIf="!dctfinanceentry['dbl_dbd_amount']">0</p>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Service Charge</label>
-                        <p *ngIf="dctfinanceentry['dbl_service_charge']">{{dctfinanceentry['dbl_service_charge']}}</p>
-                        <p *ngIf="!dctfinanceentry['dbl_service_charge']">0</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mt-1">
-                        <label>Loan Amount</label>
-                        <p *ngIf="dctfinanceentry['dbl_net_loan_amount']">{{dctfinanceentry['dbl_net_loan_amount']}}</p>
-                        <p *ngIf="!dctfinanceentry['dbl_net_loan_amount']">0</p>
-                    </div>
-                </div>
-            </div> -->
-            <!-- =======================================================================================================================================             -->
-
-        </card>
-
-        <!-- Credit Approval Button starts  here -->
-        <div class="col-md-12">
-            <span class="accent" *ngIf="(blnShowApproval) && (blnCreditApprove)">
-            <button (click)="creditApproval()"  aria-hidden="true" mat-raised-button color="accent">
-              Approve Credit
-              <!-- <i class="fa fa-chevron-circle-right" title="Check IMEI" aria-hidden="true"></i> -->
-            </button>&nbsp;
-                </span>
-        </div>
-        <!-- Credit Approval Button ends here -->
-
-
-        <!-- bajaj online add image  starts here-->
-        <!-- <card *ngIf="bln_img_status && (groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER')" class="col-md-12">
-            <div class="row">
-                <div class="col-xl-12 col-md-12">
-                    <h4 class="form-head">Add Images</h4>
-                    <div class="row mt-3">
-
-                        <div class="col-md-12 input-file-container ">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <p>Add Bill Image </p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Mobile Number</label>
+                                    <p *ngIf="dctEnquiry['cust_mobile']">{{dctEnquiry.cust_mobile}}</p>
+                                    <p *ngIf="!dctEnquiry['cust_mobile']">{{'----'}}</p>
+            
                                 </div>
-                                <div class="col-md-8">
-                                    : <input type="file" id="billImage" (change)="onChange($event,'Bill')" (cuechange)="onChange($event,'Bill')" class="input-file mt-2" id="InputFile" name="InputFile" #eventImg accept="image/jpeg" max-file-size="100kb"
-                                    />
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Email Id</label>
+                                    <p *ngIf="dctEnquiry.cust_email">{{dctEnquiry.cust_email}}</p>
+                                    <p *ngIf="!dctEnquiry.cust_email">{{'----'}}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 input-file-container ">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <p>Add Delivery Image</p>
+            
+            
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>First Name</label>
+                                    <p *ngIf="dctEnquiry.cust_fname">{{dctEnquiry.cust_fname|uppercase}}</p>
+                                    <p *ngIf="!dctEnquiry.cust_fname">{{'----'}}</p>
                                 </div>
-                                <div class="col-md-8">
-                                    : <input type="file" id="deliveryImage" (change)="onChange($event,'Delivery')" (cuechange)="onChange($event,'Delivery')" class="input-file mt-2" id="InputFile" name="InputFile" #eventImg accept="image/jpeg" max-file-size="100kb"
-                                    />
+                            </div>
+            
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Last Name</label>
+                                    <p *ngIf="dctEnquiry.cust_lname">{{dctEnquiry.cust_lname|uppercase}}</p>
+                                    <p *ngIf="!dctEnquiry.cust_lname">{{'----'}}</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <label class="mt-2">Add ID Proof :-</label>
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <p>ID Proof 1 *(Required)</p>
+                        <div class="row" *ngIf="blnShowCustFullDetails">
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Alternate Mobile Number</label>
+                                    <p *ngIf="dctEnquiry.cust_alternatemobile">{{dctEnquiry.cust_alternatemobile}}</p>
+                                    <p *ngIf="!dctEnquiry.cust_alternatemobile">{{'----'}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Alternate Email Id</label>
+                                    <p *ngIf="dctEnquiry.cust_alternatemail">{{dctEnquiry.cust_alternatemail}}</p>
+                                    <p *ngIf="!dctEnquiry.cust_alternatemail">{{'----'}}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-8  input-file-container ">
-
-                            : <input type="file" id="userImage1" (change)="onChange($event,'idFirst')" (cuechange)="onChange($event,'idFirst')" class="input-file" id="InputFile" name="InputFile" #eventImg accept="image/jpeg" max-file-size="100kb" />
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <p>Alternate Id Proof (If any)</p>
-                        </div>
-                        <div class="col-md-8 input-file-container ">
-
-                            : <input type="file" id="userImage2" (change)="onChange($event,'idSecond')" (cuechange)="onChange($event,'idSecond')" class="input-file" id="InputFile" name="InputFile" #eventImg accept="image/jpeg" max-file-size="100kb" />
-                        </div>
-                    </div>
-
-                    <div class="mt-3">
-                        <button class="mat-raised-button mat-accent" (click)="addImages()">Save</button>
-                    </div>
-                </div>
-            </div>
-        </card> -->
-
-        <!-- bajaj online add image  ends here-->
-
-        <!-- bajaj onlline view image -->
-
-        <card *ngIf="blnBajajInvoiced && blnShowImage && (groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER' || groupName == 'BAJAJ ONLINE' || groupName=='ADMIN')">
-            <h4 class="form-head">Images</h4>
-
-            <div class="row">
-                <div class="col-md-3 mt-2">
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <img class="img" [src]="imageBillSrc" alt="Image is temporrarly unavailable" />
-                        </div>
-                        <div class="col-md-12 mt-2">
-                            <label>Bill Image</label>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-md-3 mt-2">
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <img class="img" [src]="imageDeliverySrc" alt="Image is temporrarly unavailable" />
-                        </div>
-                        <div class="col-md-12 mt-2">
-                            <label>Delivery Image</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mt-2">
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <img class="img" [src]="imageIdOneSrc" alt="Image is temporrarly unavailable" />
-                        </div>
-                        <div class="col-md-12 mt-2">
-                            <label>ID Proof1</label>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div *ngIf="dctBajajImages[0][4]" class="col-md-3 mt-2">
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <img class="img" [src]="imageIdTwoSrc" alt="Image is temporrarly unavailable" />
-                        </div>
-                        <div class="col-md-12 mt-2">
-                            <label>ID Proof2</label>
-                        </div>
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        </card>
-
-
-        <!-- bajaj onlline view image -->
-
-
-
-        <!-- </div> -->
-    </div>
-</div>
-<div>
-    <app-calender></app-calender>
-    <app-sticky-notes></app-sticky-notes>
-</div>
-<!-- add imei number popup -->
-<div class="modal" id="addrequest_modal" [style.display]="blnShowPopup ? 'block' : 'none'" role="dialog">
-    <div class="modal-dialog" [style.display]="blnShowPopup ? 'block' : 'none'" style="width: 400px;text-align: center;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" (click)="hideModal()">&times;</button>
-                <h4 class="modal-title text-center">Add IMEI Number </h4>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12">
-                </div>
-                <div class="col-md-12">
-                    <mat-form-field class="example-full-width" *ngFor="let index of  lstImeiNumbers">
-                        <input matInput OnlyAlphaNum="true"  placeholder="IMEI Number" [(ngModel)]="index.imei" (keypress) = "OnKeyPress(index.imei,$event)" />
-                    </mat-form-field>
-                </div>
-
-
-                <div class="col-md-12 mb-3 mt-3">
-                    <button mat-raised-button class="add_btn" data-dismiss="modal" color="primary" (click)="addRequest()">Add</button>
-                    <button mat-raised-button class="add_btn" style="background: #c5c5c5;color: #fff;" (click)="clearFields()"> Cancel </button>
-                </div>
-            </div>
-            <div class="modal-footer clearfix"></div>
-        </div>
-    </div>
-</div>
-<!-- add imei number popup -->
-<!-- proess imei number popup -->
-<div class="modal" id="checkrequest_modal" [style.display]="blnImeiCheckPopup ? 'block' : 'none'" role="dialog">
-    <div class="modal-dialog dialog" [style.display]="blnImeiCheckPopup ? 'block' : 'none'" style="width: 400px;text-align: center;">
-        <div class="modal-content content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" (click)="hideModal()">&times;</button>
-                <h4 class="modal-title text-center">Process IMEI Number Request </h4>
-            </div>
-            <div class="modal-body">
-                <h5 style="margin: 8px;text-align: left;    font-size: 14px;">IMEI Numbers Requested :-</h5>
-
-                <div  class="col-md-12" *ngFor="let item of lstImeisToCheck[0];let i =index">
-                    <div class="mt-2 text-left" style="color: #8c8888;"><span style="color: #403e3e;">{{ i+1 }}. </span> {{ item }} </div>
-                </div>
-                <!-- <div class="col-md-12" *ngFor="let item of lstImeisToCheck">
-                    <div class="mt-2">{{ item }} </div>
+            
+                        <div class="row" *ngIf="blnShowCustFullDetails">
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Enquiry Source</label>
+                                    <p *ngIf="dctEnquiry.vchr_source_name">{{dctEnquiry.vchr_source_name|titlecase}}</p>
+                                    <p *ngIf="!dctEnquiry.vchr_source_name">{{'----'}}</p>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-6">
+                  <div class="form-group mt-1">
+                    <label>Enquiry priority</label>
+                    <p *ngIf="dctEnquiry.vchr_priority_name">{{dctEnquiry.vchr_priority_name|titlecase}}</p>
+                    <p *ngIf="!dctEnquiry.vchr_priority_name">{{'----'}}</p>
+                  </div>
                 </div> -->
-                <!-- <div class="col-md-4" *ngIf = "blnRejectRequest">
-                    <mat-form-field>
-                        <input [(ngModel)]="strRejectRemark" name="strRejectRemark" matInput placeholder="Remark*" />
-                    </mat-form-field>
-                </div> -->
-
-                <div class="col-md-12 mb-3 mt-3" style="text-align: left;">
-                    <button mat-raised-button data-dismiss="modal" class="add_btn" color="primary" (click)="processRequest('Approve')" *ngIf = "!blnRejectRequest">Approve</button>
-                    <!-- <button mat-raised-button data-dismiss="modal" class="add_btn" style="background: #827d7d;color: #fff;" (click)="processRequest('Reject')">Reject </button> -->
-                      <button mat-raised-button data-dismiss="modal" class="add_btn" style="background: #827d7d;color: #fff;" (click)="processRequest('Reject')" *ngIf = "!blnRejectRequest" >Reject </button>
-                       <button mat-raised-button data-dismiss="modal" class="add_btn" style="background: #827d7d;color: #fff;" (click)="processRequest('Reject')" *ngIf = "blnRejectRequest">OK </button>
-                       <button mat-raised-button data-dismiss="modal" class="add_btn" style="background: #827d7d;color: #fff;" (click)="cancelRejectRequest('Reject')" *ngIf = "blnRejectRequest">Cancel </button>
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Contact Source</label>
+                                    <p *ngIf="dctEnquiry.cust_contactsrc">{{dctEnquiry.cust_contactsrc|titlecase}}</p>
+                                    <p *ngIf="!dctEnquiry.cust_contactsrc">{{'----'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="blnShowCustFullDetails">
+            
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Send SMS</label>
+                                    <p *ngIf="dctEnquiry.bln_sms">{{'Yes'}}</p>
+                                    <p *ngIf="!dctEnquiry.bln_sms">{{'No'}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Branch</label>
+                                    <p *ngIf="dctEnquiry.vchr_name">{{dctEnquiry.vchr_name|titlecase}}</p>
+                                    <p *ngIf="!dctEnquiry.vchr_name">{{'----'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="blnShowCustFullDetails">
+            
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Staff Name</label>
+                                    <p *ngIf="dctEnquiry.staff_full_name">{{dctEnquiry.staff_full_name|titlecase}}</p>
+                                    <p *ngIf="!dctEnquiry.staff_full_name">{{'----'}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Date</label>
+                                    <p *ngIf="dctEnquiry.dat_created_at">{{dctEnquiry.dat_created_at}}</p>
+                                    <p *ngIf="!dctEnquiry.dat_created_at">{{'----'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="blnShowCustFullDetails">
+            
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Time</label>
+                                    <p *ngIf="dctEnquiry.time_created_at">{{dctEnquiry.time_created_at}}</p>
+                                    <p *ngIf="!dctEnquiry.time_created_at">{{'----'}}</p>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group mt-1">
+                                    <label>Remarks</label>
+                                    <p *ngIf="dctEnquiry['vchr_remarks']">{{dctEnquiry['vchr_remarks'] | titlecase}}</p>
+                                    <p *ngIf="!dctEnquiry['vchr_remarks']">{{'----'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </card>
+                    <!-- </div>
+            </div> -->
+                    <!-- <card class="col-md-12" *ngIf="(groupName=='FINANCIER' && dctEnquiry['status']!='PENDING') || ((groupName=='BRANCH MANAGER' || groupName=='ASSISTANT BRANCH MANAGER') && dctEnquiry['status']!='PENDING') || (groupName=='FINANCE ADMIN')">
+                        <h4 class="form-head">Finance Details
+            
+                        </h4>
+            
+                        <div class="row">
+                            <div class="col-md-6" *ngIf="dctEnquiry['status']">
+                                <div class="form-group mt-1">
+                                    <label>Status</label>
+                                    <p>{{dctEnquiry['status'] | titlecase}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6" *ngIf="dctEnquiry.status != 'PENDING' && dctEnquiry.status != 'NOT ELIGIBLE'">
+                                <div class="form-group mt-1">
+                                    <label>Amount</label>
+                                    <p>{{eligibleAmount}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6" *ngIf="dctEnquiry['finance_schema']">
+                                <div class="form-group mt-1">
+                                    <label>Scheme</label>
+                                    <p>{{dctEnquiry['finance_schema']}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6" *ngIf="dctEnquiry.status != 'PENDING' && dctEnquiry.status != 'NOT ELIGIBLE' && strEligibleRemarks">
+                                <div class="form-group mt-1">
+                                    <label>Remarks</label>
+                                    <p>{{strEligibleRemarks}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </card> -->
+                    <!-- <div > -->
+                    <card class="col-md-12" *ngFor="let key of enqKeys">
+                        <span *ngFor="let item of dctEnquiryDetails[key];let tempId=index">
+                <h4 class="form-head">{{key}} details {{tempId+1}}
+                    <span class="pull-right accent" *ngIf="(!(lstCompletedStatus.includes(item['vchr_enquiry_status']))) && ((groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctEnquiry.status != 'TO PROCESS' && dctEnquiry.status != 'BOOKED' && item['vchr_enquiry_status']!= 'PARTIALLY PAID' && item['vchr_enquiry_status']!= 'FINANCED')">
+                        <span class="pull-right accent" (click)="changeFollowUp(tempId,key,0,item); item['quantityCopy'] = item['int_quantity'];intFollowUpQuantity = item['int_quantity'] "
+                          *ngIf="(!(intFollowUpFlag == tempId && strFollowUpService == key)) && (((groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctEnquiry.status != 'TO PROCESS') || groupName!='FINANCIER') && item['vchr_enquiry_status'] != 'INVOICED'  && (item['vchr_enquiry_status'] != 'IMEI PENDING') && (item['vchr_enquiry_status']!='IMEI REJECTED') && (item['vchr_enquiry_status']!='IMEI REQUESTED')&& (item['vchr_enquiry_status']!='IMEI REQUESTED') && (item['vchr_enquiry_status']!='IMAGE PENDING')">
+                          <i class="fa fa-plus-circle" title="Follow-up" aria-hidden="true"></i> follow-up</span>
+                            <span class="pull-right accent" (click)="changeFollowUp(-1,'',1,item); item['quantityCopy'] = item['int_quantity'];intFollowUpQuantity = item['int_quantity'] " *ngIf="(intFollowUpFlag == tempId && strFollowUpService == key) && (((groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctEnquiry.status != 'TO PROCESS') || groupName!='FINANCIER') && item['vchr_enquiry_status'] != 'INVOICED'  && (item['vchr_enquiry_status'] != 'IMEI PENDING') && (item['vchr_enquiry_status']!='IMEI REJECTED') && (item['vchr_enquiry_status']!='IMEI REQUESTED') && (item['vchr_enquiry_status']!='IMAGE PENDING')">
+                          <i class="fa fa-minus-circle" title="Follow-up" aria-hidden="true"></i> follow-up </span>
+                            </span>
+            
+            
+            
+                        <!-- add imei button-->
+                        <!-- <span class="pull-right accent" *ngIf="((item['vchr_enquiry_status'] == 'IMEI PENDING') || (item['vchr_enquiry_status'] == 'IMEI REJECTED')) && (groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER')">
+                    <span (click)="checkClickRequest(item['pk_bint_id'],item['int_quantity'])" class="pull-right request_btn" data-toggle="modal" data-target="#addrequest_modal"
+                      aria-hidden="true">
+                      Add IMEI
+                      <i class="fa fa-chevron-circle-right" title="Add IMEI" aria-hidden="true"></i>
+                    </span>&nbsp;
+                        </span> -->
+                        <!-- add imei button -->
+                        <!-- check imei request -->
+                        <span class="pull-right accent" *ngIf="(item['vchr_enquiry_status']=='IMEI REQUESTED') && (groupName == 'BAJAJ ONLINE')">
+                    <span (click)="checkImeiRequest(item['pk_bint_id'],item['dbl_imei_json'])" class="pull-right request_btn" data-toggle="modal" data-target="#checkrequest_modal"
+                      aria-hidden="true">
+                      Check IMEI
+                      <i class="fa fa-chevron-circle-right" title="Check IMEI" aria-hidden="true"></i>
+                    </span>&nbsp;
+                        </span>
+                        <!-- check imei request -->
+            
+            
+                        <!-- partially paid status -->
+            
+            
+                        <span class="pull-right accent" *ngIf="groupName=='BALL GAME ADMIN' && item['vchr_enquiry_status'] == 'PARTIALLY PAID'">
+                    <span class="pull-right accent" (click)="changeOffer(tempId,key,0,item)"
+                      *ngIf="(!(intOfferFlag == tempId && strOfferService == key)) && item['vchr_enquiry_status'] == 'PARTIALLY PAID'">
+                      <i class="fa fa-plus-circle" title="Offer-Gdew" aria-hidden="true"></i> Add Offer</span>
+                        <span class="pull-right accent" (click)="changeOffer(-1,'',1,item)" *ngIf="(intOfferFlag == tempId && strOfferService == key) && item['vchr_enquiry_status'] == 'PARTIALLY PAID'">
+                      <i class="fa fa-minus-circle" title="Offer" aria-hidden="true"></i>Add Offer </span>
+                        </span>
+                        <!-- add gdp and gdew -->
+            
+                        <!-- <span class="pull-right accent" *ngIf="bln_checkDate && item['int_type'] !=3 && item['vchr_enquiry_status'] == 'INVOICED' && (key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Slr Cam' || key == 'Digital Camera' )">
+                    <span class="pull-right accent" (click)="changeGdpGdew(tempId,key,0,item)"
+                      *ngIf="(!(intgdpFlag == tempId && strgdpService == key)) && item['vchr_enquiry_status'] == 'INVOICED'">
+                      <i class="fa fa-plus-circle" title="Gdp-Gdew" aria-hidden="true"></i> Add GDOT</span>
+                        <span class="pull-right accent" (click)="changeGdpGdew(-1,'',1,item)" *ngIf="(intgdpFlag == tempId && strgdpService == key) && item['vchr_enquiry_status'] == 'INVOICED'">
+                      <i class="fa fa-minus-circle" title="Gdp-Gdew" aria-hidden="true"></i>Add GDOT </span>
+                        </span> -->
+            
+            
+                        </h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Brand</label>
+                                    <p *ngIf="item.vchr_brand_name">{{item['vchr_brand_name'] | titlecase}}</p>
+                                    <p *ngIf="!item.vchr_brand_name">{{'----'}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Item</label>
+                                    <p *ngIf="item.vchr_item_name">{{item['vchr_item_name'] | titlecase}}</p>
+                                    <p *ngIf="!item.vchr_item_name">{{'----'}}</p>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group mt-1">
+                                    <label>Quantity</label>
+                                    <p *ngIf="item['int_quantity']">{{item['int_quantity']}}</p>
+                                    <p *ngIf="!item['int_quantity']">{{'----'}}</p>
+                                </div>
+                            </div>
+            
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Enquiry status</label>
+                                    <p *ngIf="item.vchr_enquiry_status">{{item['vchr_enquiry_status'] | titlecase}}</p>
+                                    <p *ngIf="!item.vchr_enquiry_status">{{'----'}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12" *ngIf="((item['vchr_enquiry_status'] == 'BOOKED') || (item['vchr_enquiry_status'] == 'INVOICED')) && (key == 'Mobiles' || key == 'Tablets' || key == 'Laptops')">
+                                <div class="form-group mt-1">
+                                    <label>Imei</label>
+                                    <span *ngIf="item['dbl_imei_json']">
+                        <span *ngIf="item['dbl_imei_json']['imei'];else noimei">
+                          <mat-list class="row">
+                            <mat-list-item *ngFor="let items of item['dbl_imei_json'].imei;let i = index" class="col-sm-6">
+                              <span class="textlistid">{{i+1}}</span>
+                                    <span class="textlistid">&#8228;&ensp;</span>
+                                    <p class="textlist">{{items}}</p>
+                                    </mat-list-item>
+                                    </mat-list>
+                                    </span>
+                                    <ng-template #noimei>
+                                        <p>{{'----'}}</p>
+                                    </ng-template>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group mt-1">
+                                    <label>Estimated amount</label>
+                                    <p *ngIf="item['dbl_amount']">{{item['dbl_amount']}}</p>
+                                    <p *ngIf="!item['dbl_amount']">{{'----'}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group mt-1">
+                                    <label>Buy back Amt.</label>
+                                    <p>{{item['dbl_buyback_amount']}}</p>
+                                    <!-- <p *ngIf="item['dbl_buyback_amount']">{{item['dbl_buyback_amount']}}</p>
+                      <p *ngIf="!item['dbl_buyback_amount']">{{'----'}}</p> -->
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group mt-1">
+                                    <label>Discount Amt.</label>
+                                    <p>{{item['dbl_discount_amount']}}</p>
+                                    <!-- <p *ngIf="item['dbl_discount_amount']">{{item['dbl_discount_amount']}}</p>
+                      <p *ngIf="!item['dbl_discount_amount']">{{'----'}}</p> -->
+                                </div>
+                            </div>
+                            <!-- <div *ngIf="(key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Digital Camera' )"> -->
+                            <div class="col-md-3" *ngIf="(item['vchr_enquiry_status'] == 'IMEI PENDING') || (item['vchr_enquiry_status'] == 'IMEI REJECTED') || (item['vchr_enquiry_status'] == 'IMEI REQUESTED') || (item['vchr_enquiry_status'] == 'BOOKED') || (item['vchr_enquiry_status'] == 'INVOICED') && (key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Slr Cam' || key == 'Digital Camera' )">
+                                <div class="form-group mt-1">
+                                    <label>GDP</label>
+                                    <p>{{item['dbl_gdp']}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3" *ngIf="(item['vchr_enquiry_status'] == 'IMEI PENDING') || (item['vchr_enquiry_status'] == 'IMEI REJECTED') || (item['vchr_enquiry_status'] == 'IMEI REQUESTED') || (item['vchr_enquiry_status'] == 'BOOKED') || (item['vchr_enquiry_status'] == 'INVOICED') && (key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Slr Cam' || key == 'Digital Camera' )">
+                                <div class="form-group mt-1">
+                                    <label>GDEW</label>
+                                    <p>{{item['dbl_gdew']}}</p>
+                                </div>
+                            </div>
+            
+                            <div class="col-md-3">
+                                <div class="form-group mt-1">
+                                    <label>Total Amt.</label>
+                                    <p>{{(totalAmount(item['dbl_amount'],item['dbl_buyback_amount'],item['dbl_discount_amount'],item['dbl_gdp'],item['dbl_gdew']).toFixed(2))}}</p>
+                                </div>
+                            </div>
+                            <!-- </div> -->
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group mt-1">
+                                    <label>Remarks</label>
+                                    <p *ngIf="item['vchr_remarks']">{{item['vchr_remarks'] | titlecase}}</p>
+                                    <p *ngIf="!item['vchr_remarks']">{{'----'}}</p>
+                                </div>
+                            </div>
+                        </div> -->
+            
+                        <!-- Add follow-up section -->
+                        <div class="row" *ngIf="intFollowUpFlag == tempId && strFollowUpService == key">
+                            <div class="col-md-12">
+                                <h6>Add follow-up</h6>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <input #quantity OnlyInteger="true" [(ngModel)]="item['quantityCopy']" matInput placeholder="Quantity*" (ngModelChange)="checkQuantity(tempId, quantity.value)">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <!-- <input type="number" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*" (change)="checkAmount(tempId, item['int_quantity'], key)"> -->
+                                    <input OnlyNumber="true" [(ngModel)]="intFollowUpAmount" matInput placeholder="Estimated amount*">
+                                    <!-- <mat-icon matSuffix style="cursor:pointer" [ngbTooltip]="tipContent" (mouseover)="maxPrice= (item['dbl_max_price'] * item['int_quantity'] );minPrice=(item['dbl_min_price'] * item['int_quantity']) ">info_outline</mat-icon> -->
+                                    <!-- <ng-template #tipContent>
+                                        <span>Min. selling price : {{minPrice}}</span>
+                                        <br>
+                                        <span>Max. selling price : {{maxPrice}}</span>
+                                    </ng-template> -->
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <mat-select [(ngModel)]="strFollowUpStatus" required placeholder="Enquiry status">
+                                        <mat-option *ngFor="let status of lstFollowUpStatus" [value]="status">{{status|titlecase}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <input OnlyNumber="true" [(ngModel)]="intFollowUpBuyBackAmount" matInput placeholder="Buy back amount">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <input OnlyNumber="true" [(ngModel)]="intFollowUpDiscountAmount" matInput placeholder="Discount amount">
+                                </mat-form-field>
+                            </div>
+            
+            
+            
+                            <div class="col-md-4" *ngIf="(strFollowUpStatus == 'BOOKED') || (strFollowUpStatus == 'INVOICED') && (key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Slr Cam' || key == 'Digital Camera' )">
+                                <mat-form-field>
+                                    <input OnlyNumber="true" [(ngModel)]="intGDP" matInput placeholder="GDP">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4" *ngIf="(strFollowUpStatus == 'BOOKED') || (strFollowUpStatus == 'INVOICED') && (key == 'Mobiles' || key == 'Tablets'  || key == 'Laptops' || key == 'Slr Cam' || key == 'Digital Camera' )">
+                                <mat-form-field>
+                                    <input OnlyNumber="true" [(ngModel)]="intGDEW" matInput placeholder="GDEW">
+                                </mat-form-field>
+                            </div>
+            
+            
+                            <div class="col-md-12" *ngIf="(strFollowUpStatus == 'BOOKED') && (key == 'Mobiles' || key == 'Tablets') ">
+                                <div class="col-md-4" *ngFor="let imei of [] | range:intFollowUpQuantity">
+                                    <mat-form-field>
+                                        <input required OnlyAlphaNum="true" matInput placeholder="IMEI No." name="key-{{imei}}" [(ngModel)]="lstImei[imei]" (keypress)="validate($event)">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <mat-form-field class="mb-0">
+                                    <textarea [(ngModel)]="strFollowUpRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="mat-raised-button mat-accent" type="submit" (click)="saveFollowUp(item['pk_bint_id'],tempId, key, item['quantityCopy'])">Save</button>
+                                <button class="mat-raised-button cancel_btn" (click)="changeFollowUp(-1,'',1,item)">Cancel</button>
+                            </div>
+                        </div>
+                        <!-- Follow-up end here -->
+                        <!-- Add Offer start here -->
+                        <!-- -->
+                        <div class="row" *ngIf=" groupName=='BALL GAME ADMIN' && intOfferFlag == tempId && strOfferService == key">
+                            <div class="col-md-12">
+                                <h6>Add Offer</h6>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <mat-select [(ngModel)]="vchr_offer" required placeholder="Offer">
+                                        <mat-option *ngFor="let i of lstOffer" [value]="i.pk_bint_id">{{i.vchr_code}}-{{i.vchr_details}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+            
+                            <div class="col-md-12">
+                                <button class="mat-raised-button mat-accent" type="submit" (click)="saveOffer(item['pk_bint_id'],tempId, key,item['vchr_enquiry_status'])">Save</button>
+                                <button class="mat-raised-button cancel_btn" (click)="changeOffer(-1,'',1,item)">Cancel</button>
+                            </div>
+                        </div>
+                        <!-- Add Offer start here -->
+            
+                        <!-- smart choice details start here -->
+            
+            
+            
+                        <div *ngIf="key == 'Smart Choice' && smartchoiceKeys.length != 0 " class="row">
+                            <div class="col-md-12">
+                                <span>
+                                    <label>Product Images</label>
+                                    <div class="row" >
+                                        <div class="col-md-3" *ngFor="let image of dctSmartchoice[item.vchr_item_code][((-1*item['key_amount']))]['product']">
+                                            <div class="form-group mt-1">
+                                                <img src="{{nodeHost}}/{{image}}" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="col-md-12">
+                                <span>
+                                    <label>Exchange Form</label>
+                                    <div class="row">
+                                        <div class="col-md-3" *ngFor="let image of dctSmartchoice[item.vchr_item_code][-1*item['key_amount']]['exchangeform']">
+                                            <div class="form-group mt-1">
+                                                <img src="{{nodeHost}}/{{image}}" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="col-md-12">
+                                <span>
+                                    <label>Id Proof</label>
+                                    <div class="row">
+                                        <div class="col-md-3" *ngFor="let image of dctSmartchoice[item.vchr_item_code][-1*item['key_amount']]['idproof']">
+                                            <div class="form-group mt-1">
+                                                <img src="{{nodeHost}}/{{image}}" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+            
+            
+                        <!-- <div *ngIf="item.smartchoice" class="row">
+                            <div class="col-md-12">
+                                <h6>Smart Choice Details</h6>
+                            </div>
+                            <div *ngFor="let smartChoice of item.items let i=index">
+            
+                                <div class="col-md-12">
+                                    <div class="form-group mt-1">
+                                        <p><b>#{{i+1}}</b></p>
+                                    </div>
+                                </div>
+            
+            
+                                <div class="col-md-6">
+                                    <div class="form-group mt-1">
+                                        <label>Product</label>
+                                        <p>{{smartChoice.exchange_product}}</p>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group mt-1">
+                                        <label>Brand</label>
+                                        <p>{{smartChoice.exchange_brand}}</p>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group mt-1">
+                                        <label>Item</label>
+                                        <p>{{smartChoice.exchange_item}}</p>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group mt-1">
+                                        <label>Exchange amount</label>
+                                        <p>{{smartChoice.dbl_exchange_amt}}</p>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-12" *ngIf="smartChoice.exchange_product == 'MOBILES' || smartChoice.exchange_product == 'TABLETS' || item.items.exchange_product == 'LAPTOPS'">
+                                    <div class="form-group mt-1">
+                                        <label>Imei</label>
+                                        <p>{{smartChoice.vchr_exc_imei}}</p>
+                                    </div>
+                                </div> -->
+            
+                        <!-- <div class="col-md-12">
+                                    <span *ngIf="smartChoice['images']['image']">
+                      <label>Images</label>
+                      <div class="col-md-3" *ngFor="let image of smartChoice['images']['image']">
+                        <div class="form-group mt-1">
+                          <img src="{{nodeHost}}/{{image}}" alt="">
+                        </div>
+                      </div>
+                    </span>
+                                </div> -->
+                        <!-- 
+                                <div class="col-md-12">
+                                    <span *ngIf="smartChoice['images']['product']">
+                    <label >Product Images</label>
+                    <div class="row">
+                      <div class="col-md-3" *ngFor="let image of smartChoice['images']['product']">
+                        <div class="form-group mt-1">
+                          <img src="{{nodeHost}}/{{image}}" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </span>
+                                </div>
+            
+                            </div>
+            
+            
+                            <div class="col-md-12">
+                                <span *ngIf="item.items[0]['images']['exchangeform']">
+                  <label>Exchange Form</label>
+                  <div class="row">
+                    <div class="col-md-3" *ngFor="let image of item.items[0]['images']['exchangeform']">
+                      <div class="form-group mt-1">
+                        <img src="{{nodeHost}}/{{image}}" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  <label>Id Proof</label>
+                  <div class="row">
+                    <div class="col-md-3" *ngFor="let image of item.items[0]['images']['idproof']">
+                      <div class="form-group mt-1">
+                        <img src="{{nodeHost}}/{{image}}" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  </span>
+                            </div>
+            
+            
+                        </div> -->
+            
+                        <!-- smart choice details end here -->
+            
+                        <!-- Add gdp and gdew section -->
+            
+                        <div class="row" *ngIf="intgdpFlag == tempId && strgdpService == key">
+                            <div class="col-md-12">
+                                <h6>Add GDP & GDEW</h6>
+                            </div>
+                            <div class="col-md-4" *ngIf="gdp">
+                                <mat-form-field>
+                                    <input OnlyNumber="true" [(ngModel)]="int_GDP" matInput placeholder="GDP">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4" *ngIf="!gdp">
+                                <label>GDP</label>
+                                <p>{{int_GDP}}</p>
+                            </div>
+                            <div class="col-md-4" *ngIf="gdew">
+                                <mat-form-field>
+                                    <input OnlyNumber="true" [(ngModel)]="int_GDEW" matInput placeholder="GDEW">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4" *ngIf="!gdew">
+                                <label>GDEW</label>
+                                <p>{{int_GDEW}}</p>
+                            </div>
+            
+            
+                            <div class="col-md-12">
+                                <button class="mat-raised-button mat-accent" type="submit" (click)="saveGdpGdew(item['pk_bint_id'],tempId, key, item['dbl_amount'])">Save</button>
+                                <button class="mat-raised-button cancel_btn" (click)="changeGdpGdew(-1,'',1,item)">Cancel</button>
+                            </div>
+                        </div>
+            
+                        <!--gdp and gdew end here -->
+            
+            
+            
+                        </span>
+                    </card>
+                    <!-- <card class="col-md-12" *ngIf="groupName =='FINANCIER' && dctEnquiry['status'] =='PENDING'">
+                       
+                        <h4 class="form-head">Finance Details
+            
+                        </h4>
+                        <div *ngIf="dctEnquiry['status'] =='PENDING'">
+            
+                            <mat-radio-group name="eligible" [(ngModel)]="eligble">
+                                <mat-radio-button [value]=true>
+                                    <strong>Eligible</strong></mat-radio-button>
+                                <mat-radio-button [value]=false>
+                                    <strong>Not Eligible</strong></mat-radio-button>
+                            </mat-radio-group>
+                            <div class="row">
+                                <div class="col-md-4" *ngIf="eligble">
+                                    <mat-form-field class="mb-0">
+                                        <input required matInput OnlyNumber="true" placeholder="Amount" name="eligibleAmount" [(ngModel)]="eligibleAmount">
+                                    </mat-form-field>
+                                </div>
+            
+                                <div class="col-md-4" *ngIf="dctEnquiry['finance_schema']">
+                                    <div class="form-group mt-1">
+                                        <label>Scheme</label>
+                                        <p>{{dctEnquiry['finance_schema']}}</p>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-12" *ngIf="!eligble">
+                                    <mat-form-field class="mb-0">
+                                        <textarea [(ngModel)]="strEligibleRemarks" matInput placeholder="Remarks*" rows="2"></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-12" *ngIf="eligble">
+                                    <mat-form-field class="mb-0">
+                                        <textarea [(ngModel)]="strEligibleRemarks" matInput placeholder="Remarks" rows="2"></textarea>
+                                    </mat-form-field>
+                                </div>
+            
+                                <div class="col-md-12">
+                                    <button class="mat-raised-button mat-accent" type="submit" (click)="saveEligiblity()">Save</button>
+                                   </div>
+                            </div>
+                        </div> -->
+            
+                        <!-- <div *ngIf="dctEnquiry['status']!=='PENDING'">
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group mt-1">
+                        <label>Status</label>
+                        <p >{{dctEnquiry['status'] | titlecase}}</p>
+                      </div>
+                  </div>
+                  <div class="col-md-6" *ngIf="eligble">
+                      <div class="form-group mt-1">
+                        <label>Amount</label>
+                        <p >{{eligibleAmount}}</p>
+                      </div>
+                  </div>
+                  <div class="col-md-12" *ngIf="eligble">
+                      <div class="form-group mt-1">
+                        <label>Remarks</label>
+                        <p >{{strEligibleRemarks}}</p>
+                      </div>
+                  </div>
+            
+            </div>
+            </div> -->
+                    <!-- </card> -->
+            
+                    <!-- <card class="col-md-12" *ngIf="(groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctEnquiry.status == 'TO PROCESS'">
+                        
+            
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="form-head">Finance Approval
+                                    <span class="pull-right accent"> Total Amount : {{eligibleAmount}}</span>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Name on Card *" [(ngModel)]="strCardName" name="cardname">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-checkbox class="example-margin" [(ngModel)]="bln_name_card">Verified</mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Delivery Order No. *" [(ngModel)]="strOrderNo" name="orderno">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-checkbox class="example-margin" [(ngModel)]="bln_delivery_no">Verified</mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="mat-raised-button mat-accent" type="submit" (click)="saveFinanceApproval()">Save</button>
+                            </div>
+                        </div>
+                    </card> -->
+            
+                    <!-- Financier to Process -->
+                    <!-- <card class="col-md-12" *ngIf="groupName == 'FINANCIER' && dctEnquiry.status == 'FINANCED'">
+            
+                      
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="form-head">Finance Entry
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field>
+                                    <mat-select aria-required="" placeholder="Schema" required [(ngModel)]="strSchema" name="schema">
+                                        <mat-option *ngFor="let schema of lstSchema" value="{{schema.pk_bint_id}}">{{schema.vchr_schema}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1" *ngIf="dctEnquiry['finance_schema']">
+                                    <label>Scheme</label>
+                                    <p *ngIf="dctEnquiry['finance_schema']">{{dctEnquiry['finance_schema']}}</p>
+                                    <p *ngIf="!dctEnquiry['finance_schema']">Not available</p>
+            
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="row">
+            
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Name on Card *" [(ngModel)]="strCardName" name="cardname">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Delivery Order No. *" [(ngModel)]="strOrderNo" name="orderno">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field>
+                                    <mat-select aria-required="" placeholder="Id Type" required [(ngModel)]="strIdType" name="idType">
+                                        <mat-option *ngFor="let idType of lstIdType" value="{{idType | uppercase}}">{{idType}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Id No. " [(ngModel)]="intIdNumber" name="idno">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Pancard No." [(ngModel)]="intPancardNo" name="pancardno">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Bank Name" [(ngModel)]="vchr_bankname" name="bankname">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="A/c No." [(ngModel)]="intAccNo" name="accno">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Branch Name " [(ngModel)]="vchr_branchname" name="branchname">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Cheque No." [(ngModel)]="intChequeNo" name="chequeno">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <h6 class="col-md-12">Initial Payment</h6> -->
+                        <!-- <h6 class="form-head">Initial Payment</h6> -->
+                        <!-- payment option start here -->
+                        <!-- <div class="row">
+                            <h6 class="col-md-12">Initial Payment</h6>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <input type="radio" name="payment" value="CASH" id="cash" [(ngModel)]="payment_option" />
+                                    <label for="cash">Cash</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <input type="radio" name="payment" value="CARD" id="card" [(ngModel)]="payment_option" />
+                                    <label for="card">Debit Card</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <input type="radio" name="payment" value="CREDIT" id="credit" [(ngModel)]="payment_option" />
+                                    <label for="credit">Credit Card</label>
+                                </div>
+                            </div>
+                        </div> -->
+            
+            
+                        <!-- <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Down Payment*" [(ngModel)]="int_downpayment" name="downpayment">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- ============================================================================================================================ -->
+                        <!-- <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Down Payment" [(ngModel)]="int_downpayment" name="downpayment" type="number" OnlyNumber='true'>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Margin Money" [(ngModel)]="intMarginMoney" name="marginmoney" type="number" OnlyNumber='true'>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Processing Fee" [(ngModel)]="intProsFee" name="prosfee" type="number" OnlyNumber='true'>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div> -->
+            
+                        <!-- <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="DBD Charge" [(ngModel)]="intdbd" name="intdbd" type="number" OnlyNumber='true'>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Net Loan Amount *" [(ngModel)]="intLoanAmt" name="loanamt" type="number" OnlyNumber='true'>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <mat-form-field class="mat-icon-left">
+                                        <input matInput placeholder="Service Charge" [(ngModel)]="intSerCharge" name="sercharge" type="number" OnlyNumber='true'>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- ====================================================================================== -->
+                        <!-- <div class="row">
+                            <div class="col-md-12">
+                                <button class="mat-raised-button mat-accent" type="submit" (click)="saveFinanceEntry()">Save</button>
+                            </div>
+                        </div> -->
+                        <!-- </div> -->
+                    <!-- </card> -->
+            
+            
+            
+                    <card class="col-md-12" *ngIf="(groupName == 'FINANCIER' || groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctfinanceentry['status']">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="form-head">Finance Details
+                                    <!-- <span class="pull-right accent"> Total Amount : {{eligibleAmount}}</span> -->
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Scheme</label>
+                                    <p *ngIf="dctfinanceentry['schema']">{{dctfinanceentry['schema']}}</p>
+                                    <p *ngIf="!dctfinanceentry['schema']">Not available</p>
+            
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Down Payment</label>
+                                    <p>{{dctfinanceentry['down_payment_amount']}}</p>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Id Type</label>
+                                    <p *ngIf="dctfinanceentry['id_type']">{{dctfinanceentry['id_type']}}</p>
+                                    <p *ngIf="!dctfinanceentry['id_type']">---</p>
+            
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Id No.</label>
+                                    <p *ngIf="dctfinanceentry['id_number']">{{dctfinanceentry['id_number']}}</p>
+                                    <p *ngIf="!dctfinanceentry['id_number']">---</p>
+            
+                                </div>
+                            </div> -->
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Pancard No.</label>
+                                    <p *ngIf="dctfinanceentry['pan_number']">{{dctfinanceentry['pan_number']}}</p>
+                                    <p *ngIf="!dctfinanceentry['pan_number']">---</p>
+            
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Bank Name</label>
+                                    <p *ngIf="dctfinanceentry['bank_name']">{{dctfinanceentry['bank_name']}}</p>
+                                    <p *ngIf="!dctfinanceentry['bank_name']">---</p>
+            
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Acc No.</label>
+                                    <p *ngIf="dctfinanceentry['account_number']">{{dctfinanceentry['account_number']}}</p>
+                                    <p *ngIf="!dctfinanceentry['account_number']">---</p>
+            
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Branch Name</label>
+                                    <p *ngIf="dctfinanceentry['branch_name']">{{dctfinanceentry['branch_name']}}</p>
+                                    <p *ngIf="!dctfinanceentry['branch_name']">---</p>
+            
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Cheque No.</label>
+                                    <p *ngIf="dctfinanceentry['cheque_number']">{{dctfinanceentry['cheque_number']}}</p>
+                                    <p *ngIf="!dctfinanceentry['cheque_number']">---</p>
+            
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Payment Type</label>
+                                    <p *ngIf="dctfinanceentry['initial_payment_type']">{{dctfinanceentry['initial_payment_type']}}</p>
+                                    <p *ngIf="!dctfinanceentry['initial_payment_type']">---</p>
+            
+                                </div>
+                            </div>
+                        </div> -->
+            
+                        <div class="row">
+                            <!-- <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Down Payment</label>
+                                    <p>{{dctfinanceentry['down_payment_amount']}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Name on Card</label>
+                                    <p *ngIf="dctfinanceentry['vchr_name_in_card']">{{dctfinanceentry['vchr_name_in_card']}}</p>
+                                    <p *ngIf="!dctfinanceentry['vchr_name_in_card']">-----</p>
+                                </div>
+                            </div> -->
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Loan Amount</label>
+                                    <p *ngIf="dctfinanceentry['dbl_net_loan_amount']">{{dctfinanceentry['dbl_net_loan_amount']}}</p>
+                                    <p *ngIf="!dctfinanceentry['dbl_net_loan_amount']">0</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Delivery Order No</label>
+                                    <p *ngIf="dctfinanceentry['vchr_delivery_order_no']">{{dctfinanceentry['vchr_delivery_order_no']}}</p>
+                                    <p *ngIf="!dctfinanceentry['vchr_delivery_order_no']">-----</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- =======================================================================================================================================             -->
+                        <!-- <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Processing Fee</label>
+                                    <p *ngIf="dctfinanceentry['dbl_processing_fee']">{{dctfinanceentry['dbl_processing_fee']}}</p>
+                                    <p *ngIf="!dctfinanceentry['dbl_processing_fee']">0</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Margin Money</label>
+                                    <p *ngIf="dctfinanceentry['dbl_margin_money']">{{dctfinanceentry['dbl_margin_money']}}</p>
+                                    <p *ngIf="!dctfinanceentry['dbl_margin_money']">0</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>DBD Amount</label>
+                                    <p *ngIf="dctfinanceentry['dbl_dbd_amount']">{{dctfinanceentry['dbl_dbd_amount']}}</p>
+                                    <p *ngIf="!dctfinanceentry['dbl_dbd_amount']">0</p>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Service Charge</label>
+                                    <p *ngIf="dctfinanceentry['dbl_service_charge']">{{dctfinanceentry['dbl_service_charge']}}</p>
+                                    <p *ngIf="!dctfinanceentry['dbl_service_charge']">0</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-1">
+                                    <label>Loan Amount</label>
+                                    <p *ngIf="dctfinanceentry['dbl_net_loan_amount']">{{dctfinanceentry['dbl_net_loan_amount']}}</p>
+                                    <p *ngIf="!dctfinanceentry['dbl_net_loan_amount']">0</p>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- =======================================================================================================================================             -->
+            
+                    </card>
+            
+                    <!-- Credit Approval Button starts  here -->
+                    <div class="col-md-12">
+                        <span class="accent" *ngIf="(blnShowApproval) && (blnCreditApprove)">
+                        <button (click)="creditApproval()"  aria-hidden="true" mat-raised-button color="accent">
+                          Approve Credit
+                          <!-- <i class="fa fa-chevron-circle-right" title="Check IMEI" aria-hidden="true"></i> -->
+                        </button>&nbsp;
+                            </span>
+                    </div>
+                    <!-- Credit Approval Button ends here -->
+            
+            
+                    <!-- bajaj online add image  starts here-->
+                    <!-- <card *ngIf="bln_img_status && (groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER')" class="col-md-12">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12">
+                                <h4 class="form-head">Add Images</h4>
+                                <div class="row mt-3">
+            
+                                    <div class="col-md-12 input-file-container ">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <p>Add Bill Image </p>
+                                            </div>
+                                            <div class="col-md-8">
+                                                : <input type="file" id="billImage" (change)="onChange($event,'Bill')" (cuechange)="onChange($event,'Bill')" class="input-file mt-2" id="InputFile" name="InputFile" #eventImg accept="image/jpeg" max-file-size="100kb"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 input-file-container ">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <p>Add Delivery Image</p>
+                                            </div>
+                                            <div class="col-md-8">
+                                                : <input type="file" id="deliveryImage" (change)="onChange($event,'Delivery')" (cuechange)="onChange($event,'Delivery')" class="input-file mt-2" id="InputFile" name="InputFile" #eventImg accept="image/jpeg" max-file-size="100kb"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="mt-2">Add ID Proof :-</label>
+                                <div class="row mt-2">
+                                    <div class="col-md-4">
+                                        <p>ID Proof 1 *(Required)</p>
+                                    </div>
+                                    <div class="col-md-8  input-file-container ">
+            
+                                        : <input type="file" id="userImage1" (change)="onChange($event,'idFirst')" (cuechange)="onChange($event,'idFirst')" class="input-file" id="InputFile" name="InputFile" #eventImg accept="image/jpeg" max-file-size="100kb" />
+                                    </div>
+                                </div>
+            
+                                <div class="row mt-2">
+                                    <div class="col-md-4">
+                                        <p>Alternate Id Proof (If any)</p>
+                                    </div>
+                                    <div class="col-md-8 input-file-container ">
+            
+                                        : <input type="file" id="userImage2" (change)="onChange($event,'idSecond')" (cuechange)="onChange($event,'idSecond')" class="input-file" id="InputFile" name="InputFile" #eventImg accept="image/jpeg" max-file-size="100kb" />
+                                    </div>
+                                </div>
+            
+                                <div class="mt-3">
+                                    <button class="mat-raised-button mat-accent" (click)="addImages()">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </card> -->
+            
+                    <!-- bajaj online add image  ends here-->
+            
+                    <!-- bajaj onlline view image -->
+            
+                    <card *ngIf="blnBajajInvoiced && blnShowImage && (groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER' || groupName == 'BAJAJ ONLINE' || groupName=='ADMIN')">
+                        <h4 class="form-head">Images</h4>
+            
+                        <div class="row">
+                            <div class="col-md-3 mt-2">
+                                <div class="row">
+            
+                                    <div class="col-md-12">
+                                        <img class="img" [src]="imageBillSrc" alt="Image is temporrarly unavailable" />
+                                    </div>
+                                    <div class="col-md-12 mt-2">
+                                        <label>Bill Image</label>
+                                    </div>
+                                </div>
+                            </div>
+            
+            
+                            <div class="col-md-3 mt-2">
+                                <div class="row">
+            
+                                    <div class="col-md-12">
+                                        <img class="img" [src]="imageDeliverySrc" alt="Image is temporrarly unavailable" />
+                                    </div>
+                                    <div class="col-md-12 mt-2">
+                                        <label>Delivery Image</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mt-2">
+                                <div class="row">
+            
+                                    <div class="col-md-12">
+                                        <img class="img" [src]="imageIdOneSrc" alt="Image is temporrarly unavailable" />
+                                    </div>
+                                    <div class="col-md-12 mt-2">
+                                        <label>ID Proof1</label>
+                                    </div>
+                                </div>
+            
+            
+                            </div>
+                            <div *ngIf="dctBajajImages[0][4]" class="col-md-3 mt-2">
+                                <div class="row">
+            
+                                    <div class="col-md-12">
+                                        <img class="img" [src]="imageIdTwoSrc" alt="Image is temporrarly unavailable" />
+                                    </div>
+                                    <div class="col-md-12 mt-2">
+                                        <label>ID Proof2</label>
+                                    </div>
+                                </div>
+            
+            
+                            </div>
+            
+                        </div>
+            
+                    </card>
+            
+            
+                    <!-- bajaj onlline view image -->
+            
+            
+            
+                    <!-- </div> -->
                 </div>
             </div>
-            <div class="modal-footer clearfix"></div>
+            <div>
+                <app-calender></app-calender>
+                <app-sticky-notes></app-sticky-notes>
+            </div>
+            <!-- add imei number popup -->
+            <div class="modal" id="addrequest_modal" [style.display]="blnShowPopup ? 'block' : 'none'" role="dialog">
+                <div class="modal-dialog" [style.display]="blnShowPopup ? 'block' : 'none'" style="width: 400px;text-align: center;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" (click)="hideModal()">&times;</button>
+                            <h4 class="modal-title text-center">Add IMEI Number </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12">
+                            </div>
+                            <div class="col-md-12">
+                                <mat-form-field class="example-full-width" *ngFor="let index of  lstImeiNumbers">
+                                    <input matInput OnlyAlphaNum="true"  placeholder="IMEI Number" [(ngModel)]="index.imei" (keypress) = "OnKeyPress(index.imei,$event)" />
+                                </mat-form-field>
+                            </div>
+            
+            
+                            <div class="col-md-12 mb-3 mt-3">
+                                <button mat-raised-button class="add_btn" data-dismiss="modal" color="primary" (click)="addRequest()">Add</button>
+                                <button mat-raised-button class="add_btn" style="background: #c5c5c5;color: #fff;" (click)="clearFields()"> Cancel </button>
+                            </div>
+                        </div>
+                        <div class="modal-footer clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- add imei number popup -->
+            <!-- proess imei number popup -->
+            <div class="modal" id="checkrequest_modal" [style.display]="blnImeiCheckPopup ? 'block' : 'none'" role="dialog">
+                <div class="modal-dialog dialog" [style.display]="blnImeiCheckPopup ? 'block' : 'none'" style="width: 400px;text-align: center;">
+                    <div class="modal-content content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" (click)="hideModal()">&times;</button>
+                            <h4 class="modal-title text-center">Process IMEI Number Request </h4>
+                        </div>
+                        <div class="modal-body">
+                            <h5 style="margin: 8px;text-align: left;    font-size: 14px;">IMEI Numbers Requested :-</h5>
+            
+                            <div  class="col-md-12" *ngFor="let item of lstImeisToCheck[0];let i =index">
+                                <div class="mt-2 text-left" style="color: #8c8888;"><span style="color: #403e3e;">{{ i+1 }}. </span> {{ item }} </div>
+                            </div>
+                            <!-- <div class="col-md-12" *ngFor="let item of lstImeisToCheck">
+                                <div class="mt-2">{{ item }} </div>
+                            </div> -->
+                            <!-- <div class="col-md-4" *ngIf = "blnRejectRequest">
+                                <mat-form-field>
+                                    <input [(ngModel)]="strRejectRemark" name="strRejectRemark" matInput placeholder="Remark*" />
+                                </mat-form-field>
+                            </div> -->
+            
+                            <div class="col-md-12 mb-3 mt-3" style="text-align: left;">
+                                <button mat-raised-button data-dismiss="modal" class="add_btn" color="primary" (click)="processRequest('Approve')" *ngIf = "!blnRejectRequest">Approve</button>
+                                <!-- <button mat-raised-button data-dismiss="modal" class="add_btn" style="background: #827d7d;color: #fff;" (click)="processRequest('Reject')">Reject </button> -->
+                                  <button mat-raised-button data-dismiss="modal" class="add_btn" style="background: #827d7d;color: #fff;" (click)="processRequest('Reject')" *ngIf = "!blnRejectRequest" >Reject </button>
+                                   <button mat-raised-button data-dismiss="modal" class="add_btn" style="background: #827d7d;color: #fff;" (click)="processRequest('Reject')" *ngIf = "blnRejectRequest">OK </button>
+                                   <button mat-raised-button data-dismiss="modal" class="add_btn" style="background: #827d7d;color: #fff;" (click)="cancelRejectRequest('Reject')" *ngIf = "blnRejectRequest">Cancel </button>
+                            </div>
+                        </div>
+                        <div class="modal-footer clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- process imei number popup -->
+
+
+
+
         </div>
+      </div>
     </div>
 </div>
-<!-- process imei number popup -->

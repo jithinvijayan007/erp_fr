@@ -51,7 +51,7 @@
             </mat-form-field>
         </div>
         <div class="col-md-2 col-lg-2">
-            <button mat-raised-button class="mt-3 mb-1 mat-accent" (click)="searchEnquiryList(startDate,endDate)" name="advancedFilter">
+            <button  class="btn save_btn mr-2" (click)="searchEnquiryList(startDate,endDate)" name="advancedFilter">
              <i class="fa fa-search"></i> Search
              </button>
         </div>
@@ -150,13 +150,13 @@
     </ng-container>
 
     <ng-container matColumnDef="change">
-        <mat-header-cell *matHeaderCellDef>
+        <mat-header-cell *matHeaderCellDef style="JUSTIFY-CONTENT: center;">
             Actions
         </mat-header-cell>
-        <mat-cell *matCellDef="let row" [style.color]="row.color">
-            <button id="view" title="View" class="view_btn" (click)=detailEnquiry(row.enquiry_id) *ngIf="blnView"><i class="fa fa-eye" aria-hidden="true"></i></button>
-            <button id="followup" title="Follow-up" (click)=FollowUpHistory(row.enquiry_id) class="followup_btn" *ngIf="blnFollowupAdd"><i class="fa fa-retweet" aria-hidden="true"></i></button>
-            <button id="download" disabled title="Download" class="edit_btn" (click)="downloadEnquiry(row.enquiry_id)" *ngIf="blnView"><i class="fa fa-download" aria-hidden="true" ></i></button>
+        <mat-cell *matCellDef="let row" [style.color]="row.color" style="justify-content: flex-end;">
+            <button id="view" title="View" class="view_btn eye" (click)=detailEnquiry(row.enquiry_id) *ngIf="blnView"><i class="fa fa-eye" aria-hidden="true"></i></button>
+            <button id="followup" title="Follow-up" (click)=FollowUpHistory(row.enquiry_id) class="followup_btn refesh" *ngIf="blnFollowupAdd"><i class="fa fa-retweet" aria-hidden="true"></i></button>
+            <button id="download" disabled title="Download" class="edit_btn downlode" (click)="downloadEnquiry(row.enquiry_id)" *ngIf="blnView"><i class="fa fa-download" aria-hidden="true" ></i></button>
         </mat-cell>
     </ng-container>
 
