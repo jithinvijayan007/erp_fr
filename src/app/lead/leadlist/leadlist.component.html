@@ -4,14 +4,18 @@
   </span>&nbsp; All Enquiries
     <span class="float-right" *ngIf="blnAdd">
     <!-- <button mat-raised-button [routerLink]="['/crm/addenquirymaster']"> -->
-    <button mat-raised-button (click)="addEnquiryRouting()">
+        <!-- commented for o2force -->
+    <!-- <button mat-raised-button (click)="addEnquiryRouting()">
 
        Add enquiry
-    </button>
+    </button> -->
   </span>
 </h4>
 <p>Check your all enquiry basic details.</p>
-<div class="col-md-12 ">
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
 
     <div class="row bgwhite">
         <div class="col-md-2 col-lg-2">
@@ -71,13 +75,13 @@
 </div>
 
 
-<div class="example-header">
+<div class=" col-md-12">
     <mat-form-field>
         <input #enqFilter id="enquirysearch" matInput (keyup)="applyFilter($event.target.value)" placeholder="Advance search">
     </mat-form-field>
 </div>
 
-<mat-table #table [dataSource]="dataSource" matSort>
+<mat-table #table [dataSource]="dataSource" matSort style="margin: 5px;">
 
     <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
@@ -153,10 +157,11 @@
         <mat-header-cell *matHeaderCellDef style="JUSTIFY-CONTENT: center;">
             Actions
         </mat-header-cell>
-        <mat-cell *matCellDef="let row" [style.color]="row.color" style="justify-content: flex-end;">
+        <mat-cell *matCellDef="let row" [style.color]="row.color" style="justify-content: center;">
             <button id="view" title="View" class="view_btn eye" (click)=detailEnquiry(row.enquiry_id) *ngIf="blnView"><i class="fa fa-eye" aria-hidden="true"></i></button>
-            <button id="followup" title="Follow-up" (click)=FollowUpHistory(row.enquiry_id) class="followup_btn refesh" *ngIf="blnFollowupAdd"><i class="fa fa-retweet" aria-hidden="true"></i></button>
-            <button id="download" disabled title="Download" class="edit_btn downlode" (click)="downloadEnquiry(row.enquiry_id)" *ngIf="blnView"><i class="fa fa-download" aria-hidden="true" ></i></button>
+            <!-- commented for o2force -->
+            <!-- <button id="followup" title="Follow-up" (click)=FollowUpHistory(row.enquiry_id) class="followup_btn refesh" *ngIf="blnFollowupAdd"><i class="fa fa-retweet" aria-hidden="true"></i></button>
+            <button id="download" disabled title="Download" class="edit_btn downlode" (click)="downloadEnquiry(row.enquiry_id)" *ngIf="blnView"><i class="fa fa-download" aria-hidden="true" ></i></button> -->
         </mat-cell>
     </ng-container>
 
@@ -169,3 +174,6 @@
 </div>
 
 <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+      </div>
+    </div>
+</div>
