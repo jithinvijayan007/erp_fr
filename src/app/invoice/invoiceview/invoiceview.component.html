@@ -590,10 +590,10 @@
                 <div class="text-center m-t-10">
                     <!-- <button class="btn btn-danger" type="submit" (click)="verifyInvoice()" *ngIf="blnExchange">Verify</button> -->
                     <button *ngIf="!blnApproved && intApprove!=1 && intApprove!=3" class="btn btn-danger"
-                        [disabled]="rejectDisable||saveButtonStatus" type="submit"
-                        (click)="rejectInvoice()">Reject</button>
+                        [disabled]="rejectDisable||saveButtonStatus||dltDissable" type="submit"
+                        (click)="rejectInvoice()" >Reject</button>
                     <!-- <button  class="btn btn-danger" [disabled]="rejectDisable" type="submit" (click)="rejectInvoice()">Reject</button> -->
-                    <button *ngIf="!blnApproved && intApprove!=1 && intApprove!=3" [disabled]="printDisable"
+                    <button *ngIf="!blnApproved && intApprove!=1 && intApprove!=3" [disabled]="printDisable||pntDisable"
                         class="btn print_btn" type="submit" (click)="printInvoice()">Print</button>
                     <!-- <button  [disabled]="printDisable" class="btn print_btn" type="submit" (click)="printInvoice()">Print</button> -->
                     <!-- <button  class="btn btn-success" type="submit" (click)="saveInvoice()">Save</button> -->

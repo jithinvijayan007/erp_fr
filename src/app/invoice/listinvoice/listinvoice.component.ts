@@ -91,13 +91,13 @@ export class ListinvoiceComponent implements OnInit {
     });
     
     if(dct_perms.VIEW==true ){
-      this.lstCustom= [{ name: 'viewrecord', title: '<i class="fa fa-eye"></i>'},
-      { name: 'downloadrecord', title: '&nbsp;&nbsp;<i class="fas fa-print"></i>'},]
+      this.lstCustom= [{ name: 'viewrecord', title: '<i class="fa fa-eye"></i>'}]
+      // { name: 'downloadrecord', title: '&nbsp;&nbsp;<i class="fas fa-print"></i>'}
          
     }
-    else{
-      this.lstCustom= [ { name: 'downloadrecord', title: '&nbsp;&nbsp;<i class="fas fa-print"></i>'},]
-    }
+    // else{
+    //   this.lstCustom= [ { name: 'downloadrecord', title: '&nbsp;&nbsp;<i class="fas fa-print"></i>'},]
+    // }
     this.settings.actions.custom = this.lstCustom
 
     this.searchProduct.valueChanges.pipe(

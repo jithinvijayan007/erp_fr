@@ -503,6 +503,8 @@ export class InvoiceviewComponent implements OnInit {
   returnId;
 
   printDisable = true;
+  pntDisable = true;
+  dltDissable = true;
   saveDisable = false;
   dctLen;
   dctCombo = {};
