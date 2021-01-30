@@ -34,6 +34,8 @@ export class LeadlistComponent implements OnInit {
   intCompanyId = localStorage.getItem('companyId');
   userId = localStorage.getItem('userId');
   companyType = localStorage.getItem('company_type')
+  groupName = localStorage.getItem('group_name').toUpperCase()
+
   searchMobile: FormControl = new FormControl();
   testpip: PipeTransform;
   datStartDate;
@@ -143,7 +145,7 @@ export class LeadlistComponent implements OnInit {
       .subscribe((strData: string) => {
         if (strData === undefined) {
         } else {
-          if (strData.length > 3) {
+          if (strData.length > 6) {
             this.lstMobileNumbers = [];
             this.typeServ
               .search_customer(strData)
@@ -328,11 +330,9 @@ this.serverService
   response => {
     
     this.lstEnquiryList = response['data'];
-    console.log(this.lstEnquiryList);
     
     // console.log(this.strCustomerId,this.branchId,'responce')
     if (!response['data'][0].enquiry) {
-      console.log("335");
       
       this.lstEnquiryList = [];
     }

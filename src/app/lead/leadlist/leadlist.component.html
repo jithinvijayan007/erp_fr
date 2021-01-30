@@ -44,7 +44,7 @@
                 </mat-autocomplete>
             </mat-form-field>
         </div>
-        <div class="col-md-3 col-lg-3">
+        <div class="col-md-3 col-lg-3" *ngIf="groupName == 'ADMIN'">
             <mat-form-field>
                 <input matInput placeholder="Branch" [(ngModel)]="branchName" (ngModelChange)="branchNameChanged($event)" name="branch" [formControl]="searchBranch" [matAutocomplete]="branch" #idBranch>
                 <mat-autocomplete #branch="matAutocomplete">
