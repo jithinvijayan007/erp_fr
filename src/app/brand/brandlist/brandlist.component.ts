@@ -14,7 +14,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./brandlist.component.css']
 })
 export class BrandlistComponent implements OnInit {
-  lstPermission=JSON.parse(localStorage.permission)
+  lstPermission=JSON.parse(localStorage.group_permissions)
   blnAdd=false
   ngOnInit(){
     this.getData()

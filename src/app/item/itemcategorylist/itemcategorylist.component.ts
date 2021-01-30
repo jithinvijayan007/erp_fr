@@ -101,7 +101,8 @@ export class ItemcategorylistComponent implements OnInit {
    this.dctData['item']={}
    this.dctData['data']=[]
    this.dctData['tax_master']={}
-    this.serviceObject.getData('itemcategory/add_category/?strUpdate='+0).subscribe(
+   
+   this.serviceObject.getData('itemcategory/add_category/?strUpdate='+0).subscribe(
       (response) => {
           if (response.status == 1)
           {
