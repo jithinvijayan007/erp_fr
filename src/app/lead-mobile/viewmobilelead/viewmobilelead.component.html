@@ -168,6 +168,11 @@
                             </div>
                         </div>
                     </card>
+                    
+        </div>
+    </div>
+  </div>
+</div>
                     <!-- </div>
             </div> -->
                     <!-- <card class="col-md-12" *ngIf="(groupName=='FINANCIER' && dctEnquiry['status']!='PENDING') || ((groupName=='BRANCH MANAGER' || groupName=='ASSISTANT BRANCH MANAGER') && dctEnquiry['status']!='PENDING') || (groupName=='FINANCE ADMIN')">
@@ -203,9 +208,14 @@
                         </div>
                     </card> -->
                     <!-- <div > -->
+                        <div class="row">
+                            <div class="col-12">
+                              <div class="card">
+                                <div class="card-body">                                                                       
                     <card class="col-md-12" *ngFor="let key of enqKeys">
                         <span *ngFor="let item of dctEnquiryDetails[key];let tempId=index">
-                <h4 class="form-head">{{key}} details {{tempId+1}}
+                            <div class="label success">
+                <h4 class="form-head"style="font-weight: 600;font-family: sans-serif;">{{key}} details {{tempId+1}}
                     <span class="pull-right accent" *ngIf="(!(lstCompletedStatus.includes(item['vchr_enquiry_status']))) && ((groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctEnquiry.status != 'TO PROCESS' && dctEnquiry.status != 'BOOKED' && item['vchr_enquiry_status']!= 'PARTIALLY PAID' && item['vchr_enquiry_status']!= 'FINANCED')">
                         <span class="pull-right accent" (click)="changeFollowUp(tempId,key,0,item); item['quantityCopy'] = item['int_quantity'];intFollowUpQuantity = item['int_quantity'] "
                           *ngIf="(!(intFollowUpFlag == tempId && strFollowUpService == key)) && (((groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctEnquiry.status != 'TO PROCESS') || groupName!='FINANCIER') && item['vchr_enquiry_status'] != 'INVOICED'  && (item['vchr_enquiry_status'] != 'IMEI PENDING') && (item['vchr_enquiry_status']!='IMEI REJECTED') && (item['vchr_enquiry_status']!='IMEI REQUESTED')&& (item['vchr_enquiry_status']!='IMEI REQUESTED') && (item['vchr_enquiry_status']!='IMAGE PENDING')">
@@ -258,8 +268,9 @@
             
             
                         </h4>
+                        </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group mt-1">
                                     <label>Brand</label>
                                     <p *ngIf="item.vchr_brand_name">{{item['vchr_brand_name'] | titlecase}}</p>
@@ -273,10 +284,30 @@
                                     <p *ngIf="!item.vchr_item_name">{{'----'}}</p>
                                 </div>
                             </div>
+                        
+                        <div class="col-md-3" *ngIf="((item['vchr_enquiry_status'] == 'BOOKED') || (item['vchr_enquiry_status'] == 'INVOICED')) && (key == 'Mobiles' || key == 'Tablets' || key == 'Laptops')">
+                            <div class="form-group mt-1">
+                                <label>Imei</label>
+                                <span *ngIf="item['dbl_imei_json']">
+                    <span *ngIf="item['dbl_imei_json']['imei'];else noimei">
+                      <mat-list class="row">
+                        <mat-list-item *ngFor="let items of item['dbl_imei_json'].imei;let i = index" class="col-sm-6">
+                          <span class="textlistid">{{i+1}}</span>
+                                <span class="textlistid">&#8228;&ensp;</span>
+                                <p class="textlist">{{items}}</p>
+                                </mat-list-item>
+                                </mat-list>
+                                </span>
+                                <ng-template #noimei>
+                                    <p>{{'----'}}</p>
+                                </ng-template>
+                                </span>
+                            </div>
+                        </div>
                         </div>
             
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group mt-1">
                                     <label>Quantity</label>
                                     <p *ngIf="item['int_quantity']">{{item['int_quantity']}}</p>
@@ -284,14 +315,14 @@
                                 </div>
                             </div>
             
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group mt-1">
                                     <label>Enquiry status</label>
                                     <p *ngIf="item.vchr_enquiry_status">{{item['vchr_enquiry_status'] | titlecase}}</p>
                                     <p *ngIf="!item.vchr_enquiry_status">{{'----'}}</p>
                                 </div>
                             </div>
-                            <div class="col-md-12" *ngIf="((item['vchr_enquiry_status'] == 'BOOKED') || (item['vchr_enquiry_status'] == 'INVOICED')) && (key == 'Mobiles' || key == 'Tablets' || key == 'Laptops')">
+                            <!-- <div class="col-md-12" *ngIf="((item['vchr_enquiry_status'] == 'BOOKED') || (item['vchr_enquiry_status'] == 'INVOICED')) && (key == 'Mobiles' || key == 'Tablets' || key == 'Laptops')">
                                 <div class="form-group mt-1">
                                     <label>Imei</label>
                                     <span *ngIf="item['dbl_imei_json']">
@@ -309,8 +340,8 @@
                                     </ng-template>
                                     </span>
                                 </div>
-                            </div>
-                            <div class="col-md-5">
+                            </div> -->
+                            <div class="col-md-3">
                                 <div class="form-group mt-1">
                                     <label>Estimated amount</label>
                                     <p *ngIf="item['dbl_amount']">{{item['dbl_amount']}}</p>
@@ -325,7 +356,7 @@
                       <p *ngIf="!item['dbl_buyback_amount']">{{'----'}}</p> -->
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="form-group mt-1">
                                     <label>Discount Amt.</label>
                                     <p>{{item['dbl_discount_amount']}}</p>
@@ -1319,11 +1350,10 @@
                 </div>
             </div>
             <!-- process imei number popup -->
-
-
-
-
         </div>
-      </div>
     </div>
+  </div>
 </div>
+
+
+
