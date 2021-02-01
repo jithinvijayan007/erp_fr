@@ -57,6 +57,18 @@ import {SharedService} from './layouts/shared-service';
 import { SnotifyService } from 'ng-snotify';
 
 import { from } from 'rxjs';
+import { ChatComponent } from './a2-components/chat/chat/chat.component';
+import { AdditionNavbarComponent } from './a2-components/addition-navbar/addition-navbar.component';
+import { AlertComponent } from './a2-components/alert/alert.component';
+import { BadgeComponent } from './a2-components/badge/badge.component';
+import { A2CardComponent } from './a2-components/card/card.component';
+import { FileComponent } from './a2-components/file/file.component';
+import { FooterComponent } from './a2-components/footer/footer.component';
+// import { LogoComponent } from './a2-components/logo/logo.component';
+import { MainMenuComponent } from './a2-components/main-menu/main-menu.component';
+import { NavbarComponent } from './a2-components/navbar/navbar.component';
+import { NIHTimelineComponent } from './a2-components/ni-h-timeline/ni-h-timeline.component';
+import { CardModule } from './card.module';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -75,6 +87,18 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BreadcrumbComponent,
     SidebarComponent,
     PrintcomponentComponent,
+    ChatComponent,
+    AdditionNavbarComponent,
+    AlertComponent,
+    BadgeComponent,
+    BreadcrumbComponent,
+    A2CardComponent,
+    FileComponent,
+    FooterComponent,
+    MainMenuComponent,
+    NavbarComponent,
+    NIHTimelineComponent,
+    SidebarComponent
     // AddreceiptComponent
     
   
@@ -110,6 +134,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatAutocompleteModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    // CommonModule
     
   ],
   providers: [
@@ -132,6 +157,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     },
     // { provide: OWL_DATE_TIME_LOCALE, useValue: "gb" },
 
+  ],
+  exports: [
+    MainMenuComponent,
+    // LogoComponent,
+    A2CardComponent
   ],
   bootstrap: [AppComponent]
 })

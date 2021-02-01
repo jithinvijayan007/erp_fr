@@ -20,7 +20,7 @@
                 <div class="row">
                     <!-- <div class="row">
               <div class="col-md-12 col-lg-8"> -->
-                    <card class="col-md-12">
+                    <div class="col-md-12 card">
                         <div class="label success">
                             <h4 style="font-weight: 600;font-family: sans-serif;">
                         <span class="form-head" style="margin-bottom: 0px;">Enquiry details {{'-' + dctEnquiry.vchr_enquiry_num}}
@@ -167,7 +167,7 @@
                                 </div>
                             </div>
                         </div>
-                    </card>
+                    </div>
                     
         </div>
     </div>
@@ -212,7 +212,7 @@
                             <div class="col-12">
                               <div class="card">
                                 <div class="card-body">                                                                       
-                    <card class="col-md-12" *ngFor="let key of enqKeys">
+                    <div class="col-md-12 card" *ngFor="let key of enqKeys">
                         <span *ngFor="let item of dctEnquiryDetails[key];let tempId=index">
                             <div class="label success">
                 <h4 class="form-head"style="font-weight: 600;font-family: sans-serif;">{{key}} details {{tempId+1}}
@@ -671,7 +671,7 @@
             
             
                         </span>
-                    </card>
+                    </div>
                     <!-- <card class="col-md-12" *ngIf="groupName =='FINANCIER' && dctEnquiry['status'] =='PENDING'">
                        
                         <h4 class="form-head">Finance Details
@@ -975,7 +975,7 @@
             
             
             
-                    <card class="col-md-12" *ngIf="(groupName == 'FINANCIER' || groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctfinanceentry['status']">
+                    <div class="col-md-12 card" *ngIf="(groupName == 'FINANCIER' || groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER') && dctfinanceentry['status']">
                         <div class="row">
                             <div class="col-md-12">
                                 <h4 class="form-head">Finance Details
@@ -1139,7 +1139,7 @@
                         </div> -->
                         <!-- =======================================================================================================================================             -->
             
-                    </card>
+                    </div>
             
                     <!-- Credit Approval Button starts  here -->
                     <div class="col-md-12">
@@ -1215,7 +1215,7 @@
             
                     <!-- bajaj onlline view image -->
             
-                    <card *ngIf="blnBajajInvoiced && blnShowImage && (groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER' || groupName == 'BAJAJ ONLINE' || groupName=='ADMIN')">
+                    <div class="card" *ngIf="blnBajajInvoiced && blnShowImage && (groupName == 'BRANCH MANAGER' || groupName == 'ASSISTANT BRANCH MANAGER' || groupName == 'BAJAJ ONLINE' || groupName=='ADMIN')">
                         <h4 class="form-head">Images</h4>
             
                         <div class="row">
@@ -1272,7 +1272,7 @@
             
                         </div>
             
-                    </card>
+                    </div>
             
             
                     <!-- bajaj onlline view image -->
@@ -1283,8 +1283,8 @@
                 </div>
             </div>
             <div>
-                <app-calender></app-calender>
-                <app-sticky-notes></app-sticky-notes>
+                <!-- <app-calender></app-calender> -->
+                <!-- <app-sticky-notes></app-sticky-notes> -->
             </div>
             <!-- add imei number popup -->
             <div class="modal" id="addrequest_modal" [style.display]="blnShowPopup ? 'block' : 'none'" role="dialog">

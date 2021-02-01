@@ -1,0 +1,173 @@
+@import "variable";
+@import "fonts";
+@import "structure";
+@import "typography";
+@import "helpers";
+@import "material-components";
+@import "~angular-star-rating/assets/scss/star-rating";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
+
+
+
+.footer h4{margin: 0 0 10px 0;  font-size: 20px; letter-spacing: 1px; text-transform: uppercase; color: #f1f1f1 !important;}
+
+.newfooter ul li .fa {
+    margin: 0 10px 0 0;
+    color: #ff8b00;
+    font-size: 10px;
+}
+.newfooter ul li:hover{
+    border-bottom: 1px solid #292929 !important;
+}
+
+.footer ul li .fa {
+    margin: 0 10px 0 -6px !important;
+    color: #ff8b00;
+}
+.inner_banner_img {
+    margin-top: 78px;
+}
+
+.mission_box h5 {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 25px;
+    color: #008000;
+}
+
+.login_btn {
+    margin: 20px 15px !important;
+    float: right;
+}
+
+.menu li a {
+    line-height: 78px !important;
+}
+
+
+
+
+
+.cke_1 .cke_toolgroup {
+    background-image: none !important;
+    border: 1px solid #bdbdbd !important;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+1,dbdbdb+50,fefefe+100 */
+background: rgb(255,255,255) !important; /* Old browsers */
+background: -moz-linear-gradient(top, rgba(255,255,255,1) 1%, rgba(219,219,219,1) 50%, rgba(254,254,254,1) 100%) !important; /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(255,255,255,1) 1%,rgba(219,219,219,1) 50%,rgba(254,254,254,1) 100%) !important; /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(255,255,255,1) 1%,rgba(219,219,219,1) 50%,rgba(254,254,254,1) 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fefefe',GradientType=0 ) !important; /* IE6-9 */
+}
+
+.cke_top {
+    border-bottom: 1px solid #ffffff;
+    padding: 6px 8px 2px;
+    white-space: normal;
+    box-shadow: 0 1px 0 #fff inset;
+    background: #f4f4f4 !important;
+    /* background-image: linear-gradient(to bottom,#f5f5f5,#cfd1cf); */
+    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0,startColorstr='#f5f5f5',endColorstr='#cfd1cf');
+}
+
+a.cke_combo_button {
+    border: 1px solid #bdbdbd !important;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+1,dbdbdb+50,fefefe+100 */
+background: rgb(255,255,255) !important; /* Old browsers */
+background: -moz-linear-gradient(top, rgba(255,255,255,1) 1%, rgba(219,219,219,1) 50%, rgba(254,254,254,1) 100%) !important; /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(255,255,255,1) 1%,rgba(219,219,219,1) 50%,rgba(254,254,254,1) 100%) !important; /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(255,255,255,1) 1%,rgba(219,219,219,1) 50%,rgba(254,254,254,1) 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fefefe',GradientType=0 ) !important; /* IE6-9 */
+}
+
+.cke_1 a.cke_button_off:hover, .cke_1 a.cke_button_off:focus, .cke_1 a.cke_button_off:active {
+    background-image: linear-gradient(#a6d4f9, #3ca9da) !important;
+}
+
+.cke_1 .cke_button_on {
+    background-image: linear-gradient(#a6d4f9, #3ca9da) !important;
+}
+
+#cke_editor1{border: 1px solid #dadbda !important; border-radius: 5px !important;}
+.cke_top{border-bottom: 0 !important;}
+.cke_top{box-shadow: 0;}
+
+.cke_path {display: none !important;}
+#cke_1_bottom{border: 0 !important;     margin-bottom: 2px !important;}
+.cke_1 .cke_toolbar_separator {
+    background: #252525 !important;
+}
+.cke_inner {
+    margin: 1px 2px 0 2px !important;
+}
+.send_mail_work{margin: 15px 0 0px;}
+
+.testmail{background-color: #3c4e62 !important;}
+
+.shedu{background-color: #1772ad !important;}
+
+.mat-menu-panel{margin-top: 40px;}
+
+.send{padding: 5px 11px !important; border: 0;}
+
+.btn_section{margin: 0 10px;}
+
+.dropbtn, btn_new_01, btn_new_02:hover{background: #518acc !important;}
+
+
+.cke_139 .cke_toolgroup {
+    background-image: none !important;
+}
+
+
+input.mat-chip-input {
+    max-width: 50px !important;
+    margin: 0px !important;
+}
+.mat-toolbar {
+    background: #f5f5f5;
+    color: rgba(0,0,0,.87);
+    font-size: 16px!important;
+    padding: 15px!important;
+    font-weight: 700!important;
+    text-align: center;
+    margin: 10px;
+}
+
+.mat-chip{
+    padding: 5px 12px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 768px) {
+    .inner_banner_img {
+        margin-top: 0 !important;
+    }
+}

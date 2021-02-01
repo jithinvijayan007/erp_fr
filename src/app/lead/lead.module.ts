@@ -19,6 +19,7 @@ import { StickyModule } from 'ng2-sticky-kit';
 import { LeadRoutingModule } from '../lead/lead-routing.module';
 import { LeadlistComponent } from './leadlist/leadlist.component';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 // import { ViewleadComponent } from './viewlead/viewlead.component';
 
 
@@ -46,7 +47,10 @@ import { MatTableModule } from '@angular/material/table';
     StickyModule,
     NgbPopoverModule,
     NgbModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatIconModule,
+    // MatFormFieldModule,
     // CommoncomponentsModule,
     // CalenderModule,
     // StickyNotesModule,

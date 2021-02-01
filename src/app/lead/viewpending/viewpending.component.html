@@ -19,7 +19,7 @@
 
 <div class="row">
     <div class="col-md-8">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Enquiry details {{'-' + dctEnquiry.vchr_enquiry_num}}
                 <span class="pull-right accent">
 <i class="fa fa-chevron-down" (click)="blnShowCustFullDetails = !blnShowCustFullDetails" *ngIf="blnShowCustFullDetails"></i>
@@ -120,7 +120,7 @@
             </div> -->
 
 
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 
@@ -128,7 +128,7 @@
 
 <div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
     <div class="col-md-8" *ngFor="let item of lstFlightList; let tempId=index;">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Flight details {{tempId+1}}
                 <!-- <span class="pull-right accent" (click)="intFlightFollowUpID = (intFlightFollowUpID != tempId)? tempId:-1"> -->
                 <span class="pull-right accent">
@@ -267,7 +267,7 @@
                 </div>
             </div>
             <!-- Follow-up end here -->
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 
@@ -277,7 +277,7 @@
 <!-- train start -->
 <div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
     <div class="col-md-8" *ngFor="let item of lstTrainList; let tempId=index;">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Train details {{tempId+1}}
 
                 <span class="pull-right accent">
@@ -414,7 +414,7 @@
                 </div>
             </div>
             <!-- Follow-up end here -->
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 <!-- train end -->
@@ -424,7 +424,7 @@
 
 <div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
     <div class="col-md-8" *ngFor="let item of lstHotelList;let tempId=index;">
-        <card>{{indexRefresh(0)}}
+        <!-- <card>{{indexRefresh(0)}} -->
             <h4 class="form-head">Hotel details {{tempId+1}}
                 <span class="pull-right accent">
                 <span class="pull-right accent" (click)="changeFollowUp(tempId,'hotel',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='hotel')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
@@ -567,7 +567,7 @@
                 </div>
             </div>
             <!-- Follow-up end here -->
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 
@@ -577,7 +577,7 @@
 
 <div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
     <div class="col-md-8" *ngFor="let item of lstVisaList;let tempId=index">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Visa details {{tempId+1}}
                 <span class="pull-right accent">
                 <span class="pull-right accent" (click)="changeFollowUp(tempId,'visa',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='visa')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
@@ -696,7 +696,7 @@
             <!-- Follow-up end here -->
 
 
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 
@@ -781,7 +781,7 @@
 
 <div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
     <div class="col-md-8" *ngFor="let item of lstForexList;let tempId = index">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Forex details{{ tempId+1}}
                 <span class="pull-right accent">
                 <span class="pull-right accent" (click)="changeFollowUp(tempId,'forex',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='forex')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
@@ -861,7 +861,7 @@
                 </div>
             </div>
             <!-- Follow-up end here -->
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 
@@ -870,7 +870,7 @@
 
 <div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
     <div class="col-md-8" *ngFor="let item of lstTravelInsuranceList;let tempId=index">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Travel insurance details{{ tempId+1}}
 
                 <span class="pull-right accent">
@@ -976,7 +976,7 @@
                 </div>
             </div>
             <!-- Follow-up end here -->
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 
@@ -988,7 +988,7 @@
 
 <div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
     <div class="col-md-8" *ngFor="let item of lstTransportList;let tempId=index">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Transport details {{tempId+1}}
                 <span class="pull-right accent">
             <span class="pull-right accent" (click)="changeFollowUp(tempId,'transport',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='transport')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
@@ -1129,7 +1129,7 @@
             </div>
             <!-- Follow-up end here -->
 
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 
@@ -1140,7 +1140,7 @@
 
 <div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
     <div class="col-md-8" *ngFor="let item of lstPackageList;let tempId=index">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Holiday package details {{tempId+1}}
                 <span class="pull-right accent">
                 <span class="pull-right accent" (click)="changeFollowUp(tempId,'holiday',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='holiday')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> Follow-up</span>
@@ -1253,13 +1253,13 @@
                 </div>
             </div>
             <!-- Follow-up end here -->
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 
 <div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
     <div class="col-md-8" *ngFor="let item of lstKCTList;let tempId=index">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Kerala City Tour details {{tempId+1}}
                 <span class="pull-right accent" *ngIf="!(lstCompletedStatus.includes(item.vchr_enquiry_status))">
                     <span class="pull-right accent" (click)="changeFollowUp(tempId,'kct',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='kct')">  <i class="fa fa-plus-circle" title="Follow-up" aria-hidden="true"></i> follow-up</span>
@@ -1352,12 +1352,12 @@
             <!-- Follow-up end here -->
 
 
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 <div class="row" *ngIf="companyType=='TRAVEL AND TOURISM'">
     <div class="col-md-8" *ngIf="lstOtherList[0]">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Others details
                 <span class="pull-right accent" *ngIf="!(lstCompletedStatus.includes(lstOtherList[0].vchr_enquiry_status))">
                 <span class="pull-right accent" (click)="changeFollowUp(0,'other',0)" *ngIf="!(intFollowUpFlag == 0 && strFollowUpService =='other')">
@@ -1425,7 +1425,7 @@
 
 
 
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 
@@ -1435,7 +1435,7 @@
 
 <div class="row" *ngIf="companyType=='SOFTWARE'">
     <div class="col-md-8" *ngFor="let item of lstEnquiryTrck;let tempId=index">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Enquiry Track details {{tempId+1}}
                 <span class="pull-right accent" *ngIf="!(lstCompletedStatus.includes(item.vchr_enquiry_status))">
                     <span class="pull-right accent" (click)="changeFollowUp(tempId,'enquiry track',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='enquiry track')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> follow-up</span>
@@ -1561,7 +1561,7 @@
                 </div>
             </div>
             <!-- Follow-up end here -->
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 
@@ -1569,7 +1569,7 @@
 
 <div class="row" *ngIf="companyType=='SOFTWARE'">
     <div class="col-md-8" *ngFor="let item of lstAccountingSoftware;let tempId=index">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Accounting Software details {{tempId+1}}
                 <span class="pull-right accent" *ngIf="!(lstCompletedStatus.includes(item.vchr_enquiry_status))">
                         <span class="pull-right accent" (click)="changeFollowUp(tempId,'accounting software',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='accounting software')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> follow-up</span>
@@ -1695,7 +1695,7 @@
                 </div>
             </div>
             <!-- Follow-up end here -->
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 
@@ -1703,7 +1703,7 @@
 
 <div class="row" *ngIf="companyType=='SOFTWARE'">
     <div class="col-md-8" *ngFor="let item of lstHRSolutions;let tempId=index">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">HR Solutions details {{tempId+1}}
                 <span class="pull-right accent" *ngIf="!(lstCompletedStatus.includes(item.vchr_enquiry_status))">
                         <span class="pull-right accent" (click)="changeFollowUp(tempId,'hr solutions',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='hr solutions')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> follow-up</span>
@@ -1829,7 +1829,7 @@
                 </div>
             </div>
             <!-- Follow-up end here -->
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 
@@ -1837,7 +1837,7 @@
 
 <div class="row" *ngIf="companyType=='SOFTWARE'">
     <div class="col-md-8" *ngFor="let item of lstEmployeeManagement;let tempId=index">
-        <card>
+        <!-- <card> -->
             <h4 class="form-head">Employee Management details {{tempId+1}}
                 <span class="pull-right accent" *ngIf="!(lstCompletedStatus.includes(item.vchr_enquiry_status))">
                         <span class="pull-right accent" (click)="changeFollowUp(tempId,'employee management',0)" *ngIf="!(intFollowUpFlag == tempId && strFollowUpService =='employee management')">  <i class="fa fa-plus-circle"   title="Follow-up" aria-hidden="true"  ></i> follow-up</span>
@@ -1963,7 +1963,7 @@
                 </div>
             </div>
             <!-- Follow-up end here -->
-        </card>
+        <!-- </card> -->
     </div>
 </div>
 

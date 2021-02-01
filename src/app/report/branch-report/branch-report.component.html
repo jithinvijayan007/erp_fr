@@ -1,5 +1,5 @@
 <div class="row">
-    <card class="col-lg-12 col-md-12">
+    <!-- <card class="col-lg-12 col-md-12"> -->
         <form>
             <h4 class="form-head">Branch Report
                 <!-- <span class="pull-right nastock">
@@ -8,8 +8,8 @@
             </h4>
             <div class="row">
                 <div class="padd_l_r mt-4">
-                    <app-date-range-picker-3 (onSelectDate)="datFromDate=$event[0];datToDate=$event[1];showDatewiseData($event[0],$event[1]);">
-                    </app-date-range-picker-3>
+                    <!-- <app-date-range-picker-3 (onSelectDate)="datFromDate=$event[0];datToDate=$event[1];showDatewiseData($event[0],$event[1]);">
+                    </app-date-range-picker-3> -->
                 </div>
                 <div class="padd_l_r mt-2 col-md-7">
                     <mat-form-field>
@@ -34,10 +34,10 @@
                 </div>
             </div>
         </form>
-    </card>
+    <!-- </card> -->
     <div class="col-md-12 row">
         <div id="reports_style" class="col-lg-6 col-md-12" *ngIf="barChartLabels.length > 0">
-            <card style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top1">
+            <!-- <card style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top1"> -->
                 {{"Branch Wise"|uppercase}}
                 <!-- <small *ngIf="barChartOptions.title.text.length>10"> {{ barChartOptions.title.text|uppercase|slice:0:10 }}... </small>
                 <small *ngIf="barChartOptions.title.text.length<=10"> {{ barChartOptions.title.text|uppercase }} </small> -->
@@ -53,36 +53,36 @@
                 <span class="chart-icons active fa fa-chevron-up" title="Good" (click)="goodOnClick(barCurrentIndex,barMaxIndex)"></span>
                 <span class="chart-icons fa fa-chevron-down" title="Poor" (click)="poorOnClick(barCurrentIndex,barMaxIndex)"></span>
                 </span>
-            </card>
-            <card id="chart">
+            <!-- </card> -->
+            <!-- <card id="chart"> -->
                 <canvas height="250" width="740" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barChartColor" (chartClick)="chartClicked($event)">
         </canvas>
-            </card>
+            <!-- </card> -->
         </div>
 
         <div id="reports_style" class="col-lg-3 col-md-6" *ngIf="  pieServiceLabels.length > 0">
-            <card style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top2">
+            <!-- <card style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top2"> -->
                 {{"Service Wise - "|uppercase}}
                 <small *ngIf="pieServiceOptions.title.text.length>5"> {{ pieServiceOptions.title.text|uppercase|slice:0:5 }}... </small>
                 <small *ngIf="pieServiceOptions.title.text.length<=5"> {{ pieServiceOptions.title.text|uppercase }} </small>
-            </card>
-            <card id="chart">
+            <!-- </card> -->
+            <!-- <card id="chart"> -->
                 <canvas height="250" baseChart [options]="pieServiceOptions" [data]="pieServiceData" [labels]="pieServiceLabels" [colors]="pieChartColors" [chartType]="pieChartType" (chartClick)="piechartClicked($event)">
         </canvas>
-            </card>
+            <!-- </card> -->
 
         </div>
 
         <div id="reports_style" class="col-lg-3 col-md-6" *ngIf=" pieStatusLabels.length > 0">
-            <card style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top3">
+            <!-- <card style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top3"> -->
                 {{"Status Wise - "|uppercase}}
                 <small *ngIf="pieStatusOptions.title.text.length>5"> {{ pieStatusOptions.title.text|uppercase|slice:0:5 }}... </small>
                 <small *ngIf="pieStatusOptions.title.text.length<=5"> {{ pieStatusOptions.title.text|uppercase }} </small>
-            </card>
-            <card id="chart">
+            <!-- </card> -->
+            <!-- <card id="chart"> -->
                 <canvas height="250" baseChart [options]="pieStatusOptions" [data]="pieStatusData" [labels]="pieStatusLabels" [colors]="pieChartColors" [chartType]="empPieChartType">
         </canvas>
-            </card>
+            <!-- </card> -->
         </div>
     </div>
 
@@ -161,6 +161,6 @@
     </div>
 </div>
 
-<card *ngIf="barChartLabels.length==0">
+<!-- <card *ngIf="barChartLabels.length==0"> -->
     <h5 class="mat-toolbar">No data to display</h5>
-</card>
+<!-- </card> -->

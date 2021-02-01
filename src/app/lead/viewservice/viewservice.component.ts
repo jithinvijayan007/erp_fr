@@ -25,6 +25,9 @@ export class ViewserviceComponent implements OnInit {
   hostName = ''
   objectKeys;
   strService = '';
+  key
+  item
+  lst_worked_on
 
   currentUserName = localStorage.getItem('username');
   intComputersFollowupId = -1;

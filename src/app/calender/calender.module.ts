@@ -6,6 +6,7 @@ import { CardModule } from '../card.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 // import { CommoncomponentsModule } from '../commoncomponents.module';
 import { CalenderRoutingModule } from './calender-routing.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { CalenderRoutingModule } from './calender-routing.module';
     ReactiveFormsModule,
     CardModule,
     CalendarModule,
+    MatIconModule
     // CommoncomponentsModule
   ],
   exports: [CalenderComponent],
