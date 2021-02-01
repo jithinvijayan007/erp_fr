@@ -59,19 +59,19 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group mt-1">
-                                    <label>First Name</label>
+                                    <label>Name</label>
                                     <p *ngIf="dctEnquiry.cust_fname">{{dctEnquiry.cust_fname|uppercase}}</p>
                                     <p *ngIf="!dctEnquiry.cust_fname">{{'----'}}</p>
                                 </div>
                             </div>
-            
-                            <div class="col-md-6">
+            <!-- comment for o2force -->
+                            <!-- <div class="col-md-6">
                                 <div class="form-group mt-1">
                                     <label>Last Name</label>
                                     <p *ngIf="dctEnquiry.cust_lname">{{dctEnquiry.cust_lname|uppercase}}</p>
                                     <p *ngIf="!dctEnquiry.cust_lname">{{'----'}}</p>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="row" *ngIf="blnShowCustFullDetails">
                             <div class="col-md-6">
