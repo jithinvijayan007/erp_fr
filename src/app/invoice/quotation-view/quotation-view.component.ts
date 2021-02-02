@@ -47,7 +47,7 @@ export class QuotationViewComponent implements OnInit {
     }
     this.hostname = this.serviceObject.hostAddress
     this.hostname = this.hostname.slice(0, this.hostname.length - 1)
-    this.url = this.serviceObject.url
+    this.url = this.serviceObject['url']
     this.objectKeys = Object.keys;
     
     

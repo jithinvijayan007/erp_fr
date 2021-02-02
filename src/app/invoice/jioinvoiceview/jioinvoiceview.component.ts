@@ -523,7 +523,7 @@ total_receipt = 0;
       }
     ];
 
-    this.url = this.serviceObject.url
+    this.url = this.serviceObject['url']
     this.hostaddress = this.serviceObject.hostAddress
     this.hostaddress = this.hostaddress.slice(0, this.hostaddress.length - 1)
     this.printDisable=true; //disable print button

@@ -592,7 +592,7 @@ intCreditBalance=0
     this.out_of_stock=false;
     localStorage.setItem('invoiceReceipt','')
     this.blnIndirectDiscount = JSON.parse(localStorage.getItem('bln_indirect_discount'));
-    this.url = this.serviceObject.url
+    this.url = this.serviceObject['url']
     this.hostaddress = this.serviceObject.hostAddress
     this.hostaddress = this.hostaddress.slice(0, this.hostaddress.length - 1)
     this.printDisable=true; //disable print button

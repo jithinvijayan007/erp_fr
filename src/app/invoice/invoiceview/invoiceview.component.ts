@@ -671,7 +671,7 @@ export class InvoiceviewComponent implements OnInit {
     this.out_of_stock = false;
     localStorage.setItem('invoiceReceipt', '')
     this.blnIndirectDiscount = JSON.parse(localStorage.getItem('bln_indirect_discount'));
-    this.url = this.serviceObject.url
+    this.url = this.serviceObject['url']
     this.hostaddress = this.serviceObject.hostAddress
     this.hostaddress = this.hostaddress.slice(0, this.hostaddress.length - 1)
     this.printDisable = true; //disable print button
@@ -7890,7 +7890,8 @@ export class InvoiceviewComponent implements OnInit {
   }
   rejectInvoice() {
 
-
+    console.log("thisss 7893");
+    
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
