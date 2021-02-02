@@ -1,4 +1,4 @@
-import { SnotifyService } from 'ng-snotify';
+// import { SnotifyService } from 'ng-snotify';
 
 import { Component, OnInit, ViewChild , ElementRef} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -12,8 +12,9 @@ import { MatDialog  } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { TypeaheadService } from 'src/app/typeahead.service';
 import { ChartService } from '../../chart.service';
-// import 'chart.piecelabel.js';
+import 'chart.piecelabel.js';
 import { debounceTime } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-branch-report',
   templateUrl: './branch-report.component.html',
@@ -161,7 +162,7 @@ legend: { display: false }
       public router: Router ,
       private fb: FormBuilder,
       private typeaheadObject: TypeaheadService,
-      private snotifyService: SnotifyService,
+      // private snotifyService: SnotifyService,
       private chartservice:ChartService) {
       this._sharedService.emitChange(this.pageTitle);
     }
@@ -298,7 +299,8 @@ this.dataSource.sort = this.sort;
 }
 public piechartClicked(e: any) {
   if (!this.selectedOption) {
-    this.snotifyService.error('Select a branch in bar chart');
+    // this.snotifyService.error('Select a branch in bar chart');
+    Swal.fire('error', 'Select a branch in bar chart','error')
     return false;
   }
   if (e.active.length > 0) {

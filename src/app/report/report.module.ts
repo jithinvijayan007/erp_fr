@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -38,11 +38,11 @@ import { DetailedModelWiseSalesReportComponent } from './detailed-model-wise-sal
 import { CreditsalereportComponent } from './creditsalereport/creditsalereport.component';
 import { EmisalesreportComponent } from './emisalesreport/emisalesreport.component';
 import { DayclosurereportComponent } from './dayclosurereport/dayclosurereport.component';
-
+import { BranchReportComponent } from './branch-report/branch-report.component'
 
 
 @NgModule({
-  declarations: [StockReportComponent, ClientStatementComponent, DetailsSalesreportComponent, SmartChoiceReportComponent, GdpGdewReportComponent, RechargeProfitReportComponent, ProductProfitReportComponent,PurchaseReportComponent,SmartChoiceSaleComponent,StockHistoryComponent, CreditsalereportComponent,DetailedModelWiseSalesReportComponent, EmisalesreportComponent, DayclosurereportComponent],
+  declarations: [BranchReportComponent,StockReportComponent, ClientStatementComponent, DetailsSalesreportComponent, SmartChoiceReportComponent, GdpGdewReportComponent, RechargeProfitReportComponent, ProductProfitReportComponent,PurchaseReportComponent,SmartChoiceSaleComponent,StockHistoryComponent, CreditsalereportComponent,DetailedModelWiseSalesReportComponent, EmisalesreportComponent, DayclosurereportComponent],
   imports: [
     CommonModule,
     ReportRoutingModule,
@@ -68,6 +68,7 @@ import { DayclosurereportComponent } from './dayclosurereport/dayclosurereport.c
     NgxSpinnerModule,
     CdkTableModule,
     CdkTreeModule,
+    
   ]
 })
 export class ReportModule { }

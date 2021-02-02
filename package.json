@@ -44,6 +44,7 @@
     "bootstrap": "^4.5.3",
     "c3": "^0.4.24",
     "chart.js": "^2.9.4",
+    "chart.piecelabel.js": "^0.15.0",
     "chartist": "^0.11.4",
     "core-js": "^2.6.12",
     "d3": "^4.8.0",
