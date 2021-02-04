@@ -345,6 +345,7 @@ export class AddemployeeComponent implements OnInit {
       middleName: [null],
       lastName: [null, Validators.compose([Validators.required])],
       empCode : [null, Validators.compose([Validators.required])],
+
       userName : [null, Validators.compose([Validators.required])],
       password1:this.strPassword1,
       confirmPassword1: this.strConfirmPassword1,
@@ -736,9 +737,7 @@ localStorage.removeItem('intNewEmpJobId');
       
       // lstSelectedFunction = this.lstFunction.map(loc => loc.pk_bint_id)
       
-      console.log(this.lstFunction)
-      console.log("asdfg")
-      console.log(lstSelectedFunction,'fcdyhcdx')
+      
     }
     // console.log(this.lstFunction);
 // console.log(this.lstFunction);
@@ -761,6 +760,10 @@ localStorage.removeItem('intNewEmpJobId');
 
     if ( this.strFirstName == null || this.strFirstName.trim() === '') {
       Swal.fire('Error!', 'Enter First Name', 'error');
+      return false
+    }
+    else if ( this.strUserName == null || this.strUserName.trim() === '') {
+      Swal.fire('Error!', 'Enter Employee Code', 'error');
       return false
     }
      else if ( !/^[a-zA-Z\s ]*$/g.test(this.strFirstName)) {
@@ -1082,7 +1085,7 @@ localStorage.removeItem('intNewEmpJobId');
     dctTempData['strMiddleName']=this.strMiddleName;
     dctTempData['intCategoryId']=this.selectedCategoryId;
     dctTempData['strCategoryName']=this.selectedCategory
-    // dctTempData['strUserName']=this.strUserName;
+    dctTempData['strUserName']=this.strUserName;
     dctTempData['strPassword']=this.strPassword1;
     dctTempData['datDob']=moment(this.datOBirth).format('YYYY-MM-DD')
     dctTempData['datJoin']=moment(this.datOJoin).format('YYYY-MM-DD')
@@ -1125,7 +1128,7 @@ localStorage.removeItem('intNewEmpJobId');
     frmPublishedData.append('intCategoryId',this.selectedCategoryId);
     frmPublishedData.append('strCategoryName',this.selectedCategory);
     frmPublishedData.append('strCategoryCode',this.strCategoryCode);
-    // frmPublishedData.append('strUserName',this.strUserName);
+    frmPublishedData.append('strUserName',this.strUserName);
     frmPublishedData.append('strPassword',this.strPassword1.toString());
     frmPublishedData.append('datDob',moment(this.datOBirth).format('YYYY-MM-DD'))
     frmPublishedData.append('datJoin',moment(this.datOJoin).format('YYYY-MM-DD'))

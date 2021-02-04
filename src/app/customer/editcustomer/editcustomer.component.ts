@@ -281,7 +281,7 @@ export class EditcustomerComponent implements OnInit {
 
     this.serviceObject.postData('customer/customer_update/',this.dctCustomer).subscribe(
       (response) => {
-
+      
         if(response['status']==1){
 
           Swal.fire({
