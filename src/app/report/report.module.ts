@@ -42,7 +42,21 @@ import { BranchReportComponent } from './branch-report/branch-report.component'
 
 
 @NgModule({
-  declarations: [BranchReportComponent,StockReportComponent, ClientStatementComponent, DetailsSalesreportComponent, SmartChoiceReportComponent, GdpGdewReportComponent, RechargeProfitReportComponent, ProductProfitReportComponent,PurchaseReportComponent,SmartChoiceSaleComponent,StockHistoryComponent, CreditsalereportComponent,DetailedModelWiseSalesReportComponent, EmisalesreportComponent, DayclosurereportComponent],
+  declarations: [BranchReportComponent,
+    StockReportComponent,
+    ClientStatementComponent,
+    DetailsSalesreportComponent,
+    SmartChoiceReportComponent,
+    GdpGdewReportComponent,
+    RechargeProfitReportComponent,
+    ProductProfitReportComponent,
+    PurchaseReportComponent,
+    SmartChoiceSaleComponent,
+    StockHistoryComponent,
+    CreditsalereportComponent,
+    DetailedModelWiseSalesReportComponent,
+    EmisalesreportComponent,
+    DayclosurereportComponent],
   imports: [
     CommonModule,
     ReportRoutingModule,

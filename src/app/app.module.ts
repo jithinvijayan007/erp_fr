@@ -69,6 +69,7 @@ import { MainMenuComponent } from './a2-components/main-menu/main-menu.component
 import { NavbarComponent } from './a2-components/navbar/navbar.component';
 import { NIHTimelineComponent } from './a2-components/ni-h-timeline/ni-h-timeline.component';
 import { CardModule } from './card.module';
+import { ChartService } from './chart.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -147,6 +148,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AuthGuard,
     SharedService,
     TypeaheadService,
+    ChartService,
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG

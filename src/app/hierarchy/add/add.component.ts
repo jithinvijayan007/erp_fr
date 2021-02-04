@@ -38,7 +38,9 @@ export class AddComponent implements OnInit {
     this.master_id = item.pk_bint_id
   }
   Submit_data() {
-    if (this.strName == '' || this.strName == null || this.strName == 'undefined') {
+    console.log("sdf");
+    
+    if (this.strName == '' || this.strName == null || this.strName == undefined) {
       this.toastr.error('Enter the name', 'Error!');
       return false
     }
@@ -46,10 +48,39 @@ export class AddComponent implements OnInit {
       this.toastr.error('Enter the code', 'Error!');
       return false
     }
-    else if (this.master_id == null || this.master_id == 0) {
-      this.toastr.error('Select One', 'Error!');
-      return false
-    }else {
+    else if (this.lst_hierarchy.length > 0) {
+      
+      if (this.master_id == null || this.master_id == 0) {
+        this.toastr.error('Select One', 'Error!');
+        return false
+      
+      }
+      else {
+        console.log("test");
+
+        let dct_data = {}
+        dct_data['hierarchy_name'] = this.hierarchyName
+        dct_data['vchr_name'] = this.strName
+        dct_data['vchr_code'] = this.strCode
+        dct_data['master_id'] = this.master_id
+        this.serverService.postData('hierarchy/hierarchy', dct_data).subscribe(res => {
+          if (res.status == 1) {
+            swal.fire('Success', this.hierarchyName + ' Added', 'success')
+            this.strName = ""
+            this.strCode = ""
+          } else if (res.status == 0) {
+            swal.fire('Error!', res['reason'], 'error');
+          }
+        },
+          err => {
+            swal.fire('Error!', 'Something went wrong!!', 'error');
+          })
+
+      }
+    }
+    else {
+      console.log("test");
+
       let dct_data = {}
       dct_data['hierarchy_name'] = this.hierarchyName
       dct_data['vchr_name'] = this.strName
@@ -57,7 +88,7 @@ export class AddComponent implements OnInit {
       dct_data['master_id'] = this.master_id
       this.serverService.postData('hierarchy/hierarchy', dct_data).subscribe(res => {
         if (res.status == 1) {
-          swal.fire('Success', this.hierarchyName+' Added','success')
+          swal.fire('Success', this.hierarchyName + ' Added', 'success')
           this.strName = ""
           this.strCode = ""
         } else if (res.status == 0) {
@@ -67,7 +98,7 @@ export class AddComponent implements OnInit {
         err => {
           swal.fire('Error!', 'Something went wrong!!', 'error');
         })
-    
+
     }
   }
 
