@@ -1,0 +1,122 @@
+<h4>
+  <span>
+    <i class="fa fa-users" aria-hidden="true"></i>
+  </span>&nbsp; View customer
+  <span class="float-right">
+    <!-- <button mat-raised-button [routerLink]="['/crm/editcustomer']"> -->
+    <button mat-raised-button (click)="editCustomer()" [routerLink]="['/customer/editcustomer']">
+      <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+    </button>
+    <button mat-raised-button [routerLink]="['/customer/customerlist']">
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+    </button>
+  </span>
+</h4>
+<p>View all the details of the customer</p>
+<div class="col-md-12 col-lg-8 row" *ngIf="test">
+  <div class="row">
+    <card class="col-md-12">
+      <!-- <div class="row" *ngIf="test">
+         <div class="col-md-12 col-lg-8">
+    <card> -->
+      <h4 class="form-head">View customer
+        <span class="starrating pull-right">
+          <star-rating-comp aria-label="Close" [step]="0.1" style="cursor:auto;outline:none !important" [staticColor]="'ok'" name="starrating"
+            [starType]="'svg'" [rating]="dctRating" [readOnly]="true"></star-rating-comp>
+        </span>
+      </h4>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Mobile Number</label>
+            <p class="">{{data[0].int_mobile}}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mt-1">
+              <label>Location</label>
+              <p class="">{{data[0].fk_location_id__vchr_name}}</p>
+            </div>
+          </div>
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Full Name</label>
+            <p class="">{{ data[0].vchr_name.toUpperCase()}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Gender</label>
+            <p class="">{{data[0].cust_salutation.toUpperCase()}}</p>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="data[0].cust_email">
+            <div class="form-group mt-1">
+              <label>Email Id</label>
+              <p class="">{{data[0].vchr_email}}</p>
+            </div>
+          </div>
+          <div class="col-md-6" *ngIf="data[0].fk_state_id">
+            <div class="form-group mt-1">
+              <label>State Name</label>
+              <p class="">{{data[0].fk_state_id__vchr_name}}</p>
+            </div>
+          </div>
+          <div class="col-md-6" *ngIf="data[0].vchr_gst_no">
+            <div class="form-group mt-1">
+              <label>GST Number</label>
+              <p class="">{{data[0].vchr_gst_no}}</p>
+            </div>
+          </div>
+        <div class="col-md-6" *ngIf="data[0].cust_alternatemobile">
+          <div class="form-group mt-1">
+            <label>Alternate Mobile Number</label>
+            <p class="">{{data[0].cust_alternatemobile}}</p>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="data[0].cust_alternatemail">
+          <div class="form-group mt-1" x>
+            <label>Alternate Email Id</label>
+            <p class="">{{data[0].cust_alternatemail}}</p>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="data[0].cust_contactsrc">
+          <div class="form-group mt-1">
+            <label>Contact Source</label>
+            <p class="">{{data[0].cust_contactsrc}}</p>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="data[0].cust_customertype">
+          <div class="form-group mt-1">
+            <label>Customer Type</label>
+            <p class="">{{data[0].cust_customertype}}</p>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="data[0].cust_customertype=='Credit customer'">
+          <div class="form-group mt-1">
+            <label>Credit Limit</label>
+            <p *ngIf="data[0].dbl_credit_amount" class="">{{data[0].dbl_credit_amount}}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mt-1">
+            <label>Send Promotion SMS</label>
+            <p class="" *ngIf="data[0].cust_smsaccess">Yes</p>
+            <p class="" *ngIf="!data[0].cust_smsaccess">No</p>
+          </div>
+        </div>
+        <div class="col-md-6" *ngFor="let inst of dctOccassions">
+          <div class="form-group mt-1">
+            <label>{{inst.vchr_occasion_name.charAt(0).toUpperCase()+inst.vchr_occasion_name.slice(1).toLowerCase()}}</label>
+            <p class="">{{inst.dat_occasion_date | date: 'dd-MM-yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+    </card>
+  </div>
+</div>
+<div>
+  <!-- <app-calender></app-calender> -->
+  <!-- <app-sticky-notes></app-sticky-notes> -->
+</div>

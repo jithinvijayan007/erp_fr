@@ -48,6 +48,35 @@
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
+
+
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput  [formControl]="form.controls['userName']" required matInput placeholder="Employee Code" [(ngModel)]="strUserName" class="matinput1" name="userName" value="">
+                                        <mat-error *ngIf="form.controls['userName'].hasError('required')">
+                                            Employee Code required
+                                        </mat-error>
+                                        <mat-error *ngIf="form.controls['userName'].errors?.alreadytaken">
+                                            Employee Code already taken
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+
+
+                                <!-- <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput [formControl]="form.controls['userName']" required placeholder="User Name" [(ngModel)]="strUserName" class="matinput1" name="userName" value="">
+                                            <mat-error *ngIf="form.controls['userName'].hasError('required')">
+                                                User Name required
+                                            </mat-error>
+                                            <mat-error *ngIf="form.controls['userName'].errors?.alreadytaken">
+                                                Username already taken
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div> -->
+
+
                                 <div class="col-md-3">
                                         <mat-form-field class="example-full-width">
                                             <input matInput type="password" placeholder="Password" [formControl]="form.controls['password1']" required [(ngModel)]="strPassword1" class="matinput1" name="password1" value="">
