@@ -50,11 +50,16 @@ import { ExcelService } from '../excel.service';
 
 @NgModule({
   declarations: [
+    
+     
+    
+     
+     
     BranchReportComponent,
-    StockReportComponent, 
+    StockReportComponent,
     ClientStatementComponent,
-    DetailsSalesreportComponent, 
-    SmartChoiceReportComponent, 
+    DetailsSalesreportComponent,
+    SmartChoiceReportComponent,
     GdpGdewReportComponent,
     RechargeProfitReportComponent,
     ProductProfitReportComponent,

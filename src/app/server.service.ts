@@ -16,12 +16,18 @@ export class ServerService {
     url_company: string;
     public token : string;
 
-  hostAddress = 'http://o2force.com:6001/';
+  // hostAddress = 'http://o2force.com:6001/';
   // hostAddress = 'http://192.168.0.116:8000/';
+
+  protocol = window.location.protocol
+  // hostAddress= 'http://192.168.0.174:5000/'; // freddy
+  hostname = window.location.hostname
+  port = environment.production ? 6001 : 8000;
+  hostAddress = `${this.protocol}//${this.hostname}:${this.port}/`;
     
-    protocol = window.location.protocol;
-    hostname = window.location.hostname;
-    port = environment.production ? 6001 : 8000;
+    // protocol = window.location.protocol;
+    // hostname = window.location.hostname;
+    // port = environment.production ? 6001 : 8000;
   public url = 'http://o2force.com:6001/'; //live
 
     constructor(private http: HttpClient) {

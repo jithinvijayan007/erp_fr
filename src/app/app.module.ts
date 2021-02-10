@@ -74,6 +74,8 @@ import { ChartService } from './chart.service';
 import { ExcelService } from './excel.service';
 // import { ReportComponent } from './report/report2/report.component';
 // import {ReportComponent } from 'src/app/report/report.component';
+import { CardModule } from './card.module';
+// import { ChartService } from './chart.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -156,6 +158,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChartService,
     ExcelService,
     TypeaheadService,
+    ChartService,
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
