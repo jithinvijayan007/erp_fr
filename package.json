@@ -38,6 +38,7 @@
     "@swimlane/ngx-charts": "^16.0.0",
     "@swimlane/ngx-datatable": "^13.1.0",
     "amazing-time-picker": "^1.8.0",
+    "angular-2-daterangepicker": "^1.1.53",
     "angular-calendar": "^0.25.2",
     "angular-datatables": "^6.0.1",
     "angular-star-rating": "^4.0.0-beta.3",
@@ -46,6 +47,7 @@
     "chart.js": "^2.9.4",
     "chart.piecelabel.js": "^0.15.0",
     "chartist": "^0.11.4",
+    "chartjs": "^0.3.24",
     "core-js": "^2.6.12",
     "d3": "^4.8.0",
     "datatables.net": "^1.10.22",
@@ -84,6 +86,7 @@
     "save": "^2.4.0",
     "sweetalert2": "^8.19.0",
     "xlsx": "^0.15.6",
+    "xlsx-style": "^0.8.13",
     "zone.js": "^0.10.3"
   },
   "devDependencies": {

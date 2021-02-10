@@ -20,6 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { DateRangePicker3Component } from '../pages/date-range-picker-3/date-range-picker-3.component';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -38,11 +39,23 @@ import { DetailedModelWiseSalesReportComponent } from './detailed-model-wise-sal
 import { CreditsalereportComponent } from './creditsalereport/creditsalereport.component';
 import { EmisalesreportComponent } from './emisalesreport/emisalesreport.component';
 import { DayclosurereportComponent } from './dayclosurereport/dayclosurereport.component';
-import { BranchReportComponent } from './branch-report/branch-report.component'
+import { BranchReportComponent } from './branch-report/branch-report.component';
+import { MobilebranchsalesreportComponent } from './mobilebranchsalesreport/mobilebranchsalesreport.component';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { ReportComponent } from './report.component';
+import { ExcelService } from '../excel.service';
+// import { ReportComponent } from './report2/report.component';
+// import { from } from 'rxjs';
 
 
 @NgModule({
-  declarations: [BranchReportComponent,
+  declarations: [
+    
+     
+    
+     
+     
+    BranchReportComponent,
     StockReportComponent,
     ClientStatementComponent,
     DetailsSalesreportComponent,
@@ -56,7 +69,11 @@ import { BranchReportComponent } from './branch-report/branch-report.component'
     CreditsalereportComponent,
     DetailedModelWiseSalesReportComponent,
     EmisalesreportComponent,
-    DayclosurereportComponent],
+    DayclosurereportComponent,
+    MobilebranchsalesreportComponent,
+    ReportComponent,
+    DateRangePicker3Component
+      ],
   imports: [
     CommonModule,
     ReportRoutingModule,
@@ -82,7 +99,11 @@ import { BranchReportComponent } from './branch-report/branch-report.component'
     NgxSpinnerModule,
     CdkTableModule,
     CdkTreeModule,
+    ChartsModule
     
+  ],
+  providers:[
+    ReportComponent,
   ]
 })
 export class ReportModule { }

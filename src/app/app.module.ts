@@ -42,6 +42,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { ServerService } from './server.service';
 import { HttpModule } from '@angular/http';
+// import {HttpClient} from '@angular/http'
 import { MatTableModule } from '@angular/material/table';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthGuard } from './auth.guard';
@@ -68,8 +69,13 @@ import { FooterComponent } from './a2-components/footer/footer.component';
 import { MainMenuComponent } from './a2-components/main-menu/main-menu.component';
 import { NavbarComponent } from './a2-components/navbar/navbar.component';
 import { NIHTimelineComponent } from './a2-components/ni-h-timeline/ni-h-timeline.component';
-import { CardModule } from './card.module';
+// import { CardModule } from './card.module';
 import { ChartService } from './chart.service';
+import { ExcelService } from './excel.service';
+// import { ReportComponent } from './report/report2/report.component';
+// import {ReportComponent } from 'src/app/report/report.component';
+import { CardModule } from './card.module';
+// import { ChartService } from './chart.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -99,7 +105,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MainMenuComponent,
     NavbarComponent,
     NIHTimelineComponent,
-    SidebarComponent
+    SidebarComponent,
+    // ReportComponent
     // AddreceiptComponent
     
   
@@ -142,11 +149,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ServerService,
     SnotifyService,
     FormBuilder,
+    HttpClient,
     DatePipe,
     TitleCasePipe,
     DataService,
     AuthGuard,
     SharedService,
+    ChartService,
+    ExcelService,
     TypeaheadService,
     ChartService,
     {
@@ -166,6 +176,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     A2CardComponent
   ],
   bootstrap: [AppComponent]
+  
 })
 
 
