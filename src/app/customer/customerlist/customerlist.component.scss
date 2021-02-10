@@ -1,0 +1,56 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+  }
+
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+
+
+
+  .input-file-container {
+    position: relative;
+    width: 225px;
+}
+.input-file {
+    // position: absolute;
+    // // top: 0; left: 0;
+    width: auto;
+    opacity: .5;
+    padding: 5px 0;
+    cursor: hand;
+    background: #39D2B4;
+}
+.input-file:hover + .input-file-trigger,
+.input-file:focus + .input-file-trigger,
+.input-file-trigger:hover,
+.input-file-trigger:focus {
+    color: #116fab;
+}
+
+// .mat-header-cell, .mat-cell {
+//   overflow: hidden;
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
+// }
+
+.edit_btn{
+  background: linear-gradient(to right, #43cea2, #29879f);
+  color: #fff;
+  font-size: 15px;
+  padding: 7px 10px;    
+  cursor: pointer;
+}

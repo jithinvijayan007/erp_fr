@@ -7892,7 +7892,8 @@ export class InvoiceviewComponent implements OnInit {
   }
   rejectInvoice() {
 
-
+    console.log("thisss 7893");
+    
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",

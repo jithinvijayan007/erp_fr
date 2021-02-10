@@ -1,3 +1,5 @@
+import { PageCustomerlistComponent } from './customerlist/customerlist.component';
+import { StarRatingModule } from 'angular-star-rating';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -17,9 +19,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { ViewcustomerComponent } from './viewcustomer/viewcustomer.component';
 
 @NgModule({
-  declarations: [EditcustomerComponent, HistoryComponent],
+  declarations: [EditcustomerComponent,ViewcustomerComponent, HistoryComponent,PageCustomerlistComponent],
   imports: [
     CommonModule,
     CustomerRoutingModule,
@@ -35,10 +38,10 @@ import { MatTableModule } from '@angular/material/table';
     MatButtonModule,
     MatTableModule,
     // MatPaginator,
-    // MatPaginatorModule,
+    MatPaginatorModule,
     MatSortModule,
     MatRadioModule,
-
+    StarRatingModule,
   ]
 })
 export class CustomerModule { }
