@@ -22,6 +22,7 @@ import { ReportComponent } from '../report.component';
 
 import { from } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mobilebranchsalesreport',
@@ -571,7 +572,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
       this.router.navigate(['/user/sign-in']);
     }
     this.searchBranch.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((data: string) => {
         if (data === undefined || data == null || data === '') {
         } else {
