@@ -1,0 +1,120 @@
+<div class="card">
+    <div class="card-body">
+            <div class="row mt-3">
+                    <div class="col-md-12">
+                            <h4 class="formhead"><i class="mdi mdi-sitemap"></i>&nbsp;Shift Allocation</h4>
+                    </div>
+                    
+                   
+                            <!-- <div class="col-md-12"> -->
+
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input (click)="picker1.open()"  matInput required readonly [matDatepicker]="picker1" placeholder="Select From Date" [(ngModel)]="datShiftFrom" #shiftFromDate>
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input (click)="picker2.open()"  matInput required readonly [matDatepicker]="picker2" placeholder="Select To Date" [(ngModel)]="datShiftTo" #shiftToDate>
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-3 mt-1" >
+                                    <mat-form-field>
+                                        <mat-label>Select Branch</mat-label>
+                                        <mat-select [(ngModel)]="intSelectedBranchId" [disableOptionCentering]="true">
+                                            <mat-option *ngFor="let branch of lstBranchData"  [value]="branch.fk_branch_id">
+                                                {{ branch.fk_branch__vchr_name | uppercase}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3 mt-1" >
+                                    <mat-form-field>
+                                        <mat-label>Select Designation</mat-label>
+                                        <mat-select [(ngModel)]="intSelectedDesigantionId" [disableOptionCentering]="true">
+                                            <mat-option *ngFor="let designation of lstDesignationData" [value]="designation.fk_designation_id">
+                                                {{ designation.fk_designation__vchr_name | uppercase}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-2">
+                                        <button (click)="getData()" class="btn save_btn mt-3">Search</button>
+                                </div>
+                            <!-- </div>     -->
+
+                           
+                </div>
+                           <!-- table start -->
+                           <!-- <div class="tabledata"> -->
+                        <div class="row" *ngIf="lstWeekOffData.length>0">
+                                <div class="col-md-12">
+                                    <table class="table table-responsive table-bordered mt-2">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" style="min-width: 130px;vertical-align: middle; position: sticky;left:-1px;background: #ffddd4;padding: 1rem !important;z-index: 1;">Employee</th>
+                                                <th *ngFor="let item of lstDayMonth;let i = index" style="text-align: center">{{item.date | slice:-2}}
+                                                    <div style="color: #fc634d;font-size: 13px;width:100%;">{{lstDays[item.int_weekday]}}</div>
+                                                </th>
+                                            </tr>
+                    
+                                        </thead>
+                                        <tbody *ngFor="let empData of lstWeekOffData;let k = index">
+                                            <tr>
+                                                <td style="font-size: 13px;position: sticky;left:-1px;background: #ffe9e3;padding:10px !important;z-index: 1;">{{ empData.strName}}</td>
+                                                <td *ngFor="let item of empData['lst_all_dates'];let i = index" style="text-align: center;min-width: 10px;max-width: 130px !important;">
+                                                    <!-- <div class="pretty p-image p-plain p-jelly">
+                                                      
+                                                        <input type="checkbox" [(ngModel)]="item.bln_status" (change)="dayChecked(item,k,i)" id="'id'+i+k" name="'date'+i+k" />
+                                                        <div class="state">
+                                                            <img  class="image" src="assets/images/tick.png" id="'ids'+i+k" name="'dates'+i+k">
+                                                            <label></label>
+                                                        </div>
+                                                    </div> -->
+<!--                                                         
+                                                   <div class="col-md-3" > -->
+                                                        <mat-form-field>
+                                                            <mat-label>Select Shift </mat-label>
+                                                            <!-- <mat-select [(ngModel)]="item.intShiftId"  [disableOptionCentering]="true"  (ngModelChange)="shiftChanged(item,item.intShiftId)" (click) = "shiftClick(empData['lst_all_dates'],i)"> -->
+                                                            <mat-select disableOptionCentering [(ngModel)]="item.intShiftId"  [disableOptionCentering]="true" (ngModelChange)="shiftChanged(item,item.intShiftId)"  (click) = "shiftClick(empData['lst_all_dates'],i)">
+                                                                <mat-option *ngFor="let shift of empData['lstShift']"   [value]="shift.intId" [disabled]="!item.blnShift">
+                                                                    {{ shift.strName | uppercase}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    <!-- </div> -->
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        <!-- </div> -->
+
+                            <!-- table ends -->
+
+                    
+                    <div class="row" *ngIf="lstWeekOffData.length>0">
+                            <div class="col-md-3 mt-2">
+                                 <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="saveShiftAllocated()">Save</button>
+                                 <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+                             </div>
+                     </div>
+            
+    </div>
+</div>         
+<div *ngIf="lstWeekOffData.length==0" style="text-align: center">
+
+    <img src="assets/images/nodata-found.png">
+
+</div> 
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

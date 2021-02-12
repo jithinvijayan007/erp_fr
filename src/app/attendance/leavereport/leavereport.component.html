@@ -1,0 +1,214 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <h4 class="formhead"><i class="fa fa-list"></i> &nbsp;Leave List</h4>
+            </div>
+
+            <div class="col-md-2">
+                <mat-form-field class="example-full-width">
+                    <input (click)="picker1.open()" matInput required readonly [matDatepicker]="picker1" placeholder="Select From Date" [(ngModel)]="datLeaveFrom" #leaveFromDate>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-2">
+                <mat-form-field class="example-full-width">
+                    <input (click)="picker2.open()" matInput required readonly [matDatepicker]="picker2" placeholder="Select To Date" [(ngModel)]="datLeaveTo" #leaveToDate>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <!-- employee chiplist -->
+            <div class=" col-md-4">
+                <mat-form-field>
+                    <mat-chip-list #chipList>
+                        <mat-chip *ngFor="let value of lstEmpSelected" (removed)="removeEmployee(value)">
+                            ​{{ (value.strUserName.length>3 ? value.strUserName.substring(0,3) + "..": value.strUserName) | titlecase }}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input [matChipInputFor]="chipList" matInput placeholder="Select Employee" [(ngModel)]="strEmployee" name="employee" [formControl]="searchEmployee" [matAutocomplete]="employee" #empId>
+                    </mat-chip-list>
+                    <!-- <mat-autocomplete #branch="matAutocomplete">
+                        <mat-option *ngFor="let item of lstBranches" [value]="item.name" (onSelectionChange)="addEmployee(item)">
+                            {{ item.code+' - '+item.name }}
+                        </mat-option>
+                    </mat-autocomplete> -->
+                    <mat-autocomplete #employee="matAutocomplete">
+                    <mat-option *ngFor="let item of lstEmployeeData" [value]="item.strUserName" (onSelectionChange)="addEmployee(item)">
+                        {{item.strUserCode+'-'+item.strUserName }}
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <!-- employee chilplist ends -->
+
+            <!-- branch select -->
+            <div class="col-md-3 mt-2">
+                <ngx-select-dropdown [config]="branchConfig" [options]="lstBranches" 
+                [(ngModel)]="strBranch" (change)="branchChangedNgx($event)" ></ngx-select-dropdown>
+            </div>
+            <!-- branch select -->
+
+
+            <!-- <div class="col-md-3" *ngIf="blnDeptShow">
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Branch Name" [formControl]="searchBranch" [(ngModel)]="strBranchName" name="branchName" (ngModelChange)="branchChange()" class="matinput1" [matAutocomplete]="branch" #idBranch>
+                    <mat-autocomplete #branch="matAutocomplete">
+                        <mat-option *ngFor="let item of lstBranches" [value]="item.name" (onSelectionChange)="branchChanged(item)">
+                            {{item.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div> -->
+            <div class="col-md-3  mt-1" *ngIf="blnDeptShow">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Department Name </mat-label>
+                    <mat-select [(ngModel)]="intDepartmentId" [disableOptionCentering]="true" (ngModelChange)="departmentChanged()">
+                        <!-- <mat-option [value]="0">--Select --</mat-option> -->
+                        <mat-option *ngFor="let department of lstDepartment" [value]="department.pk_bint_id">
+                            {{department.vchr_code+'-'+department.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mt-1">
+                <mat-form-field>
+                    <mat-label>Select Designation </mat-label>
+                    <mat-select [(ngModel)]="intSelectedDesigId" [disableOptionCentering]="true">
+                        <mat-option *ngFor="let designation of lstDesignationData" [value]="designation.pk_bint_id">
+                            {{ designation.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2  mt-1">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Leave Type </mat-label>
+                    <mat-select [(ngModel)]="intLeaveTypeId" [disableOptionCentering]="true">
+                        <mat-option [value]="">Select Leave Type</mat-option>
+                        <mat-option *ngFor="let leave of lstLeaveTypes" [value]="leave.pk_bint_id">
+                            {{leave.vchr_name | uppercase}}
+                        </mat-option>
+                        <mat-option [value]="0">COMP OFF</mat-option>
+                        <mat-option [value]="-1">ON DUTY</mat-option>
+                        <mat-option [value]="-2">WEEK OFF</mat-option>
+
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 mt-3 mb-2">
+                <div class="pretty p-icon p-round p-jelly mr-4">
+                        <input type="radio" [value]='0' name="icon" [(ngModel)]="intType" />
+                        <div class="state p-warning">
+                            <i class="icon mdi mdi-check"></i>
+                            <label>All</label>
+                        </div>
+                </div>
+
+                <div class="pretty p-icon p-round p-jelly mr-4">
+                    <input type="radio" [value]='1' name="icon" [(ngModel)]="intType" />
+                    <div class="state p-warning">
+                        <i class="icon mdi mdi-check"></i>
+                        <label>Pending</label>
+                    </div>
+                </div>
+                <div class="pretty p-icon p-round p-jelly mr-4">
+                    <input type="radio" [value]='2' name="icon" [(ngModel)]="intType" />
+                    <div class="state p-warning">
+                        <i class="icon mdi mdi-check"></i>
+                        <label>Approved</label>
+                    </div>
+                </div>
+                <div class="pretty p-icon p-round p-jelly">
+                    <input type="radio" [value]='3' name="icon" [(ngModel)]="intType" />
+                    <div class="state p-warning">
+                        <i class="icon mdi mdi-check"></i>
+                        <label>Rejected</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt-2">
+                <button type="submit" class="btn save_btn" (click)="getDetails()" style="margin-right: 10px;">Search</button>
+
+                <button class="btn cancel_btn " (click)="reset()">Reset</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 mt-2" *ngIf="lstLeaveData.length!=0">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+            </div>
+            <div class="col-md-2 mt-2" *ngIf="lstLeaveData.length!=0">
+                <button (click)="generateExcel()" type="button" class="export"  style="margin-top: 17px;"><i class="fas fa-download"></i>&nbsp;Export</button>
+            </div>
+            <div class="col-md-12 example-container mat-elevation-z8" [ngStyle]="{'display' : lstLeaveData.length > 0 ? 'block' : 'none'}">
+                <mat-table [dataSource]="dataSource"   matSort id="style1">
+                    <ng-container matColumnDef="str_emp_code" sticky>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='str_emp_code' class="minwidth" style="background: #ffe9e4;"> Code </mat-header-cell>
+                        <mat-cell *matCellDef="let row" class="minwidth">{{row.str_emp_code }} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="str_emp_name" sticky>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='str_emp_name' class="minwidth" style="background: #ffe9e4;"> Name </mat-header-cell>
+                        <mat-cell *matCellDef="let row" class="minwidth">{{row.str_emp_name}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="str_emp_degn">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='str_emp_degn' class="minwidth" > Designation </mat-header-cell>
+                        <mat-cell *matCellDef="let row" class="minwidth">{{row.str_emp_degn}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="str_emp_branch">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='str_emp_branch' class="minwidth"> Branch </mat-header-cell>
+                        <mat-cell *matCellDef="let row" class="minwidth">{{row.str_emp_branch}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="dat_from">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='dat_from' class="minwidthsticky"> Date </mat-header-cell>
+                        <mat-cell *matCellDef="let row" class="minwidthsticky">
+                            <div *ngIf="row.dat_to">{{row.dat_from}} - {{row.dat_to}} </div>
+                            <div *ngIf="!row.dat_to">{{row.dat_from}}</div>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="str_leave_type">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='str_leave_type' class="minwidthsticky"> Type </mat-header-cell>
+                        <mat-cell *matCellDef="let row" class="minwidthsticky">{{row.str_leave_type}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="str_hier_degn">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='str_hier_degn' class="minwidth" style="background: #ffe9e4;"> Authorizing Designation </mat-header-cell>
+                        <mat-cell *matCellDef="let row" class="minwidth">{{row.str_hier_degn}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="str_hier_name" >
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='str_hier_name' class="minwidth" style="background: #ffe9e4;"> Authorizing Person </mat-header-cell>
+                        <mat-cell *matCellDef="let row" class="minwidth">{{row.str_hier_name}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="dat_approved">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='dat_approved' class="minwidthsticky" style="background: #ffe9e4;"> Date of Approval </mat-header-cell>
+                        <mat-cell *matCellDef="let row" class="minwidthsticky">{{row.dat_approved}} 
+                             <!-- <div *ngIf="row.str_status=='Approved'">{{row.dat_approved}} </div>
+                             <div *ngIf="row.str_status!='Approved'"> ---- </div> -->
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="str_status" >
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='str_status' class="minwidthsticky" style="background: #ffe9e4;"> Status </mat-header-cell>
+                        <mat-cell *matCellDef="let row" class="minwidthsticky">{{row.str_status}} </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                </mat-table>
+                <!-- <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div *ngIf="lstLeaveData.length==0" style="text-align: center">
+
+    <img src="assets/images/nodata-found.png">
+
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

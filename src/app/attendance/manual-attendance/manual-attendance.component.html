@@ -1,0 +1,71 @@
+<div class="card">
+        <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                            <h4 class="formhead"><i class="mdi mdi-timetable"></i>&nbsp;Manual Attendance</h4>
+                    </div>
+                </div>
+                <div class="row mt-3">
+    
+                            <!-- <div class="col-md-4">
+                            
+                                <mat-form-field>
+                                <input matInput placeholder="Shift Code *" [(ngModel)]="strShiftCode" value="" name="code">
+                                </mat-form-field>
+                            </div>       -->
+
+    
+                                <div class="col-md-3 mt-1" >
+                                        <mat-form-field class="example-full-width">
+                                            <input [formControl]="searchEmployee" required matInput placeholder="Select Employee" [(ngModel)]="strEmployee" name="employee" class="matinput1" [matAutocomplete]="employee" (ngModelChange)="employeeChange()" #idemployee>
+                                            <mat-autocomplete #employee="matAutocomplete">
+                                                <mat-option *ngFor="let item of lstEmployeeData" [value]="item.strUserCode" (onSelectionChange)="employeeChanged(item)">
+                                                    {{item.strUserCode +'-'+item.strUserName }}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                    </div>
+                                <div class="col-md-3 mt-1">
+                                        <mat-form-field class="example-full-width">
+                                                <input (click)="picker1.open()" matInput required readonly [matDatepicker]="picker1" placeholder="Date of Attendance" [(ngModel)]="datOfAttendance" #datofattendance>
+                                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                        <mat-form-field>
+                                            <!-- <label>Punch In Time</label> -->
+                                                <!-- <input matInput [owlDateTimeTrigger]="dt5" [(ngModel)]="timePunchStart" [owlDateTime]="dt5">
+                                                <owl-date-time  #dt5></owl-date-time> -->
+                                                <input type="time" matInput placeholder="Punch In Time *" [(ngModel)]="timePunchStart" value="" name="timePunchStart" >
+                                        </mat-form-field>
+                                </div>
+                              
+                                <div class="col-md-3">
+                                        <mat-form-field>
+                                            <!-- <label>Punch Out Time</label> -->
+                                                <!-- <input matInput [owlDateTimeTrigger]="dt4" [(ngModel)]="timePunchEnd" [owlDateTime]="dt4">
+                                                <owl-date-time  #dt4></owl-date-time> -->
+                                                <input type="time" matInput placeholder="Punch Out Time*" [(ngModel)]="timePunchEnd" value="" name="punchEndTime" >
+                                        </mat-form-field>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Reason" required [(ngModel)]="strReason" value="" name="strReason">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                           <div class="col-md-3 mt-2">
+                                <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="saveAttendance()">Save</button>
+                                <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+                            </div>
+                    </div>
+                    
+        </div>
+    </div>
+    
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>
+    

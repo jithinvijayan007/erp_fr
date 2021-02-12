@@ -1,0 +1,80 @@
+ 
+  .example-container {
+    width: 100%;
+    overflow: auto;
+  }
+  
+  mat-table {
+    width:100%;
+    max-height: 548px;
+    overflow-y: auto;
+  }
+  
+  mat-cell.mat-column-action {
+    width: 200px;
+    padding-left: 8px;
+    padding-right: 0;
+  }
+  mat-header-cell.mat-column-action {
+    width: 200px;
+    padding-left: 8px;
+    padding-right: 0;
+  }
+  mat-header-cell.mat-column-name,  mat-cell.mat-column-name {
+    padding-left: 8px;
+  }
+  mat-header-cell.mat-column-desig,  mat-cell.mat-column-desig {
+    padding-left: 8px;
+  }
+  .mat-table-sticky:first-child {
+    /* border-right: 1px solid #e0e0e0; */
+  }
+ 
+  .mat-table-sticky:last-child {
+    /* border-left: 1px solid #e0e0e0; */
+  }
+  .minwidth{
+      min-width: 18%;
+  }
+  .minwidthsticky{
+    min-width: 14%;
+}
+
+p::first-letter{
+    text-transform: capitalize;
+}
+p{
+    margin: 0;
+}
+mat-cell.mat-column-name, mat-cell.mat-column-desig,mat-cell.mat-column-branch, mat-cell.mat-column-approveby, mat-cell.mat-column-brand, mat-cell.mat-column-vchr_remarks,mat-cell.mat-column-approvebyname {
+    text-transform: lowercase;
+  }
+::ng-deep mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  
+  /* Track */
+  #style1::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  #style1::-webkit-scrollbar-thumb {
+    background: #c1c1c1; 
+  }
+  
+  /* Handle on hover */
+  #style1::-webkit-scrollbar-thumb:hover {
+    background: #c1c1c1; 
+  }
+  .export{
+    background: #389472;
+    border: none;
+    color: white;
+    padding: 2px 9px 2px 9px;
+    border-radius: 3px;
+}

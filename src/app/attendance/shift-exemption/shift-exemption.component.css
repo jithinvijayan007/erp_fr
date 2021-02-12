@@ -1,0 +1,30 @@
+table{
+    max-height: 65vh;
+    overflow: auto;
+    width: 100%
+}
+.table thead th {
+     border-bottom:0;
+    position: sticky;
+    top: 0;
+    background: #feddd4;
+    color: black;
+    font-size: 15px;
+    font-weight: 600;
+    vertical-align: middle;
+    /* width: 100% */
+}
+.table-bordered th, .table-bordered td {
+    border: 1px solid #e6e6e6;
+    color: black;
+    width: 100%
+
+}
+/* .table th, .table td {
+    width: 100%;
+    border-top: 0;
+} */
+.table tbody + tbody {
+    border-top: 0;
+    width: 100%
+}

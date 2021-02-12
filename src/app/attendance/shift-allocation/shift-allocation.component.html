@@ -1,0 +1,58 @@
+<div class="card">
+    <div class="card-body">
+            <div class="row">
+                    <div class="col-md-12">
+                            <h4 class="formhead"><i class="mdi mdi-sitemap"></i>&nbsp;Shift Allocation</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-form-field class="example-full-width">
+                            <input (click)="picker1.open()"  matInput required readonly [matDatepicker]="picker1" placeholder="Select From Date" [(ngModel)]="datShiftFrom" #shiftFromDate>
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <mat-form-field class="example-full-width">
+                            <input (click)="picker2.open()"  matInput required readonly [matDatepicker]="picker2" placeholder="Select To Date" [(ngModel)]="datShiftTo" #shiftToDate>
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                
+                    <div class="col-md-3" >
+                        <mat-form-field>
+                            <mat-label>Select Shift *</mat-label>
+                            <mat-select [(ngModel)]="intShiftId" (ngModelChange)="shiftChange($event)" [disableOptionCentering]="true">
+                                <mat-option *ngFor="let shift of lstShiftData" (click)="shiftChanged(shift)" [value]="shift.pk_bint_id">
+                                    {{ shift.vchr_name | uppercase}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                
+
+                <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-label>Select Employees *</mat-label>
+                            <mat-select [(ngModel)]="lstSelectedEmployees" multiple [disableOptionCentering]="true">
+                                <mat-option *ngFor="let emp of lstEmployeeData"  [value]="emp.fk_employee__user_ptr_id">
+                                    {{ emp.fullname | uppercase}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                </div>
+            </div>
+                <div class="row">
+                        <div class="col-md-3 mt-2">
+                             <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="saveShiftAllocated()">Save</button>
+                             <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+                         </div>
+                 </div>
+
+
+    </div>
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

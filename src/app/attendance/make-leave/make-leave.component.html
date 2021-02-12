@@ -1,0 +1,110 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <h4 class="col-md-12 formhead"><i class="fas fa-users"></i>&nbsp;Attendance Sheet</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mt-1">
+                <mat-form-field>
+                    <mat-label>Select Month & Year *</mat-label>
+                    <mat-select [(ngModel)]="intMonthYear" [disableOptionCentering]="true" >
+                        <mat-option *ngFor="let month of lstMonthYear" [value]="month.value">{{month.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>    
+            <div class="col-md-3 mt-1">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Department Name *</mat-label>
+                    <mat-select [(ngModel)]="intDepartmentId" [disableOptionCentering]="true" (ngModelChange)="departmentChanged()">
+                        <mat-option *ngFor="let department of lstDepartment" [value]="department.pk_bint_id">
+                            {{department.vchr_code+'-'+department.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mt-1">
+                <mat-form-field>
+                    <mat-label>Select Designation </mat-label>
+                    <mat-select [(ngModel)]="intSelectedDesignationData" [disableOptionCentering]="true">
+                        <mat-option *ngFor="let designation of lstDesignationData" [value]="designation.pk_bint_id">
+                            {{ designation.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mt-1">
+                <mat-form-field>
+                    <mat-label>Select Branch</mat-label>
+                    <mat-select [(ngModel)]="intSelectedBranchData" [disableOptionCentering]="true">
+                        <mat-option *ngFor="let branch of lstBranchData" [value]="branch.pk_bint_id">
+                            {{ branch.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            
+           
+      
+            <div class="col-md-12 mt-1" >
+                <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="getEmployeeData()">Search</button>
+                <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+            </div>
+        </div>
+        <div class="row" *ngIf="lstDates.length>0 && lstAttendanceData.length>0">
+            <div class="col-md-12 scrollbar" >
+                <table class="table table-responsive table-bordered mt-2">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" style="left:0;min-width: 130px;vertical-align: middle; position: sticky;z-index: 999;top: 0;background: #ffddd4;">Code</th>
+                            <th rowspan="2" style="min-width: 130px;left:130px;min-width: 190px;vertical-align: middle; position: sticky;top: 0;z-index: 999;background: #ffddd4;">Name</th>
+                            <th *ngFor="let item of lstDates;let i = index" style="text-align: center">
+                                <div *ngIf="i==0 || i == (lstDates.length-1)" style="font-size: 13px;width:100%;">{{item}}</div>
+                                <div *ngIf="i!=0 && i != (lstDates.length-1)" style="font-size: 13px;width:100%;">{{item | slice:-2}}</div>
+                            </th>
+                        </tr>
+
+                    </thead>
+                    <tbody *ngFor="let empData of lstAttendanceData;let k = index">
+                        <tr>
+                            <td style="font-size: 13px;position: sticky;left:0px;background: #fff2ef;padding:10px !important;z-index: 1;">{{ empData.strEMPCode}}</td>
+                            <td style="font-size: 13px;position: sticky;left:130px;min-width: 190px;background: #fff2ef;padding:10px !important;z-index: 1;">{{ empData.strEMPName}}</td>
+                            <td *ngFor="let item of lstDates;let i = index" style="text-align: center;width: 20px !important;">
+                              <i title="{{empData[item]['strStatus']}}" style="color: #4CAF50;width: 20px !important;" *ngIf="empData[item]['strType']=='Present'" class="fas fa-check"></i>
+                              <i title="{{empData[item]['strStatus']}}" style="color: #fb5c5c;width: 20px !important;" *ngIf="empData[item]['strType']=='Absent' && empData[item]['intType']==0" (click)="lstAttendanceData[k][item]['intType']=1;makeLOP(i,k,1)" class="fas fa-times"></i>
+                              <!-- <i title="{{empData[item]['strStatus']}}" *ngIf="empData[item]['strStatus']!='Absent' && empData[item]['strStatus']!='Present'" class="fas fa-user-times" style="color:#c7c7c7;"></i> -->
+                              <i title="{{empData[item]['strStatus']}}" *ngIf="empData[item]['strType']=='Half Day'" class="mdi mdi-watch-export" style="color:#6bf1b9;"></i>
+                              <i title="{{empData[item]['strStatus']}}" *ngIf="empData[item]['strType']=='Resigned'" class="fa fa-user-times" style="color:#fd0909;"></i>
+                              <i title="{{empData[item]['strStatus']}}" *ngIf="empData[item]['strType']=='Full Day'" class="mdi mdi-export" style="color:#03fb18;"></i>
+                              <i title="{{empData[item]['strStatus']}}" *ngIf="empData[item]['strType']=='Compo Off'" class="mdi mdi-account-multiple-minus" style="color:#fa7676;"></i>
+                              <i title="{{empData[item]['strStatus']}}" *ngIf="empData[item]['strType']=='On Duty'" class="mdi mdi-run-fast" style="color:#f755f7;"></i>
+                              <i title="{{empData[item]['strStatus']}}" *ngIf="empData[item]['strType']=='Holiday'" class="mdi mdi-beach" style="color:#8c9dff;"></i>
+                              <i title="{{empData[item]['strStatus']}}" *ngIf="empData[item]['strType']=='Week Off'" class="fa fa-bed" style="color:#f18ff1;"></i>
+                              <i title="{{empData[item]['strStatus']}}" *ngIf="empData[item]['strType']=='Lop'" class="mdi mdi-export" style="color:#fa7676;"></i>
+
+
+                              <!-- <span style="color: blue;width: 20px !important;" *ngIf="empData[item]['strStatus']=='Absent' && empData[item]['intType']==1" (click)="lstAttendanceData[k][item]['intType']=2;makeLOP(i,k,2)"> LOP</span> -->
+                              <!-- <span style="color: blue;width: 20px !important;" *ngIf="empData[item]['strStatus']=='Absent' && empData[item]['intType']==2" (click)="lstAttendanceData[k][item]['intType']=0;makeLOP(i,k,0)"> PRESENT</span> -->
+                              <i title="LOP" *ngIf="empData[item]['strStatus']=='Absent' && empData[item]['intType']==1" (click)="lstAttendanceData[k][item]['intType']=2;makeLOP(i,k,2)" class="fas fa-user" style="color:red;"></i>
+                              <i title="Present" *ngIf="empData[item]['strStatus']=='Absent' && empData[item]['intType']==2 && !empData['blnWeekOff']" (click)="lstAttendanceData[k][item]['intType']=0;makeLOP(i,k,0)" class="fas fa-user" style="color:green;"></i>
+                              <i title="Present" *ngIf="empData[item]['strStatus']=='Absent' && empData[item]['intType']==2 && empData['blnWeekOff']" (click)="lstAttendanceData[k][item]['intType']=3;makeLOP(i,k,3)" class="fas fa-user" style="color:green;"></i>
+                              <i title="Week Off" *ngIf="empData[item]['strStatus']=='Absent' && empData[item]['intType']==3 && empData['blnWeekOff']" (click)="lstAttendanceData[k][item]['intType']=0;makeLOP(i,k,0)" class="fas fa-user" style="color:#f18ff1;"></i>
+                                    
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div  class="row col-md-12 mt-1 pull-right"  *ngIf="lstDates.length>0 && lstAttendanceData.length>0" >
+            <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="saveData()">Save</button>
+            <button type="submit" class="btn cancel_btn mt-2" (click)="clearData()">Clear</button>
+        </div>
+        <div *ngIf="lstDates.length!=0 && lstAttendanceData.length==0" style="text-align: center">
+
+            <img src="assets/images/nodata-found.png">
+        
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

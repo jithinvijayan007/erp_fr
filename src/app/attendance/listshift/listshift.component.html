@@ -1,0 +1,69 @@
+<div class="card">
+        <div class="card-body">
+           <div class="row">
+             <div class="col-md-12">
+                 <h4 class="formhead"><i class="fa fa-list"></i> &nbsp;Shift List</h4>
+             </div>
+             <div class="col-md-12 mt-3" [ngStyle]="{'display' : lstShiftData.length > 0 ? 'block' : 'none'}">
+                 <mat-table [dataSource]="dataSource" matSort>
+                   <!-- code Column -->
+                   <ng-container matColumnDef="vchr_code">
+                     <mat-header-cell *matHeaderCellDef mat-sort-header='vchr_code'> Code </mat-header-cell>
+                     <mat-cell *matCellDef="let row">{{row.vchr_code}} </mat-cell>
+                   </ng-container>
+                   <!-- shift name Column -->
+                   <ng-container matColumnDef="vchr_name">
+                         <mat-header-cell *matHeaderCellDef mat-sort-header='vchr_name'> Name </mat-header-cell>
+                         <mat-cell *matCellDef="let row">{{row.vchr_name}} </mat-cell>
+                   </ng-container>
+                   <!-- shift from Column -->
+                   <ng-container matColumnDef="time_shift_from">
+                     <mat-header-cell *matHeaderCellDef mat-sort-header='time_shift_from'> From </mat-header-cell>
+                     <mat-cell *matCellDef="let row"> {{row.time_shift_from}}</mat-cell>
+                   </ng-container>
+                   <!-- shift to Column -->
+                   <ng-container matColumnDef="time_shift_to">
+                     <mat-header-cell *matHeaderCellDef mat-sort-header='time_shift_to'> To </mat-header-cell>
+                     <mat-cell *matCellDef="let row"> {{row.time_shift_to }} </mat-cell>
+                   </ng-container>
+                   <!-- scheduled hrs Column -->
+                   <ng-container matColumnDef="time_shed_hrs">
+                     <mat-header-cell *matHeaderCellDef mat-sort-header='time_shed_hrs'> Scheduled Hrs </mat-header-cell>
+                     <mat-cell *matCellDef="let row">
+                       <span *ngIf="row.time_shed_hrs"> {{row.time_shed_hrs}}</span>
+                       <span *ngIf="!row.time_shed_hrs"> ------</span>
+                     </mat-cell>
+                   </ng-container>
+                   <!-- action Column -->
+                   <ng-container matColumnDef="action">
+                     <mat-header-cell *matHeaderCellDef style="display: flex;justify-content: center;"> Action </mat-header-cell>
+                     <mat-cell *matCellDef="let row" style="display: flex;justify-content: center;" >
+                       <button *ngIf="blnView" (click)="viewShift(row.pk_bint_id)" class="view mr-3">
+                         <i class="ti-eye icon" aria-hidden="true"></i>
+                       </button>
+                       <button *ngIf="blnEdit" (click)="editShift(row.pk_bint_id)" class="edit mr-3">
+                         <i class="ti-pencil icon" aria-hidden="true"></i>
+                       </button>
+                       <button *ngIf="blnDelete" (click)="deleteShift(row.pk_bint_id)" class="delete">
+                         <i class="ti-trash icon" aria-hidden="true"></i>
+                       </button>
+                     </mat-cell>
+                   </ng-container>
+                   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                   <mat-row *matRowDef="let row; columns: displayedColumns;">
+                   </mat-row>
+                 </mat-table>
+                 <!-- <mat-paginator  [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+                 <mat-paginator  [ngStyle]="{'display' : lstShiftData.length > 0 ? 'block' : 'none'}" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+               </div>
+           </div>
+        </div>
+     </div>
+     
+     
+     <div *ngIf="lstShiftData.length==0" style="text-align: center">
+     
+          <img src="assets/images/nodata-found.png">
+     
+     </div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

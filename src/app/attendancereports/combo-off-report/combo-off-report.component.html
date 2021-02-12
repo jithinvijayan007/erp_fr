@@ -1,0 +1,198 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="formhead"><i class="mdi mdi-format-list-bulleted"></i>&nbsp;Leave report</h4>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Select Type</mat-label>
+                    <mat-select [(ngModel)]="strType" [disableOptionCentering]="true">
+                        <mat-option value="compo">Compo off</mat-option>
+                        <mat-option value="marriage">Marriage Leave</mat-option>
+                        <mat-option value="casual">Casual Leave</mat-option>
+                        <mat-option value="parental">Parental Leave</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Select Branches</mat-label>
+                    <mat-select multiple  [(ngModel)]="lstselectedBranchId" [disableOptionCentering]="true">
+                        <mat-option *ngFor="let branch of lstBranches" [value]="branch.pk_bint_id">
+                            {{branch.vchr_code+'-'+branch.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Select Departments</mat-label>
+                    <mat-select multiple  [(ngModel)]="lstSelectedDepartmentId" (ngModelChange)="getDesigData()" [disableOptionCentering]="true">
+                        <mat-option *ngFor="let department of lstDepartment" [value]="department.pk_bint_id">
+                            {{department.vchr_code+'-'+department.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 mt-1">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Select Designations</mat-label>
+                    <mat-select multiple  [(ngModel)]="lstSelectedDesigId" [disableOptionCentering]="true">
+                        <mat-option *ngFor="let desig of lstDesignationData" [value]="desig.pk_bint_id">
+                            {{desig.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field>
+                    <mat-chip-list #chipList>
+                        <mat-chip  *ngFor="let value of lstEmpSelected" title={{value.strUserName}} (removed)="removeEmployee(value)">
+                            ​{{ (value.strUserName.length>3 ? value.strUserName.substring(0,3) + "..": value.strUserName) | titlecase }}
+                            <mat-icon matChipRemove><i class="fas fa-times"></i></mat-icon>
+                        </mat-chip>
+                        <input [matChipInputFor]="chipList" matInput placeholder="Select Employee" [(ngModel)]="strEmployee" name="employee" [formControl]="searchEmployee" [matAutocomplete]="employee" #empId>
+                    </mat-chip-list>
+                    <mat-autocomplete #employee="matAutocomplete">
+                        <mat-option *ngFor="let item of lstEmployeeData" [value]="item.strUserName" (onSelectionChange)="addEmployee(item)">
+                            {{item.strUserCode+'-'+item.strUserName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2 mt-1">
+                <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="getComboOffList()">Search</button>                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12"  [ngStyle]="{'display' : lstComoData.length > 0 ? 'block' : 'none'}">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+            </div>
+        </div>
+            
+            
+        <div class="col-md-12 mt-3" [ngStyle]="{'display' : lstComoData.length > 0 ? 'block' : 'none'}">
+            <mat-table [dataSource]="dataSource" matSort>
+                <!-- code Column -->
+                <ng-container matColumnDef="code">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header='strEMPCode'> Code </mat-header-cell>
+                  <mat-cell *matCellDef="let row">{{row.strEMPCode}} </mat-cell>
+                </ng-container>
+                <!-- Name Column -->
+                <ng-container matColumnDef="strEMPName">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header='strEmpName'> Name </mat-header-cell>
+                      <mat-cell *matCellDef="let row">{{row.strEmpName}} </mat-cell>
+                </ng-container>
+                <!-- Loan Amount Column -->
+                <ng-container matColumnDef="intProcced">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header='intProcced' style="justify-content: center;">  Taken</mat-header-cell>
+                    <mat-cell *matCellDef="let row" style="justify-content: center;">{{row.intProcced}}
+                        <button *ngIf="row.intProcced" class="calender" (click)="openModal(modalTimeDetails,row['intEmpId'],'proceed')"><i  class="mdi mdi-calendar-multiple-check"  title=""></i></button>
+                    </mat-cell>
+                </ng-container>
+                <!-- Applied Column -->
+                <ng-container matColumnDef="intApplied">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header='intApplied' style="justify-content: center;"> Approval Pending</mat-header-cell>
+                      <mat-cell *matCellDef="let row" style="justify-content: center;">
+                        <div *ngIf="row.intApplied">{{row.intApplied}}
+                                <button *ngIf="row.intApplied" class="calender" (click)="openModal(modalTimeDetails,row['intEmpId'],'applied')"><i  class="mdi mdi-calendar-multiple-check"  title=""></i></button>
+                             </div>
+                         <div  *ngIf="!row.intApplied">---- </div> </mat-cell>
+                </ng-container>
+                <!-- Current Month Column -->
+                <ng-container matColumnDef="intApproved">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header='intApproved' style="justify-content: center;">Available</mat-header-cell>
+                      <mat-cell *matCellDef="let row" style="justify-content: center;">{{row.intApproved}} &nbsp;
+                          <button *ngIf="row.intApproved && strType=='compo'" class="calender" (click)="openModal(modalTimeDetails,row['intEmpId'],'approved')"><i  class="mdi mdi-calendar-multiple-check"  title=""></i></button>
+                       </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="icon">
+                    <mat-header-cell *matHeaderCellDef style="max-width: 6%;">Action </mat-header-cell>
+                    <mat-cell *matCellDef="let row" style="max-width: 6%;display:flex;justify-content:center;">
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;">
+                </mat-row>
+              </mat-table>
+              <!-- <mat-paginator  [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+              <mat-paginator  [ngStyle]="{'display' : lstComoData.length > 0 ? 'block' : 'none'}" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="lstComoData.length==0" style="text-align: center">
+      
+        <img src="assets/images/nodata-found.png">
+      
+      </div>
+
+      <ng-template #modalTimeDetails let-modal>
+          <div class="modal-header">
+              <p class="text-center mt-3" style="font-size: 15px;margin: 0 !important;width: 100%;">Available Dates</p>
+          </div>
+          <div id="modalTimeDetails" class="modal-body">
+      
+              <!-- <p *ngIf="strShiftStart!='--'"><span style="font-weight:500">Shift : </span> {{strShiftStart}} &nbsp; To &nbsp; {{strShiftEnd}} </p> -->
+      
+              <!-- <p style="color: cadetblue;font-weight: 500;text-align: center;">{{strEmpStatus}}</p> -->
+              <div class="scroll" id="style-5">
+                  <table class="table table-bordered" id="modal">
+                      <thead class="thead1">
+                          <!-- <th *ngIf="strType=='compo'" class="th1">Date</th>
+                          <th *ngIf="strStatusType=='approved' && strType=='compo'" class="th1">Expiry Date</th>
+                          <th *ngIf="strStatusType=='proceed' && strType=='compo'" class="th1">Leave Date</th>
+                          <th *ngIf="(strType=='compo' && strStatusType=='applied')" class="th1">Applied Date</th>
+
+                          
+                          <th *ngIf="(strStatusType=='proceed' || strStatusType=='applied') && (strType=='casual' || strType=='marriage')" class="th1">Date From</th>
+                          <th *ngIf="(strStatusType=='proceed' || strStatusType=='applied') && (strType=='casual' || strType=='marriage')" class="th1">Date To</th>
+                          <th *ngIf="strStatusType=='proceed' && (strType=='compo' || strType=='casual')" class="th1">Mode</th>
+                          <th *ngIf="strType=='compo'" class="th1">Reason</th>
+                          <th class="th1">Status</th> -->
+
+                          <th *ngIf="strType=='compo'" class="th1">Worked Date </th>
+                          <th *ngIf="strStatusType=='approved' && strType=='compo'" class="th1"> Expiry Date </th>
+                          <th *ngIf="strStatusType=='proceed' && strType=='compo'" class="th1">Leave Date </th>
+                          <th *ngIf="(strType=='compo' && strStatusType=='applied') || ( strType=='marriage' && strStatusType=='applied')" class="th1">Applied Date </th>
+                          <th *ngIf="(strStatusType=='proceed' || strStatusType=='applied') && (strType=='casual' || strType=='marriage' || strType =='parental')" class="th1"> From Date</th>
+                          <th *ngIf="(strStatusType=='proceed' || strStatusType=='applied') && (strType=='casual' || strType=='marriage' || strType =='parental')" class="th1"> To Date</th>
+                          <th *ngIf="strType=='compo' || strType == 'casual'" class="th1">Mode </th>
+                          <th *ngIf="strType=='compo'" class="th1"> Reason</th>
+                          <th class="th1">Status </th>
+
+
+                      </thead>
+                      <tbody class="tbody1">
+                          <tr *ngFor="let item of lstAvailabeDate">
+                            <!-- <td> {{item.timStart}}</td> -->
+                            <td *ngIf="(strType=='compo' )" class="td1" > {{item.dateWorked}}</td>
+    
+                            <td *ngIf="strStatusType=='approved' && strType=='compo'" class="td1"> {{item.datExpiry}}</td>
+                            <td *ngIf="strStatusType=='proceed' && strType=='compo'" class="td1"> {{item.datLeave}}</td>
+                            <td *ngIf="(strType=='compo' && strStatusType=='applied') || ( strType=='marriage' && strStatusType=='applied')" class="td1"> {{item.dateApplied}}</td>
+
+                            <td *ngIf="(strStatusType=='proceed' || strStatusType=='applied') && (strType=='casual' || strType=='marriage' || strType=='parental')" class="td1"> {{item.dateFrom}}</td>
+                            <td *ngIf="(strStatusType=='proceed' || strStatusType=='applied') && (strType=='casual' || strType=='marriage' || strType=='parental')" class="td1"> {{item.dateTo}}</td>
+                            <td *ngIf="strType=='compo' || strType == 'casual'" class="td1"> {{item.chrLaveMode}}</td>
+                            <td *ngIf="strType=='compo'" class="td1"> {{item.strReason}}</td>
+                            <td class="td1"> {{item.strStatus}}</td>
+
+                            <!-- <td class="td1" *ngIf="item.strOutLocation=='--'" > {{item.timEnd}}</td> -->
+    
+                        </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+          <div class="modal-footer">
+                <button class="btn save_btn mt-3" (click)="closeModal()">Close</button>
+          </div>
+      </ng-template>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

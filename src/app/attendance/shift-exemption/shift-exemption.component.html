@@ -1,0 +1,138 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <h4 class="col-lg-12 formhead"><i class="mdi mdi-cash-multiple"></i>&nbsp;Add Free Shift</h4>
+        </div>
+        <div class="row">
+                        
+            <div class="col-md-3">
+                <mat-form-field class="example-full-width">
+                    <input (click)="pickerFrom.open()" [min]="minDate" matInput required readonly [matDatepicker]="pickerFrom" placeholder="From Date" [(ngModel)]="datFrom">
+                    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFrom></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="example-full-width">
+                    <input (click)="pickerTo.open()" matInput [min]="datFrom" required readonly [matDatepicker]="pickerTo" placeholder="To Date" [(ngModel)]="datTo">
+                    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerTo></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mt-1">
+                <ngx-select-dropdown [config]="typeConfig" [options]="lstType" 
+                [(ngModel)]="strType" (change)="typeChanged($event)" #strDropType></ngx-select-dropdown>
+            </div>
+            <div class="col-md-3 mt-1" *ngIf="strType=='Individual' || strType=='Branch'">
+                <ngx-select-dropdown [config]="branchConfig" [options]="lstBranch" [multiple]="true"
+                [(ngModel)]="strBranch" (change)="branchChanged($event)"></ngx-select-dropdown>
+            </div>
+            <div class="col-md-3 mt-1" *ngIf="strType=='Individual' || strType=='Department'">
+                <ngx-select-dropdown [config]="deptConfig" [options]="lstDepartment" [multiple]="true" 
+                [(ngModel)]="strDept" (change)="deptChanged($event)" ></ngx-select-dropdown>
+            </div>
+            <div class="col-md-3 mt-1" *ngIf="strType=='Individual' || strType=='Designation'">
+                <ngx-select-dropdown [config]="desigConfig" [options]="lstDesignationData" [multiple]="true"
+                [(ngModel)]="strDesig" (change)="desigChanged($event)"></ngx-select-dropdown>
+            </div>
+            <div class=" col-md-6" *ngIf="strType=='Individual'">
+                <mat-form-field>
+                    <mat-chip-list #chipList>
+                        <mat-chip  *ngFor="let value of lstEmpSelected" title={{value.strUserName}} (removed)="removeEmployee(value)">
+                            ​{{ (value.strUserName.length>3 ? value.strUserName.substring(0,3) + "..": value.strUserName) | titlecase }}
+                            <mat-icon matChipRemove><i class="fas fa-times"></i></mat-icon>
+                        </mat-chip>
+                        <input [matChipInputFor]="chipList" matInput placeholder="Select Employee" [(ngModel)]="strEmployee" name="employee" [formControl]="searchEmployee" [matAutocomplete]="employee" #empId>
+                    </mat-chip-list>
+                    <mat-autocomplete #employee="matAutocomplete">
+                    <mat-option *ngFor="let item of lstEmployeeData" [value]="item.strUserName" (onSelectionChange)="addEmployee(item)">
+                        {{item.strUserCode+'-'+item.strUserName }}
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+
+        </div>
+        <!-- <div class="row"  *ngIf="lstFilteredEmp.length>0 ">
+                <div class="col-md-4 mt-3 mb-2">
+                    <mat-label>Exclude For:</mat-label>
+                    <div class="pretty p-icon p-round p-jelly mr-4">
+                        <input type="radio" [value]="'date'" name="icon" [(ngModel)]="strExcludeType" />
+                        <div class="state p-warning">
+                            <i class="icon mdi mdi-check"></i>
+                            <label>Date</label>
+                        </div>
+                    </div>
+                    <div class="pretty p-icon p-round p-jelly mr-4">
+                        <input type="radio" [value]="'day'" name="icon" [(ngModel)]="strExcludeType" />
+                        <div class="state p-warning">
+                            <i class="icon mdi mdi-check"></i>
+                            <label>Day</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div *ngIf="strExcludeType=='date'" class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                        <input (click)="pickerDate.open()" matInput [min]="minDate" required readonly [matDatepicker]="pickerDate" placeholder="To Date" [(ngModel)]="datExclude">
+                        <mat-datepicker-toggle matSuffix [for]="pickerDate"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3 mt-1" *ngIf="strExcludeType=='day'">
+                    <ngx-select-dropdown [config]="excludeDayConfig" [options]="lstDays" [multiple]="true" 
+                    [(ngModel)]="lstExDay" (change)="exDayChanged($event)" ></ngx-select-dropdown>
+                </div>
+                <div class="col-md-3 mt-1"  *ngIf="strExcludeType=='day'">
+                    <ngx-select-dropdown [config]="excludeDayWeekConfig" [options]="lstDayWeek" [multiple]="true" 
+                    [(ngModel)]="lstExWeek1" (change)="exWeekChanged($event)" ></ngx-select-dropdown>
+                </div>
+
+            </div> -->
+        <div class="row">
+            <div class="col-md-3">
+                <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="getEmployees()">Search</button>
+                <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+            </div>
+        </div>
+       
+
+        <div class="row" *ngIf="lstFilteredEmp.length>0 ">
+            <div class="col-md-12 scrollbar" >
+                <table class="table table-responsive table-bordered mt-2">
+                    <thead>
+                        <tr>
+                            <th  style="vertical-align: middle; position: sticky;z-index: 4;top: 0;background: #ffddd4; width: 11% !important" >Code</th>
+                            <th  style="vertical-align: middle; position: sticky;top: 0;z-index: 4;background: #ffddd4; width: 25%">Name</th>
+                            <th style="width:20%;z-index: 4; width: 20%">Branch</th>
+                            <th style="width:20%;z-index: 4;width: 20%">Department</th>
+                            <th style="width:20%;z-index: 4;width: 20%">Designation</th>
+                            <th style="text-align: center;width: 5% !important;z-index: 1;">
+                            <mat-checkbox [(ngModel)] = "blnAllChecked" (change) = "allBoxChecked($event)" [checked]="isAllChecked()"></mat-checkbox>
+
+                            </th>
+                        </tr>
+
+                    </thead>
+                    <tbody *ngFor="let empData of lstFilteredEmp;let k = index">
+                        <tr>
+                            <td style="font-size: 13px;position: sticky;background: #fff2ef;padding:10px !important;z-index: 1;  width: 10%!important">{{ empData.strEMPCode }}</td>
+                            <td style="font-size: 13px;position: sticky;background: #fff2ef;padding:10px !important;z-index: 1; width: 25%">{{ empData.strUserName | uppercase}}</td>
+                            <td style="font-size: 13px;position: sticky;z-index: 1;  width: 20%">{{empData.strBranchName}}</td>
+                            <td style="font-size: 13px;position: sticky;z-index: 1; width: 20% ">{{empData.strDptName}}</td>
+                            <td style="font-size: 13px;position: sticky;z-index: 1; width: 20%">{{empData.strDesgName}}</td>
+                            <td style="text-align: center;width: 5% !important;">
+                                <mat-checkbox [(ngModel)] = "empData.blnChecked" [disabled]="lstExemptedEmpId.includes(empData.intId)" (ngModelChange) = "checkBoxChange($event,empData.intId)"></mat-checkbox>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class=" row col-md-12 mt-1" >
+            <button type="submit" *ngIf="lstFilteredEmp.length>0 " class="btn save_btn  mt-2 mr-3" (click)="setData()">Save</button>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

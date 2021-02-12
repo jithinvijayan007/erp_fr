@@ -1,0 +1,14 @@
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #f29623 !important;
+}
+.pretty .state label {
+    /* color: black; */
+    font-size: 15px;
+}
+.pretty.p-switch.p-fill input:checked ~ .state.p-success:before {
+    /* background-color: black !important; */
+}
+.pretty.p-switch input:checked ~ .state.p-success:before {
+    /* border-color: black !important; */
+}

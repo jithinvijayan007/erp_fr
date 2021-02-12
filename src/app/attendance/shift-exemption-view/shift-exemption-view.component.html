@@ -1,0 +1,126 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 ">
+                <h4 class="formhead"><i class="fa fa-eye"></i>&nbsp;Shift Exemption Details
+                    <span style="float: right;color: #32b3b5;font-size: 14px;font-weight: 400;cursor: pointer;" (click)="BackClicked()"><i class="mdi mdi-redo-variant"></i>&nbsp; Back</span>
+                </h4>
+            </div>
+        </div>
+        <div style="background-color: #f290211c; height: 125px;">
+            <!-- <div class="row"  style=""> -->
+                <!-- <div class="col-md-12"> -->
+                    <!-- <div class="row">
+                            <div class="col-md-12">
+                                <p style="margin-left: 10px;" class="name mt-2 mb-1"> Exemption by :{{dctExmptDetails.strGroupMode }} ({{dctExmptDetails.datStart}} -{{dctExmptDetails.datEnd}} ) </p>
+                            </div>
+                        </div> -->
+
+
+
+                        <div class="row" >
+                            <div class="col-md-7" style="margin-top: 10px;margin-bottom: 5px;">
+                                <span *ngIf="dctExmptDetails.hasOwnProperty('strGroupMode')" style="display: inline-flex;"><label style="margin-left: 10px;">Exemption by :</label>&nbsp;<span><p>{{dctExmptDetails.strGroupMode}}</p></span></span><br>
+                                <span *ngIf="dctExmptDetails.hasOwnProperty('datStart')" style="display: inline-flex;"><label style="margin-left: 10px;">Start Date:</label>&nbsp;<span><p>{{ dctExmptDetails.datStart }}</p></span></span><br>
+                                <span *ngIf="dctExmptDetails.hasOwnProperty('datEnd')" style="display: inline-flex;"><label style="margin-left: 10px;">End Date:</label>&nbsp;<span><p>{{ dctExmptDetails.datEnd }}</p></span></span> 
+                            </div>
+                            <ng-container *ngIf="dctExmptDetails.hasOwnProperty('lstTypeName')">
+                            <div class="col-md-5" style="margin-top: 10px;margin-bottom: 10px;" *ngIf="dctExmptDetails['lstTypeName'].length>0" >
+                                        <div class="box1">
+                                                <ul  *ngFor="let item of dctExmptDetails['lstTypeName']" class="pull-right">
+                                                            <li> <p>{{item['strName']}} </p></li>
+                        
+                                                </ul>
+                                            </div>
+                                            
+                                            
+                                            
+                                        </div>
+                            </ng-container>
+                                                    <!-- <div *ngIf="dctExmptDetails['lstTypeName'].length>0" class="col-md-12" style="margin-left: 10px;border: solid;border-color: #e2e2e2d4;border-width: 2px;" class="row" >
+                            <span *ngFor="let item of dctExmptDetails['lstTypeName']">
+                                <div style="border: solid 1px;border-radius: 4px;margin-bottom: 6px;margin-top: 6px;margin-left: 6px;margin-right: 2px;">{{item['strName']}}</div>
+                            </span>
+
+                        </div> -->
+                            <!-- <div class="col-md-6" style="display: inline-flex;">
+                                <label>Department:</label>&nbsp;<p>{{dctExmptDetails.strDepartment}}</p>
+                            </div> -->
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-md-6" style="display: inline-flex;">
+                                <label style="margin-left: 10px;">Start Date: </label>&nbsp;<p>{{dctExmptDetails.intStartMonth +'-'+dctExmptDetails.intStartYear}}</p>
+                            </div>
+                            <div class="col-md-6" style="display: inline-flex;">
+                                <label>Total Amount:</label>&nbsp;<p>{{dctExmptDetails.intTotalAmount}}</p>
+                            </div>
+                        </div> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+            </div>
+
+            
+            <div [ngStyle]="{'display' : lstExmptEmpData.length > 0 ? 'block' : 'none'}" style="margin-top: 15px" class="col-md-12">
+                <mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="code">
+                        <mat-header-cell *matHeaderCellDef  mat-sort-header='strEmpCode' >Code</mat-header-cell>
+                            ​<mat-cell *matCellDef="let row">{{row.strEmpCode}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="name">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header='strName'> Name</mat-header-cell>
+                            <mat-cell  *matCellDef="let row">{{row.strName }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="branch">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header='strBranch'> Branch</mat-header-cell>
+                            <mat-cell  *matCellDef="let row">{{row.strBranch }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="department">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header='strDepartment'> Department </mat-header-cell>
+                            <mat-cell  *matCellDef="let row">{{row.strDepartment }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="action"> 
+                            <mat-header-cell *matHeaderCellDef style="padding-left: 50px;padding-right: 0px;" > Action </mat-header-cell>
+                            <mat-cell style="padding-left: 50px;padding-right: 0px" *matCellDef="let row">
+                                <button title="Delete" (click)="deleteDetails(row)" class="delete">
+                                    <i class="ti-trash icon"></i>
+                                </button>
+                                <!-- <button (click)="opnEditModal(row,modalEditDate)" title="Edit" class="edit mr-2" >
+                                    <i class="ti-pencil text-info icon" aria-hidden="true"></i>
+                                </button> -->
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </mat-row>
+                    </mat-table>
+                    <mat-paginator [ngStyle]="{'display' : lstExmptEmpData.length > 0 ? 'block' : 'none'}"  [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+                </div>
+        </div>
+    </div>
+<ng-template #modalEditDate let-modal>
+    <div class="modal-header">
+        <p class="text-center mt-3" style="font-size: 15px;margin: 0 !important;">Edit Exemption Details - {{strPopupName}}</p>
+    </div>
+    <div id="modalEditDate" class="modal-body">
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Date From</mat-label>
+                    <input (click)="pickerFrom.open()" [min]="minDate" matInput required readonly [matDatepicker]="pickerFrom" placeholder="From Date" [(ngModel)]="datPoupupFrom">
+                    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFrom></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="example-full-width">
+                    <input (click)="pickerTo.open()" matInput [min]="datFrom" required readonly [matDatepicker]="pickerTo" placeholder="To Date" [(ngModel)]="datPopupTo">
+                    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerTo></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <button title="Approve" (click)=amountEdit() class="btn  save_btn mt-3 mr-3">Confirm Amount</button>
+        <button class="btn cancel_btn mt-3" (click)=closeEditModal()>Cancel</button>
+    </div>
+</ng-template>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>
