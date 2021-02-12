@@ -1,6 +1,6 @@
 import * as io from 'socket.io-client';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import {Injectable} from '@angular/core';
 import { URLSearchParams, RequestOptions } from '@angular/http';
 import {Http, Headers, Response} from '@angular/http';

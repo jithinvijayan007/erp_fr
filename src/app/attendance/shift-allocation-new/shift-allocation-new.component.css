@@ -1,0 +1,79 @@
+.input1 {
+    width: 35px;
+    text-align: center;
+}
+
+.input1:focus {
+    border: 1px solid #0C0;
+    box-shadow: 1px 1px 4px #DADADA;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: orange;
+    border-radius: 10px;
+    background-image: linear-gradient(to right, #868f96 0%, #596164 100%);
+}
+
+.table th,
+.table td {
+    padding: 3px !important;
+    vertical-align: middle;
+    padding-top: 1rem !important;
+}
+
+.table-bordered {
+    border: none;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #efe5e5;
+}
+
+.table thead th,
+.table th {
+    font-weight: 600;
+}
+
+td:first-child {
+    background: #ffe9e3;
+    color: #2d475d;
+}
+
+.pretty .state label {
+    color: black !important;
+}
+
+.pretty {
+    margin-right: 0px !important;
+}
+
+.table thead {
+    background: #ff85672e;
+}
+
+.table-responsive {
+    max-height: 400px;
+    
+}
+.table tbody + tbody {
+    border-top: none !important;
+}
+
+
+.cdk-overlay-connected-position-bounding-box .cdk-overlay-pane .mat-select-panel {
+    min-width: 90% !important;
+    margin-left: 15px;
+    margin-top: 22px;
+}

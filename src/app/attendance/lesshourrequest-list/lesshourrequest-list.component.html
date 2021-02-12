@@ -1,0 +1,85 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="formhead"><i class="fa fa-list"></i> &nbsp; Request List</h4>
+            </div>
+
+            <div class="col-md-12 mt-3" [ngStyle]="{'display' : lstData.length > 0 ? 'block' : 'none'}">
+                <mat-table [dataSource]="dataSource" matSort>
+
+                    <ng-container matColumnDef="emp_code">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='emp_code'>Employee code </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.fk_employee__vchr_employee_code }} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="emp_name">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='emp_name'>Employee name </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.vchr_emp_name }} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="vchr_name">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='vchr_name'>Requested Hours </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.fk_late_hours_policy__vchr_name }} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="dat_requested">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='dat_requested'>Requested Date </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.dat_requested }} </mat-cell>
+                    </ng-container>
+                    <!-- action Column -->
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef style="display: flex;justify-content: center;"> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let row" style="display: flex;justify-content: center;">
+                            <button (click)="approveRequest(row.pk_bint_id)" class="edit mr-2">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                      </button>
+                            <button (click)="deletePopupModal(deletePopup,row.pk_bint_id)" class="delete">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                </mat-table>
+                <!-- <mat-paginator  [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+                <mat-paginator [ngStyle]="{'display' : lstData.length > 0 ? 'block' : 'none'}" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<ng-template #deletePopup let-modal>
+    <div class="modal-header" style="background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
+        color: white;">
+        <p class="text-center mt-3" style="font-size: 15px;margin: 0 !important;">Reason For Rejection</p>
+    </div>
+    <div class="text-center mt-2" style="display: none">
+        <mat-checkbox name="same"></mat-checkbox>
+    </div>
+    <div id="deletePopup" class="modal-body">
+        <div class="row">
+
+            <div class="col-md-12">
+                <mat-form-field>
+                    <input matInput placeholder="Reason" [(ngModel)]="strRemarks">
+                </mat-form-field>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="text-align:center;">
+                <button title="Delete" (click)=rejectRequest() class="btn  save_btn mt-3 mr-3">Reject</button>
+                <button class="btn cancel_btn mt-3" (click)="hideModal()">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+<div *ngIf="lstData.length==0" style="text-align: center">
+
+    <img src="assets/images/nodata-found.png">
+
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

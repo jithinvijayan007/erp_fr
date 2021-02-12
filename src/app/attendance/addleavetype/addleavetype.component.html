@@ -1,0 +1,65 @@
+<div class="card">
+    <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                        <h4 class="formhead" *ngIf="leaveAction=='save'" ><i class="mdi mdi-export"></i>&nbsp;Add Leave Type</h4>
+                        <h4 class="formhead" *ngIf="leaveAction=='edit'"><i class="mdi mdi-export"></i>&nbsp;Edit Leave Type</h4>
+
+                </div>
+            </div>
+            <div class="row mt-3">
+                   
+                            <div class="col-md-2">
+
+                                    <mat-form-field>
+                                    <input matInput required placeholder="Leave Type" [(ngModel)]="strLeaveName" value="" name="name">
+                                    </mat-form-field>
+                            </div>
+                            <!-- <div class="col-md-2">
+                
+                                <mat-form-field>
+                                <input matInput placeholder="Code" [(ngModel)]="strLeaveCode" value="" name="code">
+                                </mat-form-field>
+                            </div> -->
+                            <div class="col-md-2 mt-1">
+                                <mat-form-field >
+                                    <mat-label>Year *</mat-label>
+                                    <mat-select [(ngModel)]="intYear" [disableOptionCentering]="true">
+                                        <mat-option *ngFor="let year of lstYears" [value]="year.value">
+                                            {{ year.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-2">
+                
+                                <mat-form-field>
+                                <input matInput type="number" required placeholder="No of Leaves per Year" [(ngModel)]="intLeavePYear" value="" name="noOfleavePerYear">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-2">
+                
+                                <mat-form-field>
+                                <input matInput type="number" required placeholder="Max no of leaves / month" [(ngModel)]="intMaxLeavePMonth" value="" name="noOfleavePerMonth">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-4">
+                
+                                <mat-form-field>
+                                <input matInput  placeholder="Remarks" [(ngModel)]="strRemarks" value="" name="remarks">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                       <div class="col-md-3">
+                            <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="saveLeaveType()">Save</button>
+                            <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+                        </div>
+                    </div>
+                
+    </div>
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

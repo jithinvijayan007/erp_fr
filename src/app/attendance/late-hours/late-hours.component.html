@@ -1,0 +1,110 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                    <h4 *ngIf="!blnShowFilter" class="formhead"><i class="mdi mdi-format-list-bulleted"></i>&nbsp;Regularize Less Hours</h4>
+                    <h4 *ngIf="blnShowFilter" class="formhead"><i class="mdi mdi-format-list-bulleted"></i>&nbsp;Less Hours to LOP</h4>
+
+            </div>
+        </div>
+        <div class="row">
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Select Month & Year *</mat-label>
+                        <mat-select [(ngModel)]="intMonthYear" [disableOptionCentering]="true" >
+                        <mat-option *ngFor="let month of lstMonthYear" [value]="month.value">{{month.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3" *ngIf="blnShowFilter">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Department Name *</mat-label>
+                        <mat-select [(ngModel)]="intDepartmentId" [disableOptionCentering]="true">
+                            <mat-option *ngFor="let department of lstDepartment" [value]="department.pk_bint_id">
+                                {{department.vchr_code+'-'+department.vchr_name | uppercase}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3 mt-2" >
+                    <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="getLateHrsList()">Search</button>
+                    <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+                </div>
+        </div>
+        <!-- <div class="col-md-12"  [ngStyle]="{'display' : lstLateHrDetails.length > 0 ? 'block' : 'none'}">
+          <mat-form-field>
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+          </mat-form-field>
+      </div> -->
+        <!-- <div class="row">
+                <div class="col-md-3 mt-2">
+                     <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="getPayDetailList()">Search</button>
+                     <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+                 </div>
+         </div> -->
+         <div class="col-md-12 mt-3" [ngStyle]="{'display' : lstLateHrDetails.length > 0 ? 'block' : 'none'}">
+          <mat-table [dataSource]="dataSource" matSort>
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="blnRegularize">
+              <mat-header-cell *matHeaderCellDef > Regularised</mat-header-cell>
+              <mat-cell *matCellDef="let row"><input type="checkbox" [(ngModel)]="row.blnRegularize" [value]="row.blnRegularize" (ngModelChange)="toBeRegularizedChanged($event,row)"> </mat-cell>
+            </ng-container>
+            <!-- Regularize Column -->
+            <!-- <ng-container matColumnDef="Regularize">
+              <mat-header-cell *matHeaderCellDef > Status </mat-header-cell>
+              <mat-cell *matCellDef="let row"><div style="color: green;" *ngIf="row.blnRegularize">Regularised</div><div style="color: #f14a4a;" *ngIf="!row.blnRegularize"> Not Regularised</div></mat-cell>
+            </ng-container> -->
+            <!--Employee Name Column -->
+            <ng-container matColumnDef="strEmpName">
+                  <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                  <mat-cell *matCellDef="let row">{{row.strFullName}} </mat-cell>
+            </ng-container>
+             <!--Employee Name Column -->
+             <ng-container matColumnDef="strEmpDesig">
+              <mat-header-cell *matHeaderCellDef> Designation </mat-header-cell>
+              <mat-cell *matCellDef="let row">{{row.strDesig}} </mat-cell>
+        </ng-container>
+            <!-- Duration Column -->
+            <ng-container matColumnDef="durLessHour">
+              <mat-header-cell *matHeaderCellDef> Duration </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <div>{{row.durLessHour}}</div>
+                </mat-cell>
+            </ng-container>
+              <!-- action Column -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef style="display: flex;justify-content: center;"> Action </mat-header-cell>
+              <mat-cell *matCellDef="let row" style="display: flex;justify-content: center;" >
+                <!-- <button *ngIf="blnView" (click)="viewShift(row.pk_bint_id)" class="view mr-3">
+                  <i class="ti-eye icon" aria-hidden="true"></i>
+                </button> -->
+                <button *ngIf="blnEdit" (click)="editPayDetail(row)" class="edit mr-3">
+                  <i class="ti-pencil icon" aria-hidden="true"></i>
+                </button>
+                <button *ngIf="blnDelete" (click)="deletePayDetail(row)" class="delete">
+                  <i class="ti-trash icon" aria-hidden="true"></i>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+          <!-- <mat-paginator  [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+          <mat-paginator  [ngStyle]="{'display' : lstLateHrDetails.length > 0 ? 'block' : 'none'}" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <button *ngIf="blnShowFilter && lstLateHrDetails.length!=0" type="submit" class="btn save_btn  mt-2 mr-3" (click)="regularizeData()">Regularize</button>
+            <!-- <button *ngIf="blnShowFilter && lstLateHrDetails.length!=0" type="submit" class="btn save_btn  mt-2 mr-3" (click)="convertAsLOP()">Convert as LOP</button> -->
+          </div>
+        </div>
+    </div>
+  </div>
+  <div *ngIf="lstLateHrDetails.length==0" style="text-align: center">
+  
+    <img src="assets/images/nodata-found.png">
+  
+  </div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

@@ -1,0 +1,68 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="formhead"><i class="fa fa-list"></i> &nbsp; Requested List</h4>
+            </div>
+
+            <div class="col-md-12 mt-3" [ngStyle]="{'display' : lstData.length > 0 ? 'block' : 'none'}">
+                <mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="vchr_name">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='vchr_name'>Requested Hours </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.fk_late_hours_policy__vchr_name }} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="str_status">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='str_status'>Status </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.str_status }} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="dat_requested">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='dat_requested'>Date </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.dat_requested }} </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                </mat-table>
+                <!-- <mat-paginator  [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+                <mat-paginator [ngStyle]="{'display' : lstData.length > 0 ? 'block' : 'none'}" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<ng-template #deletePopup let-modal>
+    <div class="modal-header" style="background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
+        color: white;">
+        <p class="text-center mt-3" style="font-size: 15px;margin: 0 !important;">Reason For Rejection</p>
+    </div>
+    <div class="text-center mt-2" style="display: none">
+        <mat-checkbox name="same"></mat-checkbox>
+    </div>
+    <div id="deletePopup" class="modal-body">
+        <div class="row">
+
+            <div class="col-md-12">
+                <mat-form-field>
+                    <input matInput placeholder="Reason" [(ngModel)]="strRemarks">
+                </mat-form-field>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="text-align:center;">
+                <button title="Delete" (click)=rejectRequest() class="btn  save_btn mt-3 mr-3">Reject</button>
+                <button class="btn cancel_btn mt-3" (click)="hideModal()">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+<div *ngIf="lstData.length==0" style="text-align: center">
+
+    <img src="assets/images/nodata-found.png">
+
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

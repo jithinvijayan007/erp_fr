@@ -1,0 +1,90 @@
+<div class="card">
+        <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                            <h4 class="formhead"><i class="fa fa-eye"></i>&nbsp;View Shift
+                                <span style="float: right;color: #32b3b5;font-size: 14px;font-weight: 400;" (click)="clearFields()"><i class="mdi mdi-redo-variant"></i>&nbsp; Back</span>
+                            </h4>
+                    </div>
+                </div>
+                    <div *ngIf="lstShiftDetails.length>0" class="row mt-3">
+                            <div class="col-md-4">
+                              <label>Shift Name </label>
+                              <p> {{lstShiftDetails[0].vchr_name}}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Shift Code </label>
+                                <p> {{lstShiftDetails[0].vchr_code}}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Night Shift:</label>
+                                <p >{{lstShiftDetails[0].bln_night }}</p>
+                                <!-- <p >False</p>                                -->
+                            </div>
+                    
+                            <div class="col-md-4">
+                                <label>Shift Start Time</label>
+                                <p class="">{{lstShiftDetails[0].time_shift_from}}</p>
+                            </div>
+                            <!-- {{lstShiftDetails['userlist'][0].last_name.charAt(0).toUpperCase()+lstShiftDetails['userlist'][0].last_name.slice(1).toLowerCase()}} -->
+                            <div class="col-md-4">
+                                <label>Shift End Time</label>
+                                <p class="">{{lstShiftDetails[0].time_shift_to}}</p>
+                            </div>
+                            <div class="col-md-4">
+                                    <label>Break Start Time</label>
+                                    <p *ngIf="lstShiftDetails[0].time_break_from" class="">{{lstShiftDetails[0].time_break_from}}</p>
+                                    <p *ngIf="!lstShiftDetails[0].time_break_from" class="">------</p>
+
+                            </div>
+                        
+                            <div class="col-md-4">
+                                <label>Break End Time</label>
+                                <p *ngIf="lstShiftDetails[0].time_break_to" class="">{{lstShiftDetails[0].time_break_to}}</p>
+                                <p *ngIf="!lstShiftDetails[0].time_break_to" class="">------</p>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label>Scheduled Hours</label>
+                                <p *ngIf="lstShiftDetails[0].time_shed_hrs" class="">{{lstShiftDetails[0].time_shed_hrs}}</p>
+                                <p *ngIf="!lstShiftDetails[0].time_shed_hrs" class="">------</p>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label>Break Hours</label>
+                                <p *ngIf="lstShiftDetails[0].time_break_hrs" class="">{{lstShiftDetails[0].time_break_hrs}}</p>
+                                <p *ngIf="!lstShiftDetails[0].time_break_hrs" class="">------</p>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Full Day Hours</label>
+                                <p *ngIf="lstShiftDetails[0].time_full_day" class="">{{lstShiftDetails[0].time_full_day}}</p>
+                                <p *ngIf="!lstShiftDetails[0].time_full_day" class="">------</p>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label>Half Day Hours</label>
+                                <p *ngIf="lstShiftDetails[0].time_half_day" class="">{{lstShiftDetails[0].time_half_day}}</p>
+                                <p *ngIf="!lstShiftDetails[0].time_half_day" class="">------</p>
+                            </div>
+                            <div class="col-md-4" >
+                                <label>Allowances</label>
+                                <p class="" *ngIf="blnAllowance">{{lstShiftDetails[0].dbl_allowance_amt}}</p>
+                                <p class="" *ngIf="!blnAllowance">------</p>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label>Remarks</label>
+                                <p *ngIf="lstShiftDetails[0].vchr_remark" class="">{{lstShiftDetails[0].vchr_remark}}</p>
+                                <p *ngIf="!lstShiftDetails[0].vchr_remark" class="">------</p>
+
+                            </div>                    
+                    </div>
+                    
+         </div>
+    </div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>
+        
+    
+    
+    
+    

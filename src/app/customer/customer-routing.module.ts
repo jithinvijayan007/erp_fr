@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../auth.guard';
 import { EditcustomerComponent } from './editcustomer/editcustomer.component';
 import { HistoryComponent } from './history/history.component';
+import { PageCustomerlistComponent } from './customerlist/customerlist.component';
+import { ViewcustomerComponent } from './viewcustomer/viewcustomer.component';
+
 
 const routes: Routes = [
   {
@@ -38,6 +41,27 @@ const routes: Routes = [
         }
       },
     ]
+  },
+  {
+    path: '',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'customerlist',
+        component: PageCustomerlistComponent,
+        data: {
+          title: 'Customer List',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: ' Customer List' }
+          ]
+        }
+      },
+    ]
+  },
+  {
+    path: 'viewcustomer',
+    component:ViewcustomerComponent,
   },
 ];
 

@@ -1,0 +1,211 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="formhead"><i class="mdi mdi-account-check"></i>&nbsp;Day wise Attendance</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+
+            <div class="col-md-3">
+                <mat-form-field class="example-full-width">
+                    <input (click)="picker1.open()" matInput required readonly [matDatepicker]="picker1" placeholder="Select Date" [(ngModel)]="datAttendance" #shiftFromDate>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mt-1" *ngIf="dctFilters.blnDept">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Department Name </mat-label>
+                    <mat-select multiple [(ngModel)]="lstSelectedDept" [disableOptionCentering]="true">
+                        <mat-option *ngFor="let department of lstDepartment" (onSelectionChange)="departmentChanged($event)" [value]="department.pk_bint_id">
+                            {{department.vchr_code+'-'+department.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+            <div class="col-md-3  mt-1" *ngIf="dctFilters.blnPhysicalLoc">
+                <mat-form-field>
+                    <mat-label>Physical Location</mat-label>
+                    <mat-select [(ngModel)]="lstSelectedLocation" multiple>
+                        <mat-option *ngFor="let loc of lstLocationData" (onSelectionChange)="locationChanged($event)" [value]="loc.pk_bint_id">
+                            {{ loc.vchr_physical_loc | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mt-1" *ngIf="dctFilters.blnBrand">
+                <mat-form-field>
+                    <mat-label>Select Brand</mat-label>
+                    <mat-select [(ngModel)]="intSelectedBrandId" [disableOptionCentering]="true">
+                        <mat-option *ngFor="let brand of lstBrandData" (onSelectionChange)="brandChanged($event)" [value]="brand.pk_bint_id">
+                            {{ brand.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6" *ngIf="dctFilters.blnEmployee">
+                <mat-form-field class="example-full-width">
+                    <input [formControl]="searchEmployee" matInput placeholder="Select Employee" [(ngModel)]="strEmployee" name="employee" class="matinput1" [matAutocomplete]="employee" (ngModelChange)="employeeChange()" #idemployee>
+                    <mat-autocomplete #employee="matAutocomplete">
+                        <mat-option *ngFor="let item of lstEmployeeData" [value]="item.strUserName" (onSelectionChange)="employeeChanged(item)">
+                            {{item.strUserCode+'-'+item.strUserName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+          
+            <div class="col-md-3 mt-1" *ngIf ="dctFilters.blnBranch">
+                <mat-form-field>
+                    <mat-label>Select Branch</mat-label>
+                    <mat-select [(ngModel)]="lstSelectedBranchData" [disableOptionCentering]="true" multiple>
+                        <mat-option *ngFor="let branch of lstBranchData" (onSelectionChange)="branchChanged($event)" [value]="branch.pk_bint_id">
+                            {{ branch.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mt-1" *ngIf ="dctFilters.blnDesignation">
+                <mat-form-field>
+                    <mat-label>Select Designation</mat-label>
+                    <mat-select [(ngModel)]="lstSelectedDesignationData" [disableOptionCentering]="true" multiple>
+                        <mat-option *ngFor="let designation of lstDesignationData" (onSelectionChange)="designationChanged($event)" [value]="designation.pk_bint_id">
+                            {{ designation.vchr_name | uppercase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- <div class="col-md-3 mt-1">
+                <mat-form-field>
+                    <mat-label>Select Attendance Status</mat-label>
+                    <mat-select multiple [(ngModel)]="lstAttendanceStatus"  [disableOptionCentering]="true" >
+                        <mat-option #allSelected value="all" (click)="toggleAllSelection()">All </mat-option>
+                        <mat-option *ngFor="let stat of lsStatusData" [value]="stat.value" (click)="tosslePerOne()">{{stat.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> -->
+            <div class="col-md-3 mt-1">
+                <mat-form-field>
+                    <mat-label>Select Attendance Status</mat-label>
+                    <mat-select multiple [(ngModel)]="lstAttendanceStatus"  #select  [disableOptionCentering]="true" >
+                        <div class="select-all">
+                            <mat-checkbox [(ngModel)]="blnAllSelected" (change)="toggleAllSelection()">Select All</mat-checkbox>
+                        </div>
+                        <mat-option *ngFor="let stat of lsStatusData" value="{{stat.value}}" (click)="optionClick()">{{stat.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3 mt-3">
+                <button type="submit" class="btn save_btn" (click)="showData()">Search</button>
+            </div>
+           
+           
+        </div>
+        <div class="row" *ngIf="lstData.length>0">
+                <div class="col-md-10" >
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <button (click)="generateExcel()" class="export"  style="margin-top: 17px;"><i class="fas fa-download"></i>&nbsp;Export</button>
+                    </div>
+    </div>
+        <div class="row mt-3" [ngStyle]="{'display' : lstData.length > 0 ? 'block' : 'none'}">
+            <div class="scroll" *ngIf="lstData.length!=0" id="style-5">
+                <div class="col-md-12">
+                    <mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="code">
+                            <mat-header-cell *matHeaderCellDef style="max-width: 14%;"> Code </mat-header-cell>
+                            <mat-cell [ngClass]="{'redrow': row.strDirection == 'IN' && !row.blnCurrDate}" *matCellDef="let row" style="max-width:14%;">{{row.strEMPCode}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="name">
+                            <mat-header-cell *matHeaderCellDef > Name </mat-header-cell>
+                            <mat-cell [ngClass]="{'redrow': row.strDirection == 'IN' && !row.blnCurrDate}" *matCellDef="let row">{{row.strEMPName}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="branch">
+                            <mat-header-cell *matHeaderCellDef > Branch </mat-header-cell>
+                            <mat-cell [ngClass]="{'redrow': row.strDirection == 'IN' && !row.blnCurrDate}" *matCellDef="let row">{{row.strBranchName | titlecase}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="in">
+                            <mat-header-cell *matHeaderCellDef style="max-width: 9%;"> In </mat-header-cell>
+                            <mat-cell [ngClass]="{'redrow': row.strDirection == 'IN' && !row.blnCurrDate}" matTooltip="{{row.strInLocation}}" [matTooltipDisabled]="row.strInLocation=='--'"  *matCellDef="let row"  [matTooltipPosition]="position.value" style="max-width: 9%;">{{row.timFirstPunch}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="out">
+                            <mat-header-cell *matHeaderCellDef style="max-width: 9%;"> Out </mat-header-cell>
+                            <mat-cell [ngClass]="{'redrow': row.strDirection == 'IN' && !row.blnCurrDate}" matTooltip="{{row.strOutLocation}}" [matTooltipDisabled]="row.strOutLocation=='--'" *matCellDef="let row"  [matTooltipPosition]="position.value" style="max-width: 9%;">{{row.timLastPunch}}</mat-cell>
+                        </ng-container>
+                        <!-- <ng-container matColumnDef="type">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header='strDirection'> Log Type </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.strDirection}}</mat-cell>
+                </ng-container> -->
+                        <ng-container matColumnDef="duration">
+                            <mat-header-cell *matHeaderCellDef style="max-width: 9%;"> Hours </mat-header-cell>
+                            <mat-cell [ngClass]="{'redrow': row.strDirection == 'IN' && !row.blnCurrDate}" *matCellDef="let row" style="max-width: 9%;"> {{row.strDuration }} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="strRemarks">
+                            <mat-header-cell *matHeaderCellDef style="max-width: 10%;"> Remarks </mat-header-cell>
+                            <mat-cell *matCellDef="let row" style="max-width: 10%;"> {{row.strRemarks }} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="icon">
+                            <mat-header-cell *matHeaderCellDef style="max-width: 6%;"> </mat-header-cell>
+                            <mat-cell *matCellDef="let row" style="max-width: 6%;display:flex;justify-content:center;">
+                                <button class="in" *ngIf="row['strDirection'] == 'IN'" (click)="openModal(modalTimeDetails,row['intLogId'])"><i  class="mdi mdi-walk"  title="IN"></i></button>
+                                <button class="out" *ngIf="row['strDirection'] == 'OUT'" (click)="openModal(modalTimeDetails,row['intLogId'])"><i  class="mdi mdi-walk"  title="OUT"></i></button>
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"[ngClass]="{'highlight': row.strDirection == '--'}" >
+                        </mat-row>
+                    </mat-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="lstData.length==0" style="text-align: center">
+
+    <img src="assets/images/nodata-found.png">
+
+</div>
+<ng-template #modalTimeDetails let-modal>
+    <div class="modal-header">
+        <p class="text-center mt-3" style="font-size: 15px;margin: 0 !important;width: 100%;">Log Time Details</p>
+    </div>
+    <div id="modalTimeDetails" class="modal-body">
+
+        <p *ngIf="strShiftStart!='--'"><span style="font-weight:500">Shift : </span> {{strShiftStart}} &nbsp; To &nbsp; {{strShiftEnd}} </p>
+
+        <p style="color: cadetblue;font-weight: 500;text-align: center;">{{strEmpStatus}}</p>
+        <div class="scroll" id="style-5">
+            <table class="table table-bordered" id="modal">
+                <thead class="thead1">
+                    <th class="th1">IN</th>
+                    <th class="th1">OUT</th>
+                </thead>
+                <tbody class="tbody1">
+                    <tr *ngFor="let item of lstTimeDetails">
+                        <td *ngIf="item.strInLocation!='--'" class="td1" title="{{item.strInLocation}}"> {{item.timStart}}</td>
+                        <td *ngIf="item.strInLocation=='--'" class="td1" > {{item.timStart}}</td>
+
+                        <td class="td1" *ngIf="item.strOutLocation!='--'" title="{{item.strOutLocation}}"> {{item.timEnd}}</td>
+                        <td class="td1" *ngIf="item.strOutLocation=='--'" > {{item.timEnd}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <tfoot>
+            <tr>
+                <td> <button class="btn save_btn mt-3" (click)="closeModal()" style="margin-left: 100px;">Close</button></td>
+            </tr>
+        </tfoot>
+
+    </div>
+</ng-template>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

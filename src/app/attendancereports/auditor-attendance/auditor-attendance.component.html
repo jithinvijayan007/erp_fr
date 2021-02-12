@@ -1,0 +1,71 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="formhead"><i class="mdi mdi-calendar-clock"></i>&nbsp;Auditors Attendance Report</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3 mt-1">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Month *</mat-label>
+                    <mat-select [(ngModel)]="intMonth" [disableOptionCentering]="true">
+                        <mat-option *ngFor="let month of lstMonths" [value]="month.value">
+                            {{ month.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mt-1">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Year *</mat-label>
+                    <mat-select [(ngModel)]="intYear" [disableOptionCentering]="true">
+                        <mat-option *ngFor="let year of lstYears" [value]="year.value">
+                            {{ year.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mt-2">
+                <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="showData()">Search</button>
+            </div>
+        </div>
+        <div class="row mt-3" [ngStyle]="{'display' : lstReportData.length > 0 ? 'block' : 'none'}">
+            <div class="scroll" id="style-5">
+                <div class="col-md-12">
+                    <mat-table [dataSource]="dataSource" matSort>
+                        <ng-container matColumnDef="EmpCode">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header='EmpCode'> Code </mat-header-cell>
+                            <mat-cell [ngClass]="{'redrow': 190 > row.DurActive || row.DurActive=='--' }" *matCellDef="let row">{{row.EmpCode}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="EmpName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header='EmpName'> Name </mat-header-cell>
+                            <mat-cell [ngClass]="{'redrow': 190 > row.DurActive || row.DurActive=='--' }" *matCellDef="let row">{{row.EmpName}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="DurActive">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header='DurActive'> No of Hours </mat-header-cell>
+                            <mat-cell [ngClass]="{'redrow': 190 > row.DurActive || row.DurActive=='--'  }"  *matCellDef="let row"> {{row.DurActive }} </mat-cell>
+                        </ng-container>
+                        <!-- <ng-container matColumnDef="icon">
+                            <mat-header-cell *matHeaderCellDef style="max-width: 80px;"> </mat-header-cell>
+                            <mat-cell *matCellDef="let row" style="max-width: 80px;display:flex;justify-content:center;">
+                                <button class="in" *ngIf="row['strDirection'] == 'IN'" (click)="openModal(modalTimeDetails,row['intLogId'])"><i  class="mdi mdi-walk blinking"  title="IN"></i></button>
+                                <button class="out" *ngIf="row['strDirection'] == 'OUT'" (click)="openModal(modalTimeDetails,row['intLogId'])"><i  class="mdi mdi-walk"  title="OUT"></i></button>
+                            </mat-cell>
+                        </ng-container> -->
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </mat-row>
+                    </mat-table>
+                    <mat-paginator [ngStyle]="{'display' : lstReportData.length > 0 ? 'block' : 'none'}" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="lstReportData.length==0" style="text-align: center">
+
+    <img src="assets/images/nodata-found.png">
+
+</div>    
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

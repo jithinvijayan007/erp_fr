@@ -1,0 +1,113 @@
+<div class="card">
+  <div class="card-body">
+          <div class="row">
+                  <div class="col-md-12">
+                          <h4 class="formhead"><i class="mdi mdi-sitemap"></i>&nbsp;Assign Leave</h4>
+                  </div>
+                  <div class="col-md-6 mt-3 mb-2" *ngIf="blnShow">
+                    <div class="pretty p-icon p-round p-jelly mr-4">
+                        <input type="radio" [value]='1' name="icon" [(ngModel)]="intType" (ngModelChange)="leaveTypeChanged()" />
+                        <div class="state p-warning">
+                            <i class="icon mdi mdi-check"></i>
+                            <label>Combo Off</label>
+                        </div>
+                    </div>
+                    <div class="pretty p-icon p-round p-jelly mr-4">
+                        <input type="radio" [value]='2' name="icon" [(ngModel)]="intType" (ngModelChange)="leaveTypeChanged()" />
+                        <div class="state p-warning">
+                            <i class="icon mdi mdi-check"></i>
+                            <label>Marriage Leave</label>
+                        </div>
+                    </div>
+                    <div class="pretty p-icon p-round p-jelly mr-4">
+                        <input type="radio" [value]='3' name="icon" [(ngModel)]="intType" (ngModelChange)="leaveTypeChanged()" />
+                        <div class="state p-warning">
+                            <i class="icon mdi mdi-check"></i>
+                            <label>Parental Leave</label>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+                    <!-- <div class="col-md-4"  *ngIf="intType==1">
+                            <mat-form-field>
+                                <mat-label>Select Employee *</mat-label>
+                                <mat-select [(ngModel)]="lstSelectedEmployees" multiple [disableOptionCentering]="true">
+                                    <mat-option *ngFor="let employee of lstEmployeeData" [value]="employee.user_ptr_id">
+                                        {{ employee.full_name | uppercase}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div> -->
+                    
+                <!-- <div class=" col-md-4" *ngIf="intType!=1"> -->
+                <div class=" col-md-4">
+                    <mat-form-field>
+                        <mat-chip-list #chipList>
+                            <mat-chip  *ngFor="let value of lstEmpSelected" title={{value.strUserName}} (removed)="removeEmployee(value)">
+                                ​{{ (value.strUserName.length>3 ? value.strUserName.substring(0,3) + "..": value.strUserName) | titlecase }}
+                                <mat-icon matChipRemove><i class="fas fa-times"></i></mat-icon>
+                            </mat-chip>
+                            <input [matChipInputFor]="chipList" matInput placeholder="Select Employee" [(ngModel)]="strEmployee" name="employee" [formControl]="searchEmployee" [matAutocomplete]="employee" #empId>
+                        </mat-chip-list>
+                        <mat-autocomplete #employee="matAutocomplete">
+                        <mat-option *ngFor="let item of lstEmployeeChip" [value]="item.strUserName" (onSelectionChange)="addEmployee(item)">
+                            {{item.strUserCode+'-'+item.strUserName }}
+                        </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+
+
+                  <div class="col-md-4" *ngIf="intType==1">
+                      <mat-form-field class="example-full-width">
+                          <input (click)="picker1.open()"  matInput required readonly [matDatepicker]="picker1" placeholder="Worked Date" [(ngModel)]="datStart" #startDate>
+                          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                          <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                  </div>
+                 
+              
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                      <input (click)="picker2.open()"  matInput required readonly [matDatepicker]="picker2" placeholder="Expiry Date" [(ngModel)]="datExpire" #expireDate>
+                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+              </div>
+              <div class="col-md-4 mt-3 mb-2" *ngIf="intType==1">
+                <div class="pretty p-icon p-round p-jelly mr-4">
+                    <input type="radio" value="full" name="icon1" [(ngModel)]="strCompoDayType" />
+                    <div class="state p-warning">
+                        <i class="icon mdi mdi-check"></i>
+                        <label>Full Day</label>
+                    </div>
+                </div>
+                <div class="pretty p-icon p-round p-jelly mr-4">
+                    <input type="radio" value="half" name="icon1" [(ngModel)]="strCompoDayType" />
+                    <div class="state p-warning">
+                        <i class="icon mdi mdi-check"></i>
+                        <label>Half Day</label>
+                    </div>
+                </div>
+
+            </div>
+              <div class="col-md-8">
+                <mat-form-field>
+                <input matInput  placeholder="Remarks *" [(ngModel)]="strRemarks" value="" name="remarks">
+                </mat-form-field>
+            </div>
+          
+              </div>  
+                 
+              <div class="row">
+                      <div class="col-md-3 mt-2">
+                           <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="saveComboOff()">Save</button>
+                           <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+                       </div>
+               </div>
+
+
+  </div>
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

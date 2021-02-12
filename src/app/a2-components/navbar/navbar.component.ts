@@ -1,3 +1,5 @@
+
+import {debounceTime,  filter } from 'rxjs/operators';
 import { Component,AfterViewInit, OnInit, Input,
   Output, EventEmitter, HostListener, ViewChild , ElementRef, OnChanges  } from '@angular/core';
 import { ServerService } from 'src/app/server.service';
@@ -9,10 +11,9 @@ import { TypeaheadService } from 'src/app/typeahead.service';
 import { FormControl, Validators} from '@angular/forms';
 // import {  } from '@angular/forms';
 // import { AmChartsService, AmChart } from '@amcharts/amcharts3-angular';
-import 'rxjs/add/operator/debounceTime';
+
 
 import { ChatService } from '../../chat.service';
-import { filter } from 'rxjs/operators';
 @Component({
   moduleId: module.id,
   selector: 'app-navbar',
@@ -553,8 +554,8 @@ export class NavbarComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
   getMobileTypehead() {
-    this.searchMobile.valueChanges
-      .debounceTime(400)
+    this.searchMobile.valueChanges.pipe(
+      debounceTime(400))
       .subscribe((strData: string) => {
 
         if (strData === undefined) {

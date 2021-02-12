@@ -944,6 +944,34 @@
                                         <input matInput type="number" placeholder="WWF No" [(ngModel)]="intWWFNumber" class="matinput1" name="wwfNumber" value="">
                                     </mat-form-field>
                                 </div>
+
+                                <div class="col-md-3 mt-1">
+                                       
+                                    <mat-form-field>
+                                        <mat-label>Select Functions</mat-label>
+                                        <mat-select [(ngModel)]="intSelectedProductId" [formControl]="form.controls['productName']"  multiple [disableOptionCentering]="true">
+                                            <mat-option *ngFor="let loc of lstProductData" [value]="loc.pk_bint_id">
+                                                {{ loc.vchr_name | uppercase}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                
+                                </div>
+                    
+                    
+                    
+                                <div class="col-md-3 mt-1">
+                                    <mat-form-field>
+                                        <mat-label>Select Subfunction</mat-label>
+                                        <mat-select [(ngModel)]="intSelectedBrandId" [formControl]="form.controls['brandName']" [disableOptionCentering]="true">
+                                            <mat-option *ngFor="let brand of lstBrandData" [value]="brand.pk_bint_id">
+                                                {{ brand.vchr_name | uppercase}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                
+                                
                 
                 
                 
@@ -962,6 +990,7 @@
                             </div> -->
                             <!-- <div class="row"> -->
                             </div>
+                            
                         <!-- address ends  -->
 
                         <div class="row mt-3">
@@ -1060,7 +1089,7 @@
                                 </mat-form-field>
                             </div> -->
 
-                            <div class="col-md-3 mt-1">
+                            <!-- <div class="col-md-3 mt-1">
                                        
                                 <mat-form-field>
                                     <mat-label>Select Functions</mat-label>
@@ -1084,7 +1113,7 @@
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                            </div>
+                            </div> -->
                         </div>
 
                 

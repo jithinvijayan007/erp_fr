@@ -4,7 +4,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef, ChangeDetecto
 
 // calender
 import {startOfDay, endOfDay, subDays, addDays, isSameDay, isSameMonth} from 'date-fns';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,

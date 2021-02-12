@@ -1,0 +1,84 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <h4 class="col-md-12 formhead"><i class="mdi mdi-file-excel"></i>&nbsp;Shift Report</h4>
+        </div>
+        <div class="row">
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                        <input (click)="picker1.open()" matInput required readonly [matDatepicker]="picker1" placeholder="From Date" [(ngModel)]="datFrom" #FromDate>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+    
+                <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                        <input (click)="picker1.open()" matInput required readonly [matDatepicker]="picker2" placeholder="To Date" [(ngModel)]="datTo" #ToDate>
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3 mt-1">
+                    <mat-form-field class="example-full-width">
+    
+                        <mat-select multiple placeholder="Branch Name" [(ngModel)]="lstSelectedBranch" [disableOptionCentering]="true" #idBranch>
+                            <mat-option *ngFor="let item of lstBranches" [value]="item.pk_bint_id">
+                                {{ item.vchr_name | uppercase}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+    
+                <div class="col-md-3 mt-1">
+                    <mat-form-field class="example-full-width">
+                        <mat-select multiple placeholder="Department Name" [(ngModel)]="lstSelectedDeptNames" [disableOptionCentering]="true" #idDepartment>
+                            <mat-option *ngFor="let item of lstDepartments" [value]="item.pk_bint_id">
+                                {{ item.vchr_name | uppercase}}
+                            </mat-option>
+                        </mat-select>
+    
+                    </mat-form-field>
+                </div>
+    
+                <div class="col-md-3 mt-1">
+                    <mat-form-field class="example-full-width">
+                        <mat-select multiple placeholder="Brand Name" [(ngModel)]="lstSelectedBrand" [disableOptionCentering]="true" #idBrand>
+                            <mat-option *ngFor="let item of lstBrand" [value]="item.pk_bint_id">
+                                {{ item.vchr_brand_name | uppercase}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+    
+    
+                <div class="col-md-3 mt-1">
+                    <mat-form-field>
+                        <mat-label>Designation </mat-label>
+                        <mat-select multiple [(ngModel)]="lstSelectedDesignation" [disableOptionCentering]="true">
+                            <mat-option *ngFor="let designation of lstDesignationData" [value]="designation.pk_bint_id">
+                                {{ designation.vchr_name | uppercase}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+    
+                <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                        <input [formControl]="searchEmployee" matInput placeholder="Select Employee" [(ngModel)]="strEmployee" name="employee" class="matinput1" [matAutocomplete]="employee" (ngModelChange)="employeeChange()" #idemployee>
+                        <mat-autocomplete #employee="matAutocomplete">
+                            <mat-option *ngFor="let item of lstEmployeeData" [value]="item.strUserName" (onSelectionChange)="employeeChanged(item)">
+                                {{item.strUserCode +'-'+item.strUserName }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3 mt-1" >
+                    <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="getShiftReportData()">Download</button>
+                    <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+                </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>
