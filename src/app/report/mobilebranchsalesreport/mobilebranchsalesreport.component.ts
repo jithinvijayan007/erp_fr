@@ -792,9 +792,9 @@ export class MobilebranchsalesreportComponent implements OnInit {
     if (fdate && tdate) {
       const dctJsonData = {};
       dctJsonData['data'] = 'Custom';
-      this.selectedFromDate = moment(new Date(fdate)).format('YYYY-MM-DD');
+      this.selectedFromDate = this.selectedFromDate;
       // this.selectedToDate = this.datToDate.add(1, 'days').format('YYYY-MM-DD');
-      this.selectedToDate = moment(new Date(tdate)).format('YYYY-MM-DD');
+      this.selectedToDate =this.selectedToDate;
       dctJsonData['date_from'] = this.selectedFromDate;
       dctJsonData['date_to'] = this.selectedToDate;
       dctJsonData['company_id'] = localStorage.getItem('companyId');
