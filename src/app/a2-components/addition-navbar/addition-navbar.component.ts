@@ -496,7 +496,7 @@ export class AdditionNavbarComponent implements AfterViewInit {
       this.selectedGroupImage = file;
       let reader;
       reader = new FileReader();
-      reader.onload = this._handleReaderLoaded.bind(this);
+      // reader.onload = this._handleReaderLoaded.bind(this);
       reader.readAsBinaryString(file);
     }
   }

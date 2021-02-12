@@ -45,6 +45,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
   tempProductIndex;
   tempBrandIndex;
   tempItemIndex;
+  typeWise=false;
 
   
   
@@ -741,10 +742,12 @@ export class MobilebranchsalesreportComponent implements OnInit {
 
 
 
-  openExport(){
+  openExport(modal){
     this.chart=false;
     this.table=false;
     this.showModal = true;
+    this.modalService.open(modal,{windowClass:'exportModal'})
+
 
   }
   closeExport(){
@@ -762,6 +765,8 @@ export class MobilebranchsalesreportComponent implements OnInit {
   }
 
   exportPdfExcel(fdate, tdate){
+
+    
 
     this.blnExported = false;
     localStorage.setItem('chartexport','');
@@ -1519,6 +1524,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
   }
 
   public chartClicked(e: any): void {
+    console.log(e)
     this.selectedOptionService = '';
     this.selectedOptionBrand = '';
     this.selectedOptionItem = '';
@@ -3012,8 +3018,10 @@ export class MobilebranchsalesreportComponent implements OnInit {
     this.expJsondata['component']='Branch_report';
     // this.expJsondata['sortname']=this.sort.active;
     // this.expJsondata['sortdirection']=this.sort.direction;
+    
   
     if(chartHead=='Branch'){
+      console.log("1111charthead",this.chartHead);
 
       
       this.expJsondata['charthead']='Branch';
