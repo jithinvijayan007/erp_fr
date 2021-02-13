@@ -10,6 +10,6 @@ import { environment } from '../environments/environment';
 export class AppComponent implements OnInit {
   title = 'app';
   ngOnInit(){
-    console.log(environment.production);
+    // console.log(environment.production);
   }
 }

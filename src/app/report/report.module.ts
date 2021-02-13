@@ -1,3 +1,4 @@
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -46,14 +47,13 @@ import { ReportComponent } from './report.component';
 import { ExcelService } from '../excel.service';
 // import { ReportComponent } from './report2/report.component';
 // import { from } from 'rxjs';
+import { SalesproductivityreportComponent } from './salesproductivityreport/salesproductivityreport.component';
+
 
 
 @NgModule({
   declarations: [
     
-     
-    
-     
      
     BranchReportComponent,
     StockReportComponent,
@@ -72,7 +72,8 @@ import { ExcelService } from '../excel.service';
     DayclosurereportComponent,
     MobilebranchsalesreportComponent,
     ReportComponent,
-    DateRangePicker3Component
+    DateRangePicker3Component,
+    SalesproductivityreportComponent
       ],
   imports: [
     CommonModule,
@@ -99,7 +100,8 @@ import { ExcelService } from '../excel.service';
     NgxSpinnerModule,
     CdkTableModule,
     CdkTreeModule,
-    ChartsModule
+    ChartsModule,
+    NgxDaterangepickerMd.forRoot()
     
   ],
   providers:[

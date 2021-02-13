@@ -54,7 +54,7 @@ export class TypeaheadService {
     // this.url_user = this.hostAddress + 'user/get_user/';
     this.url_branch = this.hostAddress + 'branch/branch_typeahead/';
     this.url_territory = this.hostAddress + 'branch/territory_typeahead/';
-    this.url_staff = this.hostAddress + 'user/user_typeahed/';
+    this.url_staff = this.hostAddress + 'user/user_typeahead/';
     this.url_auto_model = this.hostAddress + 'auto_mobile/model_typehead/';
     this.url_auto_variants = this.hostAddress + 'auto_mobile/get_variant/';
     // this.url_zone = this.hostAddress + 'state/zone_typehead/';

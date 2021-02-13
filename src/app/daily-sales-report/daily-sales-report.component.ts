@@ -390,7 +390,6 @@ dctData = {}
   this.getFilterData()
   }
   getFilterData(){
-  console.log("flkjfk", this.lstProduct,);
   
   this.selectedDate = moment(this.datFrom).format('YYYY-MM-DD')
 
@@ -527,7 +526,6 @@ dctData = {}
 
       dctData['lstProduct'] = lstData;
     }
-console.log(  dctData,"fggg");
 
     if(this.lstBrand.length>0){
       let lstData=[]
