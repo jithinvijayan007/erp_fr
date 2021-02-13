@@ -1,3 +1,4 @@
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -49,14 +50,13 @@ import { ExcelService } from '../excel.service';
 import { ProductReportSalesMobileComponent } from './product-report-sales-mobile/product-report-sales-mobile.component';
 // import { ReportComponent } from './report2/report.component';
 // import { from } from 'rxjs';
+import { SalesproductivityreportComponent } from './salesproductivityreport/salesproductivityreport.component';
+
 
 
 @NgModule({
   declarations: [
     
-     
-    
-     
      
     BranchReportComponent,
     StockReportComponent,
@@ -76,6 +76,7 @@ import { ProductReportSalesMobileComponent } from './product-report-sales-mobile
     MobilebranchsalesreportComponent,
     ReportComponent,
     DateRangePicker3Component,
+    SalesproductivityreportComponent,
     ProductReportSalesMobileComponent
       ],
   imports: [
@@ -104,6 +105,7 @@ import { ProductReportSalesMobileComponent } from './product-report-sales-mobile
     CdkTableModule,
     CdkTreeModule,
     ChartsModule,
+    NgxDaterangepickerMd.forRoot()
     // MatAutocomplete
     
   ],

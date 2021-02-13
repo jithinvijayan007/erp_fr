@@ -68,8 +68,8 @@ data: any = {
         
             this.data = dctResponse['cust_list'];
             this.dctOccassions = dctResponse['cust_occasions'];
-            console.log(this.dctOccassions);
-            console.log(this.data);
+            // console.log(this.dctOccassions);
+            // console.log(this.data);
             
             
             this.dctRating = dctResponse['cust_rating'];
