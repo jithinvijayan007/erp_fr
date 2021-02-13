@@ -12,7 +12,7 @@ import * as moment from 'moment';
 // import { SnotifyService } from 'ng-snotify';
 import { TypeaheadService } from '../../typeahead.service';
 import { log } from 'util';
-import { BaseChartDirective } from 'ng2-charts/charts/charts';
+import { BaseChartDirective } from 'ng2-charts';
 import { TitleCasePipe } from '@angular/common';
 import { ChartService } from 'src/app/chart.service';
 // import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
