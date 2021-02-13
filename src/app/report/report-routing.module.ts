@@ -17,6 +17,7 @@ import { DayclosurereportComponent } from './dayclosurereport/dayclosurereport.c
 import { BranchReportComponent } from './branch-report/branch-report.component'
 import { MobilebranchsalesreportComponent } from './mobilebranchsalesreport/mobilebranchsalesreport.component';
 import { ReportComponent } from './report.component';
+import { ProductReportSalesMobileComponent } from './product-report-sales-mobile/product-report-sales-mobile.component';
 // import { ReportComponent } from './report2/report.component';
 
 
@@ -278,22 +279,22 @@ const routes: Routes = [
       }
     ]
   },
-  // {
-  //   path: 'report2',
-  //   children: [
-  //     {
-  //       path: '',
-  //       component: ReportComponent,
-  //       data: {
-  //         title: 'Mobile Branch Report ',
-  //         urls: [
-  //           { title: 'Dashboard', url: '/dashboard' },
-  //           { title: 'Mobile Branch Report ' }
-  //         ]
-  //       }
-  //     }
-  //   ]
-  // },
+  {
+    path: 'mobilesalesreport',
+    children: [
+      {
+        path: '',
+        component: ProductReportSalesMobileComponent,
+        data: {
+          title: 'Product Report ',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Product Report' }
+          ]
+        }
+      }
+    ]
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
