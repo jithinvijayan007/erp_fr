@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="padd_l_r mt-3">
-                    <button mat-raised-button (click)="showDatewiseData(datFromDate,datToDate);" color="primary" mat-button>
+                    <button class="ok-button" mat-raised-button (click)="showDatewiseData(datFromDate,datToDate);" color="primary" mat-button>
             OK
           </button>
                 </div>
@@ -89,7 +89,7 @@
   </div>
     <div class="row" *ngIf="nodata.length>0">
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf="serviceChartLabels.length > 0">
-                    <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top1 card">
+                    <div style="margin: 0 0 0 0; padding: 0 0 0 0;display: flow-root;padding: 12px;" class="border_top1 card">
                         {{"Product Wise - "|uppercase}}
                         <!-- <span style="position: initial;" class="all_span pull-right" (click)="showAll()">All</span> -->
                         <small *ngIf="barChartOptions.title.text.length<=10">
@@ -150,7 +150,7 @@
     
 
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf=" brandPieChartLabels.length > 0">
-            <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top2 card">
+            <div style="margin: 0 0 0 0; padding: 0 0 0 0;display: flow-root;padding: 12px;" class="border_top2 card">
                 {{"Brand Wise - "|uppercase}}
                 <small *ngIf="brandPieOptions.title.text.length<=10">
           {{ brandPieOptions.title.text|uppercase }}
@@ -199,7 +199,7 @@
         </div>
 
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf=" itemPieChartLabels.length > 0">
-            <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top3 card">
+            <div style="margin: 0 0 0 0; padding: 0 0 0 0;display: flow-root;padding: 12px;" class="border_top3 card">
                 {{"Item Wise - "|uppercase}}
                 <small *ngIf="itemPieOptions.title.text.length<=10">
           {{ itemPieOptions.title.text|uppercase }}
@@ -247,7 +247,7 @@
         </div>
 
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf=" staffPieChartLabels.length > 0">
-            <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top4 card">
+            <div style="margin: 0 0 0 0; padding: 0 0 0 0;display: flow-root;padding: 12px;" class="border_top4 card">
                 {{"Staff Wise - "|uppercase}}
                 <small *ngIf="staffPieOptions.title.text.length<=5">
           {{ staffPieOptions.title.text|uppercase }}

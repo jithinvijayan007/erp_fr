@@ -37,6 +37,27 @@ export class ProductReportSalesMobileComponent implements OnInit {
   @Input('show-modal') showModal: boolean;
   @Input('show-modal2') showModal2: boolean;
 
+  public barSalesChartColor: Array<any> = this.chartservice.barSalesChartColor;
+  public pieChartColors: Array<any> = this.chartservice.pieChartColors;
+
+  // public chartColors: Array<any> = [
+  //   { // first color
+  //     backgroundColor: 'rgba(225,10,24,0.2)'
+  //     // borderColor: 'rgba(225,10,24,0.2)',
+  //     // pointBackgroundColor: 'rgba(225,10,24,0.2)',
+  //     // pointBorderColor: '#fff',
+  //     // pointHoverBackgroundColor: '#fff',
+  //     // pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+  //   },
+  //   { // second color
+  //     backgroundColor: 'rgba(225,10,24,0.2)'
+  //     // borderColor: 'rgba(225,10,24,0.2)',
+  //     // pointBackgroundColor: 'rgba(225,10,24,0.2)',
+  //     // pointBorderColor: '#fff',
+  //     // pointHoverBackgroundColor: '#fff',
+  //     // pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+  //   }];
+
   showSpinner=false;
 
   initProduct;
@@ -141,7 +162,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
   displayedColumns = ['date', 'enqno', 'staff', 'customer', 'product' , 'brand' ];
 
   // salebar chart colors
-  public barSalesChartColor: Array<any> = this.chartservice.barSalesChartColor;
+  
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -150,7 +171,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
   blnActive = true;
 
   public productPieChartType = 'pie';
-  public pieChartColors: Array<any> = this.chartservice.pieChartColors;
+  
 
 
   public productPieOptions: any = {

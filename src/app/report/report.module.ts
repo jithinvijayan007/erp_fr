@@ -41,7 +41,9 @@ import { EmisalesreportComponent } from './emisalesreport/emisalesreport.compone
 import { DayclosurereportComponent } from './dayclosurereport/dayclosurereport.component';
 import { BranchReportComponent } from './branch-report/branch-report.component';
 import { MobilebranchsalesreportComponent } from './mobilebranchsalesreport/mobilebranchsalesreport.component';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { ChartsModule } from 'ng2-charts';
+// import { ChartsModule } from 'ng2-charts/ng2-charts';
+
 import { ReportComponent } from './report.component';
 import { ExcelService } from '../excel.service';
 import { ProductReportSalesMobileComponent } from './product-report-sales-mobile/product-report-sales-mobile.component';

@@ -7,7 +7,7 @@ import { DataService } from '../../global.service';
 
 // calender
 import { startOfDay, endOfDay, subDays, addDays, isSameDay, isSameMonth } from 'date-fns';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 // import { SnotifyService } from 'ng-snotify';
 import {

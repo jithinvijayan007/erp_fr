@@ -1,9 +1,10 @@
 import { Injectable, ViewChild, QueryList, ViewChildren } from '@angular/core';
 // import 'chart.piecelabel.js';
-import { BaseChartDirective } from 'ng2-charts/charts/charts';
+// import { BaseChartDirective } from 'ng2-charts/charts/charts';
 import { ServerService } from './server.service';
 import { log } from 'util';
 import { TitleCasePipe } from '@angular/common';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Injectable()
 export class ChartService  {
