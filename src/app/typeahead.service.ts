@@ -436,7 +436,7 @@ export class TypeaheadService {
         'content-type': 'application/json',
         Authorization: jwttoken
       });
-      const data = { term: term };
+      const data = { terms: term };
         return this.http
         .post(this.url_staff, data, { headers: headers }).pipe(
         map(res => {

@@ -1,0 +1,117 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="formhead"><i class="fa fa-list"></i> &nbsp;List Free Shift</h4>
+            </div>
+            <div class="col-md-4 mt-3 mb-2">
+                <mat-label>Filter by:</mat-label>
+                <div class="pretty p-icon p-round p-jelly mr-4">
+                    <input type="radio" [value]="'date'" name="icon" [(ngModel)]="strFilterType" (ngModelChange)="typeChanged()"/>
+                    <div class="state p-warning">
+                        <i class="icon mdi mdi-check"></i>
+                        <label>Date</label>
+                    </div>
+                </div>
+                <div class="pretty p-icon p-round p-jelly mr-4">
+                    <input type="radio" [value]="'emp'" name="icon" [(ngModel)]="strFilterType" (ngModelChange)="typeChanged()"/>
+                    <div class="state p-warning">
+                        <i class="icon mdi mdi-check"></i>
+                        <label>Employee</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3" *ngIf="strFilterType=='date'">
+                <mat-form-field class="example-full-width">
+                    <input (click)="picker1.open()" matInput required readonly [matDatepicker]="picker1" placeholder="Select Date" [(ngModel)]="datSelected">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class=" col-md-6" *ngIf="strFilterType=='emp'">
+                <mat-form-field>
+                    <mat-chip-list #chipList>
+                        <mat-chip  *ngFor="let value of lstEmpSelected" title={{value.strUserName}} (removed)="removeEmployee(value)">
+                            ​{{ (value.strUserName.length>3 ? value.strUserName.substring(0,3) + "..": value.strUserName) | titlecase }}
+                            <mat-icon matChipRemove><i class="fas fa-times"></i></mat-icon>
+                        </mat-chip>
+                        <input [matChipInputFor]="chipList" matInput placeholder="Select Employee" [(ngModel)]="strEmployee" name="employee" [formControl]="searchEmployee" [matAutocomplete]="employee" #empId>
+                    </mat-chip-list>
+                    <mat-autocomplete #employee="matAutocomplete">
+                    <mat-option *ngFor="let item of lstEmployeeData" [value]="item.strUserName" (onSelectionChange)="addEmployee(item)">
+                        {{item.strUserCode+'-'+item.strUserName }}
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="getEmployeeList()">Search</button>
+            </div>
+
+            <div class="col-md-12" [ngStyle]="{'display' : lstShiftExmpData.length > 0 ? 'block' : 'none'}">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+            </div>
+            <div class="col-md-12" [ngStyle]="{'display' : lstShiftExmpData.length > 0 ? 'block' : 'none'}">
+                <mat-table [dataSource]="dataSource"  matSort>
+                    
+                    <!-- code Column -->
+                    <ng-container matColumnDef="startdate">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='username' style="max-width: 12%;padding-left: 20px;"> From Date </mat-header-cell>
+                        <mat-cell *matCellDef="let row" style="max-width: 12%; padding-left: 20px;">{{row.datStart}} </mat-cell>
+                    </ng-container>
+                   
+                    <!-- name Column -->
+                    <ng-container matColumnDef="enddate">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='fullname'style="padding-left:10px;"> To Date </mat-header-cell>
+                        <mat-cell *matCellDef="let row" style="padding-left:10px;"> {{row.datEnd }} </mat-cell>
+                    </ng-container>
+                    <!-- Department Column -->
+                    <ng-container matColumnDef="group">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='strGroupMode'> Type</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.strGroupMode}} </mat-cell>
+                    </ng-container>
+                    <!-- Designation Column -->
+                    <ng-container matColumnDef="type">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='strTypeData'> Groups </mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.strTypeData }} </mat-cell>
+                    </ng-container>
+                    <!-- phone Column -->
+                    <ng-container matColumnDef="fk_branch__vchr_name">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header='fk_branch__vchr_name'> Branch </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.fk_branch__vchr_name }} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell style="padding-right: 10px; padding-left: 10px;" *matHeaderCellDef> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <button (click)="ViewDetails(row.intId)" title="view details" class="view mr-2 ml-2">
+                                <i class="ti-eye icon" aria-hidden="true"></i>
+                            </button>
+                            <button title="Delete" (click)="deleteDetails(row)" class="delete">
+                                <i class="ti-trash icon"></i>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+                    
+                    
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+                <!-- <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="lstShiftExmpData.length==0" style="text-align: center">
+
+    <img src="assets/images/nodata-found.png">
+
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

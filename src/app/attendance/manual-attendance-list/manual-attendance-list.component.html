@@ -1,0 +1,61 @@
+<div class="card">
+        <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                            <h4 class="formhead"><i class="fa fa-list"></i> &nbsp;Manual Attendance List</h4>
+                    </div>
+                      
+                </div>
+                <div class="row">
+                        <div class="col-md-3 mt-4">
+                                <mat-form-field class="example-full-width">
+                                        <input (click)="picker1.open()" matInput required readonly [matDatepicker]="picker1" placeholder="Date of Attendance"
+                                         [(ngModel)]="datOfAttendance" #datofattendance (ngModelChange)="getManualAttendanceData()">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                        </div>
+                </div>
+                <div *ngIf="lstAttendanceData.length!=0">
+                        <div class="row mt-3">
+                                <table class="table" style="margin-left: 10px;margin-right: 10px;">
+                                        <thead>
+                                            <tr>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>Punch In Time</th>
+                                                <th>Punch Out Time</th>
+                                                <!-- <th>Action</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let item of lstAttendanceData">
+                                            <tr >
+                                                <td>{{ item['fk_punchingemp__fk_user__vchr_employee_code']}}</td>
+                                                <td>{{item['fullname'] }}</td>
+                                                <td>{{ item['dat_start'] | date:'medium'}}</td>
+                                                <td>{{ item['dat_end'] | date:'medium' }}</td>
+
+                                                <!-- <td>
+                                                    <button title="Edit" (click)=editAttendance(item) class="edit mr-2">
+                                                        <i class="ti-pencil text-info icon" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button title="Delete" (click)="deleteAttendance(item)" class="delete">
+                                                        <i class="ti-trash icon"></i>
+                                                    </button>
+                                                </td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                        </div>
+                    
+                    </div>
+        </div>
+    </div>
+    
+    
+    <div *ngIf="lstAttendanceData.length==0" style="text-align: center">
+          
+                    <img src="assets/images/nodata-found.png">
+                
+    </div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

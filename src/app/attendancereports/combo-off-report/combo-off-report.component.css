@@ -1,0 +1,49 @@
+.modal-header {
+    padding: 8px 0px 8px 0px;
+    background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
+    color: white !important;
+}
+
+.thead1 {
+    color: #2d475d !important;
+    background: #ff85672e !important;
+    font-size: 14px;
+}
+
+.th1 {
+    font-weight: 600 !important;
+    padding: 10px !important;
+    vertical-align: top;
+}
+
+.td1 {
+    padding: 10px !important;
+    vertical-align: top;
+}
+
+.tbody1 {
+    border: none !important;
+}
+.calender {
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .14), 0 7px 10px -5px rgb(183, 143, 69);
+    color: white;
+    background: #77d67a;
+    border: none;
+    width: 29px;
+    height: 29px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+::ng-deep .classname .modal-dialog{
+    max-width: 50%;
+    width: 50%;
+    }
+.modal-footer {
+    justify-content: center;
+    border: none;
+    padding-top: 0rem !important;
+    padding-right: 1rem !important;
+    padding-bottom: 1rem !important;
+    padding-left: 1rem !important;
+
+}

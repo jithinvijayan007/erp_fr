@@ -22,6 +22,7 @@ import { ReportComponent } from '../report.component';
 
 import { from } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mobilebranchsalesreport',
@@ -45,6 +46,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
   tempProductIndex;
   tempBrandIndex;
   tempItemIndex;
+  typeWise=false;
 
   
   
@@ -571,7 +573,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
       this.router.navigate(['/user/sign-in']);
     }
     this.searchBranch.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((data: string) => {
         if (data === undefined || data == null || data === '') {
         } else {
@@ -741,10 +743,12 @@ export class MobilebranchsalesreportComponent implements OnInit {
 
 
 
-  openExport(){
+  openExport(modal){
     this.chart=false;
     this.table=false;
     this.showModal = true;
+    this.modalService.open(modal,{windowClass:'exportModal'})
+
 
   }
   closeExport(){
@@ -762,6 +766,8 @@ export class MobilebranchsalesreportComponent implements OnInit {
   }
 
   exportPdfExcel(fdate, tdate){
+
+    
 
     this.blnExported = false;
     localStorage.setItem('chartexport','');
@@ -786,9 +792,9 @@ export class MobilebranchsalesreportComponent implements OnInit {
     if (fdate && tdate) {
       const dctJsonData = {};
       dctJsonData['data'] = 'Custom';
-      this.selectedFromDate = moment(new Date(fdate)).format('YYYY-MM-DD');
+      this.selectedFromDate = this.selectedFromDate;
       // this.selectedToDate = this.datToDate.add(1, 'days').format('YYYY-MM-DD');
-      this.selectedToDate = moment(new Date(tdate)).format('YYYY-MM-DD');
+      this.selectedToDate =this.selectedToDate;
       dctJsonData['date_from'] = this.selectedFromDate;
       dctJsonData['date_to'] = this.selectedToDate;
       dctJsonData['company_id'] = localStorage.getItem('companyId');
@@ -1519,6 +1525,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
   }
 
   public chartClicked(e: any): void {
+    console.log(e)
     this.selectedOptionService = '';
     this.selectedOptionBrand = '';
     this.selectedOptionItem = '';
@@ -3012,8 +3019,10 @@ export class MobilebranchsalesreportComponent implements OnInit {
     this.expJsondata['component']='Branch_report';
     // this.expJsondata['sortname']=this.sort.active;
     // this.expJsondata['sortdirection']=this.sort.direction;
+    
   
     if(chartHead=='Branch'){
+      console.log("1111charthead",this.chartHead);
 
       
       this.expJsondata['charthead']='Branch';

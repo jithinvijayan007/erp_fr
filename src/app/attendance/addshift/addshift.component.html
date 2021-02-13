@@ -1,0 +1,174 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                    <h4 class="formhead"><i class="mdi mdi-timetable"></i>&nbsp;Add Shift</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+                <div class="col-md-12">
+                        <mat-tab-group [selectedIndex]="tabIndex" (selectedIndexChange)="tabChanged($event)">
+                                <!-- ================================== Normal ============================= -->
+
+                                <mat-tab label="Normal Shift">
+                                                <div class="row">
+                                                        <div class="col-md-4">
+                                                                <mat-form-field>
+                                                                <input matInput placeholder="Shift Code *" [(ngModel)]="strShiftCode" value="" name="code">
+                                                                </mat-form-field>
+                                                        </div>      
+                                                        <div class="col-md-4">
+                                                                <mat-form-field>
+                                                                <input matInput placeholder="Shift Name *" [(ngModel)]="strShiftName" value="" name="name">
+                                                                </mat-form-field>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                                <mat-form-field>
+                                                                        <input type="time" matInput placeholder="Shift Start Time *" [(ngModel)]="timeShiftfrom" value="" name="shiftStartTime" >
+                                                                    <!-- <input matInput placeholder="Inauguration Time* (Time)" type="time" atp-time-picker [(ngModel)]="intIngtnTime" [formControl]="registerForm.controls['inaugurationTime']"> -->
+                                                                </mat-form-field>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                                <mat-form-field>
+                                                                        <input type="time" matInput placeholder="Shift End Time *" [(ngModel)]="timeShiftTo" value="" name="shiftEndTime" >
+                                                                </mat-form-field>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                                <mat-form-field>
+                                                                        <input type="time" matInput placeholder="Break Start Time " [(ngModel)]="timeBreakFrom" value="" name="BreakStartTime" >
+                                                                </mat-form-field>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                                <mat-form-field>
+                                                                        <input type="time" matInput placeholder="Break End Time " [(ngModel)]="timeBreakTo" value="" name="BreakEndTime" >
+                                                                </mat-form-field>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                                <mat-form-field>
+                                                                        <input type="time" matInput placeholder="Break Hours " [(ngModel)]="timeBreakHrs" value="" name="breakHours" >
+                                                                </mat-form-field>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                                <mat-form-field>
+                                                                        <input type="time" matInput placeholder="Scheduled Hours " [(ngModel)]="timeShedHrs" value="" name="scheduledHours" >
+                                                                </mat-form-field>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                                <mat-form-field>
+                                                                        <input type="time" matInput placeholder="Full Day Hours " [(ngModel)]="timeFullDay" value="" name="fullDayHours" >
+                                                                </mat-form-field>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                                <mat-form-field>
+                                                                        <input type="time" matInput placeholder="Half Day Hours " [(ngModel)]="timeHalfDay" value="" name="halfDayHours" >
+                                                                </mat-form-field>
+                                                        </div>
+                                                </div>
+                                                <div class="row">
+                                                        <div class="col-md-2 mt-3">
+                                                                <div class="col-md-1" style="text-align: center;margin-top: 4px;                                    ">
+                                                                        <div class="pretty p-image p-plain">
+                                                                                <input type="checkbox" name="nightShift"  [(ngModel)]="blnNightShift"  />
+                                                                                <div class="state">
+                                                                                    <img class="image" src="assets/images/tick.png">
+                                                                                    <label>Night Shift</label>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                    
+                                                        <div class="col-md-3 mt-3">
+                                                                <div class="col-md-1" style="text-align: center;margin-top: 4px;                                    ">
+                                                                                    <div class="pretty p-image p-plain">
+                                                                                            <input type="checkbox"  name="allowances" [checked]="false" [(ngModel)]="blnAllowances" />
+                                                                                            <div class="state">
+                                                                                                <img class="image" src="assets/images/tick.png">
+                                                                                                <label>Allowances Applicable</label>
+                                                                                            </div>
+                                                                                    </div>
+                                                                             </div>
+                                                            </div>
+                                    
+                                    
+                                                                <div class="col-md-2">
+                                                                    <mat-form-field>
+                                                                            <input type="number" required [disabled]="!blnAllowances" matInput placeholder="Allowance Amount" [(ngModel)]="intAllowanceAmount" value="" name="allowanceAmount" >
+                                                                    </mat-form-field>
+                                                                </div>
+                                    
+                                                                <div class="col-md-5">
+                                    
+                                                                        <mat-form-field>
+                                                                        <input matInput placeholder="Remarks" [(ngModel)]="strRemarks" value="" name="remarks">
+                                                                        </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                        <div class="col-md-3 mt-2">
+                                                                             <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="saveShift()">Save</button>
+                                                                             <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+                                                                         </div>
+                                                                 </div>
+                                        </mat-tab>
+
+
+
+
+
+
+
+                                <!-- ================================== Normal ends ============================= -->
+                                <!-- ================================== Time ============================= -->
+                                <mat-tab label="Time Shift">
+                                        <div class="row">
+                                                <div class="col-md-3">
+                                                        <mat-form-field>
+                                                        <input matInput placeholder="Time Shift Code *" [(ngModel)]="strTimeShitfCode" value="" name="timecode">
+                                                        </mat-form-field>
+                                                </div>      
+                                                <div class="col-md-3">
+                                                        <mat-form-field>
+                                                        <input matInput placeholder="Time Shift Name *" [(ngModel)]="strTimeShiftName" value="" name="timename">
+                                                        </mat-form-field>
+                                                </div>
+                                                <div class="col-md-3" >
+                                                    <mat-form-field>
+                                                        <mat-label>Select Time Shift Range Type *</mat-label>
+                                                        <mat-select [(ngModel)]="strTimeShiftRangeType" [disableOptionCentering]="true">
+                                                            <mat-option  value="monthly">Monthly</mat-option>
+                                                            <mat-option  value="weekly">Weekly</mat-option>
+                                                            <mat-option  value="daily">Daily</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-3">
+                                                        <mat-form-field>
+                                                        <input matInput placeholder="Time Shift Hrs*" [(ngModel)]="intTimeRange" type="number" value="" name="timeduration">
+                                                        </mat-form-field>
+                                                </div>
+                                                <div class="col-md-3">
+                                                        <mat-form-field>
+                                                        <input matInput placeholder="Time Shift Remarks *" [(ngModel)]="strTimeRemarks" type="text" value="" name="timeremarks">
+                                                        </mat-form-field>
+                                                </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-md-3 mt-2">
+                                                <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="saveTimeShift()">Save</button>
+                                                <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+                                         </div>
+                                         </div>
+                                </mat-tab>
+                                <!-- ================================== Time shift ============================= -->
+
+                        </mat-tab-group>
+                </div>
+
+
+                        </div>
+
+
+                
+    </div>
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

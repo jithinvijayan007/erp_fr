@@ -19,10 +19,10 @@
 
                    
 
-                    <a *ngIf="blnDownload" data-toggle="tooltip" title="Export"> <i class="fa fa-download" data-toggle="modal"
-                        data-target="#myModal" aria-hidden="true" (click)="openExport()"></i></a>
+                    <a *ngIf="blnDownload" data-toggle="tooltip" title="Export">  <i class="fas fa-download" data-toggle="modal"
+                        data-target="#myModal" aria-hidden="true" (click)="openExport(exportModal);typeWise=!typeWise"></i></a>
                     &nbsp;&nbsp;&nbsp;
-                    <a *ngIf="blnDownload" data-toggle="tooltip" title="Mail"><i class="fa fa-envelope" data-toggle="modal"
+                    <a *ngIf="blnDownload" data-toggle="tooltip" title="Mail"><i class="fas fa-envelope" data-toggle="modal"
                         data-target="#myModal-two" aria-hidden="true" (click)="openMail()"></i></a>
                             &nbsp;&nbsp;
                             <!-- <a data-toggle="tooltip" title="Chat"><i class="fa fa-comment-o" data-toggle="modal"
@@ -140,7 +140,7 @@
                 </canvas>
             </div>
             <div id="chart" *ngIf = "!blnBranchChartType" class="card">
-                    <canvas height="250" baseChart [data]="barChartData[1].data" [labels]="barChartLabels"
+                    <canvas height="250" baseChart [data]="barChartData" [labels]="barChartLabels"
                         [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors"
                         (chartClick)="chartClicked($event)">
                     </canvas>
@@ -193,7 +193,7 @@
                 </canvas>
             </div>
             <div id="chart" *ngIf = "!blnProductChartType" class="card">
-                    <canvas height="235" baseChart [options]="productPieOptions" [datasets]="servicePieChartData1"
+                    <canvas height="235" baseChart [options]="productPieOptions" [datasets]="servicePieChartData"
                         [labels]="servicePieChartLabels1" [colors]="pieChartColors" [chartType]="productPieChartType"
                         (chartClick)=servicePieChartClicked($event)>
                     </canvas>
@@ -248,7 +248,7 @@
             </div>
             <div id="chart" *ngIf = "!blnBrandChartType" class="card">
                     <canvas height="235" baseChart [options]="productPieOptions" [legend]="brandPieChartLegend"
-                        [datasets]="brandPieChartData1" [labels]="brandPieChartLabels1" [colors]="pieChartColors"
+                        [datasets]="brandPieChartData" [labels]="brandPieChartLabels1" [colors]="pieChartColors"
                         [chartType]="productPieChartType" (chartClick)=brandPieChartClicked($event)>
                     </canvas>
             </div>
@@ -301,7 +301,7 @@
             </div>
             <div id="chart" *ngIf = "!blnItemChartType" class="card">
                     <canvas height="250" baseChart [options]="productPieOptions" [legend]="itemPieChartLegend"
-                        [data]="itemPieChartData[1].data" [labels]="itemPieChartLabels" [colors]="pieChartColors"
+                        [data]="itemPieChartData" [labels]="itemPieChartLabels" [colors]="pieChartColors"
                         [chartType]="productPieChartType">
                     </canvas>
             </div>
@@ -425,7 +425,7 @@
                                                                 data-dismiss="modal">Cancel</button>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                        <button type="button" (click)='exportPdfExcel(datFromDate,datToDate)'
+                                                        <button type="button" (click)='exportPdfExcel(selectedFromDate,selectedToDate)'
                                                                 class="mat-raised-button mat-accent pull-right" data-dismiss="modal">Export</button>
                                                 </div>
                                         </div>
@@ -478,7 +478,7 @@
                                                         data-dismiss="modal">Cancel</button>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                <button type="button" (click)='exportWithEmail(datFromDate,datToDate)'
+                                                <button type="button" (click)='exportWithEmail(selectedFromDate,selectedToDate)'
                                                         class="mat-raised-button mat-accent pull-right" data-dismiss="modal">Send</button>
                                         </div>
                                 </div>
@@ -669,6 +669,50 @@
 
 </ng-template>
       <!-- chart table end here -->
+      <ng-template #exportModal let-modal>
+
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" (click)="closeExport()" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center" id="modal-blue">Export</h4>
+            </div>
+            <div class="modal-body">
+                    <h6>Choose File Format</h6>
+                    <hr>
+                    <form style="padding-bottom: 5px;" class="text-center">
+                            <mat-radio-group class="unique-radio-button" name="export" [(ngModel)]="export">
+                                    <mat-radio-button [value]=true>
+                                            <i class="fa fa-file-excel-o fa-2x bl" aria-hidden="true"></i>
+                                            <strong>Excel</strong></mat-radio-button>
+                                    <mat-radio-button [value]=false>
+                                            <i class="fa fa-file-pdf-o fa-2x re" aria-hidden="true"></i>
+                                            <strong>PDF</strong></mat-radio-button>
+                            </mat-radio-group>
+                    </form>
+                    <br>
+                    <form class="text-center">
+                            <mat-checkbox [(ngModel)]="chart" name="chart" id="chart" value="chart">Chart</mat-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <mat-checkbox [(ngModel)]="table" name="table" id="table" value="table">Table data</mat-checkbox>
+
+                            <hr>
+                    </form>
+                    <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <button type="button" class="mat-button mat-raised-button mat-primary pull-left"
+                                                    data-dismiss="modal">Cancel</button>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <button type="button" (click)='exportPdfExcel(selectedFromDate,selectedToDate)'
+                                                    class="mat-raised-button mat-accent pull-right" data-dismiss="modal">Export</button>
+                                    </div>
+                            </div>
+            </div>
+            
+    </div>
+          
+      </ng-template>
 
       <!-- <app-spinner *ngIf="showSpinner"></app-spinner> -->
+
+
 

@@ -1,0 +1,96 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <h4 class="col-md-12 formhead"><i class="mdi mdi-file-excel"></i>&nbsp;Less Hour Report</h4>
+        </div>
+        <div class="row">
+                <div class="col-md-3 mt-1">
+                    <mat-form-field>
+                        <mat-label>Select Month & Year *</mat-label>
+                        <mat-select [(ngModel)]="intMonthYear" [disableOptionCentering]="true" >
+                        <mat-option *ngFor="let month of lstMonthYear" [value]="month.value">{{month.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <!-- <div class="col-md-3">
+                        <mat-form-field class="example-full-width">
+                            <input [formControl]="searchEmployee" matInput placeholder="Select Employee" [(ngModel)]="strEmployee" name="employee" class="matinput1" [matAutocomplete]="employee" (ngModelChange)="employeeChange()" #idemployee>
+                            <mat-autocomplete #employee="matAutocomplete">
+                                <mat-option *ngFor="let item of lstEmployeeData" [value]="item.strUserName" (onSelectionChange)="employeeChanged(item)">
+                                    {{item.strUserCode+'-'+item.strUserName }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                </div> -->
+                <!-- employee chiplist -->
+                <div class=" col-md-6">
+                        <mat-form-field>
+                                <mat-chip-list #chipList>
+                                    <mat-chip *ngFor="let value of lstEmpSelected" (removed)="removeEmployee(value)">
+                                        ​{{ (value.strUserName.length>3 ? value.strUserName.substring(0,3) + "..": value.strUserName) | titlecase }}
+                                        <mat-icon matChipRemove><i class="fas fa-times"></i></mat-icon>
+                                    </mat-chip>
+                                    <input [matChipInputFor]="chipList" matInput placeholder="Select Employee" [(ngModel)]="strEmployee" name="employee" [formControl]="searchEmployee" [matAutocomplete]="employee" #empId>
+                                </mat-chip-list>
+                                <!-- <mat-autocomplete #branch="matAutocomplete">
+                                    <mat-option *ngFor="let item of lstBranches" [value]="item.name" (onSelectionChange)="addEmployee(item)">
+                                        {{ item.code+' - '+item.name }}
+                                    </mat-option>
+                                </mat-autocomplete> -->
+                                <mat-autocomplete #employee="matAutocomplete">
+                                <mat-option *ngFor="let item of lstEmployeeData" [value]="item.strUserName" (onSelectionChange)="addEmployee(item)">
+                                    {{item.strUserCode+'-'+item.strUserName }}
+                                </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                      </div>
+                <!-- employee chilplist ends -->
+                <div class="col-md-3 mt-1">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Department Name *</mat-label>
+                        <mat-select [(ngModel)]="intDepartmentId" [disableOptionCentering]="true">
+                            <mat-option *ngFor="let department of lstDepartment" [value]="department.pk_bint_id">
+                                {{department.vchr_code+'-'+department.vchr_name | uppercase}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Select Shift</mat-label>
+                        <mat-select [(ngModel)]="intShiftId" [disableOptionCentering]="true">
+                            <mat-option *ngFor="let shift of lstShiftData" [value]="shift.pk_bint_id">
+                                {{ shift.vchr_name | uppercase}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3 ">
+                        <mat-form-field>
+                            <mat-label>Select Designation *</mat-label>
+                            <mat-select [(ngModel)]="lstSelectedDesignation" multiple [disableOptionCentering]="true">
+                                <mat-option *ngFor="let designation of lstDesignationData" [value]="designation.pk_bint_id">
+                                    {{ designation.vchr_name | uppercase}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-label>Select Physical Location</mat-label>
+                            <mat-select [(ngModel)]="lstSelectedLocation" multiple [disableOptionCentering]="true">
+                                <mat-option *ngFor="let loc of lstLocationData" value="{{loc.pk_bint_id}}">
+                                    {{ loc.vchr_physical_loc | uppercase}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                <div class="col-md-3" >
+                    <button type="submit" class="btn save_btn  mt-2 mr-3" (click)="getTimingData()">Download</button>
+                    <button type="submit" class="btn cancel_btn mt-2" (click)="clearFields()">Cancel</button>
+                </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>

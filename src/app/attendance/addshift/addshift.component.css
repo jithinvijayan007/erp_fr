@@ -1,0 +1,6 @@
+::ng-deep .mat-tab-body-wrapper{
+    margin-top: 12px;
+}
+::ng-deep .mat-tab-body-content {
+    overflow-x: hidden !important;
+}

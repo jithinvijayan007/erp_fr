@@ -45,6 +45,7 @@ import { MobilebranchsalesreportComponent } from './mobilebranchsalesreport/mobi
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { ReportComponent } from './report.component';
 import { ExcelService } from '../excel.service';
+import { ProductReportSalesMobileComponent } from './product-report-sales-mobile/product-report-sales-mobile.component';
 // import { ReportComponent } from './report2/report.component';
 // import { from } from 'rxjs';
 import { SalesproductivityreportComponent } from './salesproductivityreport/salesproductivityreport.component';
@@ -73,7 +74,8 @@ import { SalesproductivityreportComponent } from './salesproductivityreport/sale
     MobilebranchsalesreportComponent,
     ReportComponent,
     DateRangePicker3Component,
-    SalesproductivityreportComponent
+    SalesproductivityreportComponent,
+    ProductReportSalesMobileComponent
       ],
   imports: [
     CommonModule,
@@ -102,6 +104,7 @@ import { SalesproductivityreportComponent } from './salesproductivityreport/sale
     CdkTreeModule,
     ChartsModule,
     NgxDaterangepickerMd.forRoot()
+    // MatAutocomplete
     
   ],
   providers:[

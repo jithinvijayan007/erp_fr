@@ -149,8 +149,8 @@ else{
 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const opts: any = { sheetFormat: { baseColWidth: '200' }, };
+    // const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    // const excelBuffer: any = XLSXStyle.write(workbook, { bookType: 'xlsx', type: 'buffer' });
     this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
   }
@@ -425,8 +425,8 @@ else{
 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    // const excelBuffer: any = XLSXStyle.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+    // const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
   }
@@ -700,8 +700,8 @@ else{
 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    // const excelBuffer: any = XLSXStyle.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+    // const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
   }
@@ -789,8 +789,8 @@ worksheet["!protect"];
 
 const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
 const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-// const excelBuffer: any = XLSXStyle.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+// const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
 this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
 }
@@ -863,8 +863,8 @@ worksheet["!protect"];
 
 const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
 const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-// const excelBuffer: any = XLSXStyle.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+// const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
 this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 }
 
@@ -983,8 +983,8 @@ else{
 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    // const excelBuffer: any = XLSXStyle.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+    // const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
   }
@@ -1060,7 +1060,7 @@ else{
 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
 
@@ -1138,7 +1138,7 @@ else{
 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
   }
@@ -1218,8 +1218,8 @@ else{
 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    // const excelBuffer: any = XLSXStyle.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+    // const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
   }
@@ -1307,8 +1307,8 @@ worksheet["!protect"];
 
 const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
 const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-// const excelBuffer: any = XLSXStyle.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+// const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
 this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
   }
@@ -1381,8 +1381,8 @@ worksheet["!protect"];
 
 const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
 const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-// const excelBuffer: any = XLSXStyle.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+// const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
 this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
   }
 
@@ -1490,7 +1490,7 @@ exportAsAuditDayReport(json: any[],expjsondata,total): void{
 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
 
@@ -1640,7 +1640,7 @@ exportAsStaffReward(json: any[],expjsondata): void{
 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
 
@@ -1777,7 +1777,7 @@ exportAsStaffReward4(json: any[],expjsondata): void{
 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
 
@@ -1874,7 +1874,7 @@ exportAsBranchAudit(json: any[],expjsondata): void{
 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
 
@@ -1970,7 +1970,7 @@ exportAsPriceRange(json: any[],expjsondata): void{
 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+    const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer,expjsondata['charthead']);
 
 
@@ -2021,9 +2021,9 @@ private cellStyle(cel:XLSX.CellObject){
     cell.s = style;
   }
 
-  private saveAsExcelFile(buffer: any, fileName: string): void {
+  private saveAsExcelFile(array: any, fileName: string): void {
     localStorage.setItem('chartexport','true')
-    const data: Blob = new Blob([buffer], {type: EXCEL_TYPE});
+    const data: Blob = new Blob([array], {type: EXCEL_TYPE});
     FileSaver.saveAs(data, fileName + '_export_' + new  Date().getTime() + EXCEL_EXTENSION);
     
  }
@@ -2091,7 +2091,7 @@ private cellStyle(cel:XLSX.CellObject){
 
   const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
   const opts: any = { sheetFormat: { baseColWidth: '200' }, };
-  const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'buffer' });
+  const excelBuffer: any = XLSX.write(workbook,{ bookType: 'xlsx', type: 'array' });
   this.saveAsExcelFile(excelBuffer,heading);
 
 

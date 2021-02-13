@@ -18,6 +18,7 @@ import { BranchReportComponent } from './branch-report/branch-report.component'
 import { MobilebranchsalesreportComponent } from './mobilebranchsalesreport/mobilebranchsalesreport.component';
 import { ReportComponent } from './report.component';
 import { SalesproductivityreportComponent } from './salesproductivityreport/salesproductivityreport.component';
+import { ProductReportSalesMobileComponent } from './product-report-sales-mobile/product-report-sales-mobile.component';
 // import { ReportComponent } from './report2/report.component';
 
 
@@ -306,6 +307,17 @@ const routes: Routes = [
           urls: [
             { title: 'Dashboard', url: '/dashboard' },
             { title: 'Sales Productivity Report ' }
+  {
+    path: 'mobilesalesreport',
+    children: [
+      {
+        path: '',
+        component: ProductReportSalesMobileComponent,
+        data: {
+          title: 'Product Report ',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Product Report' }
           ]
         }
       }
