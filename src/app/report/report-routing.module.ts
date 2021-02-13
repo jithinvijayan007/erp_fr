@@ -307,6 +307,11 @@ const routes: Routes = [
           urls: [
             { title: 'Dashboard', url: '/dashboard' },
             { title: 'Sales Productivity Report ' }
+          ]
+        }
+      }
+    ]
+  },
   {
     path: 'mobilesalesreport',
     children: [
@@ -324,6 +329,7 @@ const routes: Routes = [
     ]
   },
 ];
+
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

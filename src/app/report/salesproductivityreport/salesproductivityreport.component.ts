@@ -1,3 +1,4 @@
+import { debounceTime } from 'rxjs/operators';
 import { ServiceinvoicelistComponent } from './../../invoice/serviceinvoicelist/serviceinvoicelist.component';
 import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, Input,ViewContainerRef } from '@angular/core';
 import { SharedService } from '../../layouts/shared-service';
@@ -695,7 +696,7 @@ export class SalesproductivityreportComponent implements OnInit {
     this.showDatewiseData(this.datFromDate, this.datToDate);
 
     this.searchBrand.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((data: string) => {
         if (data === undefined) {
         } else {
@@ -723,7 +724,7 @@ export class SalesproductivityreportComponent implements OnInit {
   
   
       this.searchProduct.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((data: string) => {
         if (data === undefined) {
         } else {
@@ -750,7 +751,7 @@ export class SalesproductivityreportComponent implements OnInit {
       });
 
       this.searchItem.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((data: string) => {
         if (data === undefined) {
         } else {
@@ -778,7 +779,7 @@ export class SalesproductivityreportComponent implements OnInit {
       });
 
     this.searchBranch.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((data: string) => {
         if (data === undefined) {
         } else {
@@ -805,7 +806,7 @@ export class SalesproductivityreportComponent implements OnInit {
         }
       });
     this.searchStaff.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((data: string) => {
         if (data === undefined) {
         } else {
@@ -832,7 +833,7 @@ export class SalesproductivityreportComponent implements OnInit {
       });
 
       this.searchPromoter.valueChanges
-      .debounceTime(400)
+      .pipe(debounceTime(400))
       .subscribe((data: string) => {
         if (data === undefined) {
         } else {
