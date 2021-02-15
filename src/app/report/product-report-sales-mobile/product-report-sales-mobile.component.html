@@ -38,15 +38,15 @@
                     <app-date-range-picker-3 (onSelectDate)="datFromDate=$event[0];datToDate=$event[1];showDatewiseData($event[0],$event[1]);">
                     </app-date-range-picker-3>
                 </div> -->
-                <div class="row mt-1">
-                    <div class="col-md-3">
+                <div class="row container">
+                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
                         <mat-form-field>
                             <input name="fromDate" (click)="picker.open()" matInput [matDatepicker]="picker" placeholder="From" [(ngModel)]="datFromDate">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
                         <mat-form-field>
                             <input name="toDate" (click)="picker1.open()" matInput [matDatepicker]="picker1" placeholder="To" [(ngModel)]="datToDate">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -54,9 +54,9 @@
                         </mat-form-field>
                     </div>
                     
-                </div>
+                
 
-                <div class="padd_l_r mt-2">
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
                     <mat-form-field>
                         <input matInput placeholder="Branch" [(ngModel)]="branchName" name="branch" [formControl]="searchBranch" [matAutocomplete]="branch" #idBranch>
                         <mat-autocomplete #branch="matAutocomplete">
@@ -67,7 +67,7 @@
                     </mat-form-field>
                 </div>
 
-                <div class="padd_l_r mt-2">
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
                     <mat-form-field>
                         <input matInput placeholder="Staff" [(ngModel)]="staffName" name="staff" [formControl]="searchStaff" [matAutocomplete]="staff" #idStaff>
                         <mat-autocomplete #staff="matAutocomplete">
@@ -77,10 +77,10 @@
                         </mat-autocomplete>
                     </mat-form-field>
                 </div>
-
+</div>
                 <div class="padd_l_r mt-3">
                     <button class="ok-button" mat-raised-button (click)="showDatewiseData(datFromDate,datToDate);" color="primary" mat-button>
-            OK
+            Submit
           </button>
                 </div>
             </div>

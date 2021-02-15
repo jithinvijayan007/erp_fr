@@ -52,15 +52,15 @@
                         <app-date-range-picker-3 (onSelectDate)="datFromDate=$event[0];datToDate=$event[1];showDatewiseData($event[0],$event[1]);">
                         </app-date-range-picker-3>
                     </div> -->
-                    <div class="row mt-1">
-                        <div class="col-md-3">
+                    <div class="row container">
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3">
                             <mat-form-field>
                                 <input name="fromDate" (click)="picker.open()" matInput [matDatepicker]="picker" placeholder="From" [(ngModel)]="datFromDate">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3">
                             <mat-form-field>
                                 <input name="toDate" (click)="picker1.open()" matInput [matDatepicker]="picker1" placeholder="To" [(ngModel)]="datToDate">
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -68,10 +68,10 @@
                             </mat-form-field>
                         </div>
                         
-                    </div>
+                    
 
                     
-                <div class="col-md-2 mt-2">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     <mat-form-field>
                         <input matInput placeholder="Branch" [(ngModel)]="branchName" name="branch" [formControl]="searchBranch" [matAutocomplete]="branch" #idBranch>
                         <mat-autocomplete #branch="matAutocomplete">
@@ -81,7 +81,7 @@
                         </mat-autocomplete>
                     </mat-form-field>
                 </div>
-                <div class="col-md-2 mt-2">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     <mat-form-field>
                         <mat-select [(ngModel)]="promoter" name="branchSelected" placeholder="Select type" (change)="setType()">
                             <mat-option value="staff" >Staff</mat-option>
@@ -89,7 +89,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-md-5 mt-2" *ngIf="!promoterType">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3" *ngIf="!promoterType">
                     <mat-form-field>
                         <mat-chip-list #chipList>
                             <mat-chip *ngFor="let value of staffSelected" (removed)="removeStaff(value)">
@@ -108,8 +108,12 @@
                         </mat-autocomplete>
                     </mat-form-field>
                 </div>
+</div>
+                </div>
+<div class="row">
 
-                <div class="col-md-5 mt-2" *ngIf="promoterType">
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6" *ngIf="promoterType">
                     <mat-form-field>
                         <mat-chip-list #chipList>
                             <mat-chip *ngFor="let value of promoterSelected" (remove)="removePromoter(value)">
@@ -128,7 +132,7 @@
                         </mat-autocomplete>
                     </mat-form-field>
                 </div>
-
+</div>
                 <div class="col-md-12 filter" *ngIf="!blnFilterOn" style="    margin-left: 0;">
                     <span>Advanced Filter</span> 
                     <!-- <mat-icon title="Click here" (click)="filterClick()" class="filter_btn mat-icon material-icons" role="img" aria-hidden="true">keyboard_arrow_down</mat-icon> -->
@@ -137,8 +141,9 @@
                        </span>
                     <!-- <mat-icon title="Click here"  class="filter_btn mat-icon material-icons" role="img" aria-hidden="true">highlight_off</mat-icon> -->
                 </div>
+                
                 <div class="col-md-2 mt-3">
-                    <button mat-raised-button (click)="showDatewiseData(datFromDate,datToDate);" color="primary" mat-button *ngIf="!blnFilterOn">OK</button>
+                    <button mat-raised-button (click)="showDatewiseData(datFromDate,datToDate);" class="ok-button" color="primary" mat-button *ngIf="!blnFilterOn">Submit</button>
                 </div>
                 <div class="col-lg-12 filter" style="margin-left: 0px;" *ngIf="blnFilterOn">
                         &nbsp;<span>Advanced Filter</span> 
@@ -147,7 +152,7 @@
                     <span class="cursor" (click)="filterClickOff()">
                         <i class="fa fa-chevron-up" title="Click here" style="margin-left: 5px;color: #58c2ec;"></i>
                        </span>
-                </div>
+                <!-- </div> -->
                 </div>
                 <div class="row" *ngIf="blnFilterOn">   
                 <div class="padd_l_r mt-2">
@@ -183,8 +188,8 @@
                     </mat-form-field>
                 </div> -->
                 <div class="padd_l_r mt-3">
-                    <button mat-raised-button (click)="showDatewiseData(selectedFromDate,selectedToDate);" color="primary" mat-button>
-            OK
+                    <button class="ok-button" mat-raised-button (click)="showDatewiseData(selectedFromDate,selectedToDate);" color="primary" mat-button>
+            Submit
           </button>
                 </div>
             </div>

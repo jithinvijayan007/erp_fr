@@ -3,9 +3,9 @@
         <form>
             <div class="form-head" id="form-blue">
                 <div class="row">
-                    <h4 class="form-head col-md-5 col-lg-5">
+                    <h4 class="form-head col-md-5 col-lg-5"><legend>
 
-                        Branch Report
+                        Branch Report</legend>
                     </h4>
 
                     <div class="nastock col-md-5 col-lg-5 pt-1">
@@ -37,15 +37,15 @@
                     <app-date-range-picker-3 (onSelectDate)="datFromDate=$event[0];datToDate=$event[1];showDatewiseData($event[0],$event[1]);">
                     </app-date-range-picker-3>
                 </div> -->
-                <div class="row mt-1">
-                    <div class="col-md-3">
+                <div class="row container">
+                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
                         <mat-form-field>
                             <input name="fromDate" (click)="picker.open()" matInput [matDatepicker]="picker" placeholder="From" [(ngModel)]="selectedFromDate">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
                         <mat-form-field>
                             <input name="toDate" (click)="picker1.open()" matInput [matDatepicker]="picker1" placeholder="To" [(ngModel)]="selectedToDate">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -53,10 +53,10 @@
                         </mat-form-field>
                     </div>
                     
-                </div>
+                
             <!-- </div>
             <div class="row"> -->
-                <div class="padd_l_r mt-2 col-md-7">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                     <mat-form-field>
                         <mat-chip-list #chipList>
                             <mat-chip *ngFor="let value of statusSelected" (removed)="removeStatus(value)">
@@ -79,10 +79,11 @@
                         </mat-autocomplete>
                     </mat-form-field>
                 </div>
+                </div>
                 <div class="padd_l_r mt-3">
-                    <button mat-raised-button (click)="showDatewiseData(selectedFromDate,selectedToDate);" color="primary"
+                    <button mat-raised-button class="ok-button" (click)="showDatewiseData(selectedFromDate,selectedToDate);" color="primary"
                         mat-button>
-                        OK
+                        Submit
                     </button>
                 </div>
             </div>
@@ -135,7 +136,7 @@
             </div>
             <div id="chart" *ngIf = "blnBranchChartType" class="card">
                 <canvas height="250" baseChart [datasets]="barChartData" [labels]="barChartLabels"
-                    [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor"
+                    [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType"  [colors]="barSalesChartColor"
                     (chartClick)="chartClicked($event)">
                 </canvas>
             </div>
