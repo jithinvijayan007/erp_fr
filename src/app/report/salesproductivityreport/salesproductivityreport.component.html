@@ -197,8 +197,8 @@
         </div>
 </div>
 <div class="row" *ngIf="nodata.length>0">
-    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf="barChartLabels.length > 0">
-        <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top1 card">
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf="barChartLabels.length > 0" >
+        <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top1 card" >
             {{"Staff Wise"|titlecase}}
             <!-- <small *ngIf="barChartOptions.title.text.length>5">
         {{ barChartOptions.title.text|titlecase|slice:0:5 }}...
@@ -232,8 +232,8 @@
           </small>
                 <small class="chart-icons fa fa-arrow-right" (click)="moveBar('source','right')"></small>
             </ng-container>
-            <span class="chart-icons fa fa-chevron-up" title="Good" *ngIf="blnGood" (click)="goodOnClick()" [ngClass]="{'active':blnActive}"></span>
-            <span class="chart-icons fa fa-chevron-down" title="Poor" *ngIf="blnPoor" (click)="poorOnClick()" [ngClass]="{'active':!blnActive}"></span>
+            <span class="chart-icons fa fa-chevron-up" title="Good" *ngIf="blnGood" (click)="goodOnClick()" [ngClass]="{'active':blnActive}" style="PADDING: 10px;"></span>
+            <span class="chart-icons fa fa-chevron-down" title="Poor" *ngIf="blnPoor" (click)="poorOnClick()" [ngClass]="{'active':!blnActive}" style="PADDING: 10px;"></span>
             </span>
         </div>
         <div id="chart" *ngIf = "blnStaffChartType" class="card">
@@ -247,38 +247,47 @@
     </div>
 
     <div  style="background-color: white;" class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf="productBarChartLabels.length > 0">
-        <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top2 card">
+        <div style="margin: 0 0 0 0; padding: 10px;" class="border_top2 card">
             {{"Product Wise - "|titlecase}}
-            <small *ngIf="productBarChartOptions.title.text.length>5">
+            <span>
+            <!-- <small *ngIf="productBarChartOptions.title.text.length>5">
         {{ productBarChartOptions.title.text|titlecase|slice:0:5 }}...
-      </small>
-            <small *ngIf="productBarChartOptions.title.text.length<=5">
+      </small> -->
+            <small *ngIf="productBarChartOptions.title.text.length>=2">
         {{ productBarChartOptions.title.text|titlecase }}
       </small>
+      <ng-container *ngIf='productMaxIndex>1 && blnChartType'>
+        <small class="chart-icons fa fa-arrow-left" (click)="moveBar('product','left')"></small>
+        <small>
+          &nbsp; Page {{productCurrentIndex}} of {{productMaxIndex}} &nbsp;&nbsp;&nbsp;
+        </small>
+        <small class="chart-icons fa fa-arrow-right" (click)="moveBar('product','right')"></small>
+      </ng-container>
             <span class="pull-right">
                    <!-- Show pie chart -->
-                   <a data-toggle="tooltip" *ngIf="blnChartType" title="Show pie chart data" style="cursor: pointer;" (click)="changeChart()">
+                   <a data-toggle="tooltip" *ngIf="blnChartType" title="Show pie chart data" style="cursor: pointer;" (click)="changeChart()" style="padding: 5px;">
                         <i class="fas fa-chart-pie"></i>
                         </a>
                         <!-- Show pie char end -->
                         <!-- Show bar chart -->
-                        <a data-toggle="tooltip" *ngIf="!blnChartType" title="Show bar chart data" style="cursor: pointer;" (click)="changeChart()">
+                        <a data-toggle="tooltip" *ngIf="!blnChartType" title="Show bar chart data" style="cursor: pointer;" (click)="changeChart()"style="padding: 5px;">
                             <i class="fas fa-chart-bar"></i>
                             </a>
+                            </span>
                         <!-- Show bar char end -->
                   <!-- Table data icon -->
-                  <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Product')">
+                  <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Product')" style="padding: 5px;">
                         &nbsp;<i class="fa fa-eye" data-toggle="modal" data-target="#chart_modal" aria-hidden="true"></i>
                         &nbsp;&nbsp;
                         </a>
                 <!-- Table data icon end here -->
-        <ng-container *ngIf='productMaxIndex>1 && blnChartType'>
+        <!-- <ng-container *ngIf='productMaxIndex>1 && blnChartType'>
           <small class="chart-icons fa fa-arrow-left" (click)="moveBar('product','left')"></small>
           <small>
             &nbsp; Page {{productCurrentIndex}} of {{productMaxIndex}} &nbsp;&nbsp;&nbsp;
           </small>
           <small class="chart-icons fa fa-arrow-right" (click)="moveBar('product','right')"></small>
-        </ng-container>
+        </ng-container> -->
       </span>
     </div>
         <div id="chart" *ngIf = "blnChartType card">
@@ -294,19 +303,20 @@
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf="brandBarChartLabels.length > 0">
         <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top3 card">
             {{"Brand Wise - "|titlecase}}
-            <small *ngIf="brandBarChartOptions.title.text.length>5">
+            <span>
+            <!-- <small *ngIf="brandBarChartOptions.title.text.length>5">
         {{ brandBarChartOptions.title.text|titlecase|slice:0:5 }}...
-      </small>
-            <small *ngIf="brandBarChartOptions.title.text.length<=5">
+      </small> -->
+            <small *ngIf="brandBarChartOptions.title.text.length>=2">
         {{ brandBarChartOptions.title.text|titlecase }}
       </small>
             <span class="pull-right">
-                    <a data-toggle="tooltip" *ngIf="blnBrandChartType" title="Show pie chart data" style="cursor: pointer;" (click)="changeBrandChart()">
+                    <a data-toggle="tooltip" *ngIf="blnBrandChartType" title="Show pie chart data" style="cursor: pointer;" (click)="changeBrandChart()" style="padding: 5px;">
                             <i class="fas fa-chart-pie"></i>
                             </a>
                             <!-- Show pie char end -->
                             <!-- Show bar chart -->
-                            <a data-toggle="tooltip" *ngIf="!blnBrandChartType" title="Show bar chart data" style="cursor: pointer;" (click)="changeBrandChart()">
+                            <a data-toggle="tooltip" *ngIf="!blnBrandChartType" title="Show bar chart data" style="cursor: pointer;" (click)="changeBrandChart()" style="padding: 5px;">
                                 <i class="fas fa-chart-bar"></i>
                                 </a>
                             <!-- Show bar char end -->
@@ -323,6 +333,7 @@
           </small>
           <small class="chart-icons fa fa-arrow-right" (click)="moveBar('brand','right')"></small>
         </ng-container>
+      </span>
       </span>
     </div>
         <div id="chart" *ngIf="blnBrandChartType" class="card">
