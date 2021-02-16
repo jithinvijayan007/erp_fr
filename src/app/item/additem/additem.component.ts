@@ -321,10 +321,12 @@ export class AdditemComponent implements OnInit {
     // } else if (!Object.keys(this.dctSpec)) {
     //   this.toastr.error('Specifications required', 'Error!');
     //   return false;
-    } else if (!this.form.get('img1').value && !this.blnEdit) {
-      this.toastr.error('Image required', 'Error!');
-      return false;
-    }else{
+    }
+    // else if (!this.form.get('img1').value && !this.blnEdit) {
+    //   this.toastr.error('Image required', 'Error!'); commented for o2force
+    //   return false;
+    // }
+    else {
 
       let bln_validation = false
       Object.keys(this.dctSpec).map(item=>{
