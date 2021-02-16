@@ -186,3 +186,12 @@
     width: 67px;
     height: 34px;
 } 
+
+.example-container {
+    height: 800px;
+    overflow: auto;
+  }
+::ng-deep .modal-content{
+    width: max-content;
+    // right: 33%;
+}

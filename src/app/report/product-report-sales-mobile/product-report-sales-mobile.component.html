@@ -24,9 +24,9 @@
                         <a *ngIf="blnDownload" data-toggle="tooltip" title="Export"> <i class="fa fa-download" data-toggle="modal"
                             data-target="#myModal" aria-hidden="true" (click)="openExport(exportModal);typeWise=!typeWise"></i></a>
                         &nbsp;&nbsp;&nbsp;
-                        <a *ngIf="blnDownload" data-toggle="tooltip" title="Mail"><i class="fa fa-envelope" data-toggle="modal"
+                        <!-- <a *ngIf="blnDownload" data-toggle="tooltip" title="Mail"><i class="fa fa-envelope" data-toggle="modal"
                             data-target="#myModal-two" aria-hidden="true" (click)="openMail()"></i></a>
-                                &nbsp;&nbsp;
+                                &nbsp;&nbsp; -->
                                 <!-- <a data-toggle="tooltip" title="Chat"><i class="fa fa-comment-o" data-toggle="modal"
                                         data-target="#myModal-three" aria-hidden="true"></i></a> -->
                     <!-- </div> -->
@@ -79,7 +79,7 @@
                 </div>
 </div>
                 <div class="padd_l_r mt-3">
-                    <button class="ok-button" mat-raised-button (click)="showDatewiseData(datFromDate,datToDate);" color="primary" mat-button>
+                    <button class="btn save_btn" mat-raised-button (click)="showDatewiseData(datFromDate,datToDate);" color="primary" mat-button>
             Submit
           </button>
                 </div>
@@ -101,17 +101,23 @@
                         <span class="pull-right">
         
                             <!-- Show pie chart -->
-                            <a data-toggle="tooltip" *ngIf="blnChartType" title="Show pie chart data" style="cursor: pointer;" (click)="changeChart()">
+                            <a data-toggle="tooltip" *ngIf="blnChartType" title="Show pie chart data" style="cursor: pointer;" (click)="changeChart()" style="
+                            padding: 5px;
+                        ">
                             <i class="fas fa-chart-pie"></i>
                             </a>
                             <!-- Show pie char end -->
                             <!-- Show bar chart -->
-                            <a data-toggle="tooltip" *ngIf="!blnChartType" title="Show bar chart data" style="cursor: pointer;" (click)="changeChart()">
+                            <a data-toggle="tooltip" *ngIf="!blnChartType" title="Show bar chart data" style="cursor: pointer;" (click)="changeChart()" style="
+                            padding: 5px;
+                        ">
                                 <i class="fas fa-chart-bar"></i>
                                 </a>
                             <!-- Show bar char end -->
                             <!-- Table data icon -->
-                            <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Product')">
+                            <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Product')" style="
+                            padding: 5px;
+                        ">
                                     &nbsp;<i class="fa fa-eye" data-toggle="modal" data-target="#chart_modal" aria-hidden="true"></i>
                                     &nbsp;&nbsp;
                                     </a>
@@ -124,8 +130,12 @@
                         <span class="chart-icons fas fa-arrow-right" (click)="moveBar('product','right')"></span>
                         </ng-container>
                         &nbsp;&nbsp;
-                        <span class="chart-icons active fa fa-chevron-up" title="Good" *ngIf="blnGood  && blnChartType" (click)="goodOnClick()" [ngClass]="{'active':blnActive}"></span>
-                        <span class="chart-icons fas fa-chevron-down" title="Poor" *ngIf="blnPoor  && blnChartType" (click)="poorOnClick()" [ngClass]="{'active':!blnActive}"></span>
+                        <span class="chart-icons active fa fa-chevron-up" title="Good" *ngIf="blnGood  && blnChartType" (click)="goodOnClick()" [ngClass]="{'active':blnActive}" style="
+                        padding: 5px;
+                    "></span>
+                        <span class="chart-icons fas fa-chevron-down" title="Poor" *ngIf="blnPoor  && blnChartType" (click)="poorOnClick()" [ngClass]="{'active':!blnActive}" style="
+                        padding: 5px;
+                    "></span>
         
                         </span>
                     </div>
@@ -160,17 +170,23 @@
         </small>
                 <span class="pull-right">
                     <!-- Show pie chart -->
-                    <a data-toggle="tooltip" *ngIf="blnBrandChartType" title="Show pie chart data" style="cursor: pointer;" (click)="brandchangeChart()">
+                    <a data-toggle="tooltip" *ngIf="blnBrandChartType" title="Show pie chart data" style="cursor: pointer;" (click)="brandchangeChart()" style="
+                    padding: 5px;
+                ">
                             <i class="fas fa-chart-pie"></i>
                             </a>
                             <!-- Show pie char end -->
                             <!-- Show bar chart -->
-                            <a data-toggle="tooltip" *ngIf="!blnBrandChartType" title="Show bar chart data" style="cursor: pointer;" (click)="brandchangeChart()">
+                            <a data-toggle="tooltip" *ngIf="!blnBrandChartType" title="Show bar chart data" style="cursor: pointer;" (click)="brandchangeChart()" style="
+                            padding: 5px;
+                        ">
                                 <i class="fas fa-chart-bar"></i>
                                 </a>
                             <!-- Show bar char end -->
                      <!-- Table data icon -->
-                     <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Brand')">
+                     <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Brand')"style="
+                     padding: 5px;
+                 ">
                             &nbsp;<i class="fas fa-eye" data-toggle="modal" data-target="#chart_modal" aria-hidden="true"></i>
                             &nbsp;&nbsp;
                             </a>
@@ -220,7 +236,9 @@
                             <!-- Show bar char end -->
 
                     <!-- Table data icon -->
-                    <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Item')">
+                    <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Item')" style="
+                    padding: 5px;
+                ">
                             &nbsp;<i class="fa fa-eye" data-toggle="modal" data-target="#chart_modal" aria-hidden="true"></i>
                             &nbsp;&nbsp;
                             </a>
@@ -267,7 +285,9 @@
                                 </a> -->
                             <!-- Show bar char end -->
                      <!-- Table data icon -->
-                     <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Staff')">
+                     <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Staff')" style="
+                     padding: 5px;
+                 ">
                             &nbsp;<i class="fa fa-eye" data-toggle="modal" data-target="#chart_modal" aria-hidden="true"></i>
                             &nbsp;&nbsp;
                             </a>
