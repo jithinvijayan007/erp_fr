@@ -691,8 +691,8 @@ export class SalesproductivityreportComponent implements OnInit {
       tdate: [null, Validators.compose([Validators.required])]
     });
 
-    this.datFromDate = moment(new Date(this.datFromDate)).format('YYYY-MM-DD');
-    this.datToDate = moment(new Date(this.datToDate)).format('YYYY-MM-DD');
+    this.datFromDate = moment(new Date()).format('YYYY-MM-DD');
+    this.datToDate = moment(new Date()).format('YYYY-MM-DD');
     this.showDatewiseData(this.datFromDate, this.datToDate);
 
     this.searchBrand.valueChanges
@@ -1043,12 +1043,14 @@ export class SalesproductivityreportComponent implements OnInit {
     // fdate._d = new Date(from.getTime() + (from.getTimezoneOffset() * 60000));
     // tdate._d = new Date(to.getTime() + (to.getTimezoneOffset() * 60000));
    
-    this.datFromSaved = moment(new Date(fdate)).format('YYYY-MM-DD');
-    this.datToSaved = moment(new Date(tdate)).format('YYYY-MM-DD');
+    this.datFromDate = moment(new Date(fdate)).format('YYYY-MM-DD');
+    this.datToDate = moment(new Date(tdate)).format('YYYY-MM-DD');
+    console.log(moment(new Date(fdate)).format('YYYY-MM-DD'),'xfxjuc',moment(new Date(tdate)).format('YYYY-MM-DD'));
+
     const dctJsonData = { username: this.currentUserName };
     dctJsonData['data'] = 'Custom';
-    dctJsonData['date_from'] = this.datFromSaved;
-    dctJsonData['date_to'] = this.datToSaved;
+    dctJsonData['date_from'] = this.datFromDate;
+    dctJsonData['date_to'] = this.datToDate;
     dctJsonData['type'] = 'Sale';
     dctJsonData['show_type'] = this.type;
     dctJsonData['show_table'] = this.chartName;

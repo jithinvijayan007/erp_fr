@@ -535,8 +535,8 @@ export class ProductReportSalesMobileComponent implements OnInit {
     if (!localStorage.getItem('Tokeniser')) {
       this.router.navigate(['/user/sign-in']);
     }
-    this.datFromDate = moment();
-    this.datToDate = moment();
+    this.datFromDate = moment(new Date()).format('YYYY-MM-DD');
+    this.datToDate = moment(new Date()).format('YYYY-MM-DD');
     this.showDatewiseData(this.datFromDate, this.datToDate);
 
 
