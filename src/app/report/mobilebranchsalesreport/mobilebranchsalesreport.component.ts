@@ -599,9 +599,9 @@ export class MobilebranchsalesreportComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     // this.dataSource.paginator.firstPage();
-    this.datFromDate = moment();
-    this.datToDate = moment();
-    this.showDatewiseData(this.datFromDate, this.datToDate);
+    this.selectedFromDate = moment(new Date()).format('YYYY-MM-DD');
+    this.selectedToDate = moment(new Date()).format('YYYY-MM-DD');
+    this.showDatewiseData(this.selectedFromDate, this.selectedToDate);
     // this.showAll();
   }
   tabledataFunc(){
@@ -660,7 +660,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
     // let to = tdate._d;
     // fdate._d = new Date(from.getTime() + (from.getTimezoneOffset() * 60000));
     // tdate._d = new Date(to.getTime() + (to.getTimezoneOffset() * 60000));
-    console.log(moment(new Date(fdate)).format('YYYY-MM-DD'),'xfxjuc',moment(new Date(tdate)).format('YYYY-MM-DD'));
+    // console.log(moment(new Date(fdate)).format('YYYY-MM-DD'),'xfxjuc',moment(new Date(tdate)).format('YYYY-MM-DD'));
     
     this.blnDataLoaded = false;
     if (fdate && tdate) {
@@ -669,6 +669,8 @@ export class MobilebranchsalesreportComponent implements OnInit {
       this.selectedFromDate = moment(new Date(fdate)).format('YYYY-MM-DD');
       // this.selectedToDate = this.datToDate.add(1, 'days').format('YYYY-MM-DD');
       this.selectedToDate = moment(new Date(tdate)).format('YYYY-MM-DD');
+        // console.log("abc",this.selectedToDate);
+
       dctJsonData['date_from'] = this.selectedFromDate;
       dctJsonData['date_to'] = this.selectedToDate;
       dctJsonData['company_id'] = localStorage.getItem('companyId');
