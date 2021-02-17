@@ -26,6 +26,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from "ngx-spinner";
+
 
 @Component({
   selector: 'app-product-report-sales-mobile',
@@ -104,6 +106,8 @@ export class ProductReportSalesMobileComponent implements OnInit {
   blnExported = false;
   strUrl = '';
   dctJsonData1 = {}
+
+  exportmodal;
 
 
   showPopup=false;
@@ -502,7 +506,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
     private typeaheadObject: TypeaheadService,
     // private snotifyService: SnotifyService,
     public toastr: ToastrService,
-    // private spinnerService: Ng4LoadingSpinnerService,
+    private spinnerService: NgxSpinnerService,
     private chartservice: ChartService,
     private reportcomponent: ReportComponent,
     vcr: ViewContainerRef,
@@ -663,9 +667,10 @@ export class ProductReportSalesMobileComponent implements OnInit {
     this.chart=false;
     this.table=false;
     this.showModal = true;
-    this.modalService.open(modal, { windowClass: 'exportModal' })
+    this.exportmodal = this.modalService.open(modal,{windowClass:'exportModal',backdrop:false})
   }
   closeExport(){
+    this.exportmodal.close();
     this.showModal = false;
   }
   openMail(){
@@ -751,7 +756,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
 
       // }
 
-     // this.spinnerService.show();
+     this.spinnerService.show();
       // var chartElement = <HTMLInputElement> document.getElementById("chart");
       // var tableElement = <HTMLInputElement> document.getElementById("tableData");
 
@@ -769,8 +774,10 @@ export class ProductReportSalesMobileComponent implements OnInit {
         this.serverService.postData("product_report_pdf/",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
+            this.exportmodal.close();
+            this.showModal = false;
 
               if (response['status'] === 1) {
               
@@ -798,8 +805,10 @@ export class ProductReportSalesMobileComponent implements OnInit {
            }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
+            this.exportmodal.close();
+            this.showModal = false;
 
           });
 
@@ -811,8 +820,10 @@ export class ProductReportSalesMobileComponent implements OnInit {
         this.serverService.postData("product_report_pdf/",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
+            this.exportmodal.close();
+            this.showModal = false;
 
               if (response['status'] === 1) {
               //org
@@ -886,8 +897,10 @@ export class ProductReportSalesMobileComponent implements OnInit {
            }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
+            this.exportmodal.close();
+            this.showModal = false;
 
           });
 
@@ -973,7 +986,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
 
 
 
-      // this.spinnerService.show();
+      this.spinnerService.show();
       this.showSpinner=true;
 
     
@@ -984,7 +997,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
         this.serverService.postData("product_report_pdf/",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
               if (response['status'] === 1) {
@@ -1001,7 +1014,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
              }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
           });
@@ -1014,7 +1027,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
         this.serverService.postData("product_report_pdf/",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
               if (response['status'] === 1) {
@@ -1030,7 +1043,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
              }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
           });
@@ -1100,7 +1113,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
             dctJsonData['bln_table'] = this.table;
 
      
-      // this.spinnerService.show();
+      this.spinnerService.show();
       this.showSpinner=true;
 
     
@@ -1111,7 +1124,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
         this.serverService.postData("product_report_pdf/",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
               if (response['status'] === 1) {
@@ -1127,7 +1140,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
              }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
           });
@@ -1140,7 +1153,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
         this.serverService.postData("product_report_pdf/",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
               if (response['status'] === 1) {
@@ -1155,7 +1168,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
              }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
           });
@@ -1206,7 +1219,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
       dctJsonData['staff'] = this.staffId;
       this.expJsondata['staff']=this.staffName;
     }
-    // this.spinnerService.show();
+    this.spinnerService.show();
     this.showSpinner=true;
 
     // this.serverService.getServiceReportMobile(JSON.stringify(dctJsonData))
@@ -1231,7 +1244,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
      this.serverService.postData("reports/service_wise_mobile/",dctJsonData)
     .subscribe(
       (response) => {
-        // this.spinnerService.hide();
+        this.spinnerService.hide();
         this.showSpinner=false;
        
           if (response['status'] === 1) {
@@ -1264,7 +1277,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
        }
       },
       (error) => {
-        // this.spinnerService.hide();
+        this.spinnerService.hide();
         this.showSpinner=false;
 
       });
@@ -2802,7 +2815,7 @@ downloadLog(dctJsonData){
   this.serverService.postData("download_log/",dctDownloadLog)
   .subscribe(
     (response) => {
-      // this.spinnerService.hide();
+      this.spinnerService.hide();
       this.showSpinner=false;
 
         if (response['status'] === 1) {
@@ -2828,7 +2841,7 @@ downloadLog(dctJsonData){
      }
     },
     (error) => {
-      // this.spinnerService.hide();
+      this.spinnerService.hide();
       this.showSpinner=false;
 
     });

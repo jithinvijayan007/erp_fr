@@ -24,6 +24,7 @@ import { from } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime } from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-mobilebranchsalesreport',
   templateUrl: './mobilebranchsalesreport.component.html',
@@ -47,6 +48,8 @@ export class MobilebranchsalesreportComponent implements OnInit {
   tempBrandIndex;
   tempItemIndex;
   typeWise=false;
+
+  exportmodal;
 
   
   
@@ -637,7 +640,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
          }
         },
         (error) => {
-          // this.spinnerService.hide();
+          this.spinnerService.hide();
           this.showSpinner=false;
 
         });
@@ -697,14 +700,14 @@ export class MobilebranchsalesreportComponent implements OnInit {
         this.expJsondata['branch']='ALL'
       }
 
-      // this.spinnerService.show();
+      this.spinnerService.show();
       this.showSpinner=true;
 
       this.serverService
         .postData('enquiry/mobilebranchreport/',dctJsonData)
         .subscribe(
           response => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
             
             if (response['status'] == 1) {
@@ -734,7 +737,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
           
           },
           error => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
           }
@@ -749,11 +752,12 @@ export class MobilebranchsalesreportComponent implements OnInit {
     this.chart=false;
     this.table=false;
     this.showModal = true;
-    this.modalService.open(modal,{windowClass:'exportModal'})
+    this.exportmodal = this.modalService.open(modal,{windowClass:'exportModal',backdrop:false})
 
 
   }
   closeExport(){
+    this.exportmodal.close();
     this.showModal = false;
   }
   openMail(){
@@ -811,7 +815,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
             dctJsonData['bln_chart'] = this.chart;
             dctJsonData['bln_table'] = this.table;
 
-            // this.spinnerService.show();
+            this.spinnerService.show();
             this.showSpinner=true;
 
       
@@ -822,8 +826,11 @@ export class MobilebranchsalesreportComponent implements OnInit {
         this.serverService.postData("branch_report_download/branch_pdf",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
+            this.exportmodal.close();
+            this.showModal = false;
+            
 
               if (response['status'] === 1) {
               
@@ -853,8 +860,10 @@ export class MobilebranchsalesreportComponent implements OnInit {
            }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
+            this.exportmodal.close();
+            this.showModal = false;
 
           });
 
@@ -866,8 +875,10 @@ export class MobilebranchsalesreportComponent implements OnInit {
         this.serverService.postData("branch_report_download/branch_pdf",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
+            this.exportmodal.close();
+            this.showModal = false;
 
               if (response['status'] === 1) {
               //org
@@ -909,8 +920,10 @@ export class MobilebranchsalesreportComponent implements OnInit {
            }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
+            this.exportmodal.close();
+            this.showModal = false;
 
           });
 
@@ -984,7 +997,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
 
 
 
-      // this.spinnerService.show();
+      this.spinnerService.show();
       this.showSpinner=true;
 
     
@@ -995,7 +1008,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
         this.serverService.postData("branch_report_download/branch_pdf",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
               if (response['status'] === 1) {
@@ -1015,7 +1028,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
              }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
           });
@@ -1028,7 +1041,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
         this.serverService.postData("branch_report_download/branch_pdf",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
               if (response['status'] === 1) {
@@ -1047,7 +1060,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
              }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
           });
@@ -1109,7 +1122,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
             dctJsonData['bln_table'] = this.table;
 
      
-      // this.spinnerService.show();
+      this.spinnerService.show();
       this.showSpinner=true;
 
     
@@ -1120,7 +1133,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
         this.serverService.postData("branch_report_download/branch_pdf",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
               if (response['status'] === 1) {
@@ -1140,7 +1153,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
              }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
           });
@@ -1153,7 +1166,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
         this.serverService.postData("branch_report_download/branch_pdf",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
               if (response['status'] === 1) {
@@ -1172,7 +1185,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
              }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
 
           });
@@ -3164,7 +3177,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
     this.serverService.postData("download_log/",dctDownloadLog)
     .subscribe(
       (response) => {
-        // this.spinnerService.hide();
+        this.spinnerService.hide();
         this.showSpinner=false;
 
           if (response['status'] === 1) {
@@ -3190,7 +3203,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
        }
       },
       (error) => {
-        // this.spinnerService.hide();
+        this.spinnerService.hide();
         this.showSpinner=false;
 
       });
