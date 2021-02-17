@@ -141,7 +141,7 @@
                 </canvas>
             </div>
             <div id="chart" *ngIf = "!blnBranchChartType" class="card">
-                    <canvas height="250" baseChart [data]="barChartData" [labels]="barChartLabels"
+                    <canvas height="250" baseChart [data]="barChartData[1].data" [labels]="barChartLabels"
                         [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors"
                         (chartClick)="chartClicked($event)">
                     </canvas>
@@ -194,7 +194,7 @@
                 </canvas>
             </div>
             <div id="chart" *ngIf = "!blnProductChartType" class="card">
-                    <canvas height="235" baseChart [options]="productPieOptions" [datasets]="servicePieChartData"
+                    <canvas height="235" baseChart [options]="productPieOptions" [datasets]="servicePieChartData1"
                         [labels]="servicePieChartLabels1" [colors]="pieChartColors" [chartType]="productPieChartType"
                         (chartClick)=servicePieChartClicked($event)>
                     </canvas>
@@ -249,7 +249,7 @@
             </div>
             <div id="chart" *ngIf = "!blnBrandChartType" class="card">
                     <canvas height="235" baseChart [options]="productPieOptions" [legend]="brandPieChartLegend"
-                        [datasets]="brandPieChartData" [labels]="brandPieChartLabels1" [colors]="pieChartColors"
+                        [datasets]="brandPieChartData1" [labels]="brandPieChartLabels1" [colors]="pieChartColors"
                         [chartType]="productPieChartType" (chartClick)=brandPieChartClicked($event)>
                     </canvas>
             </div>
@@ -302,7 +302,7 @@
             </div>
             <div id="chart" *ngIf = "!blnItemChartType" class="card">
                     <canvas height="250" baseChart [options]="productPieOptions" [legend]="itemPieChartLegend"
-                        [data]="itemPieChartData" [labels]="itemPieChartLabels" [colors]="pieChartColors"
+                        [data]="itemPieChartData[1].data" [labels]="itemPieChartLabels" [colors]="pieChartColors"
                         [chartType]="productPieChartType">
                     </canvas>
             </div>

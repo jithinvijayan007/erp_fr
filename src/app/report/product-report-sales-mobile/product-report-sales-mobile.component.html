@@ -146,7 +146,7 @@
                         </div>
                         <div id="chart" class="card" *ngIf="!blnChartType">  
                             <!-- setting pie chart -->
-                        <canvas  height="235px" baseChart [options]="productPieOptions" [datasets]="serviceChartData" [labels]="serviceChartLabels1"
+                        <canvas  height="235px" baseChart [options]="productPieOptions" [datasets]="serviceChartData1" [labels]="serviceChartLabels1"
                           [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)="chartClicked($event)">
                         </canvas>
                       </div>
@@ -209,7 +209,7 @@
             </div>
 
             <div id="chart" class="card" *ngIf="!blnBrandChartType">
-                    <canvas height="235" baseChart [options]="productPieOptions" [datasets]="brandPieChartData" [labels]="brandPieChartLabels1" [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)=brandPieChartClicked($event)>
+                    <canvas height="235" baseChart [options]="productPieOptions" [datasets]="brandPieChartData1" [labels]="brandPieChartLabels1" [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)=brandPieChartClicked($event)>
             </canvas>
                 </div>
         </div>
@@ -258,7 +258,7 @@
             </div>
 
             <div class="card" id="chart" *ngIf="!blnItemChartType">
-                    <canvas height="235" baseChart [options]="productPieOptions" [data]="itemPieChartData" [labels]="itemPieChartLabels" [legend]="itemChartLegend" [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)=itemPieChartClicked($event)>
+                    <canvas height="235" baseChart [options]="productPieOptions" [data]="itemPieChartData[1].data" [labels]="itemPieChartLabels" [legend]="itemChartLegend" [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)=itemPieChartClicked($event)>
             </canvas>
                 </div>
 
@@ -306,7 +306,7 @@
         </canvas>
             </div>
             <div id="chart" class="card" *ngIf="!blnStaffChartType">
-                    <canvas height="235" baseChart [options]="productPieOptions" [data]="staffPieChartData" [labels]="staffPieChartLabels1" [legend]="staffChartLegend" [colors]="pieChartColors" [chartType]="productPieChartType">
+                    <canvas height="235" baseChart [options]="productPieOptions" [data]="staffPieChartData[1].data" [labels]="staffPieChartLabels1" [legend]="staffChartLegend" [colors]="pieChartColors" [chartType]="productPieChartType">
             </canvas>
                 </div>
 
