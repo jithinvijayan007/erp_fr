@@ -172,26 +172,32 @@
     
     //   Removes modal transform 
 
-    .exportModal{
-        min-width: 800px !important;
-        min-height: 500px !important;
-    }
+    // .exportModal{
+    //     min-width: 800px ;
+    //     min-height: 500px ;
+    // }
 
-.ok-button{
-      display: block;
-    background-color: #2d8bc2;
-    color: white;
-    border-radius: 7px;
-    border: none;
-    width: 67px;
-    height: 34px;
-} 
+// .ok-button{
+//       display: block;
+//     background-color: #2d8bc2;
+//     color: white;
+//     border-radius: 7px;
+//     border: none;
+//     width: 67px;
+//     height: 34px;
+// } 
 
 .example-container {
-    height: 800px;
+    max-height: 700px;
     overflow: auto;
   }
 ::ng-deep .modal-content{
-    width: max-content;
-    // right: 33%;
+    width: 1150px !important;
+    justify-content: center;
+    display: block;
+    margin: auto;
+}
+
+.pull-right{
+    float: right;
 }
