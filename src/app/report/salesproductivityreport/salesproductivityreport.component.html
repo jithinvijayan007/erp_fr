@@ -186,7 +186,7 @@
                     </mat-form-field>
                 </div> -->
                 <div class="col-md-2">
-                    <button class="btn save_btn" mat-raised-button (click)="showDatewiseData(selectedFromDate,selectedToDate);" color="primary" mat-button>
+                    <button class="btn save_btn" mat-raised-button (click)="showDatewiseData(datFromDate,datToDate);" color="primary" mat-button>
             Submit
           </button>
                 </div>
@@ -752,7 +752,7 @@
 
 <ng-template #exportModal let-modal>
 
-    <div class="modal-content">
+    <div class="modal-content" [style.display]="showModal ? 'block' : 'none'">
         <div class="modal-header">
                 <button type="button" class="close" (click)="closeExport()" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title text-center" id="modal-blue">Export</h4>
@@ -780,7 +780,7 @@
                 <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                         <button type="button" class="mat-button mat-raised-button mat-primary pull-left"
-                                                data-dismiss="modal">Cancel</button>
+                                        (click)="closeExport()" data-dismiss="modal">Cancel</button>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                         <button type="button" (click)='exportPdfExcel(datFromDate,datToDate)'
@@ -791,6 +791,13 @@
         
     </div>
 </ng-template>
+
+
+
+
+
+
+<ngx-spinner bdColor = "rgba(0,0,0,0.13)" size="default" color="#f77b36" type="ball-spin-clockwise"></ngx-spinner>
 
     
     

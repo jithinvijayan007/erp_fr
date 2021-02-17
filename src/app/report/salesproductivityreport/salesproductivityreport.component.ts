@@ -58,6 +58,8 @@ export class SalesproductivityreportComponent implements OnInit {
   chartHead;
   dataSource1;
 
+  exportmodal
+
   dct_product = {};
   dct_brand = {};
   dct_item = {};
@@ -653,7 +655,7 @@ export class SalesproductivityreportComponent implements OnInit {
     // private snotifyService: SnotifyService,
     private fb: FormBuilder,
     private chartservice: ChartService,
-    // private spinnerService: NgxSpinnerService,
+    private spinnerService: NgxSpinnerService,
     // public toastr: ToastsManager,
     private reportComponent: ReportComponent,
     private modalService: NgbModal, 
@@ -1199,6 +1201,7 @@ export class SalesproductivityreportComponent implements OnInit {
     if(this.chart==false&&this.table==false){
 
       // this.toastr.error('Choose chart or table');
+      Swal.fire('Error','Choose chart or table','error')
       this.validationStatus=false;
       return false;
 
@@ -1257,19 +1260,22 @@ export class SalesproductivityreportComponent implements OnInit {
     dctJsonData['bln_chart'] = this.chart;
     dctJsonData['bln_table'] = this.table;
 
-    // this.spinnerService.show();
+    this.spinnerService.show();
     this.showSpinner=true;
 
       
       if(this.export){
 
         dctJsonData['document'] = 'excel';
-
+        // this.spinnerService.show()
         this.serverService.postData("enquiry_productivity_report_pdf/enq_productivity_pdf/",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
+            this.exportmodal.close();
+            this.showModal = false;
+            
 
               if (response['status'] == 1) {
               
@@ -1295,8 +1301,10 @@ export class SalesproductivityreportComponent implements OnInit {
            }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
+            this.exportmodal.close();
+            this.showModal = false;
 
           });
 
@@ -1308,8 +1316,10 @@ export class SalesproductivityreportComponent implements OnInit {
         this.serverService.postData("enquiry_productivity_report_pdf/enq_productivity_pdf/",dctJsonData)
         .subscribe(
           (response) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
+            this.exportmodal.close();
+            this.showModal = false;
 
               if (response['status'] == 1) {
               //org
@@ -1353,8 +1363,10 @@ export class SalesproductivityreportComponent implements OnInit {
            }
           },
           (error) => {
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
             this.showSpinner=false;
+            this.exportmodal.close();
+            this.showModal = false;
 
           });
        
@@ -1372,6 +1384,7 @@ export class SalesproductivityreportComponent implements OnInit {
     if(this.chart==false&&this.table==false){
 
       // this.toastr.error('Choose chart or table');
+      Swal.fire('Error','Choose chart or table','error')
       this.validationStatus=false;
       return false;
 
@@ -1544,6 +1557,7 @@ export class SalesproductivityreportComponent implements OnInit {
     if(this.chart==false&&this.table==false){
 
       // this.toastr.error('Choose chart or table');
+      Swal.fire('Error','Choose chart or table','error')
       this.validationStatus=false;
       return false;
 
@@ -2167,7 +2181,7 @@ export class SalesproductivityreportComponent implements OnInit {
     this.selectedOptionBrand = '';
     if (this.selectedOptionSource == '') {
       // this.snotifyService.error('Select product before item');
-      Swal.fire('Error','Select product before item','error')
+      // Swal.fire('Error','Select product before item','error')
 
       this.selectedOptionSource=this.initAssignee;
       this.clickedStaffIndex=this.sourceCurrentIndex;
@@ -2271,14 +2285,14 @@ export class SalesproductivityreportComponent implements OnInit {
   brandChartClicked(e: any): void {
     if (this.selectedOptionSource == '') {
       // this.snotifyService.error('Select product before item');
-      Swal.fire('Error','Select product before item','error')
+      // Swal.fire('Error','Select product before item','error')
 
       this.selectedOptionSource=this.initAssignee;
       this.clickedStaffIndex=this.sourceCurrentIndex;
     }
     if (this.selectedOptionProduct == '') {
       // this.snotifyService.error('Select product before item');
-      Swal.fire('Error','Select product before item','error')
+      // Swal.fire('Error','Select product before item','error')
 
       
       this.selectedOptionProduct=this.initProduct;
@@ -3033,11 +3047,12 @@ export class SalesproductivityreportComponent implements OnInit {
     this.chart=false;
     this.table=false;
     this.showModal = true;
-    this.modalService.open(modal,{windowClass:'exportModal'})
+    this.exportmodal = this.modalService.open(modal,{windowClass:'exportModal',backdrop:false})
 
 
   }
   closeExport(){
+    this.exportmodal.close();
     this.showModal = false;
   }
   openMail(){
