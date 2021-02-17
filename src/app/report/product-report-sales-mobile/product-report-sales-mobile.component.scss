@@ -190,3 +190,17 @@
     height: 34px;
 }  
 //   Removes modal transform 
+.example-container {
+  max-height: 700px;
+  overflow: auto;
+}
+::ng-deep .modal-content{
+  width: 1150px !important;
+  justify-content: center;
+  display: block;
+  margin: auto;
+}
+.pull-right{
+  float: right;
+}
+
