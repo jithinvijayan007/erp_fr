@@ -1534,7 +1534,7 @@ export class ProductReportSalesMobileComponent implements OnInit {
     });
 
     for (let page in this.dctReportData.SERVICE_BRAND_ITEM_STAFF){      
-      if(page=='3'){
+      if (page == '2') {
         break;
       }
       this.serviceChartLabels1.push(...Object.keys(this.dctReportData.SERVICE_BRAND_ITEM_STAFF[page]));
@@ -2448,6 +2448,20 @@ setTimeout(() => (this.staffPieChartLabels1 = Object.assign([], this.staffPieCha
           this.serviceCurrentIndex = 1;
         }
       }
+
+
+      this.serviceChartLabels1 = []
+      this.serviceChartData1[0].data = []
+      this.serviceChartLabels1.push(...Object.keys(this.dctReportData.SERVICE_BRAND_ITEM_STAFF[this.serviceCurrentIndex]));
+      for (let product in this.dctReportData.SERVICE_BRAND_ITEM_STAFF[this.serviceCurrentIndex]) {
+
+        this.serviceChartData1[0].data.push(this.dctReportData.SERVICE_BRAND_ITEM_STAFF[this.serviceCurrentIndex][product]['Sale']);
+
+
+      }
+
+
+
       this.currentPage=this.serviceCurrentIndex;
       // if (
       // this.selectedOptionProduct === '' &&
