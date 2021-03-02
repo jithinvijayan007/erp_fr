@@ -1,0 +1,1103 @@
+<div class="row">
+  <div class="col-lg-12 col-md-12 div">
+    <form>
+        <h4 class="form-new-head col-md-12">
+          <div class="row">
+            <span class="col-md-6" style="top: 8px;">&nbsp;{{chartName}}</span>
+            <span *ngIf="blnShowQty"   class="col-md-2">
+              <label class="switch">
+                <input class="switch-input" type="checkbox" (change)="switchChange()" name="type" [(ngModel)]="type" />
+                <span class="switch-label" data-on="Value" data-off="Qty"></span>
+                <span class="switch-handle"></span>
+              </label>
+            </span>
+            <span *ngIf="!blnShowQty"  class="col-md-2">
+              <label class="switch" style="visibility:hidden;">
+                <input class="switch-input" type="checkbox" (change)="switchChange()" name="type" [(ngModel)]="type" />
+                <span class="switch-label" data-on="Value" data-off="Qty"></span>
+                <span class="switch-handle"></span>
+              </label>
+            </span>
+             <span class="col-md-3">
+              <div class="text-right pt-0">
+                <a data-toggle="tooltip" title="Export" *ngIf ="blnTemporaryHide">
+                  <i class="fa fa-download" data-toggle="modal" data-target="#myModal" aria-hidden="true" (click)="openExport(exportModal1);typeWise=!typeWise"></i>
+                </a>
+                <!-- &nbsp;&nbsp;&nbsp;
+                <a data-toggle="tooltip" title="Mail">
+                  <i class="fa fa-envelope" data-toggle="modal" data-target="#myModal-two" aria-hidden="true" (click)="openMail()"></i>
+                </a>
+                &nbsp;&nbsp; -->
+              </div> 
+            </span>  
+          </div>
+        </h4>
+        <div class="clearfix"></div>
+
+      <div class="row" *ngIf=" urlName != 'productstockreport' && urlName != 'branchstockreport' && urlName != 'branchtargetreport' && urlName != 'regiontargetreport'">
+        <!-- <div class="padd_l_r mt-4">
+          <app-date-range-picker-3 (onSelectDate)="datFromDate=$event[0];datToDate=$event[1];showDatewiseData($event[0],$event[1]);">
+          </app-date-range-picker-3>
+        </div> -->
+
+        <div class="row mt-1">
+          <div class="col-md-3">
+              <mat-form-field>
+                  <input name="fromDate" (click)="picker.open()" matInput [matDatepicker]="picker" placeholder="From" [(ngModel)]="datFromDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+          </div>
+          <div class="col-md-3">
+              <mat-form-field>
+                  <input name="toDate" (click)="picker1.open()" matInput [matDatepicker]="picker1" placeholder="To" [(ngModel)]="datToDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+          </div>
+          
+      </div>
+
+        <div class="col-lg-3 mt-2" *ngIf="blnBranch">
+          <mat-form-field>
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let value of statusSelected" (remove)="removeStatus(value)">
+                ​{{ (value.name.length>3 ? value.name.substring(0,3) + "..": value.name) | titlecase }}
+                <!-- <mat-icon matChipRemove>cancel1</mat-icon>-->
+                <i matChipRemove class="fas fa-times"></i>
+              </mat-chip> 
+              
+              <input [matChipInputFor]="chipList" matInput placeholder="Branch" [(ngModel)]="branchName" name="branch"
+                [formControl]="searchBranch" [matAutocomplete]="branch" #idBranch>
+            </mat-chip-list>
+            <mat-autocomplete #branch="matAutocomplete">
+              <mat-option *ngFor="let item of lstBranches" [value]="item.name" (onSelectionChange)="addStatus(item)">
+                {{ item.id+' - '+item.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+    <!-- ============================================================== -->
+
+
+        <div class="col-lg-4 mt-2" *ngIf="blnStaff">
+          <mat-form-field>
+              <mat-chip-list #chipList1>
+                  <mat-chip *ngFor="let value of statusStaffSelected" (remove)="removeStaffStatus(value)">
+                      ​{{ (value.name.length>3 ? value.name.substring(0,3) + "..": value.name) | titlecase }}
+                      <!-- <mat-icon matChipRemove>cancel</mat-icon> -->
+                      <i matChipRemove class="fas fa-times"></i>
+                  </mat-chip>
+                  <input [matChipInputFor]="chipList" matInput placeholder="Staff" [(ngModel)]="staffName" name="staff"
+                          [formControl]="searchStaff" [matAutocomplete]="staff"
+                          #idStaff>
+              </mat-chip-list>
+                  <mat-autocomplete #staff="matAutocomplete">
+                          <mat-option *ngFor="let staf of lstStaffs" [value]="staf.name"
+                                  (onSelectionChange)="addStaffStatus(staf)">
+                                  {{ staf.code+' - '+staf.name }}
+                          </mat-option>
+                  </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+        <!-- ============================================================== -->
+     
+        <div class="col-lg-4 mt-2" *ngIf="blnProduct">
+          <mat-form-field>
+              <mat-chip-list #chipList1>
+                  <mat-chip *ngFor="let value of statusProductSelected" (remove)="removeProductStatus(value)">
+                      ​{{ (value.name.length>3 ? value.name.substring(0,3) + "..": value.name) | titlecase }}
+                      <mat-icon matChipRemove>cancel2</mat-icon>
+                  </mat-chip>
+                  <input [matChipInputFor]="chipList1" matInput placeholder="Product" [(ngModel)]="productName" name="product"
+                          [formControl]="searchProduct" [matAutocomplete]="product"
+                          #idProduct>
+              </mat-chip-list>
+                  <mat-autocomplete #product="matAutocomplete">
+                          <mat-option *ngFor="let product of lstProducts" [value]="product.name"
+                                  (onSelectionChange)="addProductStatus(product)">
+                                  {{product.name }}
+                          </mat-option>
+                  </mat-autocomplete>
+          </mat-form-field>
+        </div>
+     
+        <div class="col-lg-4 mt-2" *ngIf="blnBrand">
+          <mat-form-field>
+              <mat-chip-list #chipList1>
+                  <mat-chip *ngFor="let value of statusBrandSelected" (remove)="removeBrandStatus(value)">
+                      ​{{ (value.name.length>3 ? value.name.substring(0,3) + "..": value.name) | titlecase }}
+                      <mat-icon matChipRemove>cancel3</mat-icon>
+                  </mat-chip>
+                  <input [matChipInputFor]="chipList1" matInput placeholder="Brand" [(ngModel)]="brandName" name="brand"
+                          [formControl]="searchBrand" [matAutocomplete]="brand"
+                          #idBrand>
+              </mat-chip-list>
+                  <mat-autocomplete #brand="matAutocomplete">
+                          <mat-option *ngFor="let brand of lstBrands" [value]="brand.name"
+                                  (onSelectionChange)="addBrandStatus(brand)">
+                                  {{brand.name }}
+                          </mat-option>
+                  </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+        <div class="col-lg-4 mt-2" *ngIf="blnItem">
+          <mat-form-field>
+              <mat-chip-list #chipList1>
+                  <mat-chip *ngFor="let value of statusItemSelected" (remove)="removeItemStatus(value)">
+                      ​{{ (value.name.length>3 ? value.name.substring(0,3) + "..": value.name) | titlecase }}
+                      <mat-icon matChipRemove>cancel4</mat-icon>
+                  </mat-chip>
+                  <input [matChipInputFor]="chipList1" matInput placeholder="item" [(ngModel)]="itemName" name="item"
+                          [formControl]="searchItem" [matAutocomplete]="item"
+                          #idItem>
+              </mat-chip-list>
+                  <mat-autocomplete #item="matAutocomplete">
+                          <mat-option *ngFor="let item of lstItems" [value]="item.name"
+                                  (onSelectionChange)="addItemStatus(item)">
+                                  {{item.name }}
+                          </mat-option>
+                  </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <!-- ============================================================== -->
+
+        
+        <div class="padd_l_r mt-3" *ngIf="blnStaff || blnBranch || blnBrand || blnProduct">
+          <button mat-raised-button (click)="okClicked(datFromDate,datToDate);" color="primary" mat-button>
+            Submit
+          </button>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="urlName == 'branchtargetreport' || urlName == 'regiontargetreport'">
+        <div class="padd_l_r mt-4">
+          <mat-form-field>
+            <mat-select placeholder="Select year" id="yearshow" [(ngModel)]="selectedYear" name="currentYear" #yeardata>
+              <mat-option *ngFor="let item of year;let i=index;" [value]="item">{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="padd_l_r mt-4">
+          <mat-form-field>
+            <mat-select placeholder="Select Quarter" id="quarter" [(ngModel)]="quarter" name="quarter" #quarterdata>
+              <mat-option *ngFor="let item of lstquarter;" [value]="item">{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="padd_l_r mt-3">
+          <button mat-raised-button (click)='showDatewiseTargetData()' color="primary" mat-button>
+            Submit
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+    <div class="row">
+
+    <!-- CHART ONE -->
+    <div class="{{chart_1_size}}" *ngIf="chart_1_Labels.length > 0">
+      <div *ngIf="chart_1_Type == 'bar' || chart_1_Type == 'grouped_bar' || chart_1_Type == 'stacked_bar'" style="margin: 0 0 0 0; padding: 0 0 0 0;"
+        class="border_top1 card">
+        {{displayedColumns[0]|uppercase}} WISE-
+        <small *ngIf="chart_1_Options.title.text.length<=5">
+          {{ chart_1_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_1_Options.title.text.length>5">
+          {{ chart_1_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+            <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[0],'str_chart_1',chart_1_Type)">
+                &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+                &nbsp;&nbsp;
+                </a>
+          <span (click)="showAll()" style="position: initial;" class="all_span">All</span>
+
+          <ng-container *ngIf='chart_1_MaxIndex>1'>
+            <small class="chart-icons fa fa-arrow-left" (click)="moveBar('chart_1','left')"></small>
+            <small>
+              Page {{chart_1_CurrentIndex}} of {{chart_1_MaxIndex}}
+            </small>
+            <small class="chart-icons fa fa-arrow-right" (click)="moveBar('chart_1','right')"></small>
+          </ng-container>
+
+          &nbsp;&nbsp;
+          <span class="chart-icons active fa fa-chevron-up" title="Good" (click)="goodOnClick()" [ngClass]="{'active':blnActive}"
+            *ngIf="blnGood"></span>
+          <span class="chart-icons fa fa-chevron-down" title="Poor" (click)="poorOnClick()" [ngClass]="{'active':!blnActive}"
+            *ngIf="blnPoor"></span>
+          <!-- <span class="chart-icons fa fa-chevron-up" title="Good" (click)="goodOnClick()" [ngClass]="{'active':blnActive}"></span>
+            <span class="chart-icons fa fa-chevron-down" title="Poor" (click)="poorOnClick()" [ngClass]="{'active':!blnActive}"></span> -->
+          </span>
+        </div>
+      <div *ngIf="chart_1_Type == 'pie' || chart_1_Type == 'doughnut'" style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top5 card">
+        {{displayedColumns[0] |uppercase}} WISE-
+        <small *ngIf="chart_1_Options.title.text.length<=5">
+          {{ chart_1_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_1_Options.title.text.length>5">
+          {{ chart_1_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+        <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[0],'str_chart_1',chart_1_Type)">
+          &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+          &nbsp;&nbsp;
+          </a>
+        </span>
+      </div>
+      <div *ngIf="chart_1_Type == 'bar' || chart_1_Type == 'grouped_bar' || chart_1_Type == 'stacked_bar'" id="chart" class="card">
+        <canvas height="250" width="740" baseChart [legend]="chart_1_legend" [datasets]="chart_1_Data" [labels]="chart_1_Labels"
+          [options]="chart_1_Options" [colors]="firstBarChartColor" [chartType]="'bar'" (chartClick)="chart_1_Clicked($event)">
+        </canvas>
+      </div>
+      <div *ngIf="chart_1_Type == 'pie' || chart_1_Type == 'doughnut'" id="chart" class="card">
+        <canvas height="250" baseChart [options]="chart_1_Options" [data]="chart_1_Data" [labels]="chart_1_Labels"
+          [colors]="pieChartColors" (chartClick)="chart_1_Clicked($event)" [chartType]="chart_1_Type">
+        </canvas>
+      </div>
+    </div>
+
+    <!-- CHART TWO -->
+
+
+    <div class="{{chart_2_size}}" *ngIf="chart_2_Labels.length > 0">
+      <div *ngIf="chart_2_Type == 'bar' || chart_2_Type == 'grouped_bar' || chart_2_Type == 'stacked_bar'" style="margin: 0 0 0 0; padding: 0 0 0 0;"
+        class="border_top2 card">
+        {{displayedColumns[1]|uppercase}} WISE-
+        <small *ngIf="chart_2_Options.title.text.length<=5">
+          {{ chart_2_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_2_Options.title.text.length>5">
+          {{ chart_2_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+            <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[1],'str_chart_2',chart_2_Type)">
+                &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+                &nbsp;&nbsp;
+                </a>
+          <ng-container *ngIf='chart_2_MaxIndex>1'>
+            <small class="chart-icons fa fa-arrow-left" (click)="moveBar('chart_2','left')"></small>
+            <small>
+              Page {{chart_2_CurrentIndex}} of {{chart_2_MaxIndex}}
+            </small>
+            <small class="chart-icons fa fa-arrow-right" (click)="moveBar('chart_2','right')"></small>
+          </ng-container>
+          <!-- <span class="chart-icons fa fa-chevron-up" title="Good" (click)="goodOnClick()" [ngClass]="{'active':blnActive}"></span>
+                <span class="chart-icons fa fa-chevron-down" title="Poor" (click)="poorOnClick()" [ngClass]="{'active':!blnActive}"></span> -->
+
+          <!-- <span (click)="showAll()" style="position: initial;" class="all_span">All</span> -->
+        <!-- Table data icon -->
+        <!-- <a data-toggle="tooltip" title="Chat">
+          <i class="fa fa-table" data-toggle="modal" data-target="#chart_modal" aria-hidden="true"></i>
+        </a> -->
+        <!-- Table data icon end here -->
+        </span>
+      </div>
+      <div *ngIf="chart_2_Type == 'pie' || chart_2_Type == 'doughnut'" style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top5 card">
+        {{displayedColumns[1]|uppercase}} WISE-
+
+        <small *ngIf="chart_2_Options.title.text.length<=5">
+          {{ chart_2_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_2_Options.title.text.length>5">
+          {{ chart_2_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+          <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[1],'str_chart_2',chart_2_Type)">
+            &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+            &nbsp;&nbsp;
+            </a>
+          </span>
+        </div>
+      <div *ngIf="chart_2_Type == 'bar'|| chart_2_Type == 'grouped_bar' || chart_2_Type == 'stacked_bar'" id="chart" class="card">
+        <canvas height="250" width="740" baseChart [legend]="chart_2_legend" [datasets]="chart_2_Data" [labels]="chart_2_Labels"
+          [options]="chart_2_Options" [colors]="barChartColor" (chartClick)="chart_2_Clicked($event)" [chartType]="'bar'">
+        </canvas>
+      </div>
+      <div *ngIf="chart_2_Type == 'pie' || chart_2_Type == 'doughnut'" id="chart" class="card">
+        <canvas height="250" baseChart [options]="chart_2_Options" [data]="chart_2_Data" [labels]="chart_2_Labels"
+          [colors]="pieChartColors" (chartClick)="chart_2_Clicked($event)" [chartType]="chart_2_Type">
+        </canvas>
+      </div>
+    </div>
+
+
+    <!-- CHART THREE -->
+    <div class="{{chart_3_size}}" *ngIf="chart_3_Labels.length > 0">
+      <div *ngIf="chart_3_Type == 'bar' || chart_3_Type == 'grouped_bar' || chart_3_Type == 'stacked_bar'" style="margin: 0 0 0 0; padding: 0 0 0 0;"
+        class="border_top3 card">
+        {{displayedColumns[2]|uppercase}} WISE-
+        <small *ngIf="chart_3_Options.title.text.length<=5">
+          {{ chart_3_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_3_Options.title.text.length>5">
+          {{ chart_3_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+            <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[2],'str_chart_3',chart_3_Type)">
+                &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+                &nbsp;&nbsp;
+                </a>
+          <ng-container *ngIf='chart_3_MaxIndex>1'>
+            <small class="chart-icons fa fa-arrow-left" (click)="moveBar('chart_3','left')"></small>
+            <small>
+              Page {{chart_3_CurrentIndex}} of {{chart_3_MaxIndex}}
+            </small>
+            <small class="chart-icons fa fa-arrow-right" (click)="moveBar('chart_3','right')"></small>
+          </ng-container>
+          <!-- <span class="chart-icons fa fa-chevron-up" title="Good" (click)="goodOnClick()" [ngClass]="{'active':blnActive}"></span>
+                <span class="chart-icons fa fa-chevron-down" title="Poor" (click)="poorOnClick()" [ngClass]="{'active':!blnActive}"></span>
+
+            <span (click)="showAll()" style="position: initial;" class="all_span">All</span> -->
+
+        </span>
+      </div>
+      <div *ngIf="chart_3_Type == 'pie' || chart_3_Type == 'doughnut'" style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top5 card">
+        {{displayedColumns[2]|uppercase}} WISE-
+        <small *ngIf="chart_3_Options.title.text.length<=5">
+          {{ chart_3_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_3_Options.title.text.length>5">
+          {{ chart_3_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+          <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[2],'str_chart_3',chart_3_Type)">
+            &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+            &nbsp;&nbsp;
+            </a>
+          </span>
+        </div>
+      <div *ngIf="chart_3_Type == 'bar' || chart_3_Type == 'grouped_bar' || chart_3_Type == 'stacked_bar'" id="chart" class="card">
+        <canvas height="250" width="740" baseChart [legend]="chart_3_legend" [datasets]="chart_3_Data" [labels]="chart_3_Labels"
+          [options]="chart_3_Options" [colors]="barChartColor" [chartType]="'bar'" (chartClick)="chart_3_Clicked($event)">
+        </canvas>
+      </div>
+      <div *ngIf="chart_3_Type == 'pie' || chart_3_Type == 'doughnut'" id="chart" class="card">
+        <canvas height="250" baseChart [options]="chart_3_Options" [data]="chart_3_Data" [labels]="chart_3_Labels"
+          [colors]="pieChartColors" [chartType]="chart_3_Type" (chartClick)="chart_3_Clicked($event)">
+        </canvas>
+      </div>
+    </div>
+
+
+    <!-- CHART FOUR -->
+    <div class="{{chart_4_size}}" *ngIf=" chart_4_Labels.length > 0">
+      <div *ngIf="chart_4_Type == 'bar' || chart_4_Type == 'grouped_bar' || chart_4_Type == 'stacked_bar'" style="margin: 0 0 0 0; padding: 0 0 0 0;"
+        class="border_top4 card">
+        {{displayedColumns[3]|uppercase}} WISE-
+        <small *ngIf="chart_4_Options.title.text.length<=5">
+          {{ chart_4_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_4_Options.title.text.length>5">
+          {{ chart_4_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+            <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[3],'str_chart_4',chart_4_Type)">
+                &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+                &nbsp;&nbsp;
+                </a>
+          <ng-container *ngIf='chart_4_MaxIndex>1'>
+            <small class="chart-icons fa fa-arrow-left" (click)="moveBar('chart_4','left')"></small>
+            <small>
+              Page {{chart_4_CurrentIndex}} of {{chart_4_MaxIndex}}
+            </small>
+            <small class="chart-icons fa fa-arrow-right" (click)="moveBar('chart_4','right')"></small>
+          </ng-container>
+        </span>
+      </div>
+      <div *ngIf="chart_4_Type == 'pie' || chart_4_Type == 'doughnut'" style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top5 card">
+        {{displayedColumns[3]|uppercase}} WISE-
+        <small *ngIf="chart_4_Options.title.text.length<=5">
+          {{ chart_4_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_4_Options.title.text.length>5">
+          {{ chart_4_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+          <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[3],'str_chart_4',chart_4_Type)">
+            &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+            &nbsp;&nbsp;
+            </a>
+          </span>
+        </div>
+      <div *ngIf="chart_4_Type == 'bar' || chart_4_Type == 'grouped_bar' || chart_4_Type == 'stacked_bar'" id="chart" class="card">
+        <canvas height="250" width="740" baseChart [options]="chart_4_Options" [legend]="chart_4_Legend" [datasets]="chart_4_Data"
+          [labels]="chart_4_Labels" [colors]="barChartColor" [chartType]="'bar'" (chartClick)=chart_4_Clicked($event)>
+        </canvas>
+      </div>
+      <div *ngIf="chart_4_Type == 'pie' || chart_4_Type == 'doughnut'" id="chart" class="card">
+        <canvas height="250" baseChart [options]="chart_4_Options" [data]="chart_4_Data" [labels]="chart_4_Labels"
+          [colors]="pieChartColors" [chartType]="chart_4_Type" (chartClick)="chart_4_Clicked($event)">
+        </canvas>
+      </div>
+    </div>
+
+
+    <!-- CHART FIVE -->
+    <div class="{{chart_5_size}}" *ngIf=" chart_5_Labels.length > 0">
+      <div *ngIf="chart_5_Type == 'bar' || chart_5_Type == 'grouped_bar' || chart_5_Type == 'stacked_bar'" style="margin: 0 0 0 0; padding: 0 0 0 0;"
+        class="border_top5 card">
+        {{displayedColumns[4]|uppercase}} WISE-
+
+        <small *ngIf="chart_5_Options.title.text.length<=5">
+          {{ chart_5_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_5_Options.title.text.length>5">
+          {{ chart_5_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+            <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[4],'str_chart_5',chart_5_Type)">
+                &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+                &nbsp;&nbsp;
+                </a>
+          <ng-container *ngIf='chart_5_MaxIndex>1'>
+            <small class="chart-icons fa fa-arrow-left" (click)="moveBar('chart_5','left')"></small>
+            <small>
+              Page {{chart_5_CurrentIndex}} of {{chart_5_MaxIndex}}
+            </small>
+            <small class="chart-icons fa fa-arrow-right" (click)="moveBar('chart_5','right')"></small>
+          </ng-container>
+        </span>
+      </div>
+      <div *ngIf="chart_5_Type == 'pie' || chart_5_Type == 'doughnut'" style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top5 card">
+        {{displayedColumns[4]|uppercase}} WISE-
+        <small *ngIf="chart_5_Options.title.text.length<=5">
+          {{ chart_5_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_5_Options.title.text.length>5">
+          {{ chart_5_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+          <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[4],'str_chart_5',chart_5_Type)">
+            &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+            &nbsp;&nbsp;
+            </a>
+          </span>
+        </div>
+      <div *ngIf="chart_5_Type == 'bar' || chart_5_Type == 'grouped_bar' || chart_5_Type == 'stacked_bar'" id="chart" class="card">
+        <canvas height="250" width="740" baseChart [options]="chart_5_Options" [legend]="chart_5_Legend" (chartClick)="chart_5_Clicked($event)"
+          [datasets]="chart_5_Data" [labels]="chart_5_Labels" [colors]="barChartColor" [chartType]="'bar'">
+        </canvas>
+      </div>
+      <div *ngIf="chart_5_Type == 'pie' || chart_5_Type == 'doughnut'" id="chart" class="card">
+        <canvas height="250" baseChart [options]="chart_5_Options" [data]="chart_5_Data" (chartClick)="chart_5_Clicked($event)"
+          [labels]="chart_5_Labels" [colors]="pieChartColors" [chartType]="chart_5_Type">
+        </canvas>
+      </div>
+    </div>
+
+    <!-- CHART SIX -->
+    <div class="{{chart_6_size}}" *ngIf=" chart_6_Labels.length > 0">
+      <div *ngIf="chart_6_Type == 'bar' || chart_6_Type == 'grouped_bar' || chart_6_Type == 'stacked_bar'" style="margin: 0 0 0 0; padding: 0 0 0 0;"
+        class="border_top6 card">
+        {{displayedColumns[5]|uppercase}} WISE-
+        <small *ngIf="chart_6_Options.title.text.length<=5">
+          {{ chart_6_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_6_Options.title.text.length>5">
+          {{ chart_6_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+            <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[5],'str_chart_6',chart_6_Type)">
+                &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+                &nbsp;&nbsp;
+                </a>
+          <ng-container *ngIf='chart_6_MaxIndex>1'>
+            <small class="chart-icons fa fa-arrow-left" (click)="moveBar('chart_6','left')"></small>
+            <small>
+              Page {{chart_6_CurrentIndex}} of {{chart_6_MaxIndex}}
+            </small>
+            <small class="chart-icons fa fa-arrow-right" (click)="moveBar('chart_6','right')"></small>
+          </ng-container>
+        </span>
+      </div>
+      <div *ngIf="chart_6_Type == 'pie' || chart_6_Type == 'doughnut'" style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top5 card">
+        {{displayedColumns[5]|uppercase}} WISE-
+        <small *ngIf="chart_6_Options.title.text.length<=5">
+          {{ chart_6_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_6_Options.title.text.length>5">
+          {{ chart_6_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+          <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[5],'str_chart_6',chart_6_Type)">
+            &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+            &nbsp;&nbsp;
+            </a>
+          </span>
+        </div>
+      <div *ngIf="chart_6_Type == 'bar' || chart_6_Type == 'grouped_bar' || chart_6_Type == 'stacked_bar'" id="chart" class="card">
+        <canvas height="250" width="740" baseChart [options]="chart_6_Options" [legend]="chart_6_Legend" [datasets]="chart_6_Data"
+          [labels]="chart_6_Labels" [colors]="barChartColor" [chartType]="'bar'" (chartClick)=chart_6_Clicked($event)>
+        </canvas>
+      </div>
+      <div *ngIf="chart_6_Type == 'pie' || chart_6_Type == 'doughnut'" id="chart" class="card">
+        <canvas height="250" baseChart [options]="chart_6_Options" [data]="chart_6_Data" [labels]="chart_6_Labels"
+          [colors]="pieChartColors" [chartType]="chart_6_Type" (chartClick)="chart_6_Clicked($event)">
+        </canvas>
+      </div>
+    </div>
+
+    <!-- CHART SEVEN -->
+    <div class="{{chart_7_size}}" *ngIf=" chart_7_Labels.length > 0">
+      <div *ngIf="chart_7_Type == 'bar' || chart_7_Type == 'grouped_bar' || chart_7_Type == 'stacked_bar'" style="margin: 0 0 0 0; padding: 0 0 0 0;"
+        class="border_top7 card">
+        {{displayedColumns[6]|uppercase}} WISE-
+        <small *ngIf="chart_7_Options.title.text.length<=5">
+          {{ chart_7_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_7_Options.title.text.length>5">
+          {{ chart_7_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+            <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[6],'str_chart_7',chart_7_Type)">
+                &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+                &nbsp;&nbsp;
+                </a>
+          <ng-container *ngIf='chart_7_MaxIndex>1'>
+            <small class="chart-icons fa fa-arrow-left" (click)="moveBar('chart_7','left')"></small>
+            <small>
+              Page {{chart_7_CurrentIndex}} of {{chart_7_MaxIndex}}
+            </small>
+            <small class="chart-icons fa fa-arrow-right" (click)="moveBar('chart_7','right')"></small>
+          </ng-container>
+        </span>
+      </div>
+      <div *ngIf="chart_7_Type == 'pie' || chart_7_Type == 'doughnut'" style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top5 card">
+        {{displayedColumns[6]|uppercase}} WISE-
+        <small *ngIf="chart_7_Options.title.text.length<=5">
+          {{ chart_7_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_7_Options.title.text.length>5">
+          {{ chart_7_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+          <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[6],'str_chart_7',chart_7_Type)">
+            &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+            &nbsp;&nbsp;
+            </a>
+          </span>
+        </div>
+      <div *ngIf="chart_7_Type == 'bar' || chart_7_Type == 'grouped_bar' || chart_7_Type == 'stacked_bar'" id="chart" class="card">
+        <canvas height="250" width="740" baseChart [options]="chart_7_Options" [legend]="chart_7_Legend" [datasets]="chart_7_Data"
+          [labels]="chart_7_Labels" [colors]="barChartColor" [chartType]="'bar'" (chartClick)=chart_7_Clicked($event)>
+        </canvas>
+      </div>
+      <div *ngIf="chart_7_Type == 'pie' || chart_7_Type == 'doughnut'" id="chart" class="card">
+        <canvas height="250" baseChart [options]="chart_7_Options" [data]="chart_7_Data" [labels]="chart_7_Labels"
+          [colors]="pieChartColors" [chartType]="chart_7_Type" (chartClick)="chart_7_Clicked($event)">
+        </canvas>
+      </div>
+    </div>
+
+    <!-- CHART EIGHT -->
+    <div class="{{chart_8_size}}" *ngIf=" chart_8_Labels.length > 0">
+      <div *ngIf="chart_8_Type == 'bar' || chart_8_Type == 'grouped_bar' || chart_8_Type == 'stacked_bar'" style="margin: 0 0 0 0; padding: 0 0 0 0;"
+        class="border_top8 card">
+        {{displayedColumns[7]|uppercase}} WISE-
+        <small *ngIf="chart_8_Options.title.text.length<=5">
+          {{ chart_8_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_8_Options.title.text.length>5">
+          {{ chart_8_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+            <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[7],'str_chart_8',chart_8_Type)">
+                &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+                &nbsp;&nbsp;
+                </a>
+          <ng-container *ngIf='chart_8_MaxIndex>1'>
+            <small class="chart-icons fa fa-arrow-left" (click)="moveBar('chart_8','left')"></small>
+            <small>
+              Page {{chart_8_CurrentIndex}} of {{chart_8_MaxIndex}}
+            </small>
+            <small class="chart-icons fa fa-arrow-right" (click)="moveBar('chart_8','right')"></small>
+          </ng-container>
+        </span>
+      </div>
+      <div *ngIf="chart_8_Type == 'pie' || chart_8_Type == 'doughnut'" style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top5 card">
+        {{displayedColumns[6]|uppercase}} WISE-
+        <small *ngIf="chart_8_Options.title.text.length<=5">
+          {{ chart_8_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_8_Options.title.text.length>5">
+          {{ chart_8_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+          <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[7],'str_chart_8',chart_8_Type)">
+            &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+            &nbsp;&nbsp;
+            </a>
+          </span>
+        </div>
+      <div *ngIf="chart_8_Type == 'bar' || chart_8_Type == 'grouped_bar' || chart_8_Type == 'stacked_bar'" id="chart" class="card">
+        <canvas height="250" width="740" baseChart [options]="chart_8_Options" [legend]="chart_8_Legend" [datasets]="chart_8_Data"
+          [labels]="chart_8_Labels" [colors]="barChartColor" [chartType]="'bar'" (chartClick)=chart_8_Clicked($event)>
+        </canvas>
+      </div>
+      <div *ngIf="chart_8_Type == 'pie' || chart_8_Type == 'doughnut'" id="chart" class="card">
+        <canvas height="250" baseChart [options]="chart_8_Options" [data]="chart_8_Data" [labels]="chart_8_Labels"
+          [colors]="pieChartColors" [chartType]="chart_8_Type" (chartClick)="chart_8_Clicked($event)">
+        </canvas>
+      </div>
+    </div>
+
+    <!-- CHART NINE -->
+    <div class="{{chart_9_size}}" *ngIf=" chart_9_Labels.length > 0">
+      <div *ngIf="chart_9_Type == 'bar' || chart_9_Type == 'grouped_bar' || chart_9_Type == 'stacked_bar'" style="margin: 0 0 0 0; padding: 0 0 0 0;"
+        class="border_top9 card">
+        {{displayedColumns[8]|uppercase}} WISE-
+        <small *ngIf="chart_9_Options.title.text.length<=5">
+          {{ chart_9_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_9_Options.title.text.length>5">
+          {{ chart_9_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+            <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[8],'str_chart_9',chart_9_Type)">
+                &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+                &nbsp;&nbsp;
+                </a>
+          <ng-container *ngIf='chart_9_MaxIndex>1'>
+            <small class="chart-icons fa fa-arrow-left" (click)="moveBar('chart_9','left')"></small>
+            <small>
+              Page {{chart_9_CurrentIndex}} of {{chart_9_MaxIndex}}
+            </small>
+            <small class="chart-icons fa fa-arrow-right" (click)="moveBar('chart_9','right')"></small>
+          </ng-container>
+        </span>
+      </div>
+      <div *ngIf="chart_9_Type == 'pie' || chart_9_Type == 'doughnut'" style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top5 card">
+        {{displayedColumns[6]|uppercase}} WISE-
+        <small *ngIf="chart_9_Options.title.text.length<=5">
+          {{ chart_9_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_9_Options.title.text.length>5">
+          {{ chart_9_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+          <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[8],'str_chart_9',chart_9_Type)">
+            &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+            &nbsp;&nbsp;
+            </a>
+          </span>
+        </div>
+      <div *ngIf="chart_9_Type == 'bar' || chart_9_Type == 'grouped_bar' || chart_9_Type == 'stacked_bar'" id="chart">
+        <canvas height="250" width="740" baseChart [options]="chart_9_Options" [legend]="chart_9_Legend" [datasets]="chart_9_Data"
+          [labels]="chart_9_Labels" [colors]="barChartColor" [chartType]="'bar'" (chartClick)=chart_9_Clicked($event)>
+        </canvas>
+      </div>
+      <div *ngIf="chart_9_Type == 'pie' || chart_9_Type == 'doughnut'" id="chart" class="card">
+        <canvas height="250" baseChart [options]="chart_9_Options" [data]="chart_9_Data" [labels]="chart_9_Labels"
+          [colors]="pieChartColors" [chartType]="chart_9_Type" (chartClick)="chart_9_Clicked($event)">
+        </canvas>
+      </div>
+    </div>
+
+    <!-- CHART TEN -->
+    <div class="{{chart_10_size}}" *ngIf=" chart_10_Labels.length > 0">
+      <div *ngIf="chart_10_Type == 'bar' || chart_10_Type == 'grouped_bar' || chart_10_Type == 'stacked_bar'" style="margin: 0 0 0 0; padding: 0 0 0 0;"
+        class="border_top10 card">
+        {{displayedColumns[9]|uppercase}} WISE-
+        <small *ngIf="chart_10_Options.title.text.length<=5">
+          {{ chart_10_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_10_Options.title.text.length>5">
+          {{ chart_10_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+            <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[9],'str_chart_10',chart_10_Type)">
+                &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+                &nbsp;&nbsp;
+                </a>
+          <ng-container *ngIf='chart_10_MaxIndex>1'>
+            <small class="chart-icons fa fa-arrow-left" (click)="moveBar('chart_10','left')"></small>
+            <small>
+              Page {{chart_10_CurrentIndex}} of {{chart_10_MaxIndex}}
+            </small>
+            <small class="chart-icons fa fa-arrow-right" (click)="moveBar('chart_10','right')"></small>
+          </ng-container>
+        </span>
+      </div>
+      <div *ngIf="chart_10_Type == 'pie' || chart_10_Type == 'doughnut'" style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top5 card">
+        {{displayedColumns[6]|uppercase}} WISE-
+        <small *ngIf="chart_10_Options.title.text.length<=5">
+          {{ chart_10_Options.title.text|uppercase }}
+        </small>
+        <small *ngIf="chart_10_Options.title.text.length>5">
+          {{ chart_10_Options.title.text|uppercase|slice:0:5 }}...
+        </small>
+        <span class="pull-right">
+          <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal, displayedColumns[9],'str_chart_10',chart_10_Type)">
+            &nbsp;<i class="fa fa-eye" data-toggle="modal" aria-hidden="true"></i>
+            &nbsp;&nbsp;
+            </a>
+          </span>
+        </div>
+      <div *ngIf="chart_10_Type == 'bar' || chart_10_Type == 'grouped_bar' || chart_10_Type == 'stacked_bar'" id="chart" class="card">
+        <canvas height="250" width="740" baseChart [options]="chart_10_Options" [legend]="chart_10_Legend" [datasets]="chart_10_Data"
+          [labels]="chart_10_Labels" [colors]="barChartColor" [chartType]="'bar'" (chartClick)=chart_10_Clicked($event)>
+        </canvas>
+      </div>
+      <div *ngIf="chart_10_Type == 'pie' || chart_10_Type == 'doughnut'" id="chart" class="card">
+        <canvas height="250" baseChart [options]="chart_10_Options" [data]="chart_10_Data" [labels]="chart_10_Labels"
+          [colors]="pieChartColors" [chartType]="chart_10_Type" (chartClick)="chart_10_Clicked($event)">
+        </canvas>
+      </div>
+    </div>
+
+  </div>
+
+
+
+<div *ngIf="chart_1_Labels.length==0" class="card">
+  <h5 class="mat-toolbar">No data to display</h5>
+</div>
+
+
+
+
+
+   <!-- Modal -->
+   <!-- <ng-template #dataModal let-modal></ng-template> -->
+   <ng-template #exportModal1 let-modal>
+   <div class="modal fade" id="myModal" role="dialog" [style.display]="showModal">
+    <div class="modal-dialog modal-sm" [style.display]="showModal ">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                    <div class="modal-header">
+                            <button type="button" class="close" (click)="closeExport()" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title text-center" id="modal-blue">Export</h4>
+                    </div>
+                    <div class="modal-body">
+                            <h6>Choose File Format</h6>
+                            <hr>
+                            <form style="padding-bottom: 5px;" class="text-center">
+                                    <mat-radio-group class="unique-radio-button" name="export" [(ngModel)]="export">
+                                            <mat-radio-button [value]=true>
+                                                    <i class="fa fa-file-excel-o fa-2x bl" aria-hidden="true"></i>
+                                                    <strong>Excel</strong></mat-radio-button>
+                                            <mat-radio-button [value]=false>
+                                                    <i class="fa fa-file-pdf-o fa-2x re" aria-hidden="true"></i>
+                                                    <strong>PDF</strong></mat-radio-button>
+                                    </mat-radio-group>
+                            </form>
+                            <br>
+                            <form class="text-center">
+                                    <mat-checkbox [(ngModel)]="chart" name="chart" id="chart" value="chart">Chart</mat-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <!-- <mat-checkbox [(ngModel)]="table" name="table" id="table" value="table">Table data</mat-checkbox> -->
+
+                                    <hr>
+                            </form>
+                            <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <button (click)="closeExport()" type="button" class="mat-button mat-raised-button mat-primary pull-left"
+                                                            data-dismiss="modal">Cancel</button>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <button type="button" (click)='exportPdfExcel(datFromDate,datToDate)'
+                                                            class="mat-raised-button mat-accent pull-right" data-dismiss="modal">Export</button>
+                                     </div>
+                                   </div>
+                                </div>
+                              </div>
+                           </div>
+                        </div>
+                      </ng-template>
+
+<!-- Modal -->
+
+<div class="modal fade" id="myModal-two" role="dialog" [style.display]="showModal2 ? 'block' : 'none'">
+    <div class="modal-dialog modal-sm" [style.display]="showModal2 ? 'block' : 'none'">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                    <div class="modal-header">
+                            <button type="button" class="close" (click)="closeMail()" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title text-center" id="modal-blue">Export as Email</h4>
+                    </div>
+                    <div class="modal-body">
+                            <h6>Choose File Format</h6>
+                            <hr>
+                            <form style="padding-bottom: 5px;" class="text-center">
+
+                                    <mat-radio-group class="unique-radio-button" name="emailExport" [(ngModel)]="emailExport">
+                                            <mat-radio-button [value]=true>
+                                                    <i class="fa fa-file-excel-o fa-2x bl" aria-hidden="true"></i>
+                                                    <strong>Excel</strong></mat-radio-button>
+                                            <mat-radio-button [value]=false>
+                                                    <i class="fa fa-file-pdf-o fa-2x re" aria-hidden="true"></i>
+                                                    <strong>PDF</strong></mat-radio-button>
+                                    </mat-radio-group>
+                            </form>
+                            <br>
+                            <form class="text-center">
+                                    <mat-checkbox [(ngModel)]="chart" name="chart" id="chart" value="chart">Chart</mat-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <!-- <mat-checkbox [(ngModel)]="table" name="table" id="table" value="table">Table data</mat-checkbox> -->
+
+                                    <hr>
+                            </form>
+                            <mat-form-field>
+                                    <input matInput placeholder="Email address:" [(ngModel)]="email">
+                            </mat-form-field>
+
+                            <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <button (click)="closeExport()" type="button" class="mat-button mat-raised-button mat-primary pull-left"
+                                                    data-dismiss="modal">Cancel</button>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <button type="button" (click)='exportWithEmail(datFromDate,datToDate)'
+                                                    class="mat-raised-button mat-accent pull-right" data-dismiss="modal">Send</button>
+                                    </div>
+                            </div>
+
+                    </div>
+
+
+            </div>
+
+    </div>
+</div>
+
+
+<!--Modal -->
+<!-- <div class="modal fade" id="myModal-three" role="dialog">
+<div class="modal-dialog modal-sm">
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Chat</h4>
+    </div>
+    <div class="modal-body">
+
+
+            <form style="background-color: rgb(185, 214, 255); padding-bottom: 5px;" class="text-center">
+
+              <mat-radio-group  name="chatExport" [(ngModel)]="chatExport">
+                  <mat-radio-button  [value]=true>
+                      <i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel</mat-radio-button>
+                  <mat-radio-button  [value]=false>
+                      <i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF</mat-radio-button>
+              </mat-radio-group>
+
+
+
+          </form>
+                  <br>
+           <form class="text-center">
+                  <mat-checkbox [(ngModel)]="chart" name="chart" id="chart"  value="chart">Chart</mat-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <mat-checkbox [(ngModel)]="table" name="table" id="table"  value="table">Table-data</mat-checkbox>
+
+                    <hr>
+
+
+
+                </form>
+
+
+
+        <mat-form-field>
+            <input matInput placeholder="Name:" [(ngModel)]="chatName" name="chatName">
+        </mat-form-field>
+
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="mat-raised-button mat-accent" data-dismiss="modal">Export</button>
+    </div>
+</div>
+
+
+</div>
+</div> -->
+
+
+<!-- chart table start here -->
+<ng-template #dataModal let-modal>
+<!-- <div class="modal fade" id="chart_modal" role="dialog" [style.display]="showPopupEnq ? 'block' : 'none'">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" (click)="closePopup()">&times;</button>
+        <h4 class="modal-title text-center">{{chartHead | titlecase}} Wise Report</h4>
+      </div>
+      <div class="modal-body">
+        <div class="example-container mat-elevation-z8"> -->
+
+        <mat-table [dataSource]="dataSource2" matSort #matSort2="matSort" class="mat-elevation-z8">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="Name">
+              <mat-header-cell *matHeaderCellDef mat-sort-header='Name'> {{ chartHead | titlecase }} </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.Name}} </mat-cell>
+              <!-- <mat-cell *matCellDef> Total </mat-cell> -->
+
+            </ng-container>
+
+            <!-- Enquiry Quantity Column -->
+            <ng-container matColumnDef="EnquiryQty">
+              <mat-header-cell class="text-right" *matHeaderCellDef mat-sort-header='EnquiryQty'>{{ switch_change }} </mat-header-cell>
+              <mat-cell class="text-right" *matCellDef="let element"> {{element.EnquiryQty | number : '1.2-2'}} </mat-cell>
+              <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
+
+            </ng-container>
+
+            <!-- Contribution Percentage Column -->
+            <ng-container matColumnDef="Contrib_per">
+              <mat-header-cell class="text-right" *matHeaderCellDef mat-sort-header='Contrib_per'>Contrib % </mat-header-cell>
+              <mat-cell class="text-right" *matCellDef="let element"> {{element.Contrib_per}} </mat-cell>
+              <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns3"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns3;"></mat-row>
+
+          </mat-table>
+          <!-- </div> -->
+      <!-- </div> -->
+      <div class="modal-footer">
+
+                       
+              <!-- &nbsp;&nbsp; -->
+          <div class="table-responsive">
+              <table style="width: 100%;">
+                  <tr>
+                    <td style=" width: 97.7px;color:#556171;font-size: 12px;">Grand Total</td>
+                    <td style=" width: 97.7px;">&nbsp;</td>
+                    <td style=" width: 97.7px;">&nbsp;</td>
+                    <td style=" width: 97.7px;"class="text-right"><b>{{enqQtyTot  | number : '1.2-2'}}</b></td>                            
+                    <td style=" width: 97.7px;">&nbsp;</td>
+                    <td style=" width: 97.7px;">&nbsp;<button  type="button" style="background:#12aa89;border:0px;" class="btn btn-primary pull-right" (click)="exportAsXLSX()" >Export</button></td>                           
+                  </tr>
+              </table>
+          </div>
+         
+        <!-- <button type="button" class="mat-raised-button mat-accent" data-dismiss="modal">Export</button> -->
+      </div>
+    <!-- </div>
+  </div>
+</div> -->
+</ng-template>
+
+<!-- enquiry -->
+<ng-template #exportModal let-modal>
+<!-- <div class="modal fade" id="chart_modal" role="dialog" [style.display]="showPopupSale ? 'block' : 'none'">
+    <div class="modal-dialog modal-lg" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" (click)="closePopup()">&times;</button>
+          <h4 class="modal-title text-center">{{chartHead | titlecase}} Wise Report</h4>
+        </div>
+        <div class="modal-body">
+          <div class="example-container mat-elevation-z8"> -->
+
+          <mat-table id="matId" [dataSource]="dataSource1" matSort #matSort1="matSort" class="mat-elevation-z8">
+  
+              <!-- Position Column -->
+              <ng-container matColumnDef="Name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header='Name'> {{ chartHead | titlecase }} </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.Name}} </mat-cell>
+                <!-- <mat-cell *matCellDef> Total </mat-cell> -->
+              </ng-container>
+  
+              <!-- Enquiry Quantity Column -->
+              <ng-container matColumnDef="EnquiryQty" >
+<!-- 
+                <div  *ngIf="blnDiscount">
+                    <mat-header-cell class="text-right" *matHeaderCellDef mat-sort-header="EnquiryQty" >Discount</mat-header-cell>
+                </div>
+                <div *ngIf="!blnDiscount">
+                    <mat-header-cell class="text-right" *matHeaderCellDef mat-sort-header="EnquiryQty" >Enquiry </mat-header-cell>
+                </div> -->
+                
+                <mat-header-cell class="text-right" *matHeaderCellDef mat-sort-header="EnquiryQty" >{{strHead}} </mat-header-cell>
+                <mat-cell class="text-right" *matCellDef="let element"> {{element.EnquiryQty  | number : '1.2-2'}} </mat-cell>
+                <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
+
+              </ng-container>
+
+               <!-- Sales Quantity Column -->
+               <ng-container matColumnDef="SaleQty">
+                    <mat-header-cell class="text-right" *matHeaderCellDef mat-sort-header='SaleQty'> {{strHead2}} </mat-header-cell>
+                    <mat-cell class="text-right" *matCellDef="let element"> {{element.SaleQty | number : '1.2-2'}} </mat-cell>
+                    <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
+
+                  </ng-container>
+
+              <!-- Contribution Percentage Column -->
+              <ng-container matColumnDef="ContribQty_per">
+                    <mat-header-cell class="text-right" *matHeaderCellDef mat-sort-header='ContribQty_per'>Contrib % </mat-header-cell>
+                    <mat-cell class="text-right" *matCellDef="let element"> {{element.ContribQty_per}} </mat-cell>
+                    <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
+
+              </ng-container>
+
+                <!-- Conversion Percentage Column -->
+                <ng-container matColumnDef="Conversion_per">
+                        <mat-header-cell class="text-right" *matHeaderCellDef mat-sort-header='Conversion_per'>Conversion % </mat-header-cell>
+                        <mat-cell class="text-right" *matCellDef="let element"> {{element.Conversion_per}} </mat-cell>
+                        <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
+
+                    </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns1;"></mat-row>
+              <!-- <mat-row *matRowDef></mat-row> -->
+
+              <!-- <mat-footer-row *matFooterRowDef></mat-footer-row> -->
+
+
+              <!-- <mat-footer-row *matFooterRowDef="displayedColumns1; sticky: true"></mat-footer-row> -->
+                <!-- <ng-container>
+                   
+                    <mat-cell> {{enqQtyTot}} </mat-cell>
+                </ng-container> -->
+
+            </mat-table>
+
+
+
+            <!-- <mat-paginator [pageIndex]="0" [length]="10" [pageSize]="10" [pageSizeOptions]="[10, 25, 100]"></mat-paginator> -->
+            <!-- </div> -->
+        <!-- </div> -->
+        <div class="modal-footer">
+
+                         
+                <!-- &nbsp;&nbsp; -->
+            <div class="table-responsive">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style=" width: 97.7px;color:#556171;font-size: 12px;">Grand Total</td>
+                        <td style=" width: 97.7px;"class="text-right"><b>{{enqQtyTot | number : '1.2-2'}}</b></td>                            
+                        <td style=" width: 97.7px;"class="text-right"><b>{{saleQtyTot | number : '1.2-2'}} </b></td>                            
+                        <td style=" width: 97.7px;">&nbsp;</td>
+                        <!-- <td style=" width: 97.7px;"class="text-right"><b>{{enqValTot}}</b> </td>     -->
+                        <!-- <td style=" width: 97.7px;"class="text-right"><b>{{grandTotal}}</b> </td>                             -->
+                        <td style=" width: 97.7px;">&nbsp;<button  type="button" style="background:#12aa89;border:0px;" class="btn btn-primary pull-right" (click)="exportAsXLSX()" >Export</button></td>
+                    </tr>
+                </table>
+            </div>
+           
+          <!-- <button type="button" class="mat-raised-button mat-accent" data-dismiss="modal">Export</button> -->
+        </div>
+      <!-- </div>
+    </div>
+  </div> -->
+</ng-template>
+
+
+  
+<!-- chart table end here -->
+
+<!-- <app-spinner *ngIf="showSpinner"></app-spinner> -->

@@ -29,9 +29,11 @@ export class MainMenuComponent implements OnInit {
       this.router.navigate(['/user/landing']);
     } else {
 
-      this.serverService.getData('groups/api_sidebar/').subscribe(
+      this.serverService.getData('user_groups/api_sidebar/').subscribe(
         result => {
           this.mainMenuItems = result['data'];
+          // console.log("xcv",this.mainMenuItems);
+          
         },
         (error) => {
           if (error.status === 401) {

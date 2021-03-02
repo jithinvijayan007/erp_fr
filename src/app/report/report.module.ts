@@ -1,3 +1,4 @@
+import { SnotifyService, SnotifyModule } from 'ng-snotify';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -49,6 +50,9 @@ import { ProductReportSalesMobileComponent } from './product-report-sales-mobile
 // import { ReportComponent } from './report2/report.component';
 // import { from } from 'rxjs';
 import { SalesproductivityreportComponent } from './salesproductivityreport/salesproductivityreport.component';
+import { GeneralizeReportComponent } from './generalize-report/generalize-report.component';
+
+
 
 
 
@@ -75,7 +79,8 @@ import { SalesproductivityreportComponent } from './salesproductivityreport/sale
     ReportComponent,
     DateRangePicker3Component,
     SalesproductivityreportComponent,
-    ProductReportSalesMobileComponent
+    ProductReportSalesMobileComponent,
+    GeneralizeReportComponent
       ],
   imports: [
     CommonModule,
@@ -103,7 +108,8 @@ import { SalesproductivityreportComponent } from './salesproductivityreport/sale
     CdkTableModule,
     CdkTreeModule,
     ChartsModule,
-    NgxDaterangepickerMd.forRoot()
+    NgxDaterangepickerMd.forRoot(),
+    
     // MatAutocomplete
     
   ],

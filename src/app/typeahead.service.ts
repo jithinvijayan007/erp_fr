@@ -8,10 +8,10 @@ import { environment } from '../environments/environment';
 export class TypeaheadService {
   username = localStorage.getItem('username');
   protocol = window.location.protocol
-  // hostAddress= 'http://192.168.0.174:5000/'; // freddy
+  hostAddress= 'http://192.168.1.20:8000/'; // freddy
   hostname = window.location.hostname
   port = environment.production ? 6001 : 8000;
-  hostAddress = `${this.protocol}//${this.hostname}:${this.port}/`;
+  // hostAddress = `${this.protocol}//${this.hostname}:${this.port}/`;
 
   url: string;
   url_customer:string;

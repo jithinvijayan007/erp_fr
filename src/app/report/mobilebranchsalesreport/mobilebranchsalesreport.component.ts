@@ -660,7 +660,7 @@ export class MobilebranchsalesreportComponent implements OnInit {
     // let to = tdate._d;
     // fdate._d = new Date(from.getTime() + (from.getTimezoneOffset() * 60000));
     // tdate._d = new Date(to.getTime() + (to.getTimezoneOffset() * 60000));
-    console.log(moment(new Date(fdate)).format('YYYY-MM-DD'),'xfxjuc',moment(new Date(tdate)).format('YYYY-MM-DD'));
+    // console.log(moment(new Date(fdate)).format('YYYY-MM-DD'),'xfxjuc',moment(new Date(tdate)).format('YYYY-MM-DD'));
     
     this.blnDataLoaded = false;
     if (fdate && tdate) {

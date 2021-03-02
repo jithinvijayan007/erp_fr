@@ -32,12 +32,12 @@ export class SalesproductivityreportComponent implements OnInit {
 
   // selected: {startDate: '2021-02-11', endDate: '2021-02-11'};
   // ranges: any = {
-  //   'Today': [moment(), moment()],
-  //   'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-  //   'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-  //   'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-  //   'This Month': [moment().startOf('month'), moment().endOf('month')],
-  //   'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    // 'Today': [moment(), moment()],
+    // 'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+    // 'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+    // 'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+    // 'This Month': [moment().startOf('month'), moment().endOf('month')],
+    // 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
   // }
 
   @Input('show-modal') showModal: boolean;
@@ -1042,11 +1042,18 @@ export class SalesproductivityreportComponent implements OnInit {
     // let to = tdate._d;
     // fdate._d = new Date(from.getTime() + (from.getTimezoneOffset() * 60000));
     // tdate._d = new Date(to.getTime() + (to.getTimezoneOffset() * 60000));
-   
-    this.datFromSaved = moment(new Date(fdate)).format('YYYY-MM-DD');
-    this.datToSaved = moment(new Date(tdate)).format('YYYY-MM-DD');
+    console.log(moment(new Date(fdate)).format('YYYY-MM-DD'),'xfxjuc',moment(new Date(tdate)).format('YYYY-MM-DD'));
+
+    // this.datFromSaved = moment(new Date(fdate)).format('YYYY-MM-DD');
+    // this.datToSaved = moment(new Date(tdate)).format('YYYY-MM-DD');
     const dctJsonData = { username: this.currentUserName };
     dctJsonData['data'] = 'Custom';
+
+    this.datFromDate = moment(new Date(fdate)).format('YYYY-MM-DD');
+    // this.selectedToDate = this.datToDate.add(1, 'days').format('YYYY-MM-DD');
+    this.datToDate = moment(new Date(tdate)).format('YYYY-MM-DD');
+
+
     dctJsonData['date_from'] = this.datFromSaved;
     dctJsonData['date_to'] = this.datToSaved;
     dctJsonData['type'] = 'Sale';
@@ -1106,10 +1113,10 @@ export class SalesproductivityreportComponent implements OnInit {
 
 
       });
-      // if(!tempLst.includes(this.staffName)){
-      // Swal.fire('Error','Enter valid staff name');
-      // return;
-      // }
+      if(!tempLst.includes(this.staffName)){
+      Swal.fire('Error','Enter valid staff name');
+      return;
+      }
       
     }
 

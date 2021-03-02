@@ -19,6 +19,8 @@ import { MobilebranchsalesreportComponent } from './mobilebranchsalesreport/mobi
 import { ReportComponent } from './report.component';
 import { SalesproductivityreportComponent } from './salesproductivityreport/salesproductivityreport.component';
 import { ProductReportSalesMobileComponent } from './product-report-sales-mobile/product-report-sales-mobile.component';
+import { GeneralizeReportComponent } from './generalize-report/generalize-report.component';
+
 // import { ReportComponent } from './report2/report.component';
 
 
@@ -323,6 +325,38 @@ const routes: Routes = [
           urls: [
             { title: 'Dashboard', url: '/dashboard' },
             { title: 'Product Report' }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    path: 'generalizereport',
+    children: [
+      {
+        path: '',
+        component: GeneralizeReportComponent,
+        data: {
+          title: 'Generailize Report ',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Generailize Report ' }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    path: 'territoryenquiryreport',
+    children: [
+      {
+        path: '',
+        component: GeneralizeReportComponent,
+        data: {
+          title: 'Territory Enquiry Report ',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Generailize Report ' }
           ]
         }
       }

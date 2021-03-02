@@ -55,7 +55,7 @@ import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { DataService } from './global.service';
 import { TypeaheadService } from './typeahead.service';
 import {SharedService} from './layouts/shared-service';
-import { SnotifyService } from 'ng-snotify';
+import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
 
 import { from } from 'rxjs';
 import { ChatComponent } from './a2-components/chat/chat/chat.component';
@@ -142,6 +142,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatAutocompleteModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    SnotifyModule
     // CommonModule
     
   ],
@@ -167,6 +168,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
+    { provide: 'SnotifyToastConfig', useValue: ToastDefaults},
     // { provide: OWL_DATE_TIME_LOCALE, useValue: "gb" },
 
   ],
