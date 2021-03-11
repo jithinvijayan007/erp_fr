@@ -63,6 +63,7 @@ export const Approutes: Routes = [
       { path: 'lead', loadChildren: './lead/lead.module#LeadModule' }, 
       { path: 'attendance', loadChildren: './attendance/attendance.module#AttendanceModule' },
       { path: 'attendancereports', loadChildren: './attendancereports/attendancereports.module#AttendancereportsModule' }, 
+      { path: 'reward', loadChildren: './reward/rewardmdule.module#RewardmduleModule' }, 
 
 
 

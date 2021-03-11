@@ -60,7 +60,8 @@ export class TypeaheadService {
     // this.url_zone = this.hostAddress + 'state/zone_typehead/';
     this.url_source = this.hostAddress + 'branch_cost/source_typeahead/';
     this.url_zone = this.hostAddress + 'territory/zone_typehead/';
-    this.url_brand = this.hostAddress + 'user/getbrand/';
+    // this.url_brand = this.hostAddress + 'user/getbrand/';
+    this.url_brand = this.hostAddress + 'productivityreport/list_brand/';
     this.url_branch_user = this.hostAddress + 'user/getbranchuser/';
     this.url_country_branch = this.hostAddress + 'user/get_branch/';
     this.url_branch_transfer = this.hostAddress + 'branch_transfer/branch_typeahead/';

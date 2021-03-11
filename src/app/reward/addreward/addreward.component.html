@@ -1,0 +1,646 @@
+<div class="card col-md-12 col-lg-12">
+  <h4 class="form-head">Reward</h4>
+  <div class="row mt-3">
+    <div class="col-md-12">
+       <mat-tab-group (selectedTabChange)="setTabName($event)" [selectedIndex]="tabIndex">
+        <mat-tab label="Product wise"  [disabled]='!isProductActive' >
+          <div class="row mt-3">
+            <div class="col-md-2">
+              <mat-form-field>
+                <input matInput (click)="date.open()" name="fromDate1" readonly [matDatepicker]="date" placeholder="From Date" [(ngModel)]="fromDate1">
+                <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                <mat-datepicker #date></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-md-2">
+              <mat-form-field>
+                <input matInput (click)="date1.open()" name="toDate1" readonly [matDatepicker]="date1" placeholder="To Date" [(ngModel)]="toDate1">
+                <mat-datepicker-toggle matSuffix [for]="date1"></mat-datepicker-toggle>
+                <mat-datepicker #date1></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-md-2">
+              <mat-form-field>
+                <mat-select ngDefaultControl placeholder="Select Area" name="areaType1" [(ngModel)]="areaType1" (ngModelChange)="getAreas()">
+                  <mat-option [value]="'branch'">Branch</mat-option>
+                  <!-- <mat-option [value]="'territory'">Territory</mat-option>
+                  <mat-option [value]="'zone'">Zone</mat-option> -->
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="example-full-width">
+                <mat-select ngDefaultControl placeholder="Select" name="LstArea1" multiple [(ngModel)]="LstArea1">
+                    <mat-option  *ngFor="let area of lstAreas" [value]="area.pk_bint_id">{{area.vchr_name | titlecase}}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="example-full-width">
+                <input matInput [(ngModel)]="rewardName1" name="rewardName1" placeholder="Reward Name" value="">
+              </mat-form-field>
+            </div>
+            <div class="col-md-12 mt-3">
+              <div id="table" class="table-editable">
+                  <button id="add_button" title="Add" (click)="addProduct()" mat-mini-fab color="primary" class="float-right" style="top: 10px !important;">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                <table class="table table-responsive-md text-center">
+                  <thead>
+                    <tr>
+                      <th class="text-left">Product</th>
+                      <th class="text-center">From Qty</th>
+                      <th class="text-center">Till Qty</th>
+                      <th class="text-center">Reward %</th>
+                      <th class="text-center">Reward Amt.</th>
+                      <th class="text-center">On MOP</th>
+                      <th class="text-center" style="width: 150px;">Assign To</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let product of lstProduct; let i = index">
+                      <td class="text-left">
+
+
+                        <mat-form-field>
+                          <input  [formControl]="searchProduct" matInput placeholder="Product" [(ngModel)]="lstProduct[i]['product_name']" name="product"
+                                  [matAutocomplete]="productField" #idProduct>
+                          <mat-autocomplete #productField="matAutocomplete">
+                            <mat-option *ngFor="let products of lstProducts" [value]="products.name"
+                                    (onSelectionChange)="ProductChanged(products,i)">
+                                    {{ products.name }}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>                         
+                      </td>
+    
+                      <td class="text-center">
+                        <input matInput type="number" placeholder="From Qty" [(ngModel)]="lstProduct[i]['fromQty']">
+                      </td>
+                      <td class="text-center">
+                        <input matInput placeholder="Till Qty" type="number" [(ngModel)]="lstProduct[i]['tillQty']" >
+                      </td>
+                      <td class="text-center">
+                        <input matInput placeholder="Reward %" type="number" [(ngModel)]="lstProduct[i]['slab1_percentage']">
+                      </td>
+                      <td class="text-center">
+                        <input matInput placeholder="Reward Amt" type="number" [(ngModel)]="lstProduct[i]['slab1_amount']">
+                      </td>
+                      <td class="text-center">
+                        <mat-checkbox ngDefaultControl [(ngModel)]="lstProduct[i]['reward_mop']"></mat-checkbox>
+                      </td>
+                      <td class="text-center">
+                        <mat-select placeholder="Select" ngDefaultControl [(ngModel)]="lstProduct[i]['reward_to']">
+                          <mat-option [value]="1">All Sales Men</mat-option>
+                          <mat-option [value]="3">Non-promoter</mat-option>
+                          <mat-option [value]="4">Ass.Branch Manager</mat-option>
+                          <mat-option [value]="5">Branch Manager</mat-option>
+                          <mat-option [value]="6">Territory Manager</mat-option>
+                          <mat-option [value]="7">Zone Manager</mat-option>
+
+                        </mat-select>
+                      </td>
+                      <td class="text-center">
+                        <button class="delete_btn" (click)="deleteData(i)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Brand wise" [disabled]='!isBrandActive'>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              <mat-form-field>
+                <input matInput (click)="brandDate.open()" readonly [matDatepicker]="brandDate" placeholder="From Date" [(ngModel)]="fromDate5">
+                <mat-datepicker-toggle matSuffix [for]="brandDate"></mat-datepicker-toggle>
+                <mat-datepicker #brandDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-md-2">
+              <mat-form-field>
+                <input matInput (click)="brandDate1.open()" readonly [matDatepicker]="brandDate1" placeholder="To Date" [(ngModel)]="toDate5">
+                <mat-datepicker-toggle matSuffix [for]="brandDate1"></mat-datepicker-toggle>
+                <mat-datepicker #brandDate1></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-md-2">
+              <mat-form-field>
+                <mat-select ngDefaultControl placeholder="Select Area" [(ngModel)]="areaType5" (ngModelChange)="getAreas()">
+                  <mat-option [value]="'branch'">Branch</mat-option>
+                  <!-- <mat-option [value]="'territory'">Territory</mat-option>
+                  <mat-option [value]="'zone'">Zone</mat-option> -->
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="example-full-width">
+                <mat-select ngDefaultControl placeholder="Select" multiple [(ngModel)]="LstArea5">
+                    <mat-option  *ngFor="let area of lstAreas" [value]="area.pk_bint_id">{{area.vchr_name | titlecase}}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="example-full-width">
+                <input matInput [(ngModel)]="rewardName5" placeholder="Reward Name" value="">
+              </mat-form-field>
+            </div>
+            <div class="col-md-12 mt-3">
+              <div id="table" class="table-editable">
+                  <button id="add_button" title="Add" (click)="addBrand()" mat-mini-fab color="primary" class="float-right" style="top: 10px !important;">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                <table class="table table-responsive-md text-center">
+                  <thead>
+                    <tr>
+                      <th class="text-left">Brand</th>
+                      <th class="text-center">From Qty</th>
+                      <th class="text-center">Till Qty</th>
+                      <th class="text-center">Reward %</th>
+                      <th class="text-center">Reward Amt.</th>
+                      <th class="text-center">On MOP</th>
+                      <th class="text-center" style="width: 150px;">Assign To</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let brand of lstBrand; let i = index">
+                        
+                      <td class="text-left">
+                        <mat-form-field>
+                          <input matInput placeholder="Brand" [(ngModel)]="lstBrand[i]['brand_name']" name="brand"
+                                  [matAutocomplete]="brandField" #idBrand  [formControl]="searchBrand">
+                          <mat-autocomplete #brandField="matAutocomplete">
+                            <mat-option *ngFor="let brands of lstBrands" [value]="brands.name"
+                                    (onSelectionChange)="BrandChanged(brands,i)">
+                                    {{ brands.name }}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>                         
+                      </td>
+                      <td class="text-center">
+                        <input matInput type="number" placeholder="From Qty" [(ngModel)]="lstBrand[i]['fromQty']">
+                      </td>
+                      <td class="text-center">
+                        <input matInput placeholder="Till Qty" type="number" [(ngModel)]="lstBrand[i]['tillQty']" >
+                      </td>
+                      <td class="text-center">
+                        <input matInput placeholder="Reward %" type="number" [(ngModel)]="lstBrand[i]['slab1_percentage']">
+                      </td>
+                      <td class="text-center">
+                        <input matInput placeholder="Reward Amt" type="number" [(ngModel)]="lstBrand[i]['slab1_amount']">
+                      </td>
+                      <td class="text-center">
+                        <mat-checkbox ngDefaultControl [(ngModel)]="lstBrand[i]['reward_mop']"></mat-checkbox>
+                      </td>
+                      <td class="text-center">
+                        <mat-select ngDefaultControl placeholder="Select" [(ngModel)]="lstBrand[i]['reward_to']">
+                          <mat-option [value]="1">All Sales Men</mat-option>
+                          <mat-option [value]="3">Non-promoter</mat-option>
+                          <mat-option [value]="4">Ass.Branch Manager</mat-option>
+                          <mat-option [value]="5">Branch Manager</mat-option>
+                          <mat-option [value]="6">Territory Manager</mat-option>
+                          <mat-option [value]="7">Zone Manager</mat-option>
+
+                        </mat-select>
+                      </td>
+                      <td class="text-center">
+                        <button class="delete_btn" (click)="deleteData(i)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Item wise" [disabled]='!isItemActive' >
+            <div class="row mt-3">
+            <div class="col-md-2">
+                <mat-form-field>
+                  <input matInput (click)="date2.open()" readonly [matDatepicker]="date2" placeholder="From Date" [(ngModel)]="fromDate2">
+                  <mat-datepicker-toggle matSuffix [for]="date2"></mat-datepicker-toggle>
+                  <mat-datepicker #date2></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field>
+                  <input matInput (click)="date3.open()" readonly [matDatepicker]="date3" placeholder="To Date" [(ngModel)]="toDate2">
+                  <mat-datepicker-toggle matSuffix [for]="date3"></mat-datepicker-toggle>
+                  <mat-datepicker #date3></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field>
+                  <mat-select ngDefaultControl placeholder="Select Area" [(ngModel)]="areaType2" (ngModelChange)="getAreas()">
+                    <mat-option [value]="'branch'">Branch</mat-option>
+                    <!-- <mat-option [value]="'territory'">Territory</mat-option>
+                    <mat-option [value]="'zone'">Zone</mat-option> -->
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width">
+                    <mat-select ngDefaultControl placeholder="Select" multiple [(ngModel)]="LstArea2">
+                        <mat-option *ngFor="let area of lstAreas" [value]="area.pk_bint_id">{{area.vchr_name | titlecase}}</mat-option>
+                      </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                      <input matInput [(ngModel)]="rewardName2" placeholder="Reward Name">
+                    </mat-form-field>
+              </div>
+          <div class="mt-3" *ngFor="let item of lstItem; let i=index">    
+            
+              <div class="col-md-2">
+                  <mat-form-field>
+                      <input  [formControl]="searchProduct" matInput placeholder="Product" [(ngModel)]="lstItem[i]['product_name']" name="product"
+                              [matAutocomplete]="product" #idProduct>
+                      <mat-autocomplete #product="matAutocomplete">
+                              <mat-option *ngFor="let product of lstProducts" [value]="product.name"
+                                      (onSelectionChange)="ProductChanged(product,i)">
+                                      {{ product.name }}
+                              </mat-option>
+                      </mat-autocomplete>
+              </mat-form-field>
+              </div>
+
+              <div class="col-md-2">
+                
+              <mat-form-field>
+                <input matInput placeholder="Item" [formControl]="searchItem" (input)="checkProduct(i)" [(ngModel)]="lstItem[i]['item_name']" name="item"
+                        [matAutocomplete]="itemField" #idItem>
+                <mat-autocomplete #itemField="matAutocomplete">
+                        <mat-option *ngFor="let item of lstItems" [value]="item.name"
+                                (onSelectionChange)="ItemChanged(item,i)">
+                                {{ item.name }}
+                        </mat-option>
+                </mat-autocomplete>
+        </mat-form-field>
+              </div>
+
+              <div class="col-md-1">
+                  <mat-form-field class="example-full-width">
+                    <input type="number" matInput placeholder="From Qty." [(ngModel)]="lstItem[i]['fromQty']">
+                  </mat-form-field>
+                </div>
+
+            <div class="col-md-1">
+              <mat-form-field class="example-full-width">
+                <input matInput type="number" placeholder="Till Qty." [(ngModel)]="lstItem[i]['tillQty']">
+              </mat-form-field>
+            </div>
+            <div class="col-md-1">
+              <label for="">On MOP</label>
+              <mat-checkbox ngDefaultControl class="example-full-width" [(ngModel)]="lstItem[i]['reward_mop']"></mat-checkbox>
+          </div>
+            <div class="col-md-1">
+              <mat-form-field class="example-full-width">
+                <input type="number" matInput placeholder="Reward %" [(ngModel)]="lstItem[i]['slab1_percentage']">
+              </mat-form-field>
+            </div>
+            <div class="col-md-1">
+              <mat-form-field class="example-full-width">
+                <input type="number" matInput placeholder="Reward Amount" [(ngModel)]="lstItem[i]['slab1_amount']">
+              </mat-form-field>
+            </div>
+            
+            <div class="col-md-2">
+              <mat-form-field>
+                <mat-select ngDefaultControl placeholder="To" [(ngModel)]="lstItem[i]['reward_to']">
+                  <mat-option [value]="1">All Sales Men</mat-option>
+                  <mat-option [value]="3">Non-promoter</mat-option>
+                  <mat-option [value]="4">Ass.Branch Manager</mat-option>
+                  <mat-option [value]="5">Branch Manager</mat-option>
+                  <mat-option [value]="6">Territory Manager</mat-option>
+                  <mat-option [value]="7">Zone Manager</mat-option>
+
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-1">
+           
+              <button class="delete_btn mt-4" (click)="deleteData(i)"><i class="fa fa-trash-o"></i></button>
+
+         
+            </div>
+          </div>
+
+          <div class="text-right col-md-12" >
+              <label (click)="addItem()" style="cursor: pointer;"> 
+                <span class="additem_btn" style="color: #5eb9a1;">
+                
+                <mat-icon class="mat-icon material-icons add_item" role="img" aria-hidden="true">add_circle</mat-icon>
+                <span >Add item</span>
+              </span></label>
+            </div>
+            
+          </div>
+        </mat-tab>
+        <mat-tab label="Value wise" [disabled]='!isValueActive'>
+            <div class="row mt-3">
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input matInput (click)="valuedate.open()" readonly [matDatepicker]="valuedate" placeholder="From Date" [(ngModel)]="fromDate3">
+                    <mat-datepicker-toggle matSuffix [for]="valuedate"></mat-datepicker-toggle>
+                    <mat-datepicker #valuedate></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input matInput (click)="valuedate1.open()" readonly [matDatepicker]="valuedate1" placeholder="To Date" [(ngModel)]="toDate3">
+                    <mat-datepicker-toggle matSuffix [for]="valuedate1"></mat-datepicker-toggle>
+                    <mat-datepicker #valuedate1></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field>
+                      <mat-select ngDefaultControl placeholder="Select Area" [(ngModel)]="areaType3" (ngModelChange)="getAreas()">
+                          <mat-option [value]="'branch'">Branch</mat-option>
+                          <!-- <mat-option [value]="'territory'">Territory</mat-option>
+                          <mat-option [value]="'zone'">Zone</mat-option> -->
+                        </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                   <mat-select ngDefaultControl placeholder="Select" multiple [(ngModel)]="LstArea3">
+                        <mat-option *ngFor="let area of lstAreas" [value]="area.pk_bint_id">{{area.vchr_name | titlecase}}</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                      <input matInput [(ngModel)]="rewardName3" placeholder="Reward Name">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group mt-4">
+                        <label><b>Reward 1 : </b></label>
+                        <input class="specl_input" type="number" [(ngModel)]="reward1_3">
+                      </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group mt-4">
+                        <label><b>Reward 2 : </b></label>
+                        <input class="specl_input" type="number" [(ngModel)]="reward2_3">
+                      </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group mt-4">
+                        <label><b>Reward 3 : </b></label>
+                        <input class="specl_input" type="number" [(ngModel)]="reward3_3">
+                      </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                  <div id="table" class="table-editable">
+                      <button (click)="addValue()" id="add_button" title="Add" mat-mini-fab color="primary" class="float-right" style="top: 10px !important;">
+                          <mat-icon>add</mat-icon>
+                        </button>
+                    <table class="table table-responsive-md text-center">
+                      <thead>
+                        <tr>
+                          <th class="text-left" rowspan="2">Product</th>
+                          <th class="text-center" colspan="2">Amount</th>
+                          <th class="text-center" rowspan="2">On MOP</th>
+                          <th class="text-center" rowspan="2" style="width: 150px;">To</th>
+                          <th class="text-center" colspan="2">Rewards 1</th>
+                          <th class="text-center" colspan="2">Rewards 2</th>
+                          <th class="text-center" colspan="2">Rewards 3</th>
+                          <th class="text-center" rowspan="2">Action</th>
+                        </tr>
+                        <tr>
+                          <th class="text-center subhead">From</th>
+                          <th class="text-center subhead">To</th>
+                          <th class="text-center subhead">%</th>
+                          <th class="text-right subhead">Amt.</th>
+                          <th class="text-center subhead">%</th>
+                          <th class="text-right subhead">Amt.</th>
+                          <th class="text-center subhead">%</th>
+                          <th class="text-right subhead">Amt.</th>
+                        </tr>
+
+                      
+                      </thead>
+                      <tbody>
+ 
+                        <tr *ngFor="let value of lstValues; let i=index">
+
+                          <td class="text-left"> 
+                            
+                            <mat-form-field>
+                              <input matInput placeholder="Product" [(ngModel)]="lstValues[i]['product_name']" name="product"
+                                      [matAutocomplete]="product" #idProduct [formControl]="searchProduct">
+                              <mat-autocomplete #product="matAutocomplete">
+                                <mat-option *ngFor="let products of lstProducts" [value]="products.name"
+                                        (onSelectionChange)="ProductChanged(products)">
+                                        {{ products.name }}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>     
+                          </td>
+                          <td class="text-center">
+                            <input matInput type="number" [(ngModel)]="lstValues[i]['fromAmt']">
+                          </td>
+                          <td>
+                            <input matInput type="number" [(ngModel)]="lstValues[i]['toAmt']">
+                          </td>
+                          <td class="text-center" contenteditable="false">
+                              <mat-checkbox ngDefaultControl [(ngModel)]="lstValues[i]['reward_mop']"></mat-checkbox>
+                          </td>
+                          
+                          <td class="text-center" contenteditable="false">
+                              <mat-select ngDefaultControl placeholder="Select" [(ngModel)]="lstValues[i]['reward_to']">
+                                <mat-option [value]="1">All Sales Men</mat-option>
+                                <mat-option [value]="3">Non-promoter</mat-option>
+                                <mat-option [value]="4">Ass.Branch Manager</mat-option>
+                                <mat-option [value]="5">Branch Manager</mat-option>
+                                <mat-option [value]="6">Territory Manager</mat-option>
+                                <mat-option [value]="7">Zone Manager</mat-option>
+
+                              
+                              </mat-select>
+                          </td>
+                          <td class="text-center">
+                            <input matInput type="number" [(ngModel)]="lstValues[i]['slab1_percentage']">
+                          </td>
+                          <td class="text-right">
+                           <input matInput type="number" [(ngModel)]="lstValues[i]['slab1_amount']">
+                          </td>
+                          <td class="text-center">
+                          <input matInput type="number" [(ngModel)]="lstValues[i]['slab2_percentage']">
+                          </td>
+                          <td class="text-right">
+                          <input matInput type="number" [(ngModel)]="lstValues[i]['slab2_amount']">
+                          </td>
+                          <td class="text-center">
+                          <input matInput type="number" [(ngModel)]="lstValues[i]['slab3_percentage']">
+                          </td>
+                          <td class="text-right">
+                          <input matInput type="number" [(ngModel)]="lstValues[i]['slab3_amount']">
+                          </td>
+                          <td class="text-center">
+                            <button class="delete_btn" (click)="deleteData(i)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                          </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </mat-tab>
+        <mat-tab label="Turnover wise" [disabled]='!isTurnActive'>
+          <div class="row mt-3">
+              <div class="col-md-3">
+                <mat-form-field>
+                  <input matInput (click)="turnoverdate.open()" readonly [matDatepicker]="turnoverdate" placeholder="From Date" [(ngModel)]="fromDate4">
+                  <mat-datepicker-toggle matSuffix [for]="turnoverdate"></mat-datepicker-toggle>
+                  <mat-datepicker #turnoverdate></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field>
+                  <input matInput (click)="turnoverdate1.open()" readonly [matDatepicker]="turnoverdate1" placeholder="To Date" [(ngModel)]="toDate4">
+                  <mat-datepicker-toggle matSuffix [for]="turnoverdate1"></mat-datepicker-toggle>
+                  <mat-datepicker #turnoverdate1></mat-datepicker>
+                </mat-form-field>
+              </div>
+             
+              <div class="col-md-3">
+               
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Select Branch" [(ngModel)]="branch_name" name="branch"
+                          [matAutocomplete]="branch" #idBranch [formControl]="searchBranch">
+                  <mat-autocomplete #branch="matAutocomplete">
+                    <mat-option *ngFor="let branchs of lstBranchs" [value]="branchs.name"
+                            (onSelectionChange)="BranchChanged(branchs)">
+                            {{ branchs.name }}
+                    </mat-option>
+                  </mat-autocomplete>
+              
+              </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="rewardName4" placeholder="Reward Name">
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-group mt-4">
+                      <label><b>Reward 1 : </b></label>
+                      <input class="specl_input" type="number" [(ngModel)]="reward1_4">
+                    </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-group mt-4">
+                      <label><b>Reward 2 : </b></label>
+                      <input class="specl_input" type="number" [(ngModel)]="reward2_4">
+                    </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-group mt-4">
+                      <label><b>Reward 3 : </b></label>
+                      <input class="specl_input" type="number" [(ngModel)]="reward3_4">
+                    </div>
+              </div>
+              <div class="col-md-12 mt-3">
+                <div id="table" class="table-editable">
+                    <button id="add_button"  (click)="addTurnover()" title="Add" mat-mini-fab color="primary" class="float-right" style="top: 10px !important;">
+                        <mat-icon>add</mat-icon>
+                      </button>
+                  <table class="table table-responsive-md text-center">
+                    <thead>
+                      <tr>
+                        <th class="text-center" colspan="2">Amount</th>
+                        <th class="text-center" rowspan="2">On MOP</th>
+                        <th class="text-center" rowspan="2" style="width: 150px;">To</th>
+                        <th class="text-center" colspan="2">Rewards 1</th>
+                        <th class="text-center" colspan="2">Rewards 2</th>
+                        <th class="text-center" colspan="2">Rewards 3</th>
+                        <th class="text-center" rowspan="2">Action</th>
+                      </tr>
+                      <tr>
+                        <th class="text-center subhead">From</th>
+                        <th class="text-center subhead">To</th>
+                        <th class="text-center subhead">%</th>
+                        <th class="text-right subhead">Amt.</th>
+                        <th class="text-center subhead">%</th>
+                        <th class="text-right subhead">Amt.</th>
+                        <th class="text-center subhead">%</th>
+                        <th class="text-right subhead">Amt.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     
+                      <tr *ngFor="let value of lstTurnover; let i=index">
+                       
+                          <td class="text-center">
+                            <input matInput type="number" [(ngModel)]="lstTurnover[i]['fromAmt']">
+                          </td>
+                          <td>
+                            <input matInput type="number" [(ngModel)]="lstTurnover[i]['toAmt']">
+                          </td>
+                          <td class="text-center" contenteditable="false">
+                              <mat-checkbox ngDefaultControl [(ngModel)]="lstTurnover[i]['reward_mop']"></mat-checkbox>
+                          </td>
+                          
+                          <td class="text-center" contenteditable="false">
+                              <mat-select ngDefaultControl placeholder="Select" [(ngModel)]="lstTurnover[i]['reward_to']">
+                               
+                                <mat-option [value]="4">Ass.Branch Manager</mat-option>
+                                <mat-option [value]="5">Branch Manager</mat-option>
+                                <mat-option [value]="6">Territory Manager</mat-option>
+                                <mat-option [value]="7">Zone Manager</mat-option>
+
+                              </mat-select>
+                          </td>
+                          <td class="text-center">
+                            <input matInput type="number" [(ngModel)]="lstTurnover[i]['slab1_percentage']">
+                          </td>
+                          <td class="text-right">
+                           <input matInput type="number" [(ngModel)]="lstTurnover[i]['slab1_amount']">
+                          </td>
+                          <td class="text-center">
+                          <input matInput type="number" [(ngModel)]="lstTurnover[i]['slab2_percentage']">
+                          </td>
+                          <td class="text-right">
+                          <input matInput type="number" [(ngModel)]="lstTurnover[i]['slab2_amount']">
+                          </td>
+                          <td class="text-center">
+                          <input matInput type="number" [(ngModel)]="lstTurnover[i]['slab3_percentage']">
+                          </td>
+                          <td class="text-right">
+                          <input matInput type="number" [(ngModel)]="lstTurnover[i]['slab3_amount']">
+                          </td>
+                          <td class="text-center">
+                            <button class="delete_btn" (click)="deleteData(i)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                          </td>
+                        </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+      </mat-tab>
+      </mat-tab-group>
+      <button *ngIf="caption=='save'" (click)="saveDetails()" class="mat-raised-button mat-accent mt-4">
+        SAVE
+      </button>
+      <button *ngIf="caption=='edit'" (click)="saveDetails()" mat-raised-button class="add_btn mt-4" style="background: #5dade0;color:#fff;">
+        UPDATE
+        </button>
+      <button (click)="clearFields()" class="mat-raised-button cancel_btn mt-4">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+

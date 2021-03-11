@@ -449,10 +449,10 @@ ELEMENT_DATA = [
     // this.dataSource.sort = this.sort;
     this.setupChartDetails();
     if (this.reportName == 'branchtargetreport' || this.reportName == 'regiontargetreport' || this.reportName == 'territoryenquiryreport') {
-      // this.datFromDate = this.selectedYear + '-07-01';
-      // this.datToDate = this.selectedYear + '-09-30';
-      this.datFromDate = moment();
-      this.datToDate = moment();
+      this.datFromDate = this.selectedYear + '-07-01';
+      this.datToDate = this.selectedYear + '-09-30';
+      // this.datFromDate = moment();
+      // this.datToDate = moment();
       this.showDatewiseTargetData()
     }
     else {
