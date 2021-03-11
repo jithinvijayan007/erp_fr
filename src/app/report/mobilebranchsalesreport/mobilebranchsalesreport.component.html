@@ -92,17 +92,10 @@
 </div>
     <div class="row" *ngIf="nodata.length>0">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
-            <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top1 card">
-              <div class="row"> 
-                <p class="margin-class"> {{"Branch Wise"|uppercase}}</p>
-                <!-- <small style="padding: 1%;" *ngIf="barChartOptions.title.text.length>5">
-                {{ barChartOptions.title.text|uppercase|slice:0:5 }}...
-                </small>
-                 <small style="padding: 1%;" *ngIf="barChartOptions.title.text.length<=5">
-                {{ barChartOptions.title.text|uppercase }}
-                </small> -->
-              </div> 
-                <span class="pull-right">
+          
+               <div style="margin: 0 0 0 0; padding: 0 0 0 0;display: flow-root;padding: 12px;" class="border_top4 card">
+                {{"Branch Wise"|uppercase}}                
+         <span class="pull-right" style="    float: right;">
                      <!-- Show pie chart -->
                        <!-- <a data-toggle="tooltip" *ngIf="blnBranchChartType" title="Show pie chart data" style="cursor: pointer;" (click)="changeBranchChart()">
                         <i class="fa fa-pie-chart"></i>
@@ -118,8 +111,7 @@
                   <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Branch')">
                         &nbsp;<i class="fa fa-eye" data-toggle="modal" data-target="#chart_modal" aria-hidden="true" style="padding: 10px;"></i>
                         &nbsp;&nbsp;
-                        </a>
-                        
+                        </a>                        
                 <!-- Table data icon end here -->
                     <ng-container *ngIf='branchMaxIndex>1 && blnBranchChartType'>
                         <small class="chart-icons fa fa-arrow-left" (click)="moveBar('branch','left')"></small>
@@ -132,16 +124,25 @@
                         [ngClass]="{'active':blnActive}" style="padding: 10px;"></span>
                     <span class="chart-icons fa fa-chevron-down" title="Poor" *ngIf="blnPoor" (click)="poorOnClick()"
                         [ngClass]="{'active':!blnActive}"  style="padding: 10px;"></span>
-                </span>
+                </span>               
             </div>
-            <div id="chart" *ngIf = "blnBranchChartType" class="card">
-                <canvas height="250" baseChart [datasets]="barChartData" [labels]="barChartLabels"
+
+
+              
+            <div id="chart" *ngIf = "blnBranchChartType" class="card"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        " >
+                <canvas class="chart_hight" baseChart [datasets]="barChartData" [labels]="barChartLabels"
                     [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType"  [colors]="barSalesChartColor"
                     (chartClick)="chartClicked($event)">
                 </canvas>
             </div>
-            <div id="chart" *ngIf = "!blnBranchChartType" class="card">
-                    <canvas height="250" baseChart [data]="barChartData[1].data" [labels]="barChartLabels"
+            <div id="chart" *ngIf = "!blnBranchChartType" class="card"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        ">
+                    <canvas class="chart_hight" baseChart [data]="barChartData[1].data" [labels]="barChartLabels"
                         [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors"
                         (chartClick)="chartClicked($event)">
                     </canvas>
@@ -149,18 +150,20 @@
         </div>
 
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf="servicePieChartLabels.length > 0">
-            <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top2 card">
-                <div class="row">
+            <!-- <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top2 card"> -->
+                
+                    <div style="margin: 0 0 0 0; padding: 0 0 0 0;display: flow-root;padding: 12px;" class="border_top4 card">
+                        {{"Product wise - "|uppercase}}          
                     
-                    <p class="margin-class"> {{"Product wise - "|uppercase}}</p>
+                    
                     <small style="padding: 1%;" *ngIf="servicePieOptions.title.text.length>5">
                         {{ servicePieOptions.title.text|uppercase|slice:0:5 }}...
                     </small>
                     <small style="padding: 1%;" *ngIf="servicePieOptions.title.text.length<=5">
                         {{ servicePieOptions.title.text|uppercase }}
                     </small>
-                </div>
-                    <span class="pull-right">
+               
+                    <span class="pull-right" style="float: right;">
 
                           <!-- Show pie chart -->
                        <a data-toggle="tooltip" *ngIf="blnProductChartType" title="Show pie chart data" style="cursor: pointer;" (click)="changeProductChart()">
@@ -187,14 +190,20 @@
                     </ng-container>
                 </span>
             </div>
-            <div id="chart" *ngIf = "blnProductChartType" class="card">
-                <canvas height="250" baseChart [options]="servicePieOptions" [datasets]="servicePieChartData"
+            <div id="chart" *ngIf = "blnProductChartType" class="card"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        ">
+                <canvas class="chart_hight" baseChart [options]="servicePieOptions" [datasets]="servicePieChartData"
                     [labels]="servicePieChartLabels" [colors]="barSalesChartColor" [chartType]="servicePieChartType"
                     (chartClick)=servicePieChartClicked($event)>
                 </canvas>
             </div>
-            <div id="chart" *ngIf = "!blnProductChartType" class="card">
-                    <canvas height="235" baseChart [options]="productPieOptions" [datasets]="servicePieChartData1"
+            <div id="chart" *ngIf = "!blnProductChartType" class="card"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        ">
+                    <canvas class="chart_hight" baseChart [options]="productPieOptions" [datasets]="servicePieChartData1"
                         [labels]="servicePieChartLabels1" [colors]="pieChartColors" [chartType]="productPieChartType"
                         (chartClick)=servicePieChartClicked($event)>
                     </canvas>
@@ -202,18 +211,19 @@
         </div>
 
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf=" brandPieChartLabels.length > 0">
-            <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top3 card">
-              <div class="row">
-                <p class="margin-class">{{"Brand wise -" |uppercase}}</p>
+           
+                <div style="margin: 0 0 0 0; padding: 0 0 0 0;display: flow-root;padding: 12px;" class="border_top4 card">
+                    {{"Brand wise -" |uppercase}} 
+              
                 <small style="padding: 1%;" *ngIf="brandPieOptions.title.text.length>5">
                     {{ brandPieOptions.title.text|uppercase|slice:0:5 }}...
                 </small>
                 <small style="padding: 1%;" *ngIf="brandPieOptions.title.text.length<=5">
                     {{ brandPieOptions.title.text|uppercase }}
                 </small>
-            </div>
+          
               
-                <span class="pull-right">
+                <span class="pull-right" style="float: right;">
 
                        <!-- Show pie chart -->
                     <a data-toggle="tooltip" *ngIf="blnBrandChartType" title="Show pie chart data" style="cursor: pointer;" (click)="changeBrandChart()">
@@ -241,14 +251,20 @@
 
                 </span>
             </div>
-            <div id="chart" *ngIf = "blnBrandChartType" class="card">
-                <canvas height="250" baseChart [options]="brandPieOptions" [legend]="brandPieChartLegend"
+            <div id="chart" *ngIf = "blnBrandChartType" class="card"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        ">
+                <canvas class="chart_hight" baseChart [options]="brandPieOptions" [legend]="brandPieChartLegend"
                     [datasets]="brandPieChartData" [labels]="brandPieChartLabels" [colors]="barSalesChartColor"
                     [chartType]="brandPieChartType" (chartClick)=brandPieChartClicked($event)>
                 </canvas>
             </div>
-            <div id="chart" *ngIf = "!blnBrandChartType" class="card">
-                    <canvas height="235" baseChart [options]="productPieOptions" [legend]="brandPieChartLegend"
+            <div id="chart" *ngIf = "!blnBrandChartType" class="card"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        ">
+                    <canvas class="chart_hight" baseChart [options]="productPieOptions" [legend]="brandPieChartLegend"
                         [datasets]="brandPieChartData1" [labels]="brandPieChartLabels1" [colors]="pieChartColors"
                         [chartType]="productPieChartType" (chartClick)=brandPieChartClicked($event)>
                     </canvas>
@@ -256,17 +272,18 @@
         </div>
 
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf=" itemPieChartLabels.length > 0">
-            <div style="margin: 0 0 0 0; padding: 0 0 0 0;" class="border_top4 card">
-                <div class="row">
-               <p class="margin-class"> {{"Item wise -"|uppercase}}</p>
+            
+            <div style="margin: 0 0 0 0; padding: 0 0 0 0;display: flow-root;padding: 12px;" class="border_top4 card">
+                {{"Item wise -"|uppercase}}
+             
                 <small style="padding: 1%;" *ngIf="itemPieOptions.title.text.length>5">
                     {{ itemPieOptions.title.text|uppercase|slice:0:5 }}...
                 </small>
                 <small style="padding: 1%;" *ngIf="itemPieOptions.title.text.length<=5">
                     {{ itemPieOptions.title.text|uppercase }}
                 </small>
-               </div>
-                <span class="pull-right">
+               
+                <span class="pull-right" style="float: right;">
                           <!-- Show pie chart -->
                         <!-- <a data-toggle="tooltip" *ngIf="blnItemChartType" title="Show pie chart data" style="cursor: pointer;" (click)="changeItemChart()">
                         <i class="fa fa-pie-chart"></i>
@@ -294,14 +311,20 @@
                     </ng-container>
                 </span>
             </div>
-            <div id="chart" *ngIf = "blnItemChartType" class="card">
-                <canvas height="250" baseChart [options]="itemPieOptions" [legend]="itemPieChartLegend"
+            <div id="chart" *ngIf = "blnItemChartType" class="card"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        ">
+                <canvas class="chart_hight" baseChart [options]="itemPieOptions" [legend]="itemPieChartLegend"
                     [datasets]="itemPieChartData" [labels]="itemPieChartLabels" [colors]="barSalesChartColor"
                     [chartType]="itemPieChartType">
                 </canvas>
             </div>
-            <div id="chart" *ngIf = "!blnItemChartType" class="card">
-                    <canvas height="250" baseChart [options]="productPieOptions" [legend]="itemPieChartLegend"
+            <div id="chart" *ngIf = "!blnItemChartType" class="card"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        ">
+                    <canvas class="chart_hight" baseChart [options]="productPieOptions" [legend]="itemPieChartLegend"
                         [data]="itemPieChartData[1].data" [labels]="itemPieChartLabels" [colors]="pieChartColors"
                         [chartType]="productPieChartType">
                     </canvas>

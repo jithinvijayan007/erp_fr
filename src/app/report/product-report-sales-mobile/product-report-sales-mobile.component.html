@@ -139,14 +139,20 @@
         
                         </span>
                     </div>
-                    <div id="chart" class="card"  *ngIf="blnChartType"> 
+                    <div id="chart" class="card"  *ngIf="blnChartType"  style="
+                    margin-bottom: 20px;
+                    padding-bottom: 11px;
+                "> 
                             <!-- setting bar chart -->
-                        <canvas height="235px" baseChart [datasets]="serviceChartData" [labels]="serviceChartLabels" [options]="barChartOptions" [legend]="serviceChartLegend" [chartType]="serviceChartType" [colors]="barSalesChartColor" (chartClick)="chartClicked($event)">
+                        <canvas class="chart_hight" baseChart [datasets]="serviceChartData" [labels]="serviceChartLabels" [options]="barChartOptions" [legend]="serviceChartLegend" [chartType]="serviceChartType" [colors]="barSalesChartColor" (chartClick)="chartClicked($event)">
                         </canvas> 
                         </div>
-                        <div id="chart" class="card" *ngIf="!blnChartType">  
+                        <div id="chart" class="card" *ngIf="!blnChartType"  style="
+                        margin-bottom: 20px;
+                        padding-bottom: 11px;
+                    ">  
                             <!-- setting pie chart -->
-                        <canvas  height="235px" baseChart [options]="productPieOptions" [datasets]="serviceChartData1" [labels]="serviceChartLabels1"
+                        <canvas  class="chart_hight" baseChart [options]="productPieOptions" [datasets]="serviceChartData1" [labels]="serviceChartLabels1"
                           [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)="chartClicked($event)">
                         </canvas>
                       </div>
@@ -203,13 +209,19 @@
               <span class="chart-icons fa fa-chevron-down" title="Poor"></span> -->
                 </span>
             </div>
-            <div id="chart" *ngIf="blnBrandChartType" class="card">
-                <canvas height="235" baseChart [options]="brandPieOptions" [datasets]="brandPieChartData" [labels]="brandPieChartLabels" [legend]="brandChartLegend" [colors]="barSalesChartColor" [chartType]="brandPieChartType" (chartClick)=brandPieChartClicked($event)>
+            <div id="chart" *ngIf="blnBrandChartType" class="card"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        ">
+                <canvas class="chart_hight" baseChart [options]="brandPieOptions" [datasets]="brandPieChartData" [labels]="brandPieChartLabels" [legend]="brandChartLegend" [colors]="barSalesChartColor" [chartType]="brandPieChartType" (chartClick)=brandPieChartClicked($event)>
         </canvas>
             </div>
 
-            <div id="chart" class="card" *ngIf="!blnBrandChartType">
-                    <canvas height="235" baseChart [options]="productPieOptions" [datasets]="brandPieChartData1" [labels]="brandPieChartLabels1" [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)=brandPieChartClicked($event)>
+            <div id="chart" class="card" *ngIf="!blnBrandChartType"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        ">
+                    <canvas class="chart_hight" baseChart [options]="productPieOptions" [datasets]="brandPieChartData1" [labels]="brandPieChartLabels1" [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)=brandPieChartClicked($event)>
             </canvas>
                 </div>
         </div>
@@ -252,13 +264,19 @@
                 </ng-container>
                 </span>
             </div>
-            <div id="chart" class="card" *ngIf="blnItemChartType">
-                <canvas height="235" baseChart [options]="itemPieOptions" [datasets]="itemPieChartData" [labels]="itemPieChartLabels" [legend]="itemChartLegend" [colors]="barSalesChartColor" [chartType]="itemPieChartType" (chartClick)=itemPieChartClicked($event)>
+            <div id="chart" class="card" *ngIf="blnItemChartType"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        ">
+                <canvas class="chart_hight" baseChart [options]="itemPieOptions" [datasets]="itemPieChartData" [labels]="itemPieChartLabels" [legend]="itemChartLegend" [colors]="barSalesChartColor" [chartType]="itemPieChartType" (chartClick)=itemPieChartClicked($event)>
         </canvas>
             </div>
 
-            <div class="card" id="chart" *ngIf="!blnItemChartType">
-                    <canvas height="235" baseChart [options]="productPieOptions" [data]="itemPieChartData[1].data" [labels]="itemPieChartLabels" [legend]="itemChartLegend" [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)=itemPieChartClicked($event)>
+            <div class="card" id="chart" *ngIf="!blnItemChartType"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        ">
+                    <canvas class="chart_hight" baseChart [options]="productPieOptions" [data]="itemPieChartData[1].data" [labels]="itemPieChartLabels" [legend]="itemChartLegend" [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)=itemPieChartClicked($event)>
             </canvas>
                 </div>
 
@@ -301,12 +319,18 @@
                 </ng-container>
                 </span>
             </div>
-            <div id="chart" class="card" *ngIf="blnStaffChartType" >
-                <canvas height="235" baseChart [options]="staffPieOptions" [datasets]="staffPieChartData" [labels]="staffPieChartLabels" [legend]="staffChartLegend" [colors]="barSalesChartColor" [chartType]="staffPieChartType">
+            <div id="chart" class="card" *ngIf="blnStaffChartType"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        " >
+                <canvas class="chart_hight" baseChart [options]="staffPieOptions" [datasets]="staffPieChartData" [labels]="staffPieChartLabels" [legend]="staffChartLegend" [colors]="barSalesChartColor" [chartType]="staffPieChartType">
         </canvas>
             </div>
-            <div id="chart" class="card" *ngIf="!blnStaffChartType">
-                    <canvas height="235" baseChart [options]="productPieOptions" [data]="staffPieChartData[1].data" [labels]="staffPieChartLabels1" [legend]="staffChartLegend" [colors]="pieChartColors" [chartType]="productPieChartType">
+            <div id="chart" class="card" *ngIf="!blnStaffChartType"  style="
+            margin-bottom: 20px;
+            padding-bottom: 11px;
+        ">
+                    <canvas class="chart_hight" baseChart [options]="productPieOptions" [data]="staffPieChartData[1].data" [labels]="staffPieChartLabels1" [legend]="staffChartLegend" [colors]="pieChartColors" [chartType]="productPieChartType">
             </canvas>
                 </div>
 

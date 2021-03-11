@@ -196,30 +196,13 @@
 </div>
 </div>
 <div class="row" *ngIf="nodata.length>0">
+    
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf="barChartLabels.length > 0" >
         <div style="margin: 0 0 0 0; padding: 0 0 0 0; display: flow-root; padding-left: 10px;
         padding-top: 10px;
     " class="border_top1 card" >
-            {{"Staff Wise"|titlecase}}
-            <!-- <small *ngIf="barChartOptions.title.text.length>5">
-        {{ barChartOptions.title.text|titlecase|slice:0:5 }}...
-      </small>
-            <small *ngIf="barChartOptions.title.text.length<=5">
-        {{ barChartOptions.title.text|titlecase }}
-      </small> -->
-            <span class="pull-right">
-                 <!-- Show pie chart -->
-                 <!-- <a data-toggle="tooltip" *ngIf="blnStaffChartType" title="Show pie chart data" style="cursor: pointer;" (click)="changeStaffChart()">
-                        <i class="fa fa-pie-chart"></i>
-                        </a> -->
-                        <!-- Show pie char end -->
-                        <!-- Show bar chart -->
-                        <!-- <a data-toggle="tooltip" *ngIf="!blnStaffChartType" title="Show bar chart data" style="cursor: pointer;" (click)="changeStaffChart()">
-                            <i class="fa fa-bar-chart"></i>
-                            </a> -->
-                        <!-- Show bar char end -->
-
-        <!-- <span (click)="showAll()" style="position: initial;" class="all_span ">All</span> -->
+            {{"Staff Wise"|titlecase}}          
+            <span class="pull-right">                
           <!-- Table data icon -->
           <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Staff')">
                 &nbsp;<i class="fa fa-eye" data-toggle="modal" data-target="#chart_modal" aria-hidden="true"></i>
@@ -237,28 +220,29 @@
             <span class="chart-icons fa fa-chevron-down" title="Poor" *ngIf="blnPoor" (click)="poorOnClick()" [ngClass]="{'active':!blnActive}" style="PADDING: 10px;"></span>
             </span>
         </div>
-        <div id="chart" *ngIf = "blnStaffChartType" class="card">
-            <canvas height="250" baseChart [datasets]="barChartData" [labels]="barChartLabels2" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor" (chartClick)="chartClicked($event)">
+        <div id="chart" *ngIf = "blnStaffChartType" class="card"  style="
+        margin-bottom: 20px;
+        padding-bottom: 11px;
+    ">
+            <canvas  class="chart_hight" baseChart [datasets]="barChartData" [labels]="barChartLabels2" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor" (chartClick)="chartClicked($event)">
       </canvas>
     </div>
-        <div id="chart" *ngIf = "!blnStaffChartType">
-                <canvas height="250" baseChart [data]="barChartData[1].data" [labels]="barChartLabels1" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors" (chartClick)="chartClicked($event)">
+        <div id="chart" *ngIf = "!blnStaffChartType" class="card"  style="
+        margin-bottom: 20px;
+        padding-bottom: 11px;
+    ">
+                <canvas class="chart_hight" baseChart [data]="barChartData[1].data" [labels]="barChartLabels1" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors" (chartClick)="chartClicked($event)">
           </canvas>
         </div>
     </div>
 
     <div  class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" *ngIf="productBarChartLabels.length > 0">
-        <div style="margin: 0 0 0 0;display: flow-root;padding-left: 10px;;
-        padding-top: 10px;
-     " class="border_top2 card">
-            {{"Product Wise - "|titlecase}}
-            <span>
-            <!-- <small *ngIf="productBarChartOptions.title.text.length>5">
-        {{ productBarChartOptions.title.text|titlecase|slice:0:5 }}...
-      </small> -->
-            <small *ngIf="productBarChartOptions.title.text.length>=2">
+        <div style="margin: 0 0 0 0; padding: 0 0 0 0;display: flow-root;padding: 12px;" class="border_top4 card">
+            {{"Product Wise - "|titlecase}}       
+           <small *ngIf="productBarChartOptions.title.text.length>=2">
         {{ productBarChartOptions.title.text|titlecase }}
       </small>
+      <span class="pull-right" style="float: right;">
       <ng-container *ngIf='productMaxIndex>1 && blnChartType'>
         <small class="chart-icons fa fa-arrow-left" (click)="moveBar('product','left')"></small>
         <small>
@@ -266,7 +250,7 @@
         </small>
         <small class="chart-icons fa fa-arrow-right" (click)="moveBar('product','right')"></small>
       </ng-container>
-            <span class="pull-right">
+           
                    <!-- Show pie chart -->
                    <a data-toggle="tooltip" *ngIf="blnChartType" title="Show pie chart data" style="cursor: pointer;" (click)="changeChart()" style="padding: 5px;">
                         <i class="fas fa-chart-pie"></i>
@@ -276,35 +260,28 @@
                         <a data-toggle="tooltip" *ngIf="!blnChartType" title="Show bar chart data" style="cursor: pointer;" (click)="changeChart()"style="padding: 5px;">
                             <i class="fas fa-chart-bar"></i>
                             </a>
-                            </span>
+                            
                         <!-- Show bar char end -->
                   <!-- Table data icon -->
                   <a data-toggle="tooltip" title="Table data" style="cursor: pointer;" (click)="showPopupData(dataModal,'Product')" style="padding: 5px;">
                         &nbsp;<i class="fa fa-eye" data-toggle="modal" data-target="#chart_modal" aria-hidden="true"></i>
                         &nbsp;&nbsp;
                         </a>
-                <!-- Table data icon end here -->
-        <!-- <ng-container *ngIf='productMaxIndex>1 && blnChartType'>
-          <small class="chart-icons fa fa-arrow-left" (click)="moveBar('product','left')"></small>
-          <small>
-            &nbsp; Page {{productCurrentIndex}} of {{productMaxIndex}} &nbsp;&nbsp;&nbsp;
-          </small>
-          <small class="chart-icons fa fa-arrow-right" (click)="moveBar('product','right')"></small>
-        </ng-container> -->
+                
       </span>
     </div>
-        <div id="chart" *ngIf = "blnChartType card" style="background-color: white;
+        <div id="chart" *ngIf = "blnChartType" style="
         margin-bottom: 20px;
         padding-bottom: 11px;
-    ">
-            <canvas height="250" baseChart [datasets]="productBarChartData" [labels]="productBarChartLabels" [options]="productBarChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor" (chartClick)="productChartClicked($event)">
+    " class="card">
+            <canvas  class="chart_hight" baseChart [datasets]="productBarChartData" [labels]="productBarChartLabels" [options]="productBarChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor" (chartClick)="productChartClicked($event)">
       </canvas>
     </div>
-        <div id="chart"  *ngIf = "!blnChartType" class = "card" style="background-color: white;
+        <div id="chart"  *ngIf = "!blnChartType" class = "card" style="
         margin-bottom: 20px;
         padding-bottom: 11px;
     ">
-                <canvas height="250" baseChart [datasets]="productBarChartData1" [labels]="productBarChartLabels1" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors" (chartClick)="productChartClicked($event)">
+                <canvas class="chart_hight" baseChart [datasets]="productBarChartData1" [labels]="productBarChartLabels1" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors" (chartClick)="productChartClicked($event)">
           </canvas>
         </div>
     </div>
@@ -347,12 +324,18 @@
       </span>
       </span>
     </div>
-        <div id="chart" *ngIf="blnBrandChartType" class="card">
-            <canvas height="250" baseChart [datasets]="brandBarChartData" [labels]="brandBarChartLabels" [options]="brandBarChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor" (chartClick)="brandChartClicked($event)">
+        <div id="chart" *ngIf="blnBrandChartType" class="card" style="
+        margin-bottom: 20px;
+        padding-bottom: 11px;
+    ">
+            <canvas class="chart_hight" baseChart [datasets]="brandBarChartData" [labels]="brandBarChartLabels" [options]="brandBarChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor" (chartClick)="brandChartClicked($event)">
       </canvas>
     </div>
-        <div id="chart" *ngIf="!blnBrandChartType" class="card">
-                <canvas height="250" baseChart [datasets]="brandBarChartData1" [labels]="brandBarChartLabels1" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors" (chartClick)="brandChartClicked($event)">
+        <div id="chart" *ngIf="!blnBrandChartType" class="card" style="
+        margin-bottom: 20px;
+        padding-bottom: 11px;
+    ">
+                <canvas  class="chart_hight" baseChart [datasets]="brandBarChartData1" [labels]="brandBarChartLabels1" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors" (chartClick)="brandChartClicked($event)">
           </canvas>
         </div>
     </div>
@@ -398,12 +381,18 @@
       </span>
       </span>
     </div>
-        <div id="chart" *ngIf ="blnItemChartType" class="card">
-            <canvas height="250" baseChart [datasets]="itemBarChartData" [labels]="itemBarChartLabels" [options]="itemBarChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor">
+        <div id="chart" *ngIf ="blnItemChartType" class="card" style="
+        margin-bottom: 20px;
+        padding-bottom: 11px;
+    ">
+            <canvas  class="chart_hight" baseChart [datasets]="itemBarChartData" [labels]="itemBarChartLabels" [options]="itemBarChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor">
       </canvas>
     </div>
-        <div id="chart" *ngIf ="!blnItemChartType" class="card">
-                <canvas height="250" baseChart [data]="itemBarChartData[1].data" [labels]="itemBarChartLabels" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors">
+        <div id="chart" *ngIf ="!blnItemChartType" class="card" style="
+        margin-bottom: 20px;
+        padding-bottom: 11px;
+    ">
+                <canvas  class="chart_hight" baseChart [data]="itemBarChartData[1].data" [labels]="itemBarChartLabels" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors">
           </canvas>
         </div>
     </div>
@@ -618,7 +607,12 @@
 
 
 <!-- chart table start here -->
-<ng-template #dataModal let-modal>
+
+
+
+
+
+<ng-template  #dataModal let-modal>
     <!-- <div class="modal fade" id="chart_modal" role="dialog" [style.display]="showPopup ? 'block' : 'none'"> -->
         <!-- <div class="modal-dialog modal-lg">
           <div class="modal-content"> -->
@@ -628,73 +622,74 @@
             </div> -->
             <!-- <div class="modal-body">
               <div class="example-container mat-elevation-z8"> -->
+                
                   
     
               <mat-table style="width: 100%;" [dataSource]="dataSource1" matSort class="mat-elevation-z8 example-container">
       
                   <!-- Position Column -->
-                  <ng-container matColumnDef="name">
+                  <div matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef mat-sort-header='Name'> {{ chartHead }} </mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.Name}} </mat-cell>
                     <!-- <mat-cell *matCellDef> Total </mat-cell> -->
     
-                  </ng-container>
+                  </div>
       
                   <!-- Enquiry Quantity Column -->
-                  <ng-container matColumnDef="enquiryQty">
+                  <div matColumnDef="enquiryQty">
                     <mat-header-cell  class="text-right" *matHeaderCellDef mat-sort-header='EnquiryQty'style="justify-content: flex-end !important"> Enq.Qty </mat-header-cell>
                     <mat-cell  class="text-right" *matCellDef="let element"style="justify-content: flex-end !important"> {{element.EnquiryQty}} </mat-cell>
                     <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
     
-                  </ng-container>
+                  </div>
     
                    <!-- Sales Quantity Column -->
-                   <ng-container matColumnDef="salesQty">
+                   <div matColumnDef="salesQty">
                         <mat-header-cell  class="text-right" *matHeaderCellDef mat-sort-header='SaleQty'style="justify-content: flex-end !important"> Sale Qty </mat-header-cell>
                         <mat-cell  class="text-right" *matCellDef="let element"style="justify-content: flex-end !important"> {{element.SaleQty}} </mat-cell>
                         <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
     
-                      </ng-container>
+                   </div>
     
                   <!-- Contribution Percentage Column -->
-                  <ng-container matColumnDef="contribQtyPer">
+                  <div matColumnDef="contribQtyPer">
                         <mat-header-cell  class="text-right" *matHeaderCellDef mat-sort-header='ContribQty_per'style="justify-content: flex-end !important"> Contrib Qty % </mat-header-cell>
                         <mat-cell  class="text-right" *matCellDef="let element"style="justify-content: flex-end !important"> {{element.ContribQty_per}} </mat-cell>
                         <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
     
-                  </ng-container>
+                  </div>
     
                 <!-- Enquiry Value Column -->
-                <ng-container matColumnDef="enquiryVal">
+                <div matColumnDef="enquiryVal">
                     <mat-header-cell  class="text-right" *matHeaderCellDef mat-sort-header='EnquiryValue'style="justify-content: flex-end !important"> Enq.Value </mat-header-cell>
                     <mat-cell  class="text-right" *matCellDef="let element"style="justify-content: flex-end !important"> {{element.EnquiryValue}} </mat-cell>
                     <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
     
-                </ng-container>
+                </div>
     
            <!-- Sales Value Column -->
-           <ng-container matColumnDef="salesVal">
+           <div matColumnDef="salesVal">
                 <mat-header-cell  class="text-right" *matHeaderCellDef mat-sort-header='SaleValue'style="justify-content: flex-end !important"> Sale Value </mat-header-cell>
                 <mat-cell  class="text-right" *matCellDef="let element"style="justify-content: flex-end !important"> {{element.SaleValue}} </mat-cell>
                 <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
     
-              </ng-container>
+           </div>
     
                   <!-- Contribution Percentage Column -->
-                  <ng-container matColumnDef="contribPer">
+                  <div matColumnDef="contribPer">
                     <mat-header-cell  class="text-right" *matHeaderCellDef mat-sort-header='Contrib_per'style="justify-content: flex-end !important"> Contrib Value % </mat-header-cell>
                     <mat-cell  class="text-right" *matCellDef="let element"style="justify-content: flex-end !important"> {{element.Contrib_per}} </mat-cell>
                     <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
     
-                  </ng-container>
+                  </div>
     
                     <!-- Conversion Percentage Column -->
-                    <ng-container matColumnDef="conversionPer">
+                    <div matColumnDef="conversionPer">
                             <mat-header-cell  class="text-right" *matHeaderCellDef mat-sort-header='Conversion_per'style="justify-content: flex-end !important"> Conversion % </mat-header-cell>
                             <mat-cell  class="text-right" *matCellDef="let element"style="justify-content: flex-end !important"> {{element.Conversion_per}} </mat-cell>
                             <!-- <mat-cell *matCellDef> {{enqQtyTot}} </mat-cell> -->
     
-                        </ng-container>
+                    </div>
                         <mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></mat-header-row>
                   <!-- <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row> -->
                   <mat-row *matRowDef="let row; columns: displayedColumns1;"></mat-row>
