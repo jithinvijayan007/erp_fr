@@ -144,7 +144,7 @@
                     padding-bottom: 11px;
                 "> 
                             <!-- setting bar chart -->
-                        <canvas class="chart_hight" baseChart [datasets]="serviceChartData" [labels]="serviceChartLabels" [options]="barChartOptions" [legend]="serviceChartLegend" [chartType]="serviceChartType" [colors]="barSalesChartColor" (chartClick)="chartClicked($event)">
+                        <canvas height="250" baseChart [datasets]="serviceChartData" [labels]="serviceChartLabels" [options]="barChartOptions" [legend]="serviceChartLegend" [chartType]="serviceChartType" [colors]="barSalesChartColor" (chartClick)="chartClicked($event)">
                         </canvas> 
                         </div>
                         <div id="chart" class="card" *ngIf="!blnChartType"  style="
@@ -152,7 +152,7 @@
                         padding-bottom: 11px;
                     ">  
                             <!-- setting pie chart -->
-                        <canvas  class="chart_hight" baseChart [options]="productPieOptions" [datasets]="serviceChartData1" [labels]="serviceChartLabels1"
+                        <canvas  height="250" baseChart [options]="productPieOptions" [datasets]="serviceChartData1" [labels]="serviceChartLabels1"
                           [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)="chartClicked($event)">
                         </canvas>
                       </div>
@@ -213,7 +213,7 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         ">
-                <canvas class="chart_hight" baseChart [options]="brandPieOptions" [datasets]="brandPieChartData" [labels]="brandPieChartLabels" [legend]="brandChartLegend" [colors]="barSalesChartColor" [chartType]="brandPieChartType" (chartClick)=brandPieChartClicked($event)>
+                <canvas height="250" baseChart [options]="brandPieOptions" [datasets]="brandPieChartData" [labels]="brandPieChartLabels" [legend]="brandChartLegend" [colors]="barSalesChartColor" [chartType]="brandPieChartType" (chartClick)=brandPieChartClicked($event)>
         </canvas>
             </div>
 
@@ -221,7 +221,7 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         ">
-                    <canvas class="chart_hight" baseChart [options]="productPieOptions" [datasets]="brandPieChartData1" [labels]="brandPieChartLabels1" [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)=brandPieChartClicked($event)>
+                    <canvas height="250" baseChart [options]="productPieOptions" [datasets]="brandPieChartData1" [labels]="brandPieChartLabels1" [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)=brandPieChartClicked($event)>
             </canvas>
                 </div>
         </div>
@@ -268,7 +268,7 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         ">
-                <canvas class="chart_hight" baseChart [options]="itemPieOptions" [datasets]="itemPieChartData" [labels]="itemPieChartLabels" [legend]="itemChartLegend" [colors]="barSalesChartColor" [chartType]="itemPieChartType" (chartClick)=itemPieChartClicked($event)>
+                <canvas height="250" baseChart [options]="itemPieOptions" [datasets]="itemPieChartData" [labels]="itemPieChartLabels" [legend]="itemChartLegend" [colors]="barSalesChartColor" [chartType]="itemPieChartType" (chartClick)=itemPieChartClicked($event)>
         </canvas>
             </div>
 
@@ -276,7 +276,7 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         ">
-                    <canvas class="chart_hight" baseChart [options]="productPieOptions" [data]="itemPieChartData[1].data" [labels]="itemPieChartLabels" [legend]="itemChartLegend" [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)=itemPieChartClicked($event)>
+                    <canvas height="250" baseChart [options]="productPieOptions" [data]="itemPieChartData[1].data" [labels]="itemPieChartLabels" [legend]="itemChartLegend" [colors]="pieChartColors" [chartType]="productPieChartType" (chartClick)=itemPieChartClicked($event)>
             </canvas>
                 </div>
 
@@ -323,14 +323,14 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         " >
-                <canvas class="chart_hight" baseChart [options]="staffPieOptions" [datasets]="staffPieChartData" [labels]="staffPieChartLabels" [legend]="staffChartLegend" [colors]="barSalesChartColor" [chartType]="staffPieChartType">
+                <canvas height="250" baseChart [options]="staffPieOptions" [datasets]="staffPieChartData" [labels]="staffPieChartLabels" [legend]="staffChartLegend" [colors]="barSalesChartColor" [chartType]="staffPieChartType">
         </canvas>
             </div>
             <div id="chart" class="card" *ngIf="!blnStaffChartType"  style="
             margin-bottom: 20px;
             padding-bottom: 11px;
         ">
-                    <canvas class="chart_hight" baseChart [options]="productPieOptions" [data]="staffPieChartData[1].data" [labels]="staffPieChartLabels1" [legend]="staffChartLegend" [colors]="pieChartColors" [chartType]="productPieChartType">
+                    <canvas height="250" baseChart [options]="productPieOptions" [data]="staffPieChartData[1].data" [labels]="staffPieChartLabels1" [legend]="staffChartLegend" [colors]="pieChartColors" [chartType]="productPieChartType">
             </canvas>
                 </div>
 

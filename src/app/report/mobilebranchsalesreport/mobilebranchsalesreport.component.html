@@ -133,7 +133,7 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         " >
-                <canvas class="chart_hight" baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                <canvas height="250" baseChart [datasets]="barChartData" [labels]="barChartLabels"
                     [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType"  [colors]="barSalesChartColor"
                     (chartClick)="chartClicked($event)">
                 </canvas>
@@ -142,7 +142,7 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         ">
-                    <canvas class="chart_hight" baseChart [data]="barChartData[1].data" [labels]="barChartLabels"
+                    <canvas height="250" baseChart [data]="barChartData[1].data" [labels]="barChartLabels"
                         [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors"
                         (chartClick)="chartClicked($event)">
                     </canvas>
@@ -194,7 +194,7 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         ">
-                <canvas class="chart_hight" baseChart [options]="servicePieOptions" [datasets]="servicePieChartData"
+                <canvas height="250" baseChart [options]="servicePieOptions" [datasets]="servicePieChartData"
                     [labels]="servicePieChartLabels" [colors]="barSalesChartColor" [chartType]="servicePieChartType"
                     (chartClick)=servicePieChartClicked($event)>
                 </canvas>
@@ -203,7 +203,7 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         ">
-                    <canvas class="chart_hight" baseChart [options]="productPieOptions" [datasets]="servicePieChartData1"
+                    <canvas height="250" baseChart [options]="productPieOptions" [datasets]="servicePieChartData1"
                         [labels]="servicePieChartLabels1" [colors]="pieChartColors" [chartType]="productPieChartType"
                         (chartClick)=servicePieChartClicked($event)>
                     </canvas>
@@ -255,7 +255,7 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         ">
-                <canvas class="chart_hight" baseChart [options]="brandPieOptions" [legend]="brandPieChartLegend"
+                <canvas height="250" baseChart [options]="brandPieOptions" [legend]="brandPieChartLegend"
                     [datasets]="brandPieChartData" [labels]="brandPieChartLabels" [colors]="barSalesChartColor"
                     [chartType]="brandPieChartType" (chartClick)=brandPieChartClicked($event)>
                 </canvas>
@@ -264,7 +264,7 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         ">
-                    <canvas class="chart_hight" baseChart [options]="productPieOptions" [legend]="brandPieChartLegend"
+                    <canvas height="250" baseChart [options]="productPieOptions" [legend]="brandPieChartLegend"
                         [datasets]="brandPieChartData1" [labels]="brandPieChartLabels1" [colors]="pieChartColors"
                         [chartType]="productPieChartType" (chartClick)=brandPieChartClicked($event)>
                     </canvas>
@@ -315,7 +315,7 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         ">
-                <canvas class="chart_hight" baseChart [options]="itemPieOptions" [legend]="itemPieChartLegend"
+                <canvas height="250" baseChart [options]="itemPieOptions" [legend]="itemPieChartLegend"
                     [datasets]="itemPieChartData" [labels]="itemPieChartLabels" [colors]="barSalesChartColor"
                     [chartType]="itemPieChartType">
                 </canvas>
@@ -324,7 +324,7 @@
             margin-bottom: 20px;
             padding-bottom: 11px;
         ">
-                    <canvas class="chart_hight" baseChart [options]="productPieOptions" [legend]="itemPieChartLegend"
+                    <canvas height="250" baseChart [options]="productPieOptions" [legend]="itemPieChartLegend"
                         [data]="itemPieChartData[1].data" [labels]="itemPieChartLabels" [colors]="pieChartColors"
                         [chartType]="productPieChartType">
                     </canvas>

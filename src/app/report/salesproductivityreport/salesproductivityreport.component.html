@@ -224,14 +224,14 @@
         margin-bottom: 20px;
         padding-bottom: 11px;
     ">
-            <canvas  class="chart_hight" baseChart [datasets]="barChartData" [labels]="barChartLabels2" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor" (chartClick)="chartClicked($event)">
+            <canvas  height="250" baseChart [datasets]="barChartData" [labels]="barChartLabels2" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor" (chartClick)="chartClicked($event)">
       </canvas>
     </div>
         <div id="chart" *ngIf = "!blnStaffChartType" class="card"  style="
         margin-bottom: 20px;
         padding-bottom: 11px;
     ">
-                <canvas class="chart_hight" baseChart [data]="barChartData[1].data" [labels]="barChartLabels1" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors" (chartClick)="chartClicked($event)">
+                <canvas height="250" baseChart [data]="barChartData[1].data" [labels]="barChartLabels1" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors" (chartClick)="chartClicked($event)">
           </canvas>
         </div>
     </div>
@@ -274,14 +274,14 @@
         margin-bottom: 20px;
         padding-bottom: 11px;
     " class="card">
-            <canvas  class="chart_hight" baseChart [datasets]="productBarChartData" [labels]="productBarChartLabels" [options]="productBarChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor" (chartClick)="productChartClicked($event)">
+            <canvas  height="250" baseChart [datasets]="productBarChartData" [labels]="productBarChartLabels" [options]="productBarChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor" (chartClick)="productChartClicked($event)">
       </canvas>
     </div>
         <div id="chart"  *ngIf = "!blnChartType" class = "card" style="
         margin-bottom: 20px;
         padding-bottom: 11px;
     ">
-                <canvas class="chart_hight" baseChart [datasets]="productBarChartData1" [labels]="productBarChartLabels1" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors" (chartClick)="productChartClicked($event)">
+                <canvas height="250" baseChart [datasets]="productBarChartData1" [labels]="productBarChartLabels1" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors" (chartClick)="productChartClicked($event)">
           </canvas>
         </div>
     </div>
@@ -328,14 +328,14 @@
         margin-bottom: 20px;
         padding-bottom: 11px;
     ">
-            <canvas class="chart_hight" baseChart [datasets]="brandBarChartData" [labels]="brandBarChartLabels" [options]="brandBarChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor" (chartClick)="brandChartClicked($event)">
+            <canvas height="250" baseChart [datasets]="brandBarChartData" [labels]="brandBarChartLabels" [options]="brandBarChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor" (chartClick)="brandChartClicked($event)">
       </canvas>
     </div>
         <div id="chart" *ngIf="!blnBrandChartType" class="card" style="
         margin-bottom: 20px;
         padding-bottom: 11px;
     ">
-                <canvas  class="chart_hight" baseChart [datasets]="brandBarChartData1" [labels]="brandBarChartLabels1" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors" (chartClick)="brandChartClicked($event)">
+                <canvas  height="250" baseChart [datasets]="brandBarChartData1" [labels]="brandBarChartLabels1" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors" (chartClick)="brandChartClicked($event)">
           </canvas>
         </div>
     </div>
@@ -385,14 +385,14 @@
         margin-bottom: 20px;
         padding-bottom: 11px;
     ">
-            <canvas  class="chart_hight" baseChart [datasets]="itemBarChartData" [labels]="itemBarChartLabels" [options]="itemBarChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor">
+            <canvas  height="250" baseChart [datasets]="itemBarChartData" [labels]="itemBarChartLabels" [options]="itemBarChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barSalesChartColor">
       </canvas>
     </div>
         <div id="chart" *ngIf ="!blnItemChartType" class="card" style="
         margin-bottom: 20px;
         padding-bottom: 11px;
     ">
-                <canvas  class="chart_hight" baseChart [data]="itemBarChartData[1].data" [labels]="itemBarChartLabels" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors">
+                <canvas height="250" baseChart [data]="itemBarChartData[1].data" [labels]="itemBarChartLabels" [options]="productPieOptions" [legend]="barChartLegend" [chartType]="productPieChartType" [colors]="pieChartColors">
           </canvas>
         </div>
     </div>
